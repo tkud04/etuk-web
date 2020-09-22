@@ -10,7 +10,6 @@ use Session;
 use Cookie;
 use Validator; 
 use Carbon\Carbon; 
-use App\Products;
 //use Codedge\Fpdf\Fpdf\Fpdf;
 use PDF;
 
@@ -43,9 +42,7 @@ class MainController extends Controller {
 		$c = $this->helpers->getCategories();
 		//dd($bs);
 		$signals = $this->helpers->signals;
-		$na = $this->helpers->getNewArrivals();
-		$bs = $this->helpers->getBestSellers();
-		#dd($na);
+		
 		$ads = $this->helpers->getAds("wide-ad");
 		$banners = $this->helpers->getBanners();
 		$plugins = $this->helpers->getPlugins();
@@ -56,7 +53,7 @@ class MainController extends Controller {
 		shuffle($banners);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
 
-    	return view("index-2",compact(['user','cart','c','banners','hasUnpaidOrders','bs','na','ad','signals','plugins']));
+    	return view("temp",compact(['user','cart','c','banners','hasUnpaidOrders','ad','signals','plugins']));
     }
 	
 	/**
