@@ -38,7 +38,8 @@ return [
             'database' => env('DB_DATABASE', database_path('database.sqlite')),
             'prefix' => '',
         ],
-
+         
+		 //mysql://bc2f8585545999:b140d221@us-cdbr-east-02.cleardb.com/heroku_190a17a05fd0586?reconnect=true
         'mysql' => [
             'driver' => 'mysql',
             'host' => env('DB_HOST', 'us-cdbr-east-02.cleardb.com'),
