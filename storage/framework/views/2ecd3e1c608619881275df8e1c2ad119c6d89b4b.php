@@ -272,7 +272,7 @@
 						<div class="col-lg-4 col-md-6 col-sm-12">
 							<div class="tour-simple-wrap">
 								<div class="tour-simple-thumb">
-									<a href="tour-detail.html"><img src="assets/img/destination/des-2.jpg" class="img-fluid img-responsive" alt="" /></a>
+									<a href="tour-detail.html"><img src="<?php echo e(asset('img/destination/des-2.jpg')); ?>" class="img-fluid img-responsive" alt="" /></a>
 								</div>
 								<div class="tour-simple-caption">
 									<div class="ts-caption-left">
@@ -297,7 +297,7 @@
 						<div class="col-lg-4 col-md-6 col-sm-12">
 							<div class="tour-simple-wrap">
 								<div class="tour-simple-thumb">
-									<a href="tour-detail.html"><img src="assets/img/destination/des-3.jpg" class="img-fluid img-responsive" alt="" /></a>
+									<a href="tour-detail.html"><img src="<?php echo e(asset('img/destination/des-3.jpg')); ?>" class="img-fluid img-responsive" alt="" /></a>
 								</div>
 								<div class="tour-simple-caption">
 									<div class="ts-caption-left">
@@ -322,7 +322,7 @@
 						<div class="col-lg-4 col-md-6 col-sm-12">
 							<div class="tour-simple-wrap">
 								<div class="tour-simple-thumb">
-									<a href="tour-detail.html"><img src="assets/img/destination/des-4.jpg" class="img-fluid img-responsive" alt="" /></a>
+									<a href="tour-detail.html"><img src="<?php echo e(asset('img/destination/des-4.jpg')); ?>" class="img-fluid img-responsive" alt="" /></a>
 								</div>
 								<div class="tour-simple-caption">
 									<div class="ts-caption-left">
@@ -347,7 +347,7 @@
 						<div class="col-lg-4 col-md-6 col-sm-12">
 							<div class="tour-simple-wrap">
 								<div class="tour-simple-thumb">
-									<a href="tour-detail.html"><img src="assets/img/destination/des-5.jpg" class="img-fluid img-responsive" alt="" /></a>
+									<a href="tour-detail.html"><img src="<?php echo e(asset('img/destination/des-5.jpg')); ?>" class="img-fluid img-responsive" alt="" /></a>
 								</div>
 								<div class="tour-simple-caption">
 									<div class="ts-caption-left">
@@ -372,7 +372,7 @@
 						<div class="col-lg-4 col-md-6 col-sm-12">
 							<div class="tour-simple-wrap">
 								<div class="tour-simple-thumb">
-									<a href="tour-detail.html"><img src="assets/img/destination/des-6.jpg" class="img-fluid img-responsive" alt="" /></a>
+									<a href="tour-detail.html"><img src="<?php echo e(asset('img/destination/des-6.jpg')); ?>" class="img-fluid img-responsive" alt="" /></a>
 								</div>
 								<div class="tour-simple-caption">
 									<div class="ts-caption-left">
@@ -397,7 +397,7 @@
 						<div class="col-lg-4 col-md-6 col-sm-12">
 							<div class="tour-simple-wrap">
 								<div class="tour-simple-thumb">
-									<a href="tour-detail.html"><img src="assets/img/destination/des-7.jpg" class="img-fluid img-responsive" alt="" /></a>
+									<a href="tour-detail.html"><img src="<?php echo e(asset('img/destination/des-7.jpg')); ?>" class="img-fluid img-responsive" alt="" /></a>
 								</div>
 								<div class="tour-simple-caption">
 									<div class="ts-caption-left">
