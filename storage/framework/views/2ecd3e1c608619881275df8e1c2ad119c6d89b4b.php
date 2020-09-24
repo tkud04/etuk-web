@@ -40,7 +40,7 @@
 					<nav id="navigation" class="navigation navigation-landscape">
 						<div class="nav-header">
 							<a class="nav-brand" href="#">
-								<img src="assets/img/logo.png" class="logo" alt="" />
+								<img src="<?php echo e(asset('img/logo.png')); ?>" class="logo" alt="" />
 							</a>
 							<div class="nav-toggle"></div>
 						</div>
@@ -127,7 +127,7 @@
 			
 			
 			<!-- ======================= Start Banner ===================== -->
-			<div class="main-banner full" style="background-image:url(assets/img/banner.jpg);" data-overlay="7">
+			<div class="main-banner full" style="background-image:url(<?php echo e(asset('img/banner.jpg')); ?>);" data-overlay="7">
 				<div class="container">
 					<div class="col-md-12 col-sm-12">
 					
@@ -272,7 +272,7 @@
 						<div class="col-lg-4 col-md-6 col-sm-12">
 							<div class="tour-simple-wrap">
 								<div class="tour-simple-thumb">
-									<a href="tour-detail.html"><img src="<?php echo e(asset('img/destination/des-2.jpg')); ?>" class="img-fluid img-responsive" alt="" /></a>
+									<a href="tour-detail.html"><img src="<?php echo e(asset('img/des-2.jpg')); ?>" class="img-fluid img-responsive" alt="" /></a>
 								</div>
 								<div class="tour-simple-caption">
 									<div class="ts-caption-left">
@@ -297,7 +297,7 @@
 						<div class="col-lg-4 col-md-6 col-sm-12">
 							<div class="tour-simple-wrap">
 								<div class="tour-simple-thumb">
-									<a href="tour-detail.html"><img src="<?php echo e(asset('img/destination/des-3.jpg')); ?>" class="img-fluid img-responsive" alt="" /></a>
+									<a href="tour-detail.html"><img src="<?php echo e(asset('img/des-3.jpg')); ?>" class="img-fluid img-responsive" alt="" /></a>
 								</div>
 								<div class="tour-simple-caption">
 									<div class="ts-caption-left">
@@ -322,7 +322,7 @@
 						<div class="col-lg-4 col-md-6 col-sm-12">
 							<div class="tour-simple-wrap">
 								<div class="tour-simple-thumb">
-									<a href="tour-detail.html"><img src="<?php echo e(asset('img/destination/des-4.jpg')); ?>" class="img-fluid img-responsive" alt="" /></a>
+									<a href="tour-detail.html"><img src="<?php echo e(asset('img/des-4.jpg')); ?>" class="img-fluid img-responsive" alt="" /></a>
 								</div>
 								<div class="tour-simple-caption">
 									<div class="ts-caption-left">
@@ -347,7 +347,7 @@
 						<div class="col-lg-4 col-md-6 col-sm-12">
 							<div class="tour-simple-wrap">
 								<div class="tour-simple-thumb">
-									<a href="tour-detail.html"><img src="<?php echo e(asset('img/destination/des-5.jpg')); ?>" class="img-fluid img-responsive" alt="" /></a>
+									<a href="tour-detail.html"><img src="<?php echo e(asset('img/des-5.jpg')); ?>" class="img-fluid img-responsive" alt="" /></a>
 								</div>
 								<div class="tour-simple-caption">
 									<div class="ts-caption-left">
@@ -372,7 +372,7 @@
 						<div class="col-lg-4 col-md-6 col-sm-12">
 							<div class="tour-simple-wrap">
 								<div class="tour-simple-thumb">
-									<a href="tour-detail.html"><img src="<?php echo e(asset('img/destination/des-6.jpg')); ?>" class="img-fluid img-responsive" alt="" /></a>
+									<a href="tour-detail.html"><img src="<?php echo e(asset('img/des-6.jpg')); ?>" class="img-fluid img-responsive" alt="" /></a>
 								</div>
 								<div class="tour-simple-caption">
 									<div class="ts-caption-left">
@@ -397,7 +397,7 @@
 						<div class="col-lg-4 col-md-6 col-sm-12">
 							<div class="tour-simple-wrap">
 								<div class="tour-simple-thumb">
-									<a href="tour-detail.html"><img src="<?php echo e(asset('img/destination/des-7.jpg')); ?>" class="img-fluid img-responsive" alt="" /></a>
+									<a href="tour-detail.html"><img src="<?php echo e(asset('img/des-7.jpg')); ?>" class="img-fluid img-responsive" alt="" /></a>
 								</div>
 								<div class="tour-simple-caption">
 									<div class="ts-caption-left">
@@ -446,7 +446,7 @@
 										<span class="discount-off">-35%</span>
 										<figure class="destination-list-wrap">
 											<a class="destination-listlink" href="search.html">
-												<img class="cover" src="assets/img/category/cat-1.jpg" alt="room">
+												<img class="cover" src="<?php echo e(asset('img/cat-1.jpg')); ?>" alt="room">
 											</a>
 										</figure>
 										<div class="destination-listdetails">
@@ -462,7 +462,7 @@
 										<span class="discount-off">-50%</span>
 										<figure class="destination-list-wrap">
 											<a class="destination-listlink" href="search.html">
-												<img class="cover" src="assets/img/category/cat-7.jpg" alt="room">
+												<img class="cover" src="<?php echo e(asset('img/cat-7.jpg')); ?>" alt="room">
 											</a>
 										</figure>
 										<div class="destination-listdetails">
@@ -478,7 +478,7 @@
 										<span class="discount-off">-10%</span>
 										<figure class="destination-list-wrap">
 											<a class="destination-listlink" href="search.html">
-												<img class="cover" src="assets/img/category/cat-3.jpg" alt="room">
+												<img class="cover" src="<?php echo e(asset('img/cat-3.jpg')); ?>" alt="room">
 											</a>
 										</figure>
 										<div class="destination-listdetails">
@@ -494,7 +494,7 @@
 										<span class="discount-off">-20%</span>
 										<figure class="destination-list-wrap">
 											<a class="destination-listlink" href="search.html">
-												<img class="cover" src="assets/img/category/cat-4.jpg" alt="room">
+												<img class="cover" src="<?php echo e(asset('img/cat-4.jpg')); ?>" alt="room">
 											</a>
 										</figure>
 										<div class="destination-listdetails">
@@ -510,7 +510,7 @@
 										<span class="discount-off">-30%</span>
 										<figure class="destination-list-wrap">
 											<a class="destination-listlink" href="search.html">
-												<img class="cover" src="assets/img/category/cat-5.jpg" alt="room">
+												<img class="cover" src="<?php echo e(asset('img/cat-5.jpg')); ?>" alt="room">
 											</a>
 										</figure>
 										<div class="destination-listdetails">
@@ -549,7 +549,7 @@
 							<div class="featured-hm-post">
 								<figure class="featured-hm-post-wrap">
 									<a href="blog-detail.html">
-										<img class="cover" src="assets/img/c-1.jpg" alt="room">
+										<img class="cover" src="<?php echo e(asset('img/c-1.jpg')); ?>" alt="room">
 									</a>
 								</figure>
 								<div class="hm-post-caption">
@@ -566,7 +566,7 @@
 								<div class="small-hm-post-outer">
 									<div class="small-hm-inner">
 										<div class="small-hm-post-thumb">
-											<a href="#"><img src="assets/img/c-2.jpg" class="img-responsive" alt="" /></a>
+											<a href="#"><img src="<?php echo e(asset('img/c-2.jpg')); ?>" class="img-responsive" alt="" /></a>
 										</div>
 									</div>
 									
@@ -590,7 +590,7 @@
 								<div class="small-hm-post-outer">
 									<div class="small-hm-inner">
 										<div class="small-hm-post-thumb">
-											<a href="#"><img src="assets/img/c-3.jpg" class="img-responsive" alt="" /></a>
+											<a href="#"><img src="<?php echo e(asset('img/c-3.jpg')); ?>" class="img-responsive" alt="" /></a>
 										</div>
 									</div>
 									
@@ -614,7 +614,7 @@
 								<div class="small-hm-post-outer">
 									<div class="small-hm-inner">
 										<div class="small-hm-post-thumb">
-											<a href="#"><img src="assets/img/c-4.jpg" class="img-responsive" alt="" /></a>
+											<a href="#"><img src="<?php echo e(asset('img/c-4.jpg')); ?>" class="img-responsive" alt="" /></a>
 										</div>
 									</div>
 									
@@ -643,7 +643,7 @@
 			<!-- ========================= End Recent Blog Section ============================ -->
 			
 			<!-- ============================ Newsletter Start ================================== -->
-			<section class="alert-wrap pt-5 pb-5" style="background:#ff5722 url(assets/img/bg-new.png);">
+			<section class="alert-wrap pt-5 pb-5" style="background:#ff5722 url(<?php echo e(asset('img/bg-new.png')); ?>);">
 				<div class="container">
 					<div class="row">
 						<div class="col-lg-6 col-md-6">
@@ -674,7 +674,7 @@
 							
 							<div class="col-lg-3 col-md-3">
 								<div class="footer-widget">
-									<img src="assets/img/logo-light.png" class="img-footer" alt="" />
+									<img src="<?php echo e(asset('img/logo-light.png')); ?>" class="img-footer" alt="" />
 									<div class="footer-add">
 										<p><strong>Email:</strong></br><a href="#">hello@workstock.com</a></p>
 										<p><strong>Call:</strong></br>91 855 742 62548</p>
@@ -768,7 +768,7 @@
 							</div>
 							
 							<div class="col-lg-6 col-md-6 text-right">
-								<img src="assets/img/payment.svg" class="img-fluid" alt="" />
+								<img src="<?php echo e(asset('img/payment.svg')); ?>" class="img-fluid" alt="" />
 							</div>
 							
 						</div>
@@ -927,29 +927,29 @@
 		<!-- ============================================================== -->
 		<!-- All Jquery -->
 		<!-- ============================================================== -->
-		<script src="assets/js/jquery.min.js"></script>
-		<script src="assets/js/circleMagic.min.js"></script>
-		<script src="assets/js/popper.min.js"></script>
-		<script src="assets/js/bootstrap.min.js"></script>
-		<script src="assets/js/rangeslider.js"></script>
-		<script src="assets/js/select2.min.js"></script>
-		<script src="assets/js/aos.js"></script>
-		<script src="assets/js/owl.carousel.min.js"></script>
-		<script src="assets/js/jquery.magnific-popup.min.js"></script>
-		<script src="assets/js/slick.js"></script>
-		<script src="assets/js/slider-bg.js"></script>
-		<script src="assets/js/lightbox.js"></script> 
-		<script src="assets/js/imagesloaded.js"></script>
-		<script src="assets/js/isotope.min.js"></script>
+		<script src="<?php echo e(asset('js/jquery.min.js')); ?>"></script>
+		<script src="<?php echo e(asset('js/circleMagic.min.js')); ?>"></script>
+		<script src="<?php echo e(asset('js/popper.min.js')); ?>"></script>
+		<script src="<?php echo e(asset('js/bootstrap.min.js')); ?>"></script>
+		<script src="<?php echo e(asset('js/rangeslider.js')); ?>"></script>
+		<script src="<?php echo e(asset('js/select2.min.js')); ?>"></script>
+		<script src="<?php echo e(asset('js/aos.js')); ?>"></script>
+		<script src="<?php echo e(asset('js/owl.carousel.min.js')); ?>"></script>
+		<script src="<?php echo e(asset('js/jquery.magnific-popup.min.js')); ?>"></script>
+		<script src="<?php echo e(asset('js/slick.js')); ?>"></script>
+		<script src="<?php echo e(asset('js/slider-bg.js')); ?>"></script>
+		<script src="<?php echo e(asset('js/lightbox.js')); ?>"></script> 
+		<script src="<?php echo e(asset('js/imagesloaded.js')); ?>"></script>
+		<script src="<?php echo e(asset('js/isotope.min.js')); ?>"></script>
 		
-		<script src="assets/js/custom.js"></script>
+		<script src="<?php echo e(asset('js/custom.js')); ?>"></script>
 		<!-- ============================================================== -->
 		<!-- This page plugins -->
 		<!-- ============================================================== -->
 		
 		<!-- Date Booking Script -->
-		<script src="assets/js/moment.min.js"></script>
-		<script src="assets/js/daterangepicker.js"></script>
+		<script src="<?php echo e(asset('js/moment.min.js')); ?>"></script>
+		<script src="<?php echo e(asset('js/daterangepicker.js')); ?>"></script>
 
 
 	</body>
