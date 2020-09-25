@@ -17,6 +17,12 @@
 		<!-- Custom Color Option -->
 		<link href="<?php echo e(asset('css/colors.css')); ?>" rel="stylesheet">
 		
+		<script src="<?php echo e(asset('js/jquery.min.js')); ?>"></script>
+		<script src="<?php echo e(asset('js/popper.min.js')); ?>"></script>
+		<script src="<?php echo e(asset('js/bootstrap.min.js')); ?>"></script>
+		<script src="<?php echo e(asset('js/helpers.js')); ?>"></script>
+		<script src="<?php echo e(asset('js/mmm.js')); ?>"></script>
+		
     </head>
 	
     <body class="orange-skin">
@@ -927,10 +933,10 @@
 		<!-- ============================================================== -->
 		<!-- All Jquery -->
 		<!-- ============================================================== -->
-		<script src="<?php echo e(asset('js/jquery.min.js')); ?>"></script>
+
+		
 		<script src="<?php echo e(asset('js/circleMagic.min.js')); ?>"></script>
-		<script src="<?php echo e(asset('js/popper.min.js')); ?>"></script>
-		<script src="<?php echo e(asset('js/bootstrap.min.js')); ?>"></script>
+		
 		<script src="<?php echo e(asset('js/rangeslider.js')); ?>"></script>
 		<script src="<?php echo e(asset('js/select2.min.js')); ?>"></script>
 		<script src="<?php echo e(asset('js/aos.js')); ?>"></script>
