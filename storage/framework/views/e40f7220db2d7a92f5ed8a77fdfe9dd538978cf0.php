@@ -66,7 +66,7 @@
 								
 								<li><a href="javascript:void(0);">Browse<span class="submenu-indicator"></span></a>
 									<ul class="nav-dropdown nav-submenu">
-										<li><a href="#">Tour Listing<span class="submenu-indicator"></span></a>
+										<li><a href="javascript:void(0)">Tour Listing<span class="submenu-indicator"></span></a>
 											<ul class="nav-dropdown nav-submenu">
 												<li><a href="tour-list-sidebar.html">List Layout Sidebar</a></li>
 												<li><a href="tour-grid-sidebar.html">Grid Layout Sidebar</a></li>										
@@ -115,8 +115,76 @@
 							</ul>
 							
 							<ul class="nav-menu nav-menu-social align-to-right">
+								<li><a href="#" data-toggle="modal" data-target="#login"><i class="fas fa-user-circle text-info mr-1"></i>Log In</a></li>
+								<li><a href="#" data-toggle="modal" data-target="#signup"><i class="fas fa-arrow-alt-circle-right text-warning mr-1"></i>Sign Up</a></li>
+								<li class="login-attri">
+									<div class="btn-group account-drop">
+										<button type="button" class="btn btn-order-by-filt theme-cl" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											<i class="ti-shopping-cart-full"></i>
+											<span class="cart-count">3</span>
+										</button>
+										<div class="dropdown-menu p-0 dm-lg pull-right animated flipInX">
+											<div class="cart-card">
+												<div class="cart-card-header">
+													<h4>Your Cart</h4>
+												</div>
+												
+												<div class="cart-card-body">
+												
+													<!-- Single Cart Wrap -->
+													<div class="single-cart-wrap">
+														<a href="#" class="cart-close"><i class="ti-close"></i></a>
+														<div class="single-cart-thumb">
+															<img src="assets/img/hotel/hotel-1.jpg" alt=""/>
+														</div>
+														<div class="single-cart-detail">
+															<h3 class="sc-title">Goa To Mumbai</h3>
+															<span><i class="ti-location-pin mr-1"></i>Canada</span>
+															<h4 class="sc-price theme-cl">$120</h4>
+														</div>
+													</div>
+													
+													<!-- Single Cart Wrap -->
+													<div class="single-cart-wrap">
+														<a href="#" class="cart-close"><i class="ti-close"></i></a>
+														<div class="single-cart-thumb">
+															<img src="assets/img/hotel/hotel-1.jpg" alt=""/>
+														</div>
+														<div class="single-cart-detail">
+															<h3 class="sc-title">Goa To Mumbai</h3>
+															<span><i class="ti-location-pin mr-1"></i>Canada</span>
+															<h4 class="sc-price theme-cl">$120</h4>
+														</div>
+													</div>
+													
+													<!-- Single Cart Wrap -->
+													<div class="single-cart-wrap">
+														<a href="#" class="cart-close"><i class="ti-close"></i></a>
+														<div class="single-cart-thumb">
+															<img src="assets/img/hotel/hotel-1.jpg" alt=""/>
+														</div>
+														<div class="single-cart-detail">
+															<h3 class="sc-title">Goa To Mumbai</h3>
+															<span><i class="ti-location-pin mr-1"></i>Canada</span>
+															<h4 class="sc-price theme-cl">$120</h4>
+														</div>
+													</div>
+													
+												</div>
+												
+												<div class="cart-card-footer">
+													<a href="#" class="btn btn-theme">Go To Checkout</a>
+													<h4 class="totla-prc">$516</h4>
+												</div>
+												
+											</div>
+										</div>
+									</div>
+								</li>
 								
-								<li class="add-listing theme-bg"><a href="#">Become A Host</a></li>
+								
+								
+								<li class="add-listing theme-bg"><a href="javascript:void(0)">Become A Host</a></li>
 								
 							</ul>
 						</div>
@@ -168,13 +236,13 @@
 								<div class="footer-widget">
 									<img src="<?php echo e(asset('img/logo-light.png')); ?>" class="img-footer" alt="" />
 									<div class="footer-add">
-										<p><strong>Email:</strong></br><a href="#">hello@workstock.com</a></p>
-										<p><strong>Call:</strong></br>91 855 742 62548</p>
+										<p><strong>Email:</strong></br><a href="javascript:void(0)">hello@etuk.ng</a></p>
+										<p><strong>Call:</strong></br>(234) 801 234 5678</p>
 										<ul class="footer-bottom-social mt-2">
-											<li><a href="#"><i class="ti-facebook"></i></a></li>
-											<li><a href="#"><i class="ti-twitter"></i></a></li>
-											<li><a href="#"><i class="ti-instagram"></i></a></li>
-											<li><a href="#"><i class="ti-linkedin"></i></a></li>
+											<li><a href="javascript:void(0)"><i class="ti-facebook"></i></a></li>
+											<li><a href="javascript:void(0)"><i class="ti-twitter"></i></a></li>
+											<li><a href="javascript:void(0)"><i class="ti-instagram"></i></a></li>
+											<li><a href="javascript:void(0)"><i class="ti-linkedin"></i></a></li>
 										</ul>
 									</div>
 									
@@ -185,10 +253,10 @@
 									<h4 class="widget-title">Navigations</h4>
 									<ul class="footer-menu">
 										<li><a href="video.html">Video Home Page</a></li>
-										<li><a href="#">Browse Candidates</a></li>
-										<li><a href="#">Browse Employers</a></li>
-										<li><a href="#">Advance Search</a></li>
-										<li><a href="#">Job With Map</a></li>
+										<li><a href="javascript:void(0)">Browse Candidates</a></li>
+										<li><a href="javascript:void(0)">Browse Employers</a></li>
+										<li><a href="javascript:void(0)">Advance Search</a></li>
+										<li><a href="javascript:void(0)">Job With Map</a></li>
 									</ul>
 								</div>
 							</div>
@@ -197,11 +265,11 @@
 								<div class="footer-widget">
 									<h4 class="widget-title">The Highlights</h4>
 									<ul class="footer-menu">
-										<li><a href="#">Home Page 2</a></li>
-										<li><a href="#">Home Page 3</a></li>
-										<li><a href="#">Home Page 4</a></li>
-										<li><a href="#">Home Page 5</a></li>
-										<li><a href="#">LogIn</a></li>
+										<li><a href="javascript:void(0)">Home Page 2</a></li>
+										<li><a href="javascript:void(0)">Home Page 3</a></li>
+										<li><a href="javascript:void(0)">Home Page 4</a></li>
+										<li><a href="javascript:void(0)">Home Page 5</a></li>
+										<li><a href="javascript:void(0)">LogIn</a></li>
 									</ul>
 								</div>
 							</div>
@@ -210,11 +278,11 @@
 								<div class="footer-widget">
 									<h4 class="widget-title">My Account</h4>
 									<ul class="footer-menu">
-										<li><a href="#">Dashboard</a></li>
-										<li><a href="#">Applications</a></li>
-										<li><a href="#">Packages</a></li>
-										<li><a href="#">resume.html</a></li>
-										<li><a href="#">SignUp Page</a></li>
+										<li><a href="javascript:void(0)">Dashboard</a></li>
+										<li><a href="javascript:void(0)">Applications</a></li>
+										<li><a href="javascript:void(0)">Packages</a></li>
+										<li><a href="javascript:void(0)">resume.html</a></li>
+										<li><a href="javascript:void(0)">SignUp Page</a></li>
 									</ul>
 								</div>
 							</div>
@@ -222,7 +290,7 @@
 							<div class="col-lg-3 col-md-12">
 								<div class="footer-widget">
 									<h4 class="widget-title">Download Apps</h4>
-									<a href="#" class="other-store-link">
+									<a href="javascript:void(0)" class="other-store-link">
 										<div class="other-store-app">
 											<div class="os-app-icon">
 												<i class="ti-android theme-cl"></i>
@@ -233,7 +301,7 @@
 											</div>
 										</div>
 									</a>
-									<a href="#" class="other-store-link">
+									<a href="javascript:void(0)" class="other-store-link">
 										<div class="other-store-app">
 											<div class="os-app-icon">
 												<i class="ti-apple theme-cl"></i>
@@ -304,12 +372,12 @@
 							<div class="modal-divider"><span>Or login via</span></div>
 							<div class="social-login mb-3">
 								<ul>
-									<li><a href="#" class="btn connect-fb"><i class="ti-facebook"></i>Facebook</a></li>
-									<li><a href="#" class="btn connect-twitter"><i class="ti-twitter"></i>Twitter</a></li>
+									<li><a href="javascript:void(0)" class="btn connect-fb"><i class="ti-facebook"></i>Facebook</a></li>
+									<li><a href="javascript:void(0)" class="btn connect-twitter"><i class="ti-twitter"></i>Twitter</a></li>
 								</ul>
 							</div>
 							<div class="text-center">
-								<p class="mt-5"><a href="#" class="link">Forgot password?</a></p>
+								<p class="mt-5"><a href="javascript:void(0)" class="link">Forgot password?</a></p>
 							</div>
 						</div>
 					</div>
@@ -394,12 +462,12 @@
 							<div class="modal-divider"><span>Or login via</span></div>
 							<div class="social-login mb-3">
 								<ul>
-									<li><a href="#" class="btn connect-fb"><i class="ti-facebook"></i>Facebook</a></li>
-									<li><a href="#" class="btn connect-twitter"><i class="ti-twitter"></i>Twitter</a></li>
+									<li><a href="javascript:void(0)" class="btn connect-fb"><i class="ti-facebook"></i>Facebook</a></li>
+									<li><a href="javascript:void(0)" class="btn connect-twitter"><i class="ti-twitter"></i>Twitter</a></li>
 								</ul>
 							</div>
 							<div class="text-center">
-								<p class="mt-5"><i class="ti-user mr-1"></i>Already Have An Account? <a href="#" class="link">Go For LogIn</a></p>
+								<p class="mt-5"><i class="ti-user mr-1"></i>Already Have An Account? <a href="javascript:void(0)" class="link">Go For LogIn</a></p>
 							</div>
 						</div>
 					</div>
@@ -407,7 +475,7 @@
 			</div>
 			<!-- End Modal -->
 			
-			<a id="back2Top" class="top-scroll" title="Back to top" href="#"><i class="ti-arrow-up"></i></a>
+			<a id="back2Top" class="top-scroll" title="Back to top" href="javascript:void(0)"><i class="ti-arrow-up"></i></a>
 			
 			
 
