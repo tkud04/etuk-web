@@ -33,7 +33,8 @@ class LoginController extends Controller {
 		{
 			return redirect()->intended('dashboard');
 		}
-		$cart = $this->helpers->getCart($user,$request);
+		$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
+		$cart = $this->helpers->getCart($user,$gid);
 		$c = $this->helpers->getCategories();
 		$ads = $this->helpers->getAds();
 		shuffle($ads);
@@ -374,7 +375,7 @@ class LoginController extends Controller {
 
    
     
-    public function getLogout()
+    public function getBye()
     {
         if(Auth::check())
         {  

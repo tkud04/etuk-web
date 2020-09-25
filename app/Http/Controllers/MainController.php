@@ -86,6 +86,36 @@ class MainController extends Controller {
 
     	return view("temp",compact(['user','cart','c','banners','ad','signals','plugins']));
     }
+
+	/**
+	 * Show the test page.
+	 *
+	 * @return Response
+	 */
+	public function getAbout(Request $request)
+    {
+		$user = null;
+		if(Auth::check())
+		{
+			$user = Auth::user();
+		}
+		$req = $request->all();
+		$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
+		$cart = $this->helpers->getCart($user,$gid);
+		$c = $this->helpers->getCategories();
+		//dd($bs);
+		$signals = $this->helpers->signals;
+		
+		$ads = $this->helpers->getAds("wide-ad");
+		$plugins = $this->helpers->getPlugins();
+		
+		#dd($hasUnpaidOrders);
+		
+		shuffle($ads);
+		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
+
+    	return view("about",compact(['user','cart','c','ad','signals','plugins']));
+    }
 	
 
 	/**

@@ -51,72 +51,45 @@
 						<div class="nav-menus-wrapper" style="transition-property: none;">
 							<ul class="nav-menu">
 							
-								<li class="active"><a href="javascript:void(0);">Home<span class="submenu-indicator"></span></a>
-									<ul class="nav-dropdown nav-submenu">
-										<li><a href="index.html">Home Style 1</a></li>                                    
-										<li><a href="home-2.html">Home Style 2</a></li>                                    
-										<li><a href="home-3.html">Home Style 3</a></li> 
-										<li><a href="home-4.html">Home Style 4</a></li> 
-										<li><a href="home-5.html">Home Style 5</a></li> 
-										<li><a href="home-6.html">Home Style 6</a></li> 
-										<li><a href="home-7.html">Home Style 7</a></li>
-										<li><a href="video.html">Video Home</a></li> 										
-									</ul>
-								</li>
-								
-								<li><a href="javascript:void(0);">Browse<span class="submenu-indicator"></span></a>
-									<ul class="nav-dropdown nav-submenu">
-										<li><a href="javascript:void(0)">Tour Listing<span class="submenu-indicator"></span></a>
-											<ul class="nav-dropdown nav-submenu">
-												<li><a href="tour-list-sidebar.html">List Layout Sidebar</a></li>
-												<li><a href="tour-grid-sidebar.html">Grid Layout Sidebar</a></li>										
-												<li><a href="tour-detail.html">Tour Detail</a></li> 
-											</ul>
-										</li>
-										<li><a href="javascript:void(0);">Hotel Listing<span class="submenu-indicator"></span></a>
-											<ul class="nav-dropdown nav-submenu">
-												<li><a href="hotel-list-sidebar.html">List Layout Sidebar</a></li>                                    
-												<li><a href="hotel-list-sidebar-2.html.html">List Layout 2 Sidebar</a></li>                                    
-												<li><a href="hotel-grid-sidebar.html">Grid Layout Sidebar</a></li> 
-												<li><a href="hotel-detail.html">Hotel Detail</a></li> 
-											</ul>
-										</li>
-										<li>
-											<a href="map-search.html">Half Map Screen</a>                                 
-										</li>
-										<li><a href="javascript:void(0);">Dashboard<span class="submenu-indicator"></span></a>
-											<ul class="nav-dropdown nav-submenu">
-												<li><a href="dashboard.html">Dashboard Home</a></li> 
-												<li><a href="my-booking.html">My Booking</a></li>
-												<li><a href="my-profile.html">My Profile</a></li>										
-												<li><a href="bookmark-list.html">Bookmark List</a></li>                                    
-												<li><a href="checkout.html">Checkout Page</a></li>
-												<li><a href="dashboard-invoice.html">Dashboard Invoice</a></li>
-											</ul>
-										</li>
-									</ul>
-								</li>
-								
-								<li><a href="javascript:void(0);">Pages<span class="submenu-indicator"></span></a>
-									<ul class="nav-dropdown nav-submenu">
-										<li><a href="about-us.html">About Us</a></li>                                    
-										<li><a href="blog.html">Blog Page</a></li>                                    
-										<li><a href="faq.html">FAQ Page</a></li> 
-										<li><a href="contact.html">Get in Touch</a></li> 
-										<li><a href="404.html">Error Page</a></li> 
-										<li><a href="elements.html">Elements</a></li>  
-									</ul>
+								<li class="active">
+								   <a href="<?php echo e(url('/')); ?>">Home</a>
 								</li>
 								
 								<li>
-									<a href="contact.html">Contact</a>                                 
+								   <a href="<?php echo e(url('about')); ?>">About</a>
+								</li>	
+								
+								<li>
+								   <a href="<?php echo e(url('apartments')); ?>">Apartments</a>
+								</li>	
+								
+								<li>
+								   <a href="<?php echo e(url('faq')); ?>">FAQ</a>
+								</li>									
+								
+								<li>
+									<a href="<?php echo e(url('contact')); ?>">Contact</a>                                 
 								</li>
 								
 							</ul>
-							
+							<?php
+							 $x = 3;
+							?>
 							<ul class="nav-menu nav-menu-social align-to-right">
+							  <?php if(!isset($user) || $user == null): ?>
 								<li><a href="#" data-toggle="modal" data-target="#login"><i class="fas fa-user-circle text-info mr-1"></i>Log In</a></li>
 								<li><a href="#" data-toggle="modal" data-target="#signup"><i class="fas fa-arrow-alt-circle-right text-warning mr-1"></i>Sign Up</a></li>
+							  <?php else: ?>
+								  <li><a href="javascript:void(0);">Hello, <em><?php echo e($user->fname); ?></em><span class="submenu-indicator"></span></a>
+									<ul class="nav-dropdown nav-submenu">
+										<li><a href="<?php echo e(url('dashboard')); ?>">Dashboard</a></li>                                    
+										<li><a href="<?php echo e(url('orders')); ?>">Orders</a></li>                                    
+										<li><a href="<?php echo e(url('messages')); ?>">Messages</a></li>
+										<li><a href="<?php echo e(url('bye')); ?>">Sign out</a></li>  
+									</ul>
+								</li>
+                              <?php endif; ?>							  
+							
 								<li class="login-attri">
 									<div class="btn-group account-drop">
 										<button type="button" class="btn btn-order-by-filt theme-cl" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -135,7 +108,7 @@
 													<div class="single-cart-wrap">
 														<a href="#" class="cart-close"><i class="ti-close"></i></a>
 														<div class="single-cart-thumb">
-															<img src="assets/img/hotel/hotel-1.jpg" alt=""/>
+															<img src="<?php echo e(asset('img/hotel-1.jpg')); ?>" alt=""/>
 														</div>
 														<div class="single-cart-detail">
 															<h3 class="sc-title">Goa To Mumbai</h3>
@@ -148,7 +121,7 @@
 													<div class="single-cart-wrap">
 														<a href="#" class="cart-close"><i class="ti-close"></i></a>
 														<div class="single-cart-thumb">
-															<img src="assets/img/hotel/hotel-1.jpg" alt=""/>
+															<img src="<?php echo e(asset('img/hotel-1.jpg')); ?>" alt=""/>
 														</div>
 														<div class="single-cart-detail">
 															<h3 class="sc-title">Goa To Mumbai</h3>
@@ -161,7 +134,7 @@
 													<div class="single-cart-wrap">
 														<a href="#" class="cart-close"><i class="ti-close"></i></a>
 														<div class="single-cart-thumb">
-															<img src="assets/img/hotel/hotel-1.jpg" alt=""/>
+															<img src="<?php echo e(asset('img/hotel-1.jpg')); ?>" alt=""/>
 														</div>
 														<div class="single-cart-detail">
 															<h3 class="sc-title">Goa To Mumbai</h3>
@@ -183,8 +156,8 @@
 								</li>
 								
 								
-								
-								<li class="add-listing theme-bg"><a href="javascript:void(0)">Become A Host</a></li>
+								<li><a href="javascript:void(0)"><i class="fas fa-user mr-1"></i>Mode: <span class="label label-info">HOST</span></a></li>
+								<li class="add-listing theme-bg"><a href="javascript:void(0)">Switch to Guest</a></li>
 								
 							</ul>
 						</div>
@@ -232,7 +205,7 @@
 					<div class="container">
 						<div class="row">
 							
-							<div class="col-lg-3 col-md-3">
+							<div class="col-lg-3 col-md-4">
 								<div class="footer-widget">
 									<img src="<?php echo e(asset('img/logo-light.png')); ?>" class="img-footer" alt="" />
 									<div class="footer-add">
@@ -248,33 +221,19 @@
 									
 								</div>
 							</div>		
-							<div class="col-lg-2 col-md-3">
+							<div class="col-lg-3 col-md-4">
 								<div class="footer-widget">
-									<h4 class="widget-title">Navigations</h4>
+									<h4 class="widget-title">My Account</h4>
 									<ul class="footer-menu">
-										<li><a href="video.html">Video Home Page</a></li>
-										<li><a href="javascript:void(0)">Browse Candidates</a></li>
-										<li><a href="javascript:void(0)">Browse Employers</a></li>
-										<li><a href="javascript:void(0)">Advance Search</a></li>
-										<li><a href="javascript:void(0)">Job With Map</a></li>
+										<li><a href="javascript:void(0)">Dashboard</a></li>
+										<li><a href="javascript:void(0)">Applications</a></li>
+										<li><a href="javascript:void(0)">Packages</a></li>
+										<li><a href="javascript:void(0)">resume.html</a></li>
+										<li><a href="javascript:void(0)">SignUp Page</a></li>
 									</ul>
 								</div>
 							</div>
-									
-							<div class="col-lg-2 col-md-3">
-								<div class="footer-widget">
-									<h4 class="widget-title">The Highlights</h4>
-									<ul class="footer-menu">
-										<li><a href="javascript:void(0)">Home Page 2</a></li>
-										<li><a href="javascript:void(0)">Home Page 3</a></li>
-										<li><a href="javascript:void(0)">Home Page 4</a></li>
-										<li><a href="javascript:void(0)">Home Page 5</a></li>
-										<li><a href="javascript:void(0)">LogIn</a></li>
-									</ul>
-								</div>
-							</div>
-							
-							<div class="col-lg-2 col-md-3">
+							<div class="col-lg-3 col-md-4">
 								<div class="footer-widget">
 									<h4 class="widget-title">My Account</h4>
 									<ul class="footer-menu">

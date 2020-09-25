@@ -4,8 +4,8 @@
 					<div class="row">
 						<div class="col-lg-12 col-md-12">
 							
-							<h2 class="ipt-title">About Us</h2>
-							<span class="ipn-subtitle text-light">Who we are & our mission</span>
+							<h2 class="ipt-title">{{$title}}</h2>
+							<span class="ipn-subtitle text-light">{{$subtitle}}</span>
 							
 						</div>
 					</div>

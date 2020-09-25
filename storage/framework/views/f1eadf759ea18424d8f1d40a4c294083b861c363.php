@@ -33,9 +33,9 @@
 											 $currencies = ['usd' => "USD",'gbp' => "GBP",'eur' => "EUR",'rsa' => "RSA"];
 											?>
 											<ul class="dropdown-menu mlix-wrap">
-											    @foreach($currencies as $key => $value)
-												  <li><a href="javascript:void(0)" onclick="setCurrency('{{$key}}')">{{$value}}</a>
-												@endforeach
+											    <?php $__currentLoopData = $currencies; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+												  <li><a href="javascript:void(0)" onclick="setCurrency('<?php echo e($key); ?>')"><?php echo e($value); ?></a>
+												<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 											</ul>
 										</li>
 									</ul>
@@ -45,4 +45,4 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</div><?php /**PATH C:\bkupp\lokl\repo\etuk-web\resources\views/top-header.blade.php ENDPATH**/ ?>

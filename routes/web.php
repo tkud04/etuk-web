@@ -13,6 +13,9 @@
 
 Route::get('/', 'MainController@getIndex');
 Route::get('temp', 'MainController@getTemp');
+Route::get('about', 'MainController@getAbout');
+
+Route::get('bye', 'LoginController@getBye');
 
 
 Route::get('payment/callback', 'PaymentController@getPaymentCallback');

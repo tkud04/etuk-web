@@ -1,65 +1,80 @@
-<!--start of banner-->
-  <div id="banner">
-  <?php
-    /**
-    $bbanners = [
-	  ['img' => "images/sn-8.jpg", "title" => "This is a Orifajo Title 7", "subtitle" => "This is a Dabgana Orijinal Subtitle","copy" => ""],
-	  ['img' => "images/ns-2.jpg", "title" => "This is a Orifajo Title 2", "subtitle" => "This is a Dabgana Orijinal Subtitle","copy" => ""]
-	];
-	**/
-
-    foreach($banners as $b)
-	{
-	  $img = $b['img'];
-	  $subtitle = $b['subtitle'];
-	  $title = $b['title'];
-	  $copy = $b['copy'];
-  ?>
-    <div class="item">
-	 <div class="row">
-	<div class="col-md-3 col-sm-12">
-	  <section style="margin-left: 10px;">
-                <h5 class="sub-title text-info text-uppercase text-center">Categories</h5>
-                <ul class="list-group nudge" style="text-align: center;">
-				<?php
-				  $i = 0;
-				 for($i = 0; $i < 4; $i++)
-				 {
-					 $k = $c[$i];
-					 $style = $i == 0 ? 'style="padding-left: 0px;"' : '';
-					 $uu = url('shop')."?category=".$k['category'];
-				?>
-                  <li class="list-group-item"><a href="{{$uu}}"{{$style}}>{{$k['name']}}</a></li>
-				<?php
-				 }
-				?>
-                  <li class="list-group-item"><a href="{{url('shop')}}">View more</a></li>
-                  <li class="list-group-item"><br></li>
-                </ul>
-              </section> 
-	</div>
-	<div class="col-md-6 col-sm-12" style="background: #000;">
-	<img class="img-responsive hidden-xs" src="{{$img}}" style="height: 400px; width: 1500px; object-fit: contain;" alt=""/>
-    <img class="img-responsive visible-xs" src="{{$img}}" style="height: 400px; width: 1500px; object-fit: contain;" alt=""/>
-      <div class="slider-caption">
-        <div class="container">
-          <div class="row">
-            <div class="col-xs-12 col-sm-8 col-lg-6 caption-body">
-              <h2 class="title fadeInDownBig wow" >{{strtoupper($subtitle)}}</h2>
-              <h1 class="title fadeInDownBig wow"> {{strtoupper($title)}}</h1>
-              <p class="subtitle col-sm-9 fadeInUp wow hidden-xs">{{strtoupper($copy)}}</p>
-              <div class="clearfix"></div>
-              <a class="btn btn-primary fadeInUp wow hvr-underline-from-center-primary hidden-xs" href="{{url('shop')}}"> <i class="rm-icon ion-android-checkmark-circle"></i> <span>Shop Now</span> </a> 
-			  </div>
-          </div>
-        </div>
-      </div>
-    </div>
-	<div class="col-md-3 col-sm-12"></div>
-    </div>
-	</div>
-	<?php
-	}
-	?>
-  </div>
-  <!--end of banner--> 
+<!-- ======================= Start Banner ===================== -->
+			<div class="main-banner full" style="background-image:url({{asset('img/banner.jpg')}});" data-overlay="7">
+				<div class="container">
+					<div class="col-md-12 col-sm-12">
+					
+						<div class="caption text-center cl-white mb-5">
+							<span class="stylish">Travel is only glamorous in retrospect</span>
+							<h1>Explore and Travel</h1>
+						</div>
+						
+						<form class="st-search-form-tour icon-frm withlbl">
+							<div class="g-field-search">
+								<div class="row">
+									<div class="col-lg-4 col-md-4 border-right mxnbr">
+										<div class="form-group">
+											<i class="ti-location-pin field-icon"></i>
+											<label>Location</label>
+											<input type="text" class="form-control" placeholder="Where are you going?">
+										</div>
+									</div>
+									
+									<div class="col-lg-3 col-md-4 border-right mxnbr">
+										<div class="form-group">
+											<i class="ti-calendar field-icon"></i>
+											<label>From - To</label>
+											<input type="text" class="form-control check-in-out" name="dates" value="01/01/2018 - 01/15/2018" />
+										</div>
+									</div>
+									
+									<div class="col-lg-3 col-md-4 border-right dropdown form-select-guests mnbr">
+										<div class="form-group">
+											<i class="ti-user field-icon"></i>
+											<div class="form-content dropdown-toggle" data-toggle="dropdown">
+												<div class="wrapper-more">
+													<label>Guests</label>
+													<div class="render">
+														<span class="adults"><span class="one ">1 Adult</span> <span class=" d-none  multi" data-html=":count Adults">1 Adults</span></span>-
+														<span class="children">
+															<span class="one " data-html=":count Child">0 Child</span>
+															<span class="multi  d-none" data-html=":count Children">0 Children</span>
+														</span>
+													</div>
+												</div>
+											</div>
+											<div class="dropdown-menu select-guests-dropdown">
+												<input type="hidden" name="adults" value="1" min="1" max="20">
+												<input type="hidden" name="children" value="0" min="0" max="20">
+												<div class="dropdown-item-row">
+													<div class="label">Adults</div>
+													<div class="val">
+														<span class="btn-minus" data-input="adults"><i class="ti-minus"></i></span>
+														<span class="count-display">1</span>
+														<span class="btn-add" data-input="adults"><i class="ti-plus"></i></span>
+													</div>
+												</div>
+												<div class="dropdown-item-row">
+													<div class="label">Children</div>
+													<div class="val">
+														<span class="btn-minus" data-input="children"><i class="ti-minus"></i></span>
+														<span class="count-display">0</span>
+														<span class="btn-add" data-input="children"><i class="ti-plus"></i></span>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								
+									<div class="col-lg-2 p-0 mp-15">
+										<div class="form-group  search">
+											<button class="btn btn-theme btn-search" type="submit">Book Now</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+						
+					</div>
+				</div>
+			</div>
+			<!-- ======================= End Banner ===================== -->
