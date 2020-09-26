@@ -20,8 +20,12 @@
 		<script src="{{asset('js/jquery.min.js')}}"></script>
 		<script src="{{asset('js/popper.min.js')}}"></script>
 		<script src="{{asset('js/bootstrap.min.js')}}"></script>
-		<script src="{{asset('js/helpers.js')}}"></script>
-		<script src="{{asset('js/mmm.js')}}"></script>
+		<script src="{{asset('js/helpers.js').'?ver='.rand(23,999)}}"></script>
+		<script src="{{asset('js/mmm.js').'?ver='.rand(23,999)}}"></script>
+		
+		 <!--SweetAlert--> 
+    <link href="{{asset('lib/sweet-alert/sweetalert2.css')}}" rel="stylesheet">
+    <script src="{{asset('lib/sweet-alert/sweetalert2.js')}}"></script>
 		
     </head>
 	
@@ -352,68 +356,75 @@
 						<div class="modal-body">
 							<h4 class="modal-header-title">Sign <span class="theme-cl">Up</span></h4>
 							<div class="login-form">
-								<form>
-									
+								<form id="s-form">
+									<input id="tk-signup" type="hidden" value="{{csrf_token()}}">
 									<div class="row">
 										
 										<div class="col-lg-6 col-md-6">
 											<div class="form-group">
 												<div class="input-with-icon">
-													<input type="text" class="form-control" placeholder="First name">
-													<i class="ti-user"></i>
+													<input type="text" id="s-fname" class="form-control" placeholder="First name">												
 												</div>
+												<span class="text-danger text-bold input-error" id="s-fname-error">This field is required</span>
 											</div>
 										</div>
 										
 										<div class="col-lg-6 col-md-6">
 											<div class="form-group">
 												<div class="input-with-icon">
-													<input type="text" class="form-control" placeholder="Last name">
-													<i class="ti-user"></i>
+													<input type="text" id="s-lname" class="form-control" placeholder="Last name">
+													<!--<i class="ti-user"></i>-->
 												</div>
+												<span class="text-danger text-bold input-error" id="s-lname-error">This field is required</span>
 											</div>
 										</div>
 										
 										<div class="col-lg-6 col-md-6">
 											<div class="form-group">
 												<div class="input-with-icon">
-													<input type="text" class="form-control" placeholder="Username">
-													<i class="ti-user"></i>
+													<input type="text" id="s-phone" class="form-control" placeholder="Phone number">
+													<!--<i class="ti-user"></i>-->
 												</div>
+												<span class="text-danger text-bold input-error" id="s-phone-error">This field is required</span>
 											</div>
 										</div>
 										
 										<div class="col-lg-6 col-md-6">
 											<div class="form-group">
 												<div class="input-with-icon">
-													<input type="email" class="form-control" placeholder="Email">
-													<i class="ti-email"></i>
+													<input type="email" id="s-email" class="form-control" placeholder="Email">
+													<!--<i class="ti-user"></i>-->
 												</div>
+												<span class="text-danger text-bold input-error" id="s-email-error">This field is required</span>
 											</div>
 										</div>
 	
 										<div class="col-lg-6 col-md-6">
 											<div class="form-group">
 												<div class="input-with-icon">
-													<input type="password" class="form-control" placeholder="Password">
-													<i class="ti-unlock"></i>
+													<input type="password" id="s-pass" class="form-control" placeholder="Password">
+													<!--<i class="ti-user"></i>-->
 												</div>
+												<span class="text-danger text-bold input-error" id="s-pass-error">This field is required</span>
 											</div>
 										</div>
 										
 										<div class="col-lg-6 col-md-6">
 											<div class="form-group">
 												<div class="input-with-icon">
-													<input type="password" class="form-control" placeholder="Confirm Password">
-													<i class="ti-unlock"></i>
+													<input type="password" id="s-pass2" class="form-control" placeholder="Confirm Password">
+													<!--<i class="ti-user"></i>-->
 												</div>
+												<span class="text-danger text-bold input-error" id="s-pass2-error">This field is required and passwords must match</span>
 											</div>
 										</div>
 										
 									</div>
 									
 									<div class="form-group">
-										<button type="submit" class="btn btn-md full-width pop-login">Sign Up</button>
+										<button type="submit" id="signup-submit" class="btn btn-md full-width pop-login">Submit</button>
+										<h4 class="text-primary" id="signup-loading">Processing your registration: <img alt="Loading.." src="{{asset('img/loading.gif')}}"></h4>
+										<h4 class="text-primary" id="signup-finish"><b>Signup successful!</b><p class='text-primary'>Redirecting you to the home page.</h4>
 									</div>
 								
 								</form>
@@ -423,10 +434,11 @@
 								<ul>
 									<li><a href="javascript:void(0)" class="btn connect-fb"><i class="ti-facebook"></i>Facebook</a></li>
 									<li><a href="javascript:void(0)" class="btn connect-twitter"><i class="ti-twitter"></i>Twitter</a></li>
+									<li><a href="javascript:void(0)" class="btn connect-twitter"><i class="ti-google"></i>Google</a></li>
 								</ul>
 							</div>
 							<div class="text-center">
-								<p class="mt-5"><i class="ti-user mr-1"></i>Already Have An Account? <a href="javascript:void(0)" class="link">Go For LogIn</a></p>
+								<p class="mt-5"><i class="ti-user mr-1"></i>Already Have An Account? <a href="javascript:void(0)" class="link">Log in</a></p>
 							</div>
 						</div>
 					</div>

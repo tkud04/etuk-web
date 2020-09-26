@@ -25,7 +25,7 @@ class LoginController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function getRegister(Request $request)
+	public function getSignup(Request $request)
     {
 		 $user = null;
 		$cart = [];
@@ -33,16 +33,8 @@ class LoginController extends Controller {
 		{
 			return redirect()->intended('dashboard');
 		}
-		$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
-		$cart = $this->helpers->getCart($user,$gid);
-		$c = $this->helpers->getCategories();
-		$ads = $this->helpers->getAds();
-		shuffle($ads);
-		$ad = count($ads) < 1 ? "images/inner-ad.jpg" : $ads[0]['img'];
-		$signals = $this->helpers->signals;
-		$plugins = $this->helpers->getPlugins();
-		$states = $this->helpers->states;
-		return view("register",compact(['user','cart','c','ad','signals','plugins','states']));
+		
+		return redirect()->intended("/");
     }
 	/**
 	 * Show the application welcome screen to the user.
@@ -57,18 +49,14 @@ class LoginController extends Controller {
 	 */
 	public function getLogin(Request $request)
     {
-       $user = null;
+        $user = null;
 		$cart = [];
 		if(Auth::check())
 		{
 			return redirect()->intended('dashboard');
 		}
 		
-		$cart = $this->helpers->getCart($user,$request);
-		$c = $this->helpers->categories;
-		$signals = $this->helpers->signals;
-		$plugins = $this->helpers->getPlugins();
-		return view("login",compact(['user','cart','c','signals','plugins']));	
+		return redirect()->intended("/");
     }
 
   
@@ -126,61 +114,59 @@ class LoginController extends Controller {
     
     
 	
-    public function postRegister(Request $request)
+    public function postSignup(Request $request)
     {
         $req = $request->all();
        #dd($req);
+	   $ret = ['status' => "error",'message' => "Nothing happened"];
         
-        $validator = Validator::make($req, [
+		$reqValidator = Validator::make($req,[
+		                    'dt' => 'required'
+		]);
+		
+		if($reqValidator->fails())
+         {
+             $ret['message'] = "validation";
+         }
+		 else
+		 {
+			 $dt = json_decode($req['dt'],true);
+		    $validator = Validator::make($dt, [
                              'pass' => 'required|min:7|confirmed',
                              'email' => 'required|email',                            
                              'phone' => 'required|numeric',
                              'fname' => 'required',
-                             'lname' => 'required',
-                             'address' => 'required',
-                             'city' => 'required',
-                             'state' => 'required',
-							 //'terms' => "required"
+                             'lname' => 'required'                  
          ]);
          
          if($validator->fails())
          {
-             $messages = $validator->messages();
-             //dd($messages);
-             
-             return redirect()->back()->withInput()->with('errors',$messages);
+             $ret['message'] = "validation";
          }
          
          else
          {
-			 $isNew = !$this->helpers->isDuplicateUser(['email' => $req['email'], 'phone' => $req['phone']]);
+			 $isNew = !$this->helpers->isDuplicateUser(['email' => $dt['email'], 'phone' => $dt['phone']]);
 			 
-            $req['role'] = "user";    
-            $req['status'] = "enabled";           
-            $req['verified'] = "yes";           
+            $dt['role'] = "user";    
+            $dt['status'] = "enabled";           
+            $dt['mode'] = "guest";           
+            $dt['currency'] = "ngn";           
+            $dt['verified'] = "yes";           
             
             # dd($isNew);            
-
-            $user =  $this->helpers->createUser($req); 
-			Auth::login($user);
-			$req['user_id'] = $user->id;
-			$req['company'] = "";
-            $shippingDetails =  $this->helpers->createShippingDetails($req); 
-			
+            
 			if($isNew)
 			{
-				$newDiscount = $this->helpers->getSetting('nud');
-				$this->helpers->giveDiscount($user,['type' => "flat", 'amount' => $newDiscount]);
+				$user =  $this->helpers->createUser($dt);
+				Auth::login($user);
 			}
-           // $wallet =  $this->helpers->createWallet($req); 
-           
-                                                    
-             //after creating the user, send back to the registration view with a success message
-             #$this->helpers->sendEmail($user->email,'Welcome To Disenado!',['name' => $user->fname, 'id' => $user->id],'emails.welcome','view');
-             session()->flash("signup-status", "ok");
-			 $rex = isset($req['u']) ? $req['u'] : '/';
-             return redirect()->back();
-          }
+            
+            $ret = ['status' => "ok",'message' => "Signup successful"];			
+          }	 
+		 }
+		
+        return json_encode($ret);
     }
 
    

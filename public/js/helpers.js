@@ -1,13 +1,95 @@
-				
-function populateQV(dt){
-	console.log("skju",dt);
-        $("#quickviewboxLabel").html(dt.name);
-        $("#quickviewboxDescription").html(dt.description);
-        $("#quickviewboxAmount").html(dt.amount);
-        $("#quickviewboxInStock").html(dt.inStock);
-        $("#quickviewboxOldAmount").html(dt.oldAmount);
-        $("#quickviewboxImg").attr("src",dt.imgg);
+const showElem = (name) => {
+	let names = [];
+	
+	if(Array.isArray(name)){
+	  names = name;
+	}
+	else{
+		names.push(name);
+	}
+	
+	for(let i = 0; i < names.length; i++){
+		$(names[i]).fadeIn();
+	}
 }
+
+const hideElem = (name) => {
+	let names = [];
+	
+	if(Array.isArray(name)){
+	  names = name;
+	}
+	else{
+		names.push(name);
+	}
+	
+	for(let i = 0; i < names.length; i++){
+		$(names[i]).hide();
+	}
+}
+
+const hideInputErrors = type => {
+	let ret = [];
+	
+	switch(type){
+		case "signup":
+	      ret = ['#s-fname-error','#s-lname-error','#s-email-error','#s-phone-error','#s-pass-error','#s-pass2-error'];	 
+		break;
+	}
+	
+	hideElem(ret);
+}
+
+
+const signup = dt => {
+
+     let fd = new FormData();
+		 fd.append("dt",JSON.stringify(dt));
+		 fd.append("_token",$('#tk-signup').val());
+		 
+	//create request
+	let url = "signup";
+	const req = new Request(url,{method: 'POST', body: fd});
+	
+	//fetch request
+	fetch(req)
+	   .then(response => {
+		   if(response.status === 200){
+			   //console.log(response);
+			   
+			   return response.json();
+		   }
+		   else{
+			   return {status: "error", message: "Technical error"};
+		   }
+	   })
+	   .catch(error => {
+		    alert("Failed to sign you in: " + error);			
+			hideElem('#signup-loading');
+		     showElem('#signup-submit');
+	   })
+	   .then(res => {
+		   console.log(res);
+				 
+		   if(res.status == "ok"){
+              hideElem(['#signup-loading','#signup-submit']); 
+              showElem('#signup-finish');
+              window.location = "/"; 			   
+		   }
+		   else if(res.status == "error"){
+		     alert("An unknown error has occured, please try again.");			
+			hideElem('#signup-loading');
+		     showElem('#signup-submit');					 
+		   }
+		   		   
+		  
+	   }).catch(error => {
+		    alert("Failed to sign you in: " + error);	
+            hideElem('#signup-loading');
+		     showElem('#signup-submit');		
+	   });
+}
+
 
 
 function payBank(){
@@ -304,45 +386,7 @@ function showCheckout(type){
 	}
 }
 
-function getDeliveryFee(dt){
 
-	//create request
-	let subtotal = $('#checkout-subtotal').val();
-	const req = `gdf?s=${dt}&st=${subtotal}`;
-	console.log(req);
-	
-	
-	//fetch request
-	fetch(req)
-	   .then(response => {
-		   if(response.status === 200){
-			   //console.log(response);
-			   
-			   return response.json();
-		   }
-		   else{
-			   return {status: "error:", message: "Network error"};
-		   }
-	   })
-	   .catch(error => {
-		    alert("Failed to send message: " + error);			
-	   })
-	   .then(res => {
-		   console.log(res);
-		   
-		   if(res.status == "ok"){
-			      $('#deliv').html("&#8358;" + res.message[1]);
-				  if(parseInt(res.total) > 0){
-					$('#checkout-total').html("&#8358;" + res.total[1]);  
-					$('#ca-amount').val(res.total[0] * 100);  //for paystack
-				  } 
-                  $('#checkout-methods').fadeIn();				  
-				}
-		  
-	   }).catch(error => {
-		    alert("Failed to send message: " + error);			
-	   });
-}
 
 const getCart = () => {
 	let cart = null;

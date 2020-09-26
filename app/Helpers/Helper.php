@@ -7,22 +7,13 @@ use Carbon\Carbon;
 use Mail;
 use Auth;
 use Illuminate\Http\Request;
-use App\ShippingDetails;
 use App\User;
 use App\Carts;
 use App\Categories;
-use App\Products;
-use App\Discounts;
-use App\ProductData;
-use App\ProductImages;
+
 use App\Reviews;
 use App\Ads;
 use App\Banners;
-use App\AnonOrders;
-use App\Orders;
-use App\OrderItems;
-use App\Trackings;
-use App\Wishlists;
 use App\Senders;
 use App\Settings;
 use App\Plugins;
@@ -44,115 +35,12 @@ class Helper implements HelperContract
  public $signals = ['okays'=> ["login-status" => "Welcome back!",            
                      "signup-status" => "Welcome to your new account. As a welcome gift you get a discount N500 off your first order. Enjoy your shopping!",
                      "profile-status" => "Profile updated!",
-					 "cpayment-status" => "Your request has been received, you will be notified via email shortly if your payment has been cleared.",
-                     "update-status" => "Account updated!",
-                     "config-status" => "Config added/updated!",
-                     "contact-status" => "Message sent! Our customer service representatives will get back to you shortly.",
-                     "add-review-status" => "Thanks for your feedback! It will be visible after review by admins",
-                     "add-to-cart-status" => "Added to cart!",
-                     "update-cart-status" => "Cart updated!",
-                     "remove-from-cart-status" => "Removed from cart!",
-                     "subscribe-status" => "Subscribed!",
-                     "pay-card-status" => "Payment successful! Your order is being processed.",
-                     "pay-bank-status" => "Payment successful! Your order is being processed.",
-                     "add-to-wishlist-status" => "Added to wishlist!",
-                     "add-to-compare-status" => "Added to compare list!",
-					 "remove-from-wishlist-status" => "Removed from wishlist!",
-					 "remove-from-compare-status" => "Removed from compare list!",
-					 "select-bank-status" => "Please select your bank",					 
-					 "no-cart-status" => "Your cart is empty.",
-					 "invalid-order-status" => "We couldn't find your order.",
                      ],
                      'errors'=> ["login-status-error" => "Wrong username or password, please try again.",
 					 "signup-status-error" => "There was a problem creating your account, please try again.",
 					 "profile-status-error" => "There was a problem updating your profile, please try again.",
-					 "update-status-error" => "There was a problem updating the account, please try again.",
-					 "contact-status-error" => "There was a problem sending your message, please try again.",
-					 "add-review-status-error" => "There was a problem sending your review, please try again.",
-					 "add-to-cart-status-error" => "Stock not sufficient.",
-					 "update-cart-status-error" => "Stock not sufficient.",
-					 "remove-from-cart-status-error" => "There was a problem removing this product from your cart, please try again.",
-					 "subscribe-status-error" => "There was a problem subscribing, please try again.",
-					 "pay-card-status-error" => "There was a problem making payment, please try again.",
-					 "pay-bank-status-error" => "There was a problem making payment, please try again.",
-					 "add-to-compare-status-error" => "There was a problem adding to compare list.",
-					 "add-to-wishlist-status-error" => "There was a problem adding to wishlist.",
-					 "remove-from-wishlist-status-error" => "There was a problem removing item from wishlist.",
-					 "remove-from-compare-status-error" => "There was a problem removing item from compare list.",
-					 "track-order-status-error" => "Invalid reference number, please try again.",
-					 "no-cart-status-error" => "Your cart is empty.",
-					 "invalid-order-status-error" => "We could not find your order.",
                     ]
                    ];
-
-public $categories = [
-    'watches' => [
-          ['name' => "Category_1",'url' => "#",'special' => "popular"],
-          ['name' => "Category_2",'url' => "#",'special' => ""],
-          ['name' => "Category_3",'url' => "#",'special' => ""],
-          ['name' => "Category_4",'url' => "#",'special' => "hot"],
-          ['name' => "Category_5",'url' => "#",'special' => ""],
-          ['name' => "Category_6",'url' => "#",'special' => "trending"],
-	     ],
-	'anklets' => [
-          ['name' => "Category_1",'url' => "#",'special' => ""],
-          ['name' => "Category_2",'url' => "#",'special' => ""],
-          ['name' => "Category_3",'url' => "#",'special' => ""],
-          ['name' => "Category_4",'url' => "#",'special' => ""],
-          ['name' => "Category_5",'url' => "#",'special' => "trending"],
-          ['name' => "Category_6",'url' => "#",'special' => ""],
-	     ],
-    'bracelets' => [
-          ['name' => "Category_1",'url' => "#",'special' => ""],
-          ['name' => "Category_2",'url' => "#",'special' => "popular"],
-          ['name' => "Category_3",'url' => "#",'special' => ""],
-          ['name' => "Category_4",'url' => "#",'special' => ""],
-          ['name' => "Category_5",'url' => "#",'special' => ""],
-          ['name' => "Category_6",'url' => "#",'special' => ""],
-	     ],
-    'brooches' => [
-          ['name' => "Category_1",'url' => "#",'special' => ""],
-          ['name' => "Category_2",'url' => "#",'special' => ""],
-          ['name' => "Category_3",'url' => "#",'special' => ""],
-          ['name' => "Category_4",'url' => "#",'special' => "hot"],
-          ['name' => "Category_5",'url' => "#",'special' => ""],
-          ['name' => "Category_6",'url' => "#",'special' => ""],
-	     ],
-    'earrings' => [
-          ['name' => "Category_1",'url' => "#",'special' => ""],
-          ['name' => "Category_2",'url' => "#",'special' => ""],
-          ['name' => "Category_3",'url' => "#",'special' => ""],
-          ['name' => "Category_4",'url' => "#",'special' => ""],
-          ['name' => "Category_5",'url' => "#",'special' => ""],
-          ['name' => "Category_6",'url' => "#",'special' => ""],
-	     ],
-    'necklaces' => [
-          ['name' => "Category_1",'url' => "#",'special' => "hot"],
-          ['name' => "Category_2",'url' => "#",'special' => ""],
-          ['name' => "Category_3",'url' => "#",'special' => ""],
-          ['name' => "Category_4",'url' => "#",'special' => ""],
-          ['name' => "Category_5",'url' => "#",'special' => ""],
-          ['name' => "Category_6",'url' => "#",'special' => ""],
-	     ],
-    'rings' => [
-          ['name' => "Category_1",'url' => "#",'special' => ""],
-          ['name' => "Category_2",'url' => "#",'special' => ""],
-          ['name' => "Category_3",'url' => "#",'special' => ""],
-          ['name' => "Category_4",'url' => "#",'special' => ""],
-          ['name' => "Category_5",'url' => "#",'special' => ""],
-          ['name' => "Category_6",'url' => "#",'special' => "trending"],
-	     ]
-  ];
-  
-   public $categories_2 = ['watches' => "Watches",
-			                      'anklets' => "Anklets",
-								  'bracelets' => "Bracelets",
-								  'brooches' => "Brooches",
-								  'earrings' => "Ear Rings",
-								  'necklaces' => "Necklaces",
-								  'rings' => "Rings"
-								  ];
-  
   
   public $states = [
 			                       'abia' => 'Abia',
@@ -194,30 +82,6 @@ public $categories = [
 			                       'fct' => 'FCT'  
 			];  
 
-/**
-
- 
- 
-
-
-
- 
-
-
-
-
- 
-
-
-
-
-
- 
- 
- 
-
-
-**/
 
  public $banks = [
       'access' => "Access Bank", 
@@ -247,39 +111,12 @@ public $categories = [
  ];			
 
   public $ip = "";
+    
   
-  public $smtp = [
-       'ss' => "smtp.gmail.com",
-       'sp' => "587",
-       'sec' => "tls",
-       'sa' => "yes",
-       'su' => "aceluxurystoree@gmail.com",
-       'spp' => "Ace12345$",
-       'sn' => "Ace Luxury Store",
-       'se' => "aceluxurystoree@gmail.com"
-  ];
-  //ace yahoo
-  //pass: Eca12345$
-  
-  
-  public $smtp2 = [
-       'ss' => "smtp.migadu.com",
-       'sp' => "587",
-       'sec' => "tls",
-       'sa' => "yes",
-       'su' => "olak@lotteryworldusa.com",
-       'spp' => "kudayisi",
-       'sn' => "LotteryWorld",
-       'se' => "olak@lotteryworldusa.com"
-  ];
-  
-  
-  //public $adminEmail = "aquarius4tkud@yahoo.com";
-  public $adminEmail = "aceluxurystore@yahoo.com";
+  public $adminEmail = "aquarius4tkud@yahoo.com";
+ // public $adminEmail = "aceluxurystore@yahoo.com";
   public $suEmail = "kudayisitobi@gmail.com";
-  
-  public $newUserDiscount = "500";
-  
+    
            
 		   #{'msg':msg,'em':em,'subject':subject,'link':link,'sn':senderName,'se':senderEmail,'ss':SMTPServer,'sp':SMTPPort,'su':SMTPUser,'spp':SMTPPass,'sa':SMTPAuth};
            function sendEmailSMTP($data,$view,$type="view")
@@ -463,23 +300,6 @@ $subject = $data['subject'];
               return $ret; 
            }
 		   
-		   function signInAsGuest($data)
-		   {
-			   
-			   
-			   $uu = User::where('phone',$data['phone'])
-			            ->where('password',$data['phone']."@aceluxurystore.com")->first();
-			   $remember = true;			
-			
-			  // dd($uu);
-				if(is_null($uu))
-				{
-					$uu = $this->createUser($data);
-				}
-				
-				
-				return $uu;
-		   }
 		   
            function createUser($data)
            {
@@ -488,6 +308,8 @@ $subject = $data['subject'];
                                                       'email' => $data['email'], 
                                                       'phone' => $data['phone'], 
                                                       'role' => $data['role'], 
+                                                      'mode' => $data['mode'], 
+                                                      'currency' => $data['currency'], 
                                                       'status' => $data['status'], 
                                                       'verified' => $data['verified'], 
                                                       'password' => bcrypt($data['pass']), 
@@ -513,20 +335,6 @@ $subject = $data['subject'];
                }      
        return $temp;            	   
    }
-   
-           function createShippingDetails($data)
-           {
-			   $zip = isset($data['zip']) ? $data['zip'] : "";
-           	$ret = ShippingDetails::create(['user_id' => $data['user_id'],                                                                                                          
-                                                      'company' => $data['company'], 
-                                                      'zipcode' => $zip,                                                      
-                                                      'address' => $data['address'], 
-                                                      'city' => $data['city'], 
-                                                      'state' => $data['state'], 
-                                                      ]);
-                                                      
-                return $ret;
-           }
 		   
 		   
 		   function getCart($user,$r="")
@@ -706,7 +514,111 @@ $subject = $data['subject'];
                                                       ]);	
 				}
 					
+           }
+
+
+function isDuplicateUser($data)
+	{
+		$ret = false;
+
+		$dup = User::where('email',$data['email'])
+		           ->orWhere('phone',$data['phone'])->get();
+
+       if(count($dup) > 0) $ret = true;		
+		return $ret;
+	}
+	
+	
+	 function getSender($id)
+           {
+           	$ret = [];
+               $s = Senders::where('id',$id)->first();
+ 
+              if($s != null)
+               {
+                   	$temp['ss'] = $s->ss; 
+                       $temp['sp'] = $s->sp; 
+                       $temp['se'] = $s->se;
+                       $temp['sec'] = $s->sec; 
+                       $temp['sa'] = $s->sa; 
+                       $temp['su'] = $s->su; 
+                       $temp['current'] = $s->current; 
+                       $temp['spp'] = $s->spp; 
+					   $temp['type'] = $s->type;
+                       $sn = $s->sn;
+                       $temp['sn'] = $sn;
+                        $snn = explode(" ",$sn);					   
+                       $temp['snf'] = $snn[0]; 
+                       $temp['snl'] = count($snn) > 0 ? $snn[1] : ""; 
+					   
+                       $temp['status'] = $s->status; 
+                       $temp['id'] = $s->id; 
+                       $temp['date'] = $s->created_at->format("jS F, Y"); 
+                       $ret = $temp; 
+               }                          
+                                                      
+                return $ret;
+           }
+		   
+		    function getCurrentSender()
+		   {
+			   $ret = [];
+			   $s = Senders::where('current',"yes")->first();
+			   
+			   if($s != null)
+			   {
+				   $ret = $this->getSender($s['id']);
+			   }
+			   
+			   return $ret;
+		   }
+		   
+		    function getPlugins()
+   {
+	   $ret = [];
+	   
+	   $plugins = Plugins::where('id','>',"0")->get();
+	   
+	   if(!is_null($plugins))
+	   {
+		   foreach($plugins as $p)
+		   {
+			 if($p->status == "enabled")
+			 {
+				$temp = $this->getPlugin($p->id);
+		        array_push($ret,$temp); 
+			 }
+	       }
+	   }
+	   
+	   return $ret;
+   }
+   
+   function getPlugin($id)
+           {
+           	$ret = [];
+               $p = Plugins::where('id',$id)->first();
+ 
+              if($p != null)
+               {
+                   	$temp['name'] = $p->name; 
+                       $temp['value'] = $p->value; 	   
+                       $temp['status'] = $p->status; 
+                       $temp['id'] = $p->id; 
+                       $temp['date'] = $p->created_at->format("jS F, Y"); 
+                       $temp['updated'] = $p->updated_at->format("jS F, Y"); 
+                       $ret = $temp; 
+               }                          
+                                                      
+                return $ret;
            }		   
+		   
+		   
+/**
+OLD FUNCTIONS BELOW
+**/
+	   
+		   
 		   
 		     function getProducts()
            {
@@ -2311,16 +2223,6 @@ $subject = $data['subject'];
                 return $ret;
            }
 		   
-    function isDuplicateUser($data)
-	{
-		$ret = false;
-
-		$dup = User::where('email',$data['email'])
-		           ->orWhere('phone',$data['phone'])->get();
-
-       if(count($dup) > 0) $ret = true;		
-		return $ret;
-	}
 
 	function giveDiscount($user,$dt)
 	{
@@ -2332,107 +2234,6 @@ $subject = $data['subject'];
 		]);
 		return $ret;
 	}
-	
-	 function getSender($id)
-           {
-           	$ret = [];
-               $s = Senders::where('id',$id)->first();
- 
-              if($s != null)
-               {
-                   	$temp['ss'] = $s->ss; 
-                       $temp['sp'] = $s->sp; 
-                       $temp['se'] = $s->se;
-                       $temp['sec'] = $s->sec; 
-                       $temp['sa'] = $s->sa; 
-                       $temp['su'] = $s->su; 
-                       $temp['current'] = $s->current; 
-                       $temp['spp'] = $s->spp; 
-					   $temp['type'] = $s->type;
-                       $sn = $s->sn;
-                       $temp['sn'] = $sn;
-                        $snn = explode(" ",$sn);					   
-                       $temp['snf'] = $snn[0]; 
-                       $temp['snl'] = count($snn) > 0 ? $snn[1] : ""; 
-					   
-                       $temp['status'] = $s->status; 
-                       $temp['id'] = $s->id; 
-                       $temp['date'] = $s->created_at->format("jS F, Y"); 
-                       $ret = $temp; 
-               }                          
-                                                      
-                return $ret;
-           }
-		   
-		    function getCurrentSender()
-		   {
-			   $ret = [];
-			   $s = Senders::where('current',"yes")->first();
-			   
-			   if($s != null)
-			   {
-				   $ret = $this->getSender($s['id']);
-			   }
-			   
-			   return $ret;
-		   }
-		   function getCurrentBank()
-		   {
-			   $ret = [];
-			   $s = Settings::where('name',"bank")->first();
-			   
-			   if($s != null)
-			   {
-				   $val = explode(',',$s->value);
-				   $ret = [
-				     'bname' => $val[0],
-					 'acname' => $val[1],
-					 'acnum' => $val[2]
-				   ];
-			   }
-			   
-			   return $ret;
-		   }
-		   
-		    function getPlugins()
-   {
-	   $ret = [];
-	   
-	   $plugins = Plugins::where('id','>',"0")->get();
-	   
-	   if(!is_null($plugins))
-	   {
-		   foreach($plugins as $p)
-		   {
-			 if($p->status == "enabled")
-			 {
-				$temp = $this->getPlugin($p->id);
-		        array_push($ret,$temp); 
-			 }
-	       }
-	   }
-	   
-	   return $ret;
-   }
-   
-   function getPlugin($id)
-           {
-           	$ret = [];
-               $p = Plugins::where('id',$id)->first();
- 
-              if($p != null)
-               {
-                   	$temp['name'] = $p->name; 
-                       $temp['value'] = $p->value; 	   
-                       $temp['status'] = $p->status; 
-                       $temp['id'] = $p->id; 
-                       $temp['date'] = $p->created_at->format("jS F, Y"); 
-                       $temp['updated'] = $p->updated_at->format("jS F, Y"); 
-                       $ret = $temp; 
-               }                          
-                                                      
-                return $ret;
-           }
    
 }
 ?>
