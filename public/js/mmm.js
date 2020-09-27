@@ -2,8 +2,8 @@
 
 $(document).ready(function() {
     "use strict";
-	hideInputErrors(["signup","login","fp"]);
-	hideElem(["#signup-loading","#signup-finish","#login-loading","#login-finish","#fp-loading","#fp-finish"]);
+	hideInputErrors(["signup","login","forgot-password","reset-password"]);
+	hideElem(["#signup-loading","#signup-finish","#login-loading","#login-finish","#fp-loading","#fp-finish","#rp-loading","#rp-finish"]);
 	
 	
     $("a.lno-cart").on("click", function(e) {
@@ -90,6 +90,27 @@ $(document).ready(function() {
 		  showElem("#fp-loading");
 		  
 		 fp({
+			 email: id
+		 });   
+	   }
+    });
+	
+	$("#rp-submit").click(e => {
+       e.preventDefault();
+	  
+       hideInputErrors("reset-password");	  
+      let p = $('#rp-pass').val(), p2 = $('#rp-pass2').val();
+		  
+		  
+	   if(p == "" || p2 == "" || p != p2){
+		   if(p == "") showElem('#rp-pass-error');
+		   if(p2 == "" || p != p2) showElem('#rp-pass-2-error');
+	   }
+	   else{
+		  hideElem("#rp-submit");
+		  showElem("#rp-loading");
+		  
+		 rp({
 			 email: id
 		 });   
 	   }

@@ -172,14 +172,6 @@ class LoginController extends Controller {
 		
         return json_encode($ret);
     }
-
-   
-	public function getForgotUsername()
-    {
-		$layoutAd = $this->helpers->getAds();
-		$plugins = $this->helpers->getPlugins();
-         return view('forgot_username',compact(['layoutAd','plugins']));
-    }
     
     public function getForgotPassword()
     {
@@ -202,49 +194,58 @@ class LoginController extends Controller {
      */
     public function postForgotPassword(Request $request)
     {
-    	$req = $request->all(); 
-        $validator = Validator::make($req, [
-                             'id' => 'required'
-                  ]);
-                  
-        if($validator->fails())
+    	 $req = $request->all();
+       #dd($req);
+	   $ret = ['status' => "error",'message' => "Nothing happened"];
+        
+		$reqValidator = Validator::make($req,[
+		                    'dt' => 'required'
+		]);
+		
+		if($reqValidator->fails())
          {
-             $messages = $validator->messages();
-             //dd($messages);
-             
-             return redirect()->back()->withInput()->with('errors',$messages);
+             $ret['message'] = "dt-validation";
          }
+		 else
+		 {
+			 $dt = json_decode($req['dt'],true);
+			 $validator = Validator::make($dt, [
+                             'email' => 'required|email'          
+             ]);
          
-         else{
-         	$ret = $req['id'];
+            if($validator->fails())
+            {
+              $ret['message'] = "validation";
+            }
+         
+            else
+           {
+         	  $id = $dt['email'];
 
-                $user = User::where('email',$ret)
-                                  ->orWhere('phone',$ret)->first();
+                $user = User::where('email',$id)
+                                  ->orWhere('phone',$id)->first();
 
-                if(is_null($user) || ($user->role == 'user'))
+                if(is_null($user))
                 {
-                        return redirect()->back()->withErrors("No admin account exists with that email or phone number!","errors"); 
+                         $ret['message'] = "auth";
                 }
-                
-                //get the reset code 
-                $code = $this->helpers->getPasswordResetCode($user);
-              
-                //Configure the smtp sender
-                $sender = $this->helpers->emailConfig;              
-                $sender['sn'] = 'KloudTransact Support'; 
-                #$sender['se'] = 'kloudtransact@gmail.com'; 
-                $sender['em'] = $user->email; 
-                $sender['subject'] = 'Reset Your Password'; 
-                $sender['link'] = 'www.kloudtransact.com'; 
-                $sender['ll'] = url('reset').'?code='.$code; 
-                
-                //Send password reset link
-                $this->helpers->sendEmailSMTP($sender,'emails.password','view');                                                         
-            session()->flash("forgot-password-status","ok");           
-            return redirect()->intended('forgot-password');
-
-      }
-                  
+				else
+				{
+					//get the reset code 
+                    $code = $this->helpers->getPasswordResetCode($user);
+                    $user->update(['reset_code' => $code]);
+                    $ret = $this->helpers->getCurrentSender();
+				    $ret['code'] = $code;
+				    $ret['name'] = $user->fname;
+				    $ret['subject'] = "Reset your password";
+		            $ret['em'] = $id;
+		            $this->helpers->sendEmailSMTP($ret,"emails.forgot-password");
+                    $ret = ['status' => "ok",'message' => "Link sent"];
+				}
+            }
+	     }
+	  
+	  return json_encode($ret);               
     }    
     
   
@@ -256,37 +257,33 @@ class LoginController extends Controller {
 	public function getPasswordReset(Request $request)
     {
        $user = null;
-       $req = $request->all();
-       $return = isset($req['return']) ? $req['return'] : '/';
-	   $plugins = $this->helpers->getPlugins();
 		
 		if(Auth::check())
 		{
 			$user = Auth::user();
-			$return = 'dashboard';
-			if($this->helpers->isAdmin($user)) $return = 'cobra';
-			return redirect()->intended($return);
-		} 
-       else
-        {
+			return redirect()->intended('/');
+		}
+		$signals = $this->helpers->signals;
+		$plugins = $this->helpers->getPlugins();
+		$cart = [];
+            $req = $request->all();
+			#dd($req);
 			if(isset($req['code']))
             {
-            	$user = $this->helpers->verifyPasswordResetCode($req['code']);
+				$user = $this->helpers->verifyPasswordResetCode($req['code']);
+				#dd($user);
                 if($user == null)   
                 { 
                 	return redirect()->back()->withErrors("The code is invalid or has expired. ","errors"); 
                 }
                 $v = ($user->role == "user") ? 'reset' : 'admin.reset';
-				$layoutAd = $this->helpers->getAds();
-            	return view($v,compact(['layoutAd','user','return','plugins']));
+				return view($v,compact(['cart','user','return','plugins']));
             }
             
             else
             {
-            	return redirect()->intended($return);
+            	return redirect()->intended('/');
             }
-         	
-          }
     }
     
     

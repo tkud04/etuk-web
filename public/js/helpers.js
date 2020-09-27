@@ -50,9 +50,14 @@ const hideInputErrors = type => {
 	      ret = ['#l-id-error','#l-pass-error','#login-finish'];	 
 		break;
 		
-		case "fp":
+		case "forgot-password":
 		  $('#fp-finish').html(`<b>Request received!</b><p class='text-primary'>Please check your email for your password reset link.</p>`);
 	      ret = ['#fp-id-error','#fp-finish'];	 
+		break;
+		
+		case "reset-password":
+		  $('#rp-finish').html(`<b>Password reset!</b><p class='text-primary'>You can now <a href="#" data-toggle="modal" data-target="#login">sign in</a>.</p>`);
+	      ret = ['#rp-pass-error','#rp-pass-2-error','#fp-finish'];	 
 		break;
 	  }
 	  hideElem(ret);
@@ -166,12 +171,75 @@ const login = dt => {
 	   });
 }
 
+const fp = dt => {
+
+     let fd = new FormData();
+		 fd.append("dt",JSON.stringify(dt));
+		 fd.append("_token",$('#tk-login').val());
+		 
+	//create request
+	let url = "forgot-password";
+	const req = new Request(url,{method: 'POST', body: fd});
+	
+	//fetch request
+	fetch(req)
+	   .then(response => {
+		   if(response.status === 200){
+			   return response.json();
+		   }
+		   else{
+			   return {status: "error", message: "Technical error"};
+		   }
+	   })
+	   .catch(error => {
+		    alert("Failed to send new password request: " + error);			
+			hideElem('#fp-loading');
+		     showElem('#fp-submit');
+	   })
+	   .then(res => {
+		   console.log(res);
+			 hideElem(['#fp-loading','#fp-submit']); 
+             	 
+		   if(res.status == "ok"){
+               $('#fp-finish').html(`<b>Request received!</b><p class='text-primary'>Please check your email for your password reset link.</p>`);
+				 showElem(['#fp-finish','#fp-submit']);			   
+		   }
+		   else if(res.status == "error"){
+			   console.log(res.message);
+			 if(res.message == "auth"){
+				 $('#fp-finish').html(`<p class='text-primary'>No user exists with that email address.</p>`);
+				 showElem(['#fp-finish','#fp-submit']);
+			 }
+			 else if(res.message == "validation" || res.message == "dt-validation"){
+				 $('#fp-finish').html(`<p class='text-primary'>Please enter a valid email address.</p>`);
+				 showElem(['#fp-finish','#fp-submit']);
+			 }
+			 else{
+			   alert("An unknown error has occured, please try again.");			
+			   hideElem('#fp-loading');
+		       showElem('#fp-submit');	 
+			 }					 
+		   }
+		   		   
+		  
+	   }).catch(error => {
+		    alert("Failed to sign you in: " + error);	
+            hideElem('#login-loading');
+		     showElem('#login-submit');		
+	   });
+}
+
 
 const switchMode = dt => {
     let url = `sm?m=${dt.mode}`;
 	window.location = url;
 }
 
+
+
+/****************************************************
+OLD METHODS
+/****************************************************/
 
 function bomb(dt,url){
 

@@ -528,6 +528,33 @@ function isDuplicateUser($data)
 		return $ret;
 	}
 	
+	function getPasswordResetCode($user)
+           {
+           	$u = $user; 
+               
+               if($u != null)
+               {
+               	//We have the user, create the code
+                   $code = bcrypt(rand(125,999999)."rst".$u->id);
+               	$u->update(['reset_code' => $code]);
+               }
+               
+               return $code; 
+           }
+           
+           function verifyPasswordResetCode($code)
+           {
+           	$u = User::where('reset_code',$code)->first();
+               
+               if($u != null)
+               {
+               	//We have the user, delete the code
+               	$u->update(['reset_code' => '']);
+               }
+               
+               return $u; 
+           }
+	
 	
 	 function getSender($id)
            {
