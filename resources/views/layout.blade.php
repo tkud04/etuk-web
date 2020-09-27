@@ -98,7 +98,7 @@
 									<div class="btn-group account-drop">
 										<button type="button" class="btn btn-order-by-filt theme-cl" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 											<i class="ti-shopping-cart-full"></i>
-											<span class="cart-count">3</span>
+											<span class="cart-count">{{count($cart)}}</span>
 										</button>
 										<div class="dropdown-menu p-0 dm-lg pull-right animated flipInX">
 											<div class="cart-card">
@@ -159,10 +159,24 @@
 									</div>
 								</li>
 								
-								
-								<li><a href="javascript:void(0)"><i class="fas fa-user mr-1"></i>Mode: <span class="label label-info">HOST</span></a></li>
-								<li class="add-listing theme-bg"><a href="javascript:void(0)">Switch to Guest</a></li>
-								
+								<?php
+								if(isset($user) && $user != null)
+								{
+								$mode = $user->mode; $mu = "";
+								if($mode == "guest")
+								{
+									$mu = "Switch to Host";
+								}
+								elseif($mode == "host")
+								{
+									$mu = "Switch to Guest";
+								}
+								?>
+							    <li><a href="javascript:void(0)"><i class="fas fa-user mr-1"></i>Mode: <span class="label label-info">{{strtoupper($mode)}}</span></a></li>
+								<li class="add-listing theme-bg"><a href="javascript:void(0)" onclick="switchMode({mode:'{{$mode}}'})">{{$mu}}</a></li>
+								<?php
+								}
+								?>
 							</ul>
 						</div>
 					</nav>
@@ -308,26 +322,28 @@
 						<div class="modal-body">
 							<h4 class="modal-header-title">Log <span class="theme-cl">In</span></h4>
 							<div class="login-form">
-								<form>
-								
+								<form id="l-form">
+								   <input id="tk-login" type="hidden" value="{{csrf_token()}}">
 									<div class="form-group">
 										<label>User Name</label>
 										<div class="input-with-icon">
-											<input type="text" class="form-control" placeholder="Username">
-											<i class="ti-user"></i>
+											<input type="text" id="l-id" class="form-control" placeholder="Email or phone number">
 										</div>
+										<span class="text-danger text-bold input-error" id="l-id-error">This field is required</span>
 									</div>
 									
 									<div class="form-group">
 										<label>Password</label>
 										<div class="input-with-icon">
-											<input type="password" class="form-control" placeholder="*******">
-											<i class="ti-unlock"></i>
+											<input type="password" id="l-pass" class="form-control" placeholder="*******">
 										</div>
+										<span class="text-danger text-bold input-error" id="l-pass-error">This field is required</span>
 									</div>
 									
 									<div class="form-group">
-										<button type="submit" class="btn btn-md full-width pop-login">Login</button>
+										<button type="submit" id="login-submit" class="btn btn-md full-width pop-login">Submit</button>
+										<h4 class="text-primary" id="login-loading">Signing you in.. <img alt="Loading.." src="{{asset('img/loading.gif')}}"></h4>
+										<h4 class="text-primary" id="login-finish"><b>Signin successful!</b><p class='text-primary'>Redirecting you to your dashboard.</p></h4>
 									</div>
 								
 								</form>
@@ -424,7 +440,7 @@
 									<div class="form-group">
 										<button type="submit" id="signup-submit" class="btn btn-md full-width pop-login">Submit</button>
 										<h4 class="text-primary" id="signup-loading">Processing your registration: <img alt="Loading.." src="{{asset('img/loading.gif')}}"></h4>
-										<h4 class="text-primary" id="signup-finish"><b>Signup successful!</b><p class='text-primary'>Redirecting you to the home page.</h4>
+										<h4 class="text-primary" id="signup-finish"><b>Signup successful!</b><p class='text-primary'>Redirecting you to the home page.</p></h4>
 									</div>
 								
 								</form>

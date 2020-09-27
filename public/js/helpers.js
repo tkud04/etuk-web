@@ -29,15 +29,29 @@ const hideElem = (name) => {
 }
 
 const hideInputErrors = type => {
-	let ret = [];
+	let ret = [], types = [];
 	
-	switch(type){
-		case "signup":
-	      ret = ['#s-fname-error','#s-lname-error','#s-email-error','#s-phone-error','#s-pass-error','#s-pass2-error'];	 
-		break;
+	if(Array.isArray(type)){
+	  types = type;
+	}
+	else{
+		types.push(type);
 	}
 	
-	hideElem(ret);
+	for(let i = 0; i < types.length; i++){
+	  switch(types[i]){
+		case "signup":
+		  $('#signup-finish').html(`<b>Signup successful!</b><p class='text-primary'>Redirecting you to the home page.</p>`);
+		  ret = ['#s-fname-error','#s-lname-error','#s-email-error','#s-phone-error','#s-pass-error','#s-pass2-error','#signup-finish'];	 
+		break;
+		
+		case "login":
+		  $('#login-finish').html(`<b>Signin successful!</b><p class='text-primary'>Redirecting you to your dashboard.</p>`);
+	      ret = ['#l-id-error','#l-pass-error','#login-finish'];	 
+		break;
+	  }
+	  hideElem(ret);
+	}
 }
 
 
@@ -64,7 +78,7 @@ const signup = dt => {
 		   }
 	   })
 	   .catch(error => {
-		    alert("Failed to sign you in: " + error);			
+		    alert("Failed to sign you up: " + error);			
 			hideElem('#signup-loading');
 		     showElem('#signup-submit');
 	   })
@@ -84,71 +98,75 @@ const signup = dt => {
 		   		   
 		  
 	   }).catch(error => {
-		    alert("Failed to sign you in: " + error);	
+		    alert("Failed to sign you up: " + error);	
             hideElem('#signup-loading');
 		     showElem('#signup-submit');		
 	   });
 }
 
+const login = dt => {
 
-
-function payBank(){
-	console.log("pay to bank account");
-	setPaymentAction("cod");
-}
-
-function payCard(dt){
-	 	let x3 = "{{url('/')}}";
+     let fd = new FormData();
+		 fd.append("dt",JSON.stringify(dt));
+		 fd.append("_token",$('#tk-login').val());
+		 
+	//create request
+	let url = "hello";
+	const req = new Request(url,{method: 'POST', body: fd});
 	
-	Swal.fire({
-    title: `Order reference: ${dt.ref}`,
-  imageUrl: "images/paystack.png",
-  imageWidth: 400,
-  imageHeight: 200,
-  imageAlt: `Pay for order ${dt.ref} with card`,
-  showCloseButton: true,
-  html:
-     "<h4 class='text-danger'><b>NOTE: </b>Make sure you note down your reference number above, as it will be required in the case of any issues regarding this order.</h4><p class='text-primary'>Click OK below to redirect to our secure payment gateway to complete this payment.</p>"
-}).then((result) => {
-  if (result.value) {
-	  let a = false;
-	  if(dt.anon) a = dt.anon;
-	  
-    payWithCard(a);
-  }
-});
-
+	//fetch request
+	fetch(req)
+	   .then(response => {
+		   if(response.status === 200){
+			   //console.log(response);
+			   
+			   return response.json();
+		   }
+		   else{
+			   return {status: "error", message: "Technical error"};
+		   }
+	   })
+	   .catch(error => {
+		    alert("Failed to sign you in: " + error);			
+			hideElem('#login-loading');
+		     showElem('#login-submit');
+	   })
+	   .then(res => {
+		   console.log(res);
+			 hideElem(['#login-loading','#login-submit']); 
+             	 
+		   if(res.status == "ok"){
+              showElem('#login-finish');
+              window.location = "/"; 			   
+		   }
+		   else if(res.status == "error"){
+			   console.log(res.message);
+			 if(res.message == "auth"){
+				 $('#login-finish').html("Invalid login details, please try again");
+				 showElem('#login-finish');
+				  showElem('#login-submit');
+			 }
+			 else{
+			   alert("An unknown error has occured, please try again.");			
+			   hideElem('#login-loading');
+		       showElem('#login-submit');	 
+			 }					 
+		   }
+		   		   
+		  
+	   }).catch(error => {
+		    alert("Failed to sign you in: " + error);	
+            hideElem('#login-loading');
+		     showElem('#login-submit');		
+	   });
 }
 
-function payWithCard(anon=false){
-	 mc['notes'] = $('#notes').val();
-	 if(anon){
-		 mc['name'] = $('#ca-name').val();
-		 mc['email'] = $('#ca-email').val();
-		 mc['phone'] = $('#ca-phone').val();
-		 mc['address'] = $('#ca-address').val();
-		 mc['city'] = $('#ca-city').val();
-		 mc['state'] = $('#ca-state').val();
-	 }
-	 $('#nd').val(JSON.stringify(mc)); 
-	//console.log(mc);
-	setPaymentAction("card");
+
+const switchMode = dt => {
+    let url = `sm?m=${dt.mode}`;
+	window.location = url;
 }
 
-function setPaymentAction(type){
-	let paymentURL = "";
-	
-	if(type == "cod"){
-		paymentURL = $("#bank-action").val();  
-   }
-   else if(type == "card"){
-		paymentURL = $("#card-action").val();  
-   }
-   
-   //console.log(paymentURL);
-   $('#checkout-form').attr('action',paymentURL);
-   $('#checkout-form').submit();
-}
 
 function bomb(dt,url){
 
@@ -218,15 +236,6 @@ function bomb(dt,url){
 	   });
 }
 
-function selectBank(){
-       let bname = $("#bname").val();
-	   if(bname == "other"){
-		   $('#bname-other').fadeIn();
-	   }
-	   else{
-		   $('#bname-other').hide();
-	   }
-}
 
 function printElem(html)
 {

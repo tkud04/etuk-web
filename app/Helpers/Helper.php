@@ -33,8 +33,8 @@ class Helper implements HelperContract
 {
 
  public $signals = ['okays'=> ["login-status" => "Welcome back!",            
-                     "signup-status" => "Welcome to your new account. As a welcome gift you get a discount N500 off your first order. Enjoy your shopping!",
                      "profile-status" => "Profile updated!",
+                     "switch-mode-status" => "You have now switched your account mode.",
                      ],
                      'errors'=> ["login-status-error" => "Wrong username or password, please try again.",
 					 "signup-status-error" => "There was a problem creating your account, please try again.",

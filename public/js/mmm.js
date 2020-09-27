@@ -2,8 +2,8 @@
 
 $(document).ready(function() {
     "use strict";
-	hideInputErrors("signup");
-	hideElem(["#signup-loading","#signup-finish"]);
+	hideInputErrors(["signup","login"]);
+	hideElem(["#signup-loading","#signup-finish","#login-loading","#login-finish"]);
 	
 	
     $("a.lno-cart").on("click", function(e) {
@@ -49,6 +49,28 @@ $(document).ready(function() {
 			 phone: phone,
 			 pass: p,
 			 pass_confirmation: p2
+		 });   
+	   }
+    });
+	
+	$("#l-form").submit(e => {
+       e.preventDefault();
+	  
+       hideInputErrors("login");	  
+      let id = $('#l-id').val(),p = $('#l-pass').val();
+		  
+		  
+	   if(id == "" || p == ""){
+		   if(id == "") showElem('#l-id-error');
+		   if(p == "") showElem('#l-pass-error');
+	   }
+	   else{
+		  hideElem("#login-submit");
+		  showElem("#login-loading");
+		  
+		 login({
+			 id: id,
+			 pass: p
 		 });   
 	   }
     })	

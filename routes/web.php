@@ -18,11 +18,13 @@ Route::get('about', 'MainController@getAbout');
 
 Route::get('signup', 'LoginController@getSignup');
 Route::post('signup', 'LoginController@postSignup');
-Route::get('login', 'LoginController@getLogin');
-Route::post('login', 'LoginController@postLogin');
+Route::get('hello', 'LoginController@getHello');
+Route::post('hello', 'LoginController@postHello');
 Route::get('bye', 'LoginController@getBye');
 
 Route::get('dashboard', 'MainController@getDashboard');
+Route::get('sm', 'MainController@getSwitchMode');
+
 
 Route::get('payment/callback', 'PaymentController@getPaymentCallback');
 Route::get('pay', 'MainController@getPay');

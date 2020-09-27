@@ -47,7 +47,7 @@ class LoginController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function getLogin(Request $request)
+	public function getHello(Request $request)
     {
         $user = null;
 		$cart = [];
@@ -65,49 +65,53 @@ class LoginController extends Controller {
 	 *
 	 * @return Response
 	 */
-    public function postLogin(Request $request)
+    public function postHello(Request $request)
     {
-        $req = $request->all();
-        //dd($req);
+		$req = $request->all();
+       #dd($req);
+	   $ret = ['status' => "error",'message' => "Nothing happened"];
         
-        $validator = Validator::make($req, [
+		$reqValidator = Validator::make($req,[
+		                    'dt' => 'required'
+		]);
+		
+		if($reqValidator->fails())
+         {
+             $ret['message'] = "validation";
+         }
+		 else
+		 {
+			 $dt = json_decode($req['dt'],true);
+		    $validator = Validator::make($dt, [
                              'pass' => 'required|min:6',
-                             'id' => 'required'
+                             'id' => 'required'                  
          ]);
          
          if($validator->fails())
          {
-             $messages = $validator->messages();
-             return redirect()->back()->withInput()->with('errors',$messages);
-             //dd($messages);
+             $ret['message'] = "validation";
          }
          
          else
          {
-         	$remember = true; 
-             $return = isset($req['u']) ? $req['u'] : '/';
+			$remember = true; 
              
          	//authenticate this login
-            if(Auth::attempt(['email' => $req['id'],'password' => $req['pass'],'status'=> "enabled"],$remember) || Auth::attempt(['phone' => $req['id'],'password' => $req['pass'],'status'=> "enabled"],$remember))
+            if(Auth::attempt(['email' => $dt['id'],'password' => $dt['pass'],'status'=> "enabled"],$remember) || Auth::attempt(['phone' => $dt['id'],'password' => $dt['pass'],'status'=> "enabled"],$remember))
             {
             	//Login successful               
-               $user = Auth::user();          
-                #dd($user); 
-				
-             #  if($this->helpers->isAdmin($user)){return redirect()->intended('/');}
-               #else{
-                  $rex = isset($req['u']) ? $req['u'] : '/';
-                  if($user->verified == "vendor") $rex = "my-store";
-                  return redirect()->back();
-              # }
+               $user = Auth::user();   
+               $ret = ['status' => "ok",'message' => "Signup successful"];			   
             }
 			
 			else
 			{
-				session()->flash("login-status","error");
-				return redirect()->back();
-			}
-         }        
+				 $ret['message'] = "auth";
+			}			
+          }	 
+		 }
+		
+        return json_encode($ret);
     }
 
 

@@ -129,10 +129,16 @@ class MainController extends Controller {
 		{
 			$user = Auth::user();
 		}
+		else
+		{
+			return redirect()->intended('/');
+		}
+		
 		$req = $request->all();
-		dd($user);
+		
 		$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
 		$cart = $this->helpers->getCart($user,$gid);
+		dd($user);
 		$c = $this->helpers->getCategories();
 		//dd($bs);
 		$signals = $this->helpers->signals;
@@ -146,6 +152,51 @@ class MainController extends Controller {
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
 
     	return view("about",compact(['user','cart','c','ad','signals','plugins']));
+    }
+
+	/**
+	 * Switch user mode (host/guest).
+	 *
+	 * @return Response
+	 */
+	public function getSwitchMode(Request $request)
+    {
+		$user = null;
+		if(Auth::check())
+		{
+			$user = Auth::user();
+		}
+		else
+		{
+			return redirect()->intended('/');
+		}
+		
+		$req = $request->all();
+		
+		$validator = Validator::make($req, [
+                             'm' => 'required'
+         ]);
+         
+         if($validator->fails())
+         {
+             return redirect()->back();
+         }
+		 else
+		 {
+			 $m = $req['m'];
+			 switch($m)
+			 {
+				 case 'guest':
+				   $user->update(['mode' => 'host']);
+				 break;
+				 
+				 case 'host':
+				   $user->update(['mode' => 'guest']);
+				 break;
+			 }
+			 session()->flash("switch-mode-status","ok");
+			 return redirect()->intended('/');
+		 }
     }
 	
 
