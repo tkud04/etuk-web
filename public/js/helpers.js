@@ -49,6 +49,11 @@ const hideInputErrors = type => {
 		  $('#login-finish').html(`<b>Signin successful!</b><p class='text-primary'>Redirecting you to your dashboard.</p>`);
 	      ret = ['#l-id-error','#l-pass-error','#login-finish'];	 
 		break;
+		
+		case "fp":
+		  $('#fp-finish').html(`<b>Request received!</b><p class='text-primary'>Please check your email for your password reset link.</p>`);
+	      ret = ['#fp-id-error','#fp-finish'];	 
+		break;
 	  }
 	  hideElem(ret);
 	}

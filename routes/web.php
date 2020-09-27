@@ -18,6 +18,8 @@ Route::get('about', 'MainController@getAbout');
 
 Route::get('signup', 'LoginController@getSignup');
 Route::post('signup', 'LoginController@postSignup');
+Route::get('forgot-password', 'LoginController@getForgotPassword');
+Route::post('forgot-password', 'LoginController@postForgotPassword');
 Route::get('hello', 'LoginController@getHello');
 Route::post('hello', 'LoginController@postHello');
 Route::get('bye', 'LoginController@getBye');

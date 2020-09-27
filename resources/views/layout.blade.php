@@ -356,7 +356,7 @@
 								</ul>
 							</div>
 							<div class="text-center">
-								<p class="mt-5"><a href="javascript:void(0)" class="link">Forgot password?</a></p>
+								<p class="mt-5"><a href="{{url('forgot-password')}}" class="link">Forgot password?</a></p>
 							</div>
 						</div>
 					</div>

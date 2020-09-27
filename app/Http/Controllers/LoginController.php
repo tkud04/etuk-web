@@ -181,44 +181,6 @@ class LoginController extends Controller {
          return view('forgot_username',compact(['layoutAd','plugins']));
     }
     
-    /**
-     * Send username to the given user.
-     * @param  \Illuminate\Http\Request  $request
-     */
-    public function postForgotUsername(Request $request)
-    {
-    	$req = $request->all(); 
-        $validator = Validator::make($req, [
-                             'email' => 'required|email'
-                  ]);
-                  
-        if($validator->fails())
-         {
-             $messages = $validator->messages();
-             //dd($messages);
-             
-             return redirect()->back()->withInput()->with('errors',$messages);
-         }
-         
-         else{
-         	$ret = $req['email'];
-
-                $user = User::where('email',$ret)->first();
-
-                if(is_null($user))
-                {
-                        return redirect()->back()->withErrors("This user doesn't exist!","errors"); 
-                }
-                
-                #$this->helpers->sendEmail($user->email,'Your Username',['username' => $user->username],'emails.username','view');                                                         
-            session()->flash("username-status","success");           
-            return redirect()->intended('forgot-username');
-
-      }
-                  
-    }    
-    
-    
     public function getForgotPassword()
     {
     	$user = null;
@@ -230,8 +192,8 @@ class LoginController extends Controller {
 		}
 		$signals = $this->helpers->signals;
 		$plugins = $this->helpers->getPlugins();
-		$layoutAd = $this->helpers->getAds();
-         return view('forgot-password', compact(['layoutAd','user','signals','plugins']));
+		$cart = [];
+         return view('forgot-password', compact(['cart','user','signals','plugins']));
     }
     
     /**

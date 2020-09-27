@@ -2,8 +2,8 @@
 
 $(document).ready(function() {
     "use strict";
-	hideInputErrors(["signup","login"]);
-	hideElem(["#signup-loading","#signup-finish","#login-loading","#login-finish"]);
+	hideInputErrors(["signup","login","fp"]);
+	hideElem(["#signup-loading","#signup-finish","#login-loading","#login-finish","#fp-loading","#fp-finish"]);
 	
 	
     $("a.lno-cart").on("click", function(e) {
@@ -73,5 +73,25 @@ $(document).ready(function() {
 			 pass: p
 		 });   
 	   }
-    })	
+    });
+	
+	$("#fp-submit").click(e => {
+       e.preventDefault();
+	  
+       hideInputErrors("forgot-password");	  
+      let id = $('#fp-email').val();
+		  
+		  
+	   if(id == ""){
+		   if(id == "") showElem('#fp-id-error');
+	   }
+	   else{
+		  hideElem("#fp-submit");
+		  showElem("#fp-loading");
+		  
+		 fp({
+			 email: id
+		 });   
+	   }
+    });	
 });
