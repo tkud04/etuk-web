@@ -78,11 +78,9 @@ const signup = dt => {
 	//fetch request
 	fetch(req)
 	   .then(response => {
-		   let tt = response.text();
-		   console.log("tt: ",tt);
 		   
 		   if(response.status === 200){   
-			   return JSON.stringify(tt);
+			   return respnse.json();
 		   }
 		   else{
 			   return {status: "error", message: "Technical error"};
