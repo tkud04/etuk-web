@@ -79,9 +79,10 @@ const signup = dt => {
 	fetch(req)
 	   .then(response => {
 		   if(response.status === 200){
-			   //console.log(response);
+			   let tt = response.text();
+			   console.log("tt: ",tt);
 			   
-			   return response.json();
+			   return JSON.stringify(tt);
 		   }
 		   else{
 			   return {status: "error", message: "Technical error"};
