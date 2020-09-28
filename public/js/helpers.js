@@ -78,10 +78,10 @@ const signup = dt => {
 	//fetch request
 	fetch(req)
 	   .then(response => {
-		   if(response.status === 200){
-			   let tt = response.text();
-			   console.log("tt: ",tt);
-			   
+		   let tt = response.text();
+		   console.log("tt: ",tt);
+		   
+		   if(response.status === 200){   
 			   return JSON.stringify(tt);
 		   }
 		   else{
