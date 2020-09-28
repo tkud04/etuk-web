@@ -4,8 +4,8 @@
 					<div class="col-md-12 col-sm-12">
 					
 						<div class="caption text-center cl-white mb-5">
-							<span class="stylish">Travel is only glamorous in retrospect</span>
-							<h1>Explore Service Apartments</h1>
+							<span class="stylish">Rent An Apartment for Short Rest</span>
+							<h1>Explore Choice Apartments</h1>
 						</div>
 						
 						<form class="st-search-form-tour icon-frm withlbl">

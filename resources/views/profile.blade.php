@@ -13,7 +13,7 @@ $subtitle = "Edit your account information";
 @section('content')
 @include('banner-2',['title' => $title,'subtitle' => $subtitle])
 
-	<!-- ============================ Dashboard Start ================================== -->
+	<!-- ============================ Profile Start ================================== -->
 			<section class="gray">
 				<div class="container-fluid">
 					<div class="row">
@@ -114,5 +114,5 @@ $subtitle = "Edit your account information";
 					</div>
 				</div>
 			</section>
-			<!-- ============================ Dashboard End ================================== -->
+			<!-- ============================ Profile End ================================== -->
 @stop

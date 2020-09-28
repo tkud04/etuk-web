@@ -138,7 +138,7 @@ class MainController extends Controller {
 		
 		$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
 		$cart = $this->helpers->getCart($user,$gid);
-		dd($user);
+		#dd($user);
 		$c = $this->helpers->getCategories();
 		//dd($bs);
 		$signals = $this->helpers->signals;
@@ -146,12 +146,10 @@ class MainController extends Controller {
 		$ads = $this->helpers->getAds("wide-ad");
 		$plugins = $this->helpers->getPlugins();
 		
-		#dd($hasUnpaidOrders);
-		
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
 
-    	return view("about",compact(['user','cart','c','ad','signals','plugins']));
+    	return view("dashboard",compact(['user','cart','c','ad','signals','plugins']));
     }
 
 	/**

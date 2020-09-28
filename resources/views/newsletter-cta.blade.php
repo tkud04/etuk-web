@@ -4,8 +4,8 @@
 					<div class="row">
 						<div class="col-lg-6 col-md-6">
 							<div class="jobalert-sec">
-								<h3 class="mb-1 text-light">Get New Jobs Notification!</h3>
-								<p class="text-light">Subscribe & get all related jobs notification.</p>
+								<h3 class="mb-1 text-light">Subscribe Now</h3>
+								<p class="text-light">Subscribe to our newsletter and other promotional materials.</p>
 							</div>
 						</div>
 						

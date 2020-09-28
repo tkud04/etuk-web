@@ -17,8 +17,8 @@
 									<i class="theme-cl ti-location-pin"></i>
 								</div>
 								<div class="facts-detail">
-									<h4>1,000+ Local Tours</h4>
-									<p>Morbi semper fames lobortis ac hac</p>
+									<h4>1,000+ Choice Apartments</h4>
+									<p>With 5-star hospitality</p>
 								</div>
 							</div>
 						</div>
@@ -29,8 +29,8 @@
 									<i class="theme-cl ti-shine"></i>
 								</div>
 								<div class="facts-detail">
-									<h4>Winter Destinations</h4>
-									<p>Morbi semper fames lobortis ac hac</p>
+									<h4>Home Away</h4>
+									<p>A home away from home</p>
 								</div>
 							</div>
 						</div>
@@ -41,8 +41,8 @@
 									<i class="theme-cl ti-face-smile"></i>
 								</div>
 								<div class="facts-detail">
-									<h4>98% Happy Travelers</h4>
-									<p>Morbi semper fames lobortis ac hac</p>
+									<h4>98% Happy Guests</h4>
+									<p>We strive to serve you better</p>
 								</div>
 							</div>
 						</div>
@@ -53,31 +53,31 @@
 			<!-- ================= End true Facts ========================= -->
 			
 			
-						<!-- ================= Travel start ========================= -->
+						<!-- ================= Apartment start ========================= -->
 			<section class="min">
 				<div class="container">
 				
 					<div class="row">
 						<div class="col-lg-12 col-md-12">
 							<div class="sec-heading center">
-								<p>Popular Travel Packages</p>
-								<h2>Featured Travel Packages</h2>
+								<p>Popular Apartments</p>
+								<h2>Featured Apartments</h2>
 							</div>
 						</div>
 					</div>
 					
 					<div class="row">
 						<?php
-						 $popularTravels = [
-						   ['img' => asset('img/des-2.jpg'),'href' => "javascript-void(0)", 'tc' => "5",'location' => "Ikeja, Lagos",'stars' => "4", 'amount' => "20000"],
-						   ['img' => asset('img/des-3.jpg'),'href' => "javascript-void(0)", 'tc' => "6",'location' => "Ikorodu, Lagos",'stars' => "4", 'amount' => "10000"],
-						   ['img' => asset('img/des-4.jpg'),'href' => "javascript-void(0)", 'tc' => "5",'location' => "Victoria Island, Lagos",'stars' => "4", 'amount' => "20000"],
-						   ['img' => asset('img/des-5.jpg'),'href' => "javascript-void(0)", 'tc' => "5",'location' => "Bodija, Oyo",'stars' => "4", 'amount' => "7000"],
+						 $popularApartments = [
+						   ['img' => asset('img/des-2.jpg'),'href' => "javascript-void(0)", 'tc' => "5",'location' => "Ikeja, Lagos",'stars' => "5", 'amount' => "20000"],
+						   ['img' => asset('img/des-3.jpg'),'href' => "javascript-void(0)", 'tc' => "6",'location' => "Ikorodu, Lagos",'stars' => "3", 'amount' => "10000"],
+						   ['img' => asset('img/des-4.jpg'),'href' => "javascript-void(0)", 'tc' => "5",'location' => "Victoria Island, Lagos",'stars' => "5", 'amount' => "20000"],
+						   ['img' => asset('img/des-5.jpg'),'href' => "javascript-void(0)", 'tc' => "5",'location' => "Bodija, Oyo",'stars' => "3", 'amount' => "7000"],
 						   ['img' => asset('img/des-6.jpg'),'href' => "javascript-void(0)", 'tc' => "7",'location' => "Mokola, Ibadan",'stars' => "4", 'amount' => "10000"],
 						   ['img' => asset('img/des-7.jpg'),'href' => "javascript-void(0)", 'tc' => "7",'location' => "Yaba, Lagos",'stars' => "4", 'amount' => "10000"],
 						 ];
 						 
-						 foreach($popularTravels as $pt)
+						 foreach($popularApartments as $pt)
 						 {
 						?>
 						<!-- Single Tour Place -->
@@ -93,11 +93,12 @@
 									</div>
 									<div class="ts-caption-right">
 										<div class="ts-caption-rating">
+										   @for($i = 0; $i < $pt['stars']; $i++)
 											<i class="ti-star filled"></i>
-											<i class="ti-star filled"></i>
-											<i class="ti-star filled"></i>
-											<i class="ti-star filled"></i>
+										   @endfor
+										   @for($i = 0; $i < 5 - $pt['stars']; $i++)
 											<i class="ti-star"></i>
+										   @endfor
 										</div>
 										<h5 class="ts-price">&#8358;{{number_format($pt['amount'],2)}}</h5>
 									</div>
@@ -113,7 +114,7 @@
 				
 				</div>
 			</section>
-			<!-- ========================= End Travel Section ============================ -->
+			<!-- ========================= End Apartment Section ============================ -->
 			
 			
 			<!-- ================= Activities start ========================= -->
@@ -123,8 +124,8 @@
 					<div class="row">
 						<div class="col-lg-12 col-md-12">
 							<div class="sec-heading center">
-								<p>Top Travel Activities</p>
-								<h2>New & featured Travel Activities</h2>
+								<p>Top Bouquets</p>
+								<h2>Get more for less!</h2>
 							</div>
 						</div>
 					</div>

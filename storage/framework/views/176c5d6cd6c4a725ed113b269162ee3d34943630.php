@@ -21,87 +21,51 @@
 									</a>
 								</figure>
 								<div class="hm-post-caption">
-									<span class="cat theme-bg bg-1">Nature</span>
-									<h2 class="title"><a class="title-ln" href="room_details.html">Most Visit Places in Manali</a></h2>
+									<span class="cat theme-bg bg-1">Admin</span>
+									<h2 class="title"><a class="title-ln" href="room_details.html">Most Visited Apartments in Lagos</a></h2>
 									<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
-									<a class="fmp-readmore theme-cl" href="">Read More<i class="ti-arrow-right"></i></a>
+									<a class="fmp-readmore theme-cl" href="javascript:void(0)">Read More<i class="ti-arrow-right"></i></a>
 								</div>
 							</div>
 						</div>
 						
 						<div class="col-lg-5 col-md-12">
+						<?php
+						 $posts = [
+						   ['img' => asset('img/c-2.jpg'),'href' => "javascript:void(0)",'tag' => "Apartments",'title' => "The Best Apartments in Ekiti Sept 2020",'date' => "Sept 7, 2020"],
+						   ['img' => asset('img/c-3.jpg'),'href' => "javascript:void(0)",'tag' => "Apartments",'title' => "The Best Apartments in Lagos Sept 2020",'date' => "Sept 12, 2020"],
+						   ['img' => asset('img/c-4.jpg'),'href' => "javascript:void(0)",'tag' => "Apartments",'title' => "How To Pick An Apartment",'date' => "Sept 14, 2020"]
+						 ];
+						 foreach($posts as $p)
+						 {
+						?>
 							<article class="small-hm-post">
 								<div class="small-hm-post-outer">
 									<div class="small-hm-inner">
 										<div class="small-hm-post-thumb">
-											<a href="#"><img src="<?php echo e(asset('img/c-2.jpg')); ?>" class="img-responsive" alt="" /></a>
+											<a href="#"><img src="<?php echo e($p['img']); ?>" class="img-responsive" alt="<?php echo e($p['title']); ?>" /></a>
 										</div>
 									</div>
 									
 									<div class="small-hm-inner">
 										<div class="small-hm-post-caption">
 											<ul class="post-categories">
-												<li><a href="#" class="theme-cl">Lifestyle</a>
+												<li><a href="javascript:void(0)" class="theme-cl"><?php echo e($p['tag']); ?></a>
 												</li>
 											</ul>
-											<h2 class="entry-title"><a href="blog-detail.html">The Best Travel Accessories for Designers</a></h2>
+											<h2 class="entry-title"><a href="<?php echo e($p['href']); ?>"><?php echo e($p['title']); ?></a></h2>
 											<ul class="post-meta">
-												<li class="meta-author"><span class="author"><a class="url fn n" href="#">Joanna Wellick</a></span></li>
-												<li class="meta-date"><a href="#" rel="bookmark">May 24, 2019</a></li>
+												<li class="meta-author"><span class="author"><a class="url fn n" href="javascript:void(0)">Admin</a></span></li>
+												<li class="meta-date"><a href="javascript:void(0)" rel="bookmark"><?php echo e($p['date']); ?></a></li>
 											</ul>
 										</div>
 									</div>
 									
 								</div>
 							</article>
-							<article class="small-hm-post">
-								<div class="small-hm-post-outer">
-									<div class="small-hm-inner">
-										<div class="small-hm-post-thumb">
-											<a href="#"><img src="<?php echo e(asset('img/c-3.jpg')); ?>" class="img-responsive" alt="" /></a>
-										</div>
-									</div>
-									
-									<div class="small-hm-inner">
-										<div class="small-hm-post-caption">
-											<ul class="post-categories">
-												<li><a href="#" class="theme-cl">Lifestyle</a>
-												</li>
-											</ul>
-											<h2 class="entry-title"><a href="blog-detail.html">The Best Travel Accessories for Designers</a></h2>
-											<ul class="post-meta">
-												<li class="meta-author"><span class="author"><a class="url fn n" href="#">Joanna Wellick</a></span></li>
-												<li class="meta-date"><a href="#" rel="bookmark">May 24, 2019</a></li>
-											</ul>
-										</div>
-									</div>
-									
-								</div>
-							</article>
-							<article class="small-hm-post">
-								<div class="small-hm-post-outer">
-									<div class="small-hm-inner">
-										<div class="small-hm-post-thumb">
-											<a href="#"><img src="<?php echo e(asset('img/c-4.jpg')); ?>" class="img-responsive" alt="" /></a>
-										</div>
-									</div>
-									
-									<div class="small-hm-inner">
-										<div class="small-hm-post-caption">
-											<ul class="post-categories">
-												<li><a href="#" class="theme-cl">Lifestyle</a>
-												</li>
-											</ul>
-											<h2 class="entry-title"><a href="blog-detail.html">The Best Travel Accessories for Designers</a></h2>
-											<ul class="post-meta">
-												<li class="meta-author"><span class="author"><a class="url fn n" href="#">Joanna Wellick</a></span></li>
-												<li class="meta-date"><a href="#" rel="bookmark">May 24, 2019</a></li>
-											</ul>
-										</div>
-									</div>
-									
-								</div>
-							</article>
+						 <?php
+						 }
+						 ?>
 						</div>
 					
 					</div>
