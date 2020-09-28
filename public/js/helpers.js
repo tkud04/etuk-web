@@ -80,7 +80,7 @@ const signup = dt => {
 	   .then(response => {
 		   
 		   if(response.status === 200){   
-			   return respnse.json();
+			   return response.json();
 		   }
 		   else{
 			   return {status: "error", message: "Technical error"};
