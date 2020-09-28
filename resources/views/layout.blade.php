@@ -225,7 +225,7 @@
 							
 							<div class="col-lg-3 col-md-4">
 								<div class="footer-widget">
-									<img src="{{asset('img/logo-light.png')}}" class="img-footer" alt="" />
+									<img src="{{asset('img/logo.png')}}" class="img-footer" alt="" />
 									<div class="footer-add">
 										<p><strong>Email:</strong></br><a href="javascript:void(0)">hello@etuk.ng</a></p>
 										<p><strong>Call:</strong></br>(234) 801 234 5678</p>
@@ -301,7 +301,7 @@
 						<div class="row align-items-center">
 							
 							<div class="col-lg-6 col-md-6">
-								<p class="mb-0">© 2020 Travlio. Designd By Pixel Experts. All Rights Reserved</p>
+								<p class="mb-0">&copy; <script>document.write((new Date()).getFullYear())</script> Etuk NG, All Rights Reserved</p>
 							</div>
 							
 							<div class="col-lg-6 col-md-6 text-right">

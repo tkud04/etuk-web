@@ -67,17 +67,29 @@
 					</div>
 					
 					<div class="row">
-						
+						<?php
+						 $popularTravels = [
+						   ['img' => asset('img/des-2.jpg'),'href' => "javascript-void(0)", 'tc' => "5",'location' => "Ikeja, Lagos",'stars' => "4", 'amount' => "20000"],
+						   ['img' => asset('img/des-3.jpg'),'href' => "javascript-void(0)", 'tc' => "6",'location' => "Ikorodu, Lagos",'stars' => "4", 'amount' => "10000"],
+						   ['img' => asset('img/des-4.jpg'),'href' => "javascript-void(0)", 'tc' => "5",'location' => "Victoria Island, Lagos",'stars' => "4", 'amount' => "20000"],
+						   ['img' => asset('img/des-5.jpg'),'href' => "javascript-void(0)", 'tc' => "5",'location' => "Bodija, Oyo",'stars' => "4", 'amount' => "7000"],
+						   ['img' => asset('img/des-6.jpg'),'href' => "javascript-void(0)", 'tc' => "7",'location' => "Mokola, Ibadan",'stars' => "4", 'amount' => "10000"],
+						   ['img' => asset('img/des-7.jpg'),'href' => "javascript-void(0)", 'tc' => "7",'location' => "Yaba, Lagos",'stars' => "4", 'amount' => "10000"],
+						 ];
+						 
+						 foreach($popularTravels as $pt)
+						 {
+						?>
 						<!-- Single Tour Place -->
 						<div class="col-lg-4 col-md-6 col-sm-12">
 							<div class="tour-simple-wrap">
 								<div class="tour-simple-thumb">
-									<a href="tour-detail.html"><img src="{{asset('img/des-2.jpg')}}" class="img-fluid img-responsive" alt="" /></a>
+									<a href="{{$pt['href']}}"><img src="{{$pt['img']}}" class="img-fluid img-responsive" alt="" /></a>
 								</div>
 								<div class="tour-simple-caption">
 									<div class="ts-caption-left">
-										<h4 class="ts-title"><a href="tour-detail.html">Cologne, Germany</a></h4>
-										<span>5 Tour Package</span>
+										<h4 class="ts-title"><a href="tour-detail.html">{{$pt['location']}}</a></h4>
+										<span>{{$pt['tc']}} persons max.</span>
 									</div>
 									<div class="ts-caption-right">
 										<div class="ts-caption-rating">
@@ -87,136 +99,15 @@
 											<i class="ti-star filled"></i>
 											<i class="ti-star"></i>
 										</div>
-										<h5 class="ts-price">$299.00</h5>
+										<h5 class="ts-price">&#8358;{{number_format($pt['amount'],2)}}</h5>
 									</div>
 								</div>
 							</div>
 						</div>
+						<?php
+						 }
+						?>
 						
-						<!-- Single Tour Place -->
-						<div class="col-lg-4 col-md-6 col-sm-12">
-							<div class="tour-simple-wrap">
-								<div class="tour-simple-thumb">
-									<a href="tour-detail.html"><img src="{{asset('img/des-3.jpg')}}" class="img-fluid img-responsive" alt="" /></a>
-								</div>
-								<div class="tour-simple-caption">
-									<div class="ts-caption-left">
-										<h4 class="ts-title"><a href="tour-detail.html">Monte Carlo, Monaco</a></h4>
-										<span>7 Tour Package</span>
-									</div>
-									<div class="ts-caption-right">
-										<div class="ts-caption-rating">
-											<i class="ti-star filled"></i>
-											<i class="ti-star filled"></i>
-											<i class="ti-star filled"></i>
-											<i class="ti-star filled"></i>
-											<i class="ti-star filled"></i>
-										</div>
-										<h5 class="ts-price">$259.00</h5>
-									</div>
-								</div>
-							</div>
-						</div>
-						
-						<!-- Single Tour Place -->
-						<div class="col-lg-4 col-md-6 col-sm-12">
-							<div class="tour-simple-wrap">
-								<div class="tour-simple-thumb">
-									<a href="tour-detail.html"><img src="{{asset('img/des-4.jpg')}}" class="img-fluid img-responsive" alt="" /></a>
-								</div>
-								<div class="tour-simple-caption">
-									<div class="ts-caption-left">
-										<h4 class="ts-title"><a href="tour-detail.html">Puebla, Mexico</a></h4>
-										<span>7 Tour Package</span>
-									</div>
-									<div class="ts-caption-right">
-										<div class="ts-caption-rating">
-											<i class="ti-star filled"></i>
-											<i class="ti-star filled"></i>
-											<i class="ti-star filled"></i>
-											<i class="ti-star filled"></i>
-											<i class="ti-star"></i>
-										</div>
-										<h5 class="ts-price">$350.00</h5>
-									</div>
-								</div>
-							</div>
-						</div>
-						
-						<!-- Single Tour Place -->
-						<div class="col-lg-4 col-md-6 col-sm-12">
-							<div class="tour-simple-wrap">
-								<div class="tour-simple-thumb">
-									<a href="tour-detail.html"><img src="{{asset('img/des-5.jpg')}}" class="img-fluid img-responsive" alt="" /></a>
-								</div>
-								<div class="tour-simple-caption">
-									<div class="ts-caption-left">
-										<h4 class="ts-title"><a href="tour-detail.html">Florence, Italy</a></h4>
-										<span>4 Tour Package</span>
-									</div>
-									<div class="ts-caption-right">
-										<div class="ts-caption-rating">
-											<i class="ti-star filled"></i>
-											<i class="ti-star filled"></i>
-											<i class="ti-star filled"></i>
-											<i class="ti-star filled"></i>
-											<i class="ti-star"></i>
-										</div>
-										<h5 class="ts-price">$799.00</h5>
-									</div>
-								</div>
-							</div>
-						</div>
-						
-						<!-- Single Tour Place -->
-						<div class="col-lg-4 col-md-6 col-sm-12">
-							<div class="tour-simple-wrap">
-								<div class="tour-simple-thumb">
-									<a href="tour-detail.html"><img src="{{asset('img/des-6.jpg')}}" class="img-fluid img-responsive" alt="" /></a>
-								</div>
-								<div class="tour-simple-caption">
-									<div class="ts-caption-left">
-										<h4 class="ts-title"><a href="tour-detail.html">Bergen, Norway</a></h4>
-										<span>3 Tour Package</span>
-									</div>
-									<div class="ts-caption-right">
-										<div class="ts-caption-rating">
-											<i class="ti-star filled"></i>
-											<i class="ti-star filled"></i>
-											<i class="ti-star filled"></i>
-											<i class="ti-star filled"></i>
-											<i class="ti-star"></i>
-										</div>
-										<h5 class="ts-price">$910.00</h5>
-									</div>
-								</div>
-							</div>
-						</div>
-						
-						<!-- Single Tour Place -->
-						<div class="col-lg-4 col-md-6 col-sm-12">
-							<div class="tour-simple-wrap">
-								<div class="tour-simple-thumb">
-									<a href="tour-detail.html"><img src="{{asset('img/des-7.jpg')}}" class="img-fluid img-responsive" alt="" /></a>
-								</div>
-								<div class="tour-simple-caption">
-									<div class="ts-caption-left">
-										<h4 class="ts-title"><a href="tour-detail.html">Puerto Vallarta, Mexico</a></h4>
-										<span>5 Tour Package</span>
-									</div>
-									<div class="ts-caption-right">
-										<div class="ts-caption-rating">
-											<i class="ti-star filled"></i>
-											<i class="ti-star filled"></i>
-											<i class="ti-star filled"></i>
-											<i class="ti-star filled"></i>
-											<i class="ti-star"></i>
-										</div>
-										<h5 class="ts-price">$670.00</h5>
-									</div>
-								</div>
-							</div>
-						</div>
 						
 					</div>
 				

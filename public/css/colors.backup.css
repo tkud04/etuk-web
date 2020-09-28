@@ -160,8 +160,8 @@
 .orange-skin .single-widgets.widget_search form button,
 .orange-skin .single-widgets.widget_tags ul li a:hover, .orange-skin .single-widgets.widget_tags ul li a:focus,
 .orange-skin .pagination>.active>a, .orange-skin .pagination>.active>a:focus, .orange-skin .pagination>.active>a:hover, .orange-skin .pagination>.active>span, .orange-skin .pagination>.active>span:focus, .orange-skin .pagination>.active>span:hover, .orange-skin .pagination>li>a:focus, .orange-skin .pagination>li>a:hover{
-	background-color:#be831d;
-	background:#be831d;
+	background-color:#ff5722;
+	background:#ff5722;
 }
  
 .orange-skin a.link:hover, .orange-skin a.link:focus, .orange-skin a:hover, a:focus,
@@ -188,7 +188,7 @@
 .orange-skin .blog-page .blog-details .comment-area .all-comments article .comment-details .comment-meta .comment-left-meta .comment-date,
 .orange-skin .cn-info-icon i, .orange-skin .client-info h5,
 .orange-skin .listing-card-info-price{
-	color:#be831d;
+	color:#ff5722;
 }
 
 .orange-skin .pagination>.active>a, .orange-skin .pagination>.active>a:focus, .orange-skin .pagination>.active>a:hover, .orange-skin .pagination>.active>span, .orange-skin .pagination>.active>span:focus, .orange-skin .pagination>.active>span:hover, .orange-skin .pagination>li>a:focus, .orange-skin .pagination>li>a:hover,
@@ -208,7 +208,7 @@
 .orange-skin .nav-tabs .nav-item.show .nav-link, .orange-skin .nav-tabs .nav-link.active,
 .orange-skin .btn.pop-login,
 .orange-skin .single-widgets.widget_tags ul li a:hover, .orange-skin .single-widgets.widget_tags ul li a:focus{
-	border-color:#be831d;
+	border-color:#ff5722;
 }
 
 .orange-skin li.login-attri.theme-log a {
@@ -219,7 +219,7 @@
 	background:rgba(255, 87, 34,0.1);
 }
 .orange-skin .property_item:hover .listing-thumb:before {
-    background: linear-gradient(to bottom, transparent 17%, #be831d);
+    background: linear-gradient(to bottom, transparent 17%, #ff5722);
 }
 .orange-skin .avl-features li:before{
     box-shadow: 0px 0px 0px 4px rgba(249,104,37,0.4);

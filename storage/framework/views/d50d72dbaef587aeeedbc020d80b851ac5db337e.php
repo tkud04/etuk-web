@@ -5,7 +5,7 @@
 					
 						<div class="caption text-center cl-white mb-5">
 							<span class="stylish">Travel is only glamorous in retrospect</span>
-							<h1>Explore and Travel</h1>
+							<h1>Explore Service Apartments</h1>
 						</div>
 						
 						<form class="st-search-form-tour icon-frm withlbl">

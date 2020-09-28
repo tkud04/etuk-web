@@ -1,5 +1,5 @@
 	<!-- ============================ Newsletter Start ================================== -->
-			<section class="alert-wrap pt-5 pb-5" style="background:#ff5722 url({{asset('img/bg-new.png')}});">
+			<section class="alert-wrap pt-5 pb-5" style="background:#be831d url({{asset('img/bg-new.png')}});">
 				<div class="container">
 					<div class="row">
 						<div class="col-lg-6 col-md-6">
