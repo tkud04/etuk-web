@@ -3,11 +3,10 @@
    $class = "warning";   
    $icon = "info";
    $title = "Success";
-   if($val == "error"){
-   	$signal = $signals['errors'];
+   $pos = strpos($pop,"error");
+   if($pos !== false){
    	$class = "danger";         
-       $pop .= "-error";
-	 $icon = "error";
+     $icon = "error";
    $title = "<strong>Oops...</strong>";
    }
 

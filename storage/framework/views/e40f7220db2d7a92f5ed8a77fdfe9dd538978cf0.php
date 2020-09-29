@@ -17,6 +17,8 @@
 		<!-- Custom Color Option -->
 		<link href="<?php echo e(asset('css/colors.css')); ?>" rel="stylesheet">
 		
+		<link rel="icon" type="image/png" href="<?php echo e(asset('img/favicon.png')); ?>" sizes="16x16">
+		
 		<script src="<?php echo e(asset('js/jquery.min.js')); ?>"></script>
 		<script src="<?php echo e(asset('js/popper.min.js')); ?>"></script>
 		<script src="<?php echo e(asset('js/bootstrap.min.js')); ?>"></script>

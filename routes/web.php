@@ -31,6 +31,10 @@ Route::get('profile', 'MainController@getProfile');
 Route::post('profile', 'MainController@postProfile');
 Route::get('sm', 'MainController@getSwitchMode');
 
+Route::get('my-apartments', 'MainController@getMyApartments');
+
+
+
 
 Route::get('payment/callback', 'PaymentController@getPaymentCallback');
 Route::get('pay', 'MainController@getPay');

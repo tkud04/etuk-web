@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Carts;
 use App\Categories;
-
+use App\Apartments;
 use App\Reviews;
 use App\Ads;
 use App\Banners;
@@ -35,6 +35,7 @@ class Helper implements HelperContract
  public $signals = ['okays'=> ["login-status" => "Welcome back!",            
                      "update-profile-status" => "Profile updated!",
                      "switch-mode-status" => "You have now switched your account mode.",
+					 "valid-mode-status-error" => "Access denied. Switch your account mode to grant permission for that action",
                      ],
                      'errors'=> ["login-status-error" => "Wrong username or password, please try again.",
 					 "signup-status-error" => "There was a problem creating your account, please try again.",
@@ -638,35 +639,100 @@ function isDuplicateUser($data)
                }                          
                                                       
                 return $ret;
-           }		   
+           }
 		   
+		    function isAdmin($user)
+           {
+           	$ret = false; 
+               if($user->role === "admin" || $user->role === "su") $ret = true; 
+           	return $ret;
+           }
 		   
-/**
-OLD FUNCTIONS BELOW
-**/
-	   
+		   function generateSKU()
+           {
+           	$ret = "ETUK".rand(1,9999)."GN".rand(1,999);
+                                                      
+                return $ret;
+           }
 		   
-		   
-		     function getProducts()
+	   function createApartment($data)
+           {
+           	$apartment_id = $this->generateSKU();
+               
+           	$ret = Apartments::create(['name' => $data['name'],                                                                                                          
+                                                      'apartment_id' => $apartment_id, 
+                                                      'user_id' => $data['user_id'],                                                       
+                                                      'avb' => $data['avb'],                                                       
+                                                      'in_catalog' => "no", 
+                                                      'status' => "enabled", 
+                                                      ]);
+                                                      
+                 $data['sku'] = $ret->sku;                         
+                $pd = $this->createProductData($data);
+				$ird = "none";
+				$irdc = 0;
+				if(isset($data['ird']) && count($data['ird']) > 0)
+				{
+					foreach($data['ird'] as $i)
+                    {
+                    	$this->createProductImage(['sku' => $data['sku'], 'url' => $i['public_id'], 'cover' => $i['ci'], 'irdc' => "1"]);
+                    }
+				}
+                
+                return $ret;
+           }
+
+     function getApartments($user)
            {
            	$ret = [];
-              $products = Products::where('id','>',"0")
-                                   ->where('qty','>',"0")
+              $apartments = Apartments::where('user_id',$user->id)
 			                       ->where('status',"enabled")->get();
 								   
-				$products = $products->sortByDesc('created_at');				   
+				$apartments = $apartments->sortByDesc('created_at');				   
  
-              if($products != null)
+              if($apartments != null)
                {
-				  foreach($products as $p)
+				  foreach($apartments as $a)
 				  {
-					     $pp = $this->getProduct($p->id);
-					     array_push($ret,$pp); 
+					     $aa = $this->getApartment($a->id);
+					     array_push($ret,$aa); 
 				  }
                }                         
                                                       
                 return $ret;
            }
+
+
+    function getApartment($id)
+           {
+           	$ret = [];
+              $apartment = Apartments::where('id',$id)
+			                 ->orWhere('apartment_id',$id)->first();
+ 
+              if($apartment != null)
+               {
+				  $temp = [];
+				  $temp['id'] = $product->id;
+				  $temp['name'] = $product->name;
+				  $temp['sku'] = $product->sku;
+				  $temp['qty'] = $product->qty;
+				  $temp['status'] = $product->status;
+				  $temp['discounts'] = $this->getDiscounts($product->sku);
+				  $temp['pd'] = $this->getProductData($product->sku);
+				  $imgs = $this->getImages($product->sku);
+				  #dd($imgs);
+				  $temp['imggs'] = $this->getCloudinaryImages($imgs);
+				  $ret = $temp;
+               }                         
+                                                      
+                return $ret;
+           }	   
+		   
+		   
+/***************************************************************************************************** 
+                                             OLD FUNCTIONS BELOW
+******************************************************************************************************/
+	   
 		   
 		   function getProductsByCategory($cat)
            {
@@ -705,30 +771,7 @@ OLD FUNCTIONS BELOW
                 return $ret;
            }
 		   
-		   function getProduct($id)
-           {
-           	$ret = [];
-              $product = Products::where('id',$id)
-			                 ->orWhere('sku',$id)->first();
- 
-              if($product != null)
-               {
-				  $temp = [];
-				  $temp['id'] = $product->id;
-				  $temp['name'] = $product->name;
-				  $temp['sku'] = $product->sku;
-				  $temp['qty'] = $product->qty;
-				  $temp['status'] = $product->status;
-				  $temp['discounts'] = $this->getDiscounts($product->sku);
-				  $temp['pd'] = $this->getProductData($product->sku);
-				  $imgs = $this->getImages($product->sku);
-				  #dd($imgs);
-				  $temp['imggs'] = $this->getCloudinaryImages($imgs);
-				  $ret = $temp;
-               }                         
-                                                      
-                return $ret;
-           }
+		 
 
 		   function createDiscount($data)
            {

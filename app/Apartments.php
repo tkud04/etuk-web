@@ -13,6 +13,6 @@ class Apartments extends Model
      * @var array
      */
     protected $fillable = [
-        'id', 'user_id', 'apartment_id', 'avb', 'name', 'status'
+        'id', 'user_id', 'apartment_id', 'avb', 'name', 'status', 'in_catalog'
     ];
 }

@@ -17,6 +17,8 @@
 		<!-- Custom Color Option -->
 		<link href="{{asset('css/colors.css')}}" rel="stylesheet">
 		
+		<link rel="icon" type="image/png" href="{{asset('img/favicon.png')}}" sizes="16x16">
+		
 		<script src="{{asset('js/jquery.min.js')}}"></script>
 		<script src="{{asset('js/popper.min.js')}}"></script>
 		<script src="{{asset('js/bootstrap.min.js')}}"></script>

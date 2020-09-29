@@ -286,6 +286,51 @@ class MainController extends Controller {
 		 }
     }
 	
+	/**
+	 * Show host apartments.
+	 *
+	 * @return Response
+	 */
+	public function getMyApartments(Request $request)
+    {
+		$user = null;
+		if(Auth::check())
+		{
+			$user = Auth::user();
+			
+			if($user->mode != "host")
+			{
+				session()->flash("valid-mode-status-error","ok");
+			    return redirect()->intended('/');
+			}
+		}
+		else
+		{
+			return redirect()->intended('/');
+		}
+		
+		$req = $request->all();
+		
+		$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
+		$cart = $this->helpers->getCart($user,$gid);
+		
+		$c = $this->helpers->getCategories();
+		//dd($bs);
+		$signals = $this->helpers->signals;
+		
+		$ads = $this->helpers->getAds("wide-ad");
+		$plugins = $this->helpers->getPlugins();
+		
+		$apartments = $this->helpers->getApartments($user);
+		#dd($apartments);
+		shuffle($ads);
+		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
+        
+    	return view("my-apartments",compact(['user','cart','c','ad','apartments','signals','plugins']));
+    }
+	
+	
+	
 
 	/**
 	 * Show the application welcome screen to the user.
