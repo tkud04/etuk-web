@@ -48,7 +48,7 @@
 					<nav id="navigation" class="navigation navigation-landscape">
 						<div class="nav-header">
 							<a class="nav-brand" href="{{url('/')}}">
-								<img src="{{asset('img/logo-white.jpg')}}" class="logo" alt="" />
+								<img src="{{asset('img/etukng.png')}}" class="logo" alt="" />
 							</a>
 							<div class="nav-toggle"></div>
 						</div>
@@ -224,7 +224,7 @@
 							
 							<div class="col-lg-3 col-md-4">
 								<div class="footer-widget">
-									<img src="{{asset('img/logo-white.jpg')}}" class="img-footer" alt="" />
+									<img src="{{asset('img/etukng.png')}}" class="img-footer" alt="" />
 									<div class="footer-add">
 										<p><strong>Email:</strong></br><a href="javascript:void(0)">hello@etuk.ng</a></p>
 										<p><strong>Call:</strong></br>(234) 801 234 5678</p>
