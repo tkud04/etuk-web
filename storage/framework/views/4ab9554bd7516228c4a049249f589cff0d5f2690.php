@@ -11,8 +11,9 @@
 									<ul>
 										<li class="active"><a href="dashboard.html"><i class="ti-dashboard"></i>Dashboard</a></li>
 										<li><a href="<?php echo e(url('profile')); ?>"><i class="ti-user"></i>My Profile</a></li>
-										<li><a href="<?php echo e(url('history')); ?>"><i class="ti-layers"></i>Transaction History</a></li>
-										<li><a href="<?php echo e(url('saved-items')); ?>"><i class="ti-heart"></i>Saved Items</a></li>
+										<li><a href="<?php echo e(url('history')); ?>"><i class="ti-credit-card"></i>Transaction History</a></li>
+										<li><a href="<?php echo e(url('saved-items')); ?>"><i class="ti-heart"></i>Saved Apartments</a></li>
+										<li><a href="<?php echo e(url('apartment-preferences')); ?>"><i class="ti-home"></i>Apartment Preferences</a></li>
 										<li><a href="<?php echo e(url('change-password')); ?>"><i class="ti-unlock"></i>Change Password</a></li>
 										<li><a href="<?php echo e(url('logout')); ?>"><i class="ti-power-off"></i>Log Out</a></li>
 									</ul>

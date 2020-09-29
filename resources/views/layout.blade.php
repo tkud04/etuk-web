@@ -86,8 +86,7 @@
 							  @else
 								  <li><a href="javascript:void(0);">Hello, <em>{{$user->fname}}</em><span class="submenu-indicator"></span></a>
 									<ul class="nav-dropdown nav-submenu">
-										<li><a href="{{url('dashboard')}}">Dashboard</a></li>                                    
-										<li><a href="{{url('orders')}}">Orders</a></li>                                    
+										<li><a href="{{url('dashboard')}}">Dashboard</a></li>                              
 										<li><a href="{{url('messages')}}">Messages</a></li>
 										<li><a href="{{url('bye')}}">Sign out</a></li>  
 									</ul>
