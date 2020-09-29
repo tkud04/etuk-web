@@ -23,8 +23,12 @@
 										<li><a href="javascript:void(0)">(234) 801 234 5678</a></li>
 									</ul class="tp-list">
 									<ul class="tp-list ml-2">
+									   @if(isset($user) && $user != null)
+										   <li><a href="{{url('dashboard')}}">Dashboard</a></li>
+									   @else
 										<li><a href="javascript:void(0)" data-toggle="modal" data-target="#login">Login</a></li>
 										<li><a href="javascript:void(0)" data-toggle="modal" data-target="#signup">Sign Up</a></li>
+									   @endif
 									</ul>
 									<ul class="tp-list nbr ml-2">
 										<li class="dropdown dropdown-currency hidden-xs hidden-sm">

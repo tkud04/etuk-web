@@ -23,8 +23,12 @@
 										<li><a href="javascript:void(0)">(234) 801 234 5678</a></li>
 									</ul class="tp-list">
 									<ul class="tp-list ml-2">
+									   <?php if(isset($user) && $user != null): ?>
+										   <li><a href="<?php echo e(url('dashboard')); ?>">Dashboard</a></li>
+									   <?php else: ?>
 										<li><a href="javascript:void(0)" data-toggle="modal" data-target="#login">Login</a></li>
 										<li><a href="javascript:void(0)" data-toggle="modal" data-target="#signup">Sign Up</a></li>
+									   <?php endif; ?>
 									</ul>
 									<ul class="tp-list nbr ml-2">
 										<li class="dropdown dropdown-currency hidden-xs hidden-sm">
