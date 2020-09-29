@@ -24,7 +24,7 @@ $subtitle = "Manage everything about your apartments here";
 							<div class="dashboard-wrapers">
 							
 								<div class="dashboard-gravity-list mt-0">
-									<h4>Saved Listings</h4>
+									<h4>My Apartments | <a href="<?php echo e(url('add-apartment')); ?>">Post New Apartment</a></h4>
 									<ul>
 
 										<li>
