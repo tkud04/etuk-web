@@ -27,6 +27,8 @@ Route::post('hello', 'LoginController@postHello');
 Route::get('bye', 'LoginController@getBye');
 
 Route::get('dashboard', 'MainController@getDashboard');
+Route::get('profile', 'MainController@getProfile');
+Route::post('profile', 'MainController@postProfile');
 Route::get('sm', 'MainController@getSwitchMode');
 
 

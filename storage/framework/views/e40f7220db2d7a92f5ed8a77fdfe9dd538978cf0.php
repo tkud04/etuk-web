@@ -5,7 +5,7 @@
 		<meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		
-        <title><?php echo $__env->yieldContent('title'); ?> | Etuk NG - Rentals</title>
+        <title><?php echo $__env->yieldContent('title'); ?> | Etuk NG - Rent Apartments For Short Rest Anywhere In Nigeria</title>
 		
         <!-- All Plugins Css -->
         <link rel="stylesheet" href="<?php echo e(asset('css/plugins.css')); ?>">

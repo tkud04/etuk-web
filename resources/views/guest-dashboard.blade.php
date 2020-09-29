@@ -1,6 +1,6 @@
 <?php
-$title = "Dashboard";
-$subtitle = "Welcome to your dashboard";
+$title = "Guest Dashboard";
+$subtitle = "Manage your guest account here";
 ?>
 @extends('layout')
 
@@ -18,7 +18,7 @@ $subtitle = "Welcome to your dashboard";
 				<div class="container-fluid">
 					<div class="row">
 						
-						@include('dashboard-sidebar',['user' => $user])
+						@include('guest-dashboard-sidebar',['user' => $user])
 						
 						<div class="col-lg-9 col-md-8 col-sm-12">
 							<div class="dashboard-wrapers">

@@ -2,16 +2,16 @@
 $title = "Profile";
 $subtitle = "Edit your account information";
 ?>
-@extends('layout')
 
-@section('title',$title)
 
-@section('top-header')
-@include('top-header')
-@stop
+<?php $__env->startSection('title',$title); ?>
 
-@section('content')
-@include('banner-2',['title' => $title,'subtitle' => $subtitle])
+<?php $__env->startSection('top-header'); ?>
+<?php echo $__env->make('top-header', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+<?php echo $__env->make('banner-2',['title' => $title,'subtitle' => $subtitle], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
 	<!-- ============================ Profile Start ================================== -->
 			<section class="gray">
@@ -19,7 +19,7 @@ $subtitle = "Edit your account information";
 					<div class="row">
 						<div class="col-lg-12 col-md-12 col-sm-12">
 							<div class="dashboard-wraper">
-							<form method="post" action="{{url('profile')}}">
+							<form method="post" action="<?php echo e(url('profile')); ?>">
 								<!-- Basic Information -->
 								<div class="form-submit">	
 									<h4>Account Information</h4>
@@ -30,18 +30,18 @@ $subtitle = "Edit your account information";
 											   <div class="row">
 											      <div class="form-group col-md-6">
 												      <label>First Name</label>
-												      <input type="text" name="fname" class="form-control" value="{{$u['fname']}}">
+												      <input type="text" name="fname" class="form-control" value="<?php echo e($u['fname']); ?>">
 											      </div>
 											      <div class="form-group col-md-6">
 												      <label>Last Name</label>
-												      <input type="text" name="lname" class="form-control" value="{{$u['lname']}}">
+												      <input type="text" name="lname" class="form-control" value="<?php echo e($u['lname']); ?>">
 											      </div>
 											   </div>
 											</div>
 											
 											<div class="form-group col-md-6">
 												<label>Email</label>
-												<input type="email" class="form-control" value="{{$u['email']}}">
+												<input type="email" class="form-control" value="<?php echo e($u['email']); ?>">
 											</div>
 											
 											<div class="form-group col-md-6">
@@ -123,4 +123,5 @@ $subtitle = "Edit your account information";
 				</div>
 			</section>
 			<!-- ============================ Profile End ================================== -->
-@stop
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\bkupp\lokl\repo\etuk-web\resources\views/profile.blade.php ENDPATH**/ ?>

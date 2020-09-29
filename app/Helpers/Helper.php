@@ -33,12 +33,12 @@ class Helper implements HelperContract
 {
 
  public $signals = ['okays'=> ["login-status" => "Welcome back!",            
-                     "profile-status" => "Profile updated!",
+                     "update-profile-status" => "Profile updated!",
                      "switch-mode-status" => "You have now switched your account mode.",
                      ],
                      'errors'=> ["login-status-error" => "Wrong username or password, please try again.",
 					 "signup-status-error" => "There was a problem creating your account, please try again.",
-					 "profile-status-error" => "There was a problem updating your profile, please try again.",
+					 "update-profile-status-error" => "There was a problem updating your profile, please try again.",
                     ]
                    ];
   
@@ -410,7 +410,7 @@ $subject = $data['subject'];
            	$ret = [];
                $u = User::where('email',$id)
 			            ->orWhere('id',$id)->first();
- 
+              
               if($u != null)
                {
                    	$temp['fname'] = $u->fname; 
@@ -456,7 +456,7 @@ $subject = $data['subject'];
            }
 		   
 		   
-		   function updateProfile($user, $data)
+		   function updateProfile($data)
            {  
               $ret = 'error'; 
          
@@ -464,12 +464,12 @@ $subject = $data['subject'];
                {
                	$u = User::where('id', $data['xf'])->first();
                    
-                        if($u != null && $user == $u)
+                        if($u != null)
                         {
 							$role = $u->role;
 							if(isset($data['role'])) $role = $data['role'];
 							$status = $u->status;
-							if(isset($data['status'])) $role = $data['status'];
+							if(isset($data['status'])) $status = $data['status'];
 							
                         	$u->update(['fname' => $data['fname'],
                                               'lname' => $data['lname'],
@@ -480,7 +480,7 @@ $subject = $data['subject'];
                                               #'verified' => $data['verified'],
                                            ]);
 										   
-							$this->updateShippingDetails($user,$data);
+							//$this->updateShippingDetails($user,$data);
                                            
                                            $ret = "ok";
                         }                                    

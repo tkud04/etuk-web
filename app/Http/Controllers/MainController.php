@@ -148,8 +148,97 @@ class MainController extends Controller {
 		
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
+        
+		$cpt = []; $v = "errors.404";
+		
+		if($user->mode == "host")
+		{
+			$cpt = ['user','cart','c','ad','signals','plugins'];
+			$v = "host-dashboard";
+		}
+		else if($user->mode == "guest")
+		{
+			$cpt = ['user','cart','c','ad','signals','plugins'];
+			$v = "guest-dashboard";
+		}
+		
+    	return view($v,compact($cpt));
+    }
+	
+	/**
+	 * Show the profile.
+	 *
+	 * @return Response
+	 */
+	public function getProfile(Request $request)
+    {
+		$user = null;
+		if(Auth::check())
+		{
+			$user = Auth::user();
+		}
+		else
+		{
+			return redirect()->intended('/');
+		}
+		
+		$req = $request->all();
+		
+		$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
+		$cart = $this->helpers->getCart($user,$gid);
+		#dd($user);
+		$c = $this->helpers->getCategories();
+		//dd($bs);
+		$signals = $this->helpers->signals;
+		
+		$ads = $this->helpers->getAds("wide-ad");
+		$plugins = $this->helpers->getPlugins();
+		
+		$u = $this->helpers->getUser($user->id);
+		shuffle($ads);
+		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
+        
+    	return view("profile",compact(['user','cart','c','ad','u','signals','plugins']));
+    }
+	
+	/**
+	 * Handle profile update.
+	 *
+	 * @return Response
+	 */
+	public function postProfile(Request $request)
+    {
+		$user = null;
+		if(Auth::check())
+		{
+			$user = Auth::user();
+		}
+		else
+		{
+			return redirect()->intended('/');
+		}
 
-    	return view("dashboard",compact(['user','cart','c','ad','signals','plugins']));
+		$req = $request->all();
+       dd($req);
+	    
+		$validator = Validator::make($req,[
+		                    'xf' => 'required',
+		                    'fname' => 'required',
+		                    'lname' => 'required',
+		                    'email' => 'required',
+		                    'phone' => 'required',
+		]);
+		
+		if($validator->fails())
+         {
+             return redirect()->back()->withInput()->with('errors',$messages);
+         }
+		 else
+		 {
+			$this->helpers->updateProfile($req);
+			session()->flash("update-profile-status","ok");
+			return redirect()->intended('profile');
+		 }
     }
 
 	/**
