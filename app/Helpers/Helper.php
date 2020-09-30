@@ -734,7 +734,7 @@ function isDuplicateUser($data)
 				  $temp['qty'] = $product->qty;
 				  $temp['status'] = $product->status;
 				  $temp['discounts'] = $this->getDiscounts($product->sku);
-				  $temp['pd'] = $this->getProductData($product->sku);
+				  $temp['address'] = $this->getApartmentAddress($apartment->apartment_id);
 				  $imgs = $this->getImages($product->sku);
 				  #dd($imgs);
 				  $temp['imggs'] = $this->getCloudinaryImages($imgs);
