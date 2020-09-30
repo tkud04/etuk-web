@@ -13,6 +13,6 @@ class ApartmentAddresses extends Model
      * @var array
      */
     protected $fillable = [
-        'id', 'user_id', 'apartment_id', 'avb', 'name', 'status', 'in_catalog'
-    ];
+        'id', 'apartment_id', 'address', 'city', 'state'
+	];
 }
