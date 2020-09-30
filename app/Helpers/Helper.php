@@ -11,6 +11,7 @@ use App\User;
 use App\Carts;
 use App\Categories;
 use App\Apartments;
+use App\ApartmentAddresses;
 use App\Reviews;
 use App\Ads;
 use App\Banners;
@@ -667,8 +668,9 @@ function isDuplicateUser($data)
                                                       'status' => "enabled", 
                                                       ]);
                                                       
-                 $data['sku'] = $ret->sku;                         
-                $pd = $this->createProductData($data);
+                 $data['apartment_id'] = $ret->apartment_id;                         
+                $aa = $this->createApartmentAddress($data);
+				/**
 				$ird = "none";
 				$irdc = 0;
 				if(isset($data['ird']) && count($data['ird']) > 0)
@@ -678,9 +680,23 @@ function isDuplicateUser($data)
                     	$this->createProductImage(['sku' => $data['sku'], 'url' => $i['public_id'], 'cover' => $i['ci'], 'irdc' => "1"]);
                     }
 				}
+				**/
                 
                 return $ret;
            }
+		   
+		   function createApartmentAddress($data)
+           {
+           	$ret = ApartmentAddresses::create(['apartment_id' => $data['apartment_id'], 
+                                                      'address' => $data['address'],                                                       
+                                                      'city' => $data['city'],                                                       
+                                                      'state' => $data['state']
+                                                      ]);
+                              
+                return $ret;
+           }
+		   
+		   
 
      function getApartments($user)
            {
@@ -726,7 +742,33 @@ function isDuplicateUser($data)
                }                         
                                                       
                 return $ret;
-           }	   
+           }
+
+
+    function getApartmentAddress($id)
+           {
+           	$ret = [];
+              $aa = ApartmentAddresses::where('id',$id)
+			                 ->orWhere('apartment_id',$id)->first();
+ 
+              if($aa != null)
+               {
+				  $temp = [];
+				  $temp['id'] = $apartment->id;
+				  $temp['name'] = $apartment->name;
+				  $temp['apartment_id'] = $apartment->apartment_id;
+				  $temp['address'] = $apartment->getApartmentAddress($apartment->apartment_id);
+				  $temp['status'] = $apartment->status;
+				  $temp['discounts'] = $this->getDiscounts($product->sku);
+				  $temp['pd'] = $this->getProductData($product->sku);
+				  $imgs = $this->getImages($product->sku);
+				  #dd($imgs);
+				  $temp['imggs'] = $this->getCloudinaryImages($imgs);
+				  $ret = $temp;
+               }                         
+                                                      
+                return $ret;
+           }			   
 		   
 		   
 /***************************************************************************************************** 
