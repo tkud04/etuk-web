@@ -1,5 +1,4 @@
 <?php
-$user = null;
 $cart = [];
 $title = "Page Not Found";
 $subtitle = "We checked very hard but could not find what you were looking for";

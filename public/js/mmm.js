@@ -4,6 +4,7 @@ $(document).ready(function() {
     "use strict";
 	hideInputErrors(["signup","login","forgot-password","reset-password"]);
 	hideElem(["#signup-loading","#signup-finish","#login-loading","#login-finish","#fp-loading","#fp-finish","#rp-loading","#rp-finish"]);
+	hideElem(["#add-apartment-side-2","#add-apartment-side-3"]);
 	
 	
     $("a.lno-cart").on("click", function(e) {
@@ -114,5 +115,34 @@ $(document).ready(function() {
 			 email: id
 		 });   
 	   }
+    });
+	
+	$("#add-apartment-side-1-next").click(e => {
+       e.preventDefault();
+	  hideElem(['#add-apartment-side-1','#add-apartment-side-3']);
+	  selectCheckoutSide({side: 2,type: ".add-apartment",content: "ti-check"});
+	  showElem(['#add-apartment-side-2']);
+    });
+	$("#add-apartment-side-2-prev").click(e => {
+       e.preventDefault();
+	  hideElem(['#add-apartment-side-2','#add-apartment-side-3']);
+	  selectCheckoutSide({side: 1,type: ".add-apartment",content: "ti-check"});
+	  showElem(['#add-apartment-side-1']);
+    });	
+	$("#add-apartment-side-2-next").click(e => {
+       e.preventDefault();
+	  hideElem(['#add-apartment-side-1','#add-apartment-side-2']);
+	  selectCheckoutSide({side: 3,type: ".add-apartment",content: "ti-check"});
+	  showElem(['#add-apartment-side-3']);
+    });
+	$("#add-apartment-side-3-prev").click(e => {
+       e.preventDefault();
+	  hideElem(['#add-apartment-side-1','#add-apartment-side-3']);
+	  selectCheckoutSide({side: 2,type: ".add-apartment",content: "ti-check"});
+	  showElem(['#add-apartment-side-2']);
+    });	
+	$("#add-apartment-side-3-next").click(e => {
+       e.preventDefault();
+	   console.log("add apartment submit");
     });	
 });

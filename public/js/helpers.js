@@ -64,6 +64,24 @@ const hideInputErrors = type => {
 	}
 }
 
+const selectCheckoutSide = dt => {
+	unselectCheckoutSide(dt);
+	let iicon = `${dt.type}-active-${dt.side}`;
+	$(iicon).addClass("active");
+	selectedSide = dt.side;
+}
+
+const unselectCheckoutSide = (dt) => {
+	let iicon = `${dt.type}-active-${selectedSide}`;
+	
+	$(iicon).removeClass("active");
+}
+
+const selectCheckoutSide2 = dt => {
+	let iicon = `${dt.type}-active-${dt.side}`;
+	
+	$(iicon).html(dt.content);
+}
 
 const signup = dt => {
 

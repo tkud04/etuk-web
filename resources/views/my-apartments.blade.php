@@ -13,7 +13,7 @@ $subtitle = "Manage everything about your apartments here";
 @section('content')
 @include('banner-2',['title' => $title,'subtitle' => $subtitle])
 
-	<!-- ============================ Dashboard Start ================================== -->
+	<!-- ============================ My Apartments Start ================================== -->
 			<section class="gray">
 				<div class="container-fluid">
 					<div class="row">
@@ -64,6 +64,6 @@ $subtitle = "Manage everything about your apartments here";
 					</div>
 				</div>
 			</section>
-			<!-- ============================ Dashboard End ================================== -->
+			<!-- ============================ My Apartments End ================================== -->
 
 @stop

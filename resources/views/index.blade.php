@@ -1,3 +1,4 @@
+
 @extends('layout')
 
 @section('title',"Welcome")
@@ -53,7 +54,7 @@
 			<!-- ================= End true Facts ========================= -->
 			
 			
-						<!-- ================= Apartment start ========================= -->
+						<!-- ================= Apartments start ========================= -->
 			<section class="min">
 				<div class="container">
 				
@@ -117,18 +118,9 @@
 			<!-- ========================= End Apartment Section ============================ -->
 			
 			
-			<!-- ================= Activities start ========================= -->
+			<!-- ================= Ads start ========================= -->
 			<section class="gray">
 				<div class="container">
-					
-					<div class="row">
-						<div class="col-lg-12 col-md-12">
-							<div class="sec-heading center">
-								<p>Top Bouquets</p>
-								<h2>Get more for less!</h2>
-							</div>
-						</div>
-					</div>
 					
 					<div class="row">
 						<div class="col-lg-12 col-md-12">
@@ -220,7 +212,105 @@
 					
 				</div>
 			</section>
-			<!-- ========================= End Activities Section ============================ -->
+			<!-- ========================= End Ads Section ============================ -->
+			
+			
+				<!-- ================= Bouquets start ========================= -->
+			<section class="">
+				<div class="container">
+					
+					<div class="row">
+						<div class="col-lg-12 col-md-12">
+							<div class="sec-heading center">
+								<p>Top Bouquets</p>
+								<h2>Get More For Less!</h2>
+							</div>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-lg-12 col-md-12">
+							<div class="owl-carousel owl-theme" id="lists-slide">
+								<?php
+								  $bouquets = [
+								   [
+								     'apartment_id' => "ETUK88293CD768",
+								     'location' => "Maryland, Lagos",
+									 'img'=> asset("img/des-2.jpg"),
+									 'href' => "javascript:void(0)",
+									 'discount' => "5000",
+									 'amount' => "20000",
+									 'description' => "A lovely description about my apartment and why you would have an amazing time here."
+								   ],
+								   [
+								     'apartment_id' => "ETUK979293CD7",
+								     'location' => "Naby Barracks, Calabar",
+									 'img'=> asset("img/des-3.jpg"),
+									 'href' => "javascript:void(0)",
+									 'discount' => "5000",
+									 'amount' => "20000",
+									 'description' => "A lovely description about my apartment and why you would have an amazing time here."
+								   ],
+								   [
+								     'apartment_id' => "ETUK882956768",
+								     'location' => "Maitama, Abuja",
+									 'img'=> asset("img/des-4.jpg"),
+									 'href' => "javascript:void(0)",
+									 'discount' => "5000",
+									 'amount' => "20000",
+									 'description' => "A lovely description about my apartment and why you would have an amazing time here."
+								   ],
+								   [
+								     'apartment_id' => "ETUK882454CD808",
+								     'location' => "Oshogbo, Osun",
+									 'img'=> asset("img/des-5.jpg"),
+									 'href' => "javascript:void(0)",
+									 'discount' => "5000",
+									 'amount' => "20000",
+									 'description' => "A lovely description about my apartment and why you would have an amazing time here."
+								   ],
+								   [
+								     'apartment_id' => "ETUK57593CD444",
+								     'location' => "Ikoyi, Lagos",
+									 'img'=> asset("img/des-6.jpg"),
+									 'href' => "javascript:void(0)",
+									 'discount' => "5000",
+									 'amount' => "20000",
+									 'description' => "A lovely description about my apartment and why you would have an amazing time here."
+								   ],
+								  ];
+								  
+								  foreach($bouquets as $bq)
+								  {
+								?>
+								<div class="single-item">
+									<div class="destination-discount">
+										<div class="destination-discount-thumb">
+											<a href="{{$bq['href']}}"><img src="{{$bq['img']}}" class="img-responsive" alt="Apartment #{{$bq['apartment_id']}}" /></a>
+										</div>
+										<div class="destination-discount-caption">
+											<div class="discount-box">
+												<h4 class="discount-title"><sup class="current-title">&#8358;</sup>{{number_format($bq['discount'],2)}}</h4>
+												<span>Off</span>
+											</div>
+											<h4 class="destination-title"><a href="{{$bq['href']}}">{{$bq['location']}}</a></h4>
+											<p>{{$bq['description']}}</p>
+											<h5 class="destination-price theme-cl"><span>From</span>&#8358;{{$bq['amount'] - $bq['discount']}}</h5>
+											<a href="{{$bq['href']}}" class="check-btn">Check<i class="ti-arrow-right"></i></a>
+										</div>
+									</div>
+								</div>
+								<?php
+								  }
+								?>
+							
+							</div>
+						</div>
+					</div>
+					
+				</div>
+			</section>
+			<!-- ========================= End Bouquets Section ============================ -->
 
       @include('recent-blog')
       @include('newsletter-cta')
