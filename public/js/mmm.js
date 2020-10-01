@@ -7,6 +7,15 @@ $(document).ready(function() {
 	hideElem(["#add-apartment-side-2","#add-apartment-side-3"]);
 	
 	
+	//Init wysiwyg editors
+	Simditor.locale = 'en-US';
+	let  toolbar = ['title', 'bold', 'italic', 'underline', 'strikethrough', 'fontScale', 'color', '|', 'ol', 'ul', 'blockquote', 'code', 'table', '|', 'link', 'image', 'hr', '|', 'indent', 'outdent', 'alignment'];
+	
+	let addApartmentDescriptionEditor = new Simditor({
+		textarea: $('#add-apartment-description'),
+		toolbar: toolbar
+	});
+	
     $("a.lno-cart").on("click", function(e) {
     	if(isMobile()){
     	  window.location = "cart";

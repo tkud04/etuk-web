@@ -25,7 +25,14 @@
 		<script src="<?php echo e(asset('js/helpers.js').'?ver='.rand(23,999)); ?>"></script>
 		<script src="<?php echo e(asset('js/mmm.js').'?ver='.rand(23,999)); ?>"></script>
 		
-		 <!--SweetAlert--> 
+		 <!--Simeditor--> 
+        <link rel="stylesheet" type="text/css" href="<?php echo e(asset('lib/simeditor/css/simditor.css')); ?>" />
+        <script type="text/javascript" src="<?php echo e(asset('lib/simeditor/js/module.js')); ?>"></script>
+        <script type="text/javascript" src="<?php echo e(asset('lib/simeditor/js/hotkeys.js')); ?>"></script>
+        <script type="text/javascript" src="<?php echo e(asset('lib/simeditor/js/uploader.js')); ?>"></script>
+        <script type="text/javascript" src="<?php echo e(asset('lib/simeditor/js/simditor.js')); ?>"></script>		
+		
+		<!--SweetAlert--> 
     <link href="<?php echo e(asset('lib/sweet-alert/sweetalert2.css')); ?>" rel="stylesheet">
     <script src="<?php echo e(asset('lib/sweet-alert/sweetalert2.js')); ?>"></script>
 		

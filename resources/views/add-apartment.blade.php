@@ -5,8 +5,8 @@ $subtitle = "Post a new apartment to your listings";
 $checkoutHead = <<<EOD
                                 <div class="checkout-head">
 									<ul>
-										<li class="add-apartment-active-1 active"><span class="add-apartment-ticker-1">1</span>Basic Information</li>
-										<li class="add-apartment-active-2"><span class="add-apartment-ticker-2">2</span>Amenities and Services</li>
+										<li class="add-apartment-active-1 active"><span class="add-apartment-ticker-1">1</span>Hotel Information</li>
+										<li class="add-apartment-active-2"><span class="add-apartment-ticker-2">2</span>Location & Media</li>
 										<li class="add-apartment-active-3"><span class="add-apartment-ticker-3">3</span>Preview</li>
 									</ul>
 								</div>
@@ -40,7 +40,7 @@ let selectedSide = "1";
 									<div class="row">
 								
 										<div class="col-lg-12 col-md-12 col-sm-12">
-											<h4 class="mb-3">Billing Detail</h4>
+											<h4 class="mb-3">Hotel Information</h4>
 										</div>
 										
 										<div class="col-lg-6 col-md-6 col-sm-12">
@@ -100,7 +100,7 @@ let selectedSide = "1";
 										<div class="col-lg-12 col-md-12 col-sm-12">
 											<div class="form-group">
 												<label>Special Instruction</label>
-												<textarea class="form-control"></textarea>
+												<textarea id="add-apartment-description" class="form-control"></textarea>
 											</div>
 										</div>										
 										
@@ -132,7 +132,7 @@ let selectedSide = "1";
 									<div class="row mb-5">
 								
 										<div class="col-lg-12 col-md-12 col-sm-12">
-											<h4 class="mb-3">Payment Information</h4>
+											<h4 class="mb-3">Location & Media</h4>
 										</div>
 										
 										<div class="col-lg-6 col-md-6 col-sm-12">

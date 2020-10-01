@@ -669,6 +669,7 @@ function isDuplicateUser($data)
                                                       ]);
                                                       
                  $data['apartment_id'] = $ret->apartment_id;                         
+                $adt = $this->createApartmentData($data);
                 $aa = $this->createApartmentAddress($data);
 				/**
 				$ird = "none";
@@ -691,6 +692,16 @@ function isDuplicateUser($data)
                                                       'address' => $data['address'],                                                       
                                                       'city' => $data['city'],                                                       
                                                       'state' => $data['state']
+                                                      ]);
+                              
+                return $ret;
+           }
+		   
+		   function createApartmentData($data)
+           {
+           	$ret = ApartmentData::create(['apartment_id' => $data['apartment_id'], 
+                                                      'description' => $data['description'],                                                       
+                                                      'amount' => $data['amount']                                                       
                                                       ]);
                               
                 return $ret;
@@ -734,6 +745,7 @@ function isDuplicateUser($data)
 				  $temp['qty'] = $product->qty;
 				  $temp['status'] = $product->status;
 				  $temp['discounts'] = $this->getDiscounts($product->sku);
+				  $temp['data'] = $this->getApartmentData($apartment->apartment_id);
 				  $temp['address'] = $this->getApartmentAddress($apartment->apartment_id);
 				  $temp['reviews'] = $this->getReviews($apartment->apartment_id);
 				  $imgs = $this->getImages($product->sku);
@@ -746,7 +758,27 @@ function isDuplicateUser($data)
            }
 
 
-    function getApartmentAddress($id)
+    function getApartmentData($id)
+           {
+           	$ret = [];
+              $adt = ApartmentData::where('id',$id)
+			                 ->orWhere('apartment_id',$id)->first();
+ 
+              if($adt != null)
+               {
+				  $temp = [];
+				  $temp['id'] = $adt->id;
+				  $temp['apartment_id'] = $adt->apartment_id;
+     			  $temp['description'] = $adt->description;
+				  $temp['amount'] = $adt->amount;
+				  $temp['landmarks'] = $adt->landmarks;
+				  $ret = $temp;
+               }                         
+                                                      
+                return $ret;
+           }			   
+	
+	function getApartmentAddress($id)
            {
            	$ret = [];
               $aa = ApartmentAddresses::where('id',$id)
