@@ -735,6 +735,7 @@ function isDuplicateUser($data)
 				  $temp['status'] = $product->status;
 				  $temp['discounts'] = $this->getDiscounts($product->sku);
 				  $temp['address'] = $this->getApartmentAddress($apartment->apartment_id);
+				  $temp['reviews'] = $this->getReviews($apartment->apartment_id);
 				  $imgs = $this->getImages($product->sku);
 				  #dd($imgs);
 				  $temp['imggs'] = $this->getCloudinaryImages($imgs);
@@ -754,16 +755,11 @@ function isDuplicateUser($data)
               if($aa != null)
                {
 				  $temp = [];
-				  $temp['id'] = $apartment->id;
-				  $temp['name'] = $apartment->name;
-				  $temp['apartment_id'] = $apartment->apartment_id;
-				  $temp['address'] = $apartment->getApartmentAddress($apartment->apartment_id);
-				  $temp['status'] = $apartment->status;
-				  $temp['discounts'] = $this->getDiscounts($product->sku);
-				  $temp['pd'] = $this->getProductData($product->sku);
-				  $imgs = $this->getImages($product->sku);
-				  #dd($imgs);
-				  $temp['imggs'] = $this->getCloudinaryImages($imgs);
+				  $temp['id'] = $aa->id;
+				  $temp['apartment_id'] = $aa->apartment_id;
+     			  $temp['address'] = $aa->address;
+				  $temp['city'] = $aa->city;
+				  $temp['state'] = $aa->state;
 				  $ret = $temp;
                }                         
                                                       
@@ -771,9 +767,108 @@ function isDuplicateUser($data)
            }			   
 		   
 		   
+  function createReview($user,$data)
+           {
+			   $ret = Reviews::create(['user_id' => $user->id, 
+                                                      'apartment_id' => $data['apartment_id'], 
+                                                      'service' => $data['service'],
+                                                      'location' => $data['location'],
+                                                      'security' => $data['security'],
+                                                      'cleanliness' => $data['cleanliness'],
+                                                      'comfort' => $data['comfort'],
+                                                      'status' => "pending",
+                                                      ]);
+                                                      
+                return $ret;
+           }
+		   
+		   function getReviews($apartment_id)
+           {
+           	$ret = [];
+              $reviews = Reviews::where('sku',$sku)
+			                    ->where('status',"enabled")->get();
+              $reviews = $reviews->sortByDesc('created_at');	
+			  
+              if($reviews != null)
+               {
+				  foreach($reviews as $r)
+				  {
+					  $temp = $this->getReview($r->id);
+					  array_push($ret,$temp);
+				  }
+               }                         
+                                  
+                return $ret;
+           }
+		   
+		   function getReview($id)
+           {
+           	$ret = [];
+              $r = Reviews::where('id',$id)
+			                 ->orWhere('apartment_id',$id)->first();
+ 
+              if($r != null)
+               {
+				  $temp = [];
+				  $temp['id'] = $r->id;
+				  $temp['apartment_id'] = $r->apartment_id;
+     			  $temp['service'] = $r->service;
+     			  $temp['location'] = $r->location;
+     			  $temp['security'] = $r->security;
+     			  $temp['cleanliness'] = $r->cleanliness;
+     			  $temp['comfort'] = $r->comfort;
+     			  $temp['comment'] = $r->comment;
+     			  $temp['status'] = $r->status;
+				  $temp['date'] = $aa->created_at->format("jS F, Y");
+				  $ret = $temp;
+               }                         
+                                                      
+                return $ret;
+           }
+		   
+		   function getRating($reviews)
+		   {
+			   $ret = 0;
+			   			   
+			   if($reviews != null && count($reviews) > 0)
+			   {
+				  $reviewCount = 0;
+				  $temp = 0;
+				  
+                  foreach($reviews as $r)
+				  {
+					  $sum = ($r['service'] + $r['location'] + $r['security'] + $r['cleanliness'] + $r['comfort']) / 5;
+					  $temp += $sum;
+					  ++$reviewCount;
+				  }
+                  
+                  if($temp > 0 && $reviewCount > 0)
+				  {
+					  $ret = floor($temp / $reviewCount);
+				  }				  
+			   }
+			   
+			   return $ret;
+		   }		 
+
+
+		 
+		   
+		   
+		   
+		   
+		   
 /***************************************************************************************************** 
                                              OLD FUNCTIONS BELOW
 ******************************************************************************************************/
+
+
+
+
+
+
+
+
 	   
 		   
 		   function getProductsByCategory($cat)
@@ -1055,67 +1150,6 @@ function isDuplicateUser($data)
                 return $ret;
            }
 		   
-		   function createReview($user,$data)
-           {
-			   $userId = $user == null ? $this->generateTempUserID() : $user->id;
-           	$ret = Reviews::create(['user_id' => $userId, 
-                                                      'sku' => $data['sku'], 
-                                                      'rating' => $data['rating'],
-                                                      'name' => $data['name'],
-                                                      'review' => $data['review'],
-                                                      'status' => "pending",
-                                                      ]);
-                                                      
-                return $ret;
-           }
-		   
-		   function getReviews($sku)
-           {
-           	$ret = [];
-              $reviews = Reviews::where('sku',$sku)
-			                    ->where('status',"enabled")->get();
-              $reviews = $reviews->sortByDesc('created_at');	
-			  
-              if($reviews != null)
-               {
-				  foreach($reviews as $r)
-				  {
-					  $temp = [];
-					  $temp['id'] = $r->id;
-					  $temp['user_id'] = $r->user_id;
-					  $temp['sku'] = $r->sku;
-					 $temp['rating'] = $r->rating;
-					  $temp['name'] = $r->name;
-					  $temp['review'] = $r->review;
-					  array_push($ret,$temp);
-				  }
-               }                         
-                                  
-                return $ret;
-           }
-		   
-		   function getRating($sku)
-		   {
-			   $ret = 0;
-			   
-			   $reviews = $this->getReviews($sku);
-			   
-			   if($reviews != null && count($reviews) > 0)
-			   {
-				  $sum = 0; $count = 0;
-                  foreach($reviews as $r)
-				  {
-					  $sum += $r['rating']; ++$count;
-				  }
-                  
-                  if($sum > 0 && $count > 0)
-				  {
-					  $ret = floor($sum / $count);
-				  }				  
-			   }
-			   
-			   return $ret;
-		   }
 		   
 		   function generateTempUserID()
            {

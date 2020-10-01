@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Reviews extends Model
+class ApartmentData extends Model
 {
 
     /**
@@ -13,7 +13,6 @@ class Reviews extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'apartment_id', 'service', 'location', 'security', 'cleanliness', 'comfort', 'comment', 'status'
-    ];
-    
+        'id', 'apartment_id', 'address', 'city', 'state'
+	];
 }
