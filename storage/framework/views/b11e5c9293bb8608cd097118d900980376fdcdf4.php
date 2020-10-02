@@ -23,7 +23,7 @@ EOD;
 <?php $__env->startSection('content'); ?>
 <?php echo $__env->make('banner-2',['title' => $title,'subtitle' => $subtitle], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <script>
-let selectedSide = "1";
+let selectedSide = "1", facilities = [];
 </script>
 <!-- =================== Add Apartment Search ==================== -->
 			<section class="gray">
@@ -159,13 +159,36 @@ let selectedSide = "1";
 											</div>
 										</div>
 										
+                                        <div class="col-lg-12 col-md-12 col-sm-12" style="margin-top: 20px;">
+											<h4 class="mb-3">Facilities & Services</h4>
+										</div>										
+										<?php
+										$services = [
+										  'air-conditioning' => "Air Conditioning",
+										  'wifi' => "WiFi",
+										  'security' => "Luggage Storage",
+										  'electricity' => "24hrs Electricity"
+										];
+										?>
 										<div class="col-lg-12 col-md-12 col-sm-12">
 											<div class="form-group">
-												<label>Description</label>
-												<textarea id="add-apartment-description" class="form-control"></textarea>
+											   
+												<div class="row">
+												  <?php
+											        foreach($services as $key => $value)
+													{
+											      ?>
+												  <div class="col-lg-3 col-md-6 col-sm-12">
+												    <label><?php echo e($value); ?></label>
+ 												    <a class="btn btn-primary btn-sm text-white" id="apt-service-<?php echo e($key); ?>" onclick="toggleFacility('<?php echo e($key); ?>')" data-check="unchecked">Check</a>
+												  </div>
+												  <?php
+													}
+												  ?>
+												</div>
+												
 											</div>
-										</div>										
-										
+										</div>
 										
 										<div class="col-lg-12 col-md-12 col-sm-12">
 											<div class="form-group text-center">

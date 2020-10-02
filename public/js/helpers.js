@@ -252,11 +252,38 @@ const switchMode = dt => {
 	window.location = url;
 }
 
+function toggleFacility(dt){
+	  console.log(`selecting facility ${dt}`);
+	  f = $(`a#apt-service-${dt}`);
+	  ft = f.attr('data-check');
+	  ret = {id: dt, selected: false};
+	  ih = "Check", rc = 'btn-primary', ac = 'btn-warning'; dc = "unchecked";
+	  
+	  if(f){
+		  if(ft == "unchecked"){
+			ih = "Uncheck", rc = 'btn-warning', ac = 'btn-primary'; dc = "checked";
+	        ret.selected = true;
+		  } 
+		   let ss = facilities.find(i => i.id == dt);
+		  //console.log('us: ',us);
+		  if(ss){
+			ss.selected = ret.selected;  
+		  }
+		  else{
+			facilities.push(ret);  
+		  }
+		  
+		  f.html(ih);
+		  f.removeClass(rc);
+		  f.addClass('btn-warning');
+		  f.attr({'data-check':dc});
+	  }
+}
 
 
-/****************************************************
-OLD METHODS
-/****************************************************/
+/**********************************************************************************************************************
+                                                     OLD METHODS
+/**********************************************************************************************************************/
 
 function bomb(dt,url){
 
