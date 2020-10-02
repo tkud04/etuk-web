@@ -13,7 +13,8 @@ $(document).ready(function() {
 	
 	let addApartmentDescriptionEditor = new Simditor({
 		textarea: $('#add-apartment-description'),
-		toolbar: toolbar
+		toolbar: toolbar,
+		placeholder: `This is the description`
 	});
 	
     $("a.lno-cart").on("click", function(e) {

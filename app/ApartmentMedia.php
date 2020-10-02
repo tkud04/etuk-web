@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProductImages extends Model
+class ApartmentMedia extends Model
 {
 
     /**
@@ -13,6 +13,6 @@ class ProductImages extends Model
      * @var array
      */
     protected $fillable = [
-        'id', 'sku', 'cover', 'url'
+        'id', 'apartment_id', 'cover', 'type', 'url'
     ];
 }

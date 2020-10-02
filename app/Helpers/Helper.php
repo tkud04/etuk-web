@@ -12,6 +12,7 @@ use App\Carts;
 use App\Categories;
 use App\Apartments;
 use App\ApartmentAddresses;
+use App\ApartmentMedia;
 use App\Reviews;
 use App\Ads;
 use App\Banners;
@@ -671,17 +672,21 @@ function isDuplicateUser($data)
                  $data['apartment_id'] = $ret->apartment_id;                         
                 $adt = $this->createApartmentData($data);
                 $aa = $this->createApartmentAddress($data);
-				/**
+
 				$ird = "none";
 				$irdc = 0;
 				if(isset($data['ird']) && count($data['ird']) > 0)
 				{
 					foreach($data['ird'] as $i)
                     {
-                    	$this->createProductImage(['sku' => $data['sku'], 'url' => $i['public_id'], 'cover' => $i['ci'], 'irdc' => "1"]);
+                    	$this->createApartmentMedia([
+						           'apartment_id' => $data['apartment_id'],
+								   'url' => $i['public_id'],
+								   'cover' => $i['ci'],
+								   'type' => $i['type']
+                         ]);
                     }
 				}
-				**/
                 
                 return $ret;
            }
@@ -702,6 +707,17 @@ function isDuplicateUser($data)
            	$ret = ApartmentData::create(['apartment_id' => $data['apartment_id'], 
                                                       'description' => $data['description'],                                                       
                                                       'amount' => $data['amount']                                                       
+                                                      ]);
+                              
+                return $ret;
+           }
+		   
+		   function createApartmentMedia($data)
+           {
+           	$ret = ApartmentMedia::create(['apartment_id' => $data['apartment_id'], 
+                                                      'url' => $data['url'],                                                       
+                                                      'cover' => $data['cover'],                                                    
+                                                      'type' => $data['type']                                                       
                                                       ]);
                               
                 return $ret;
@@ -747,6 +763,7 @@ function isDuplicateUser($data)
 				  $temp['discounts'] = $this->getDiscounts($product->sku);
 				  $temp['data'] = $this->getApartmentData($apartment->apartment_id);
 				  $temp['address'] = $this->getApartmentAddress($apartment->apartment_id);
+				  $temp['media'] = $this->getApartmentMedia(['apartment_id'=>$apartment->apartment_id,'type' => "all"]);
 				  $temp['reviews'] = $this->getReviews($apartment->apartment_id);
 				  $imgs = $this->getImages($product->sku);
 				  #dd($imgs);
@@ -796,7 +813,123 @@ function isDuplicateUser($data)
                }                         
                                                       
                 return $ret;
-           }			   
+           }
+
+     function getApartmentMedia($dt)
+           {
+           	$ret = [];
+			if($type == "all")
+			{
+				$ams = ApartmentMedia::where('apartment_id',$apartment_id)->get();
+			}
+			else
+			{
+				$ams = ApartmentMedia::where('apartment_id',$apartment_id)
+			                       ->where('type',$type)->get();
+			}
+            
+              if($ams != null)
+               {
+				  foreach($ams as $am)
+				  {
+				    $temp = [];
+				    $temp['id'] = $am->id;
+				    $temp['apartment_id'] = $am->apartment_id;
+					$temp['cover'] = $am->cover;
+					$temp['type'] = $am->type;
+				    $temp['url'] = $am->url;
+				    array_push($ret,$temp);
+				  }
+               }                         
+                                                      
+                return $ret;
+           }
+		   
+		   function isCoverImage($img)
+		   {
+			   return $img['cover'] == "yes";
+		   }
+		   
+		   function getImage($pi)
+           {
+       	         $temp = [];
+				 $temp['id'] = $pi->id;
+				 $temp['sku'] = $pi->sku;
+			     $temp['cover'] = $pi->cover;
+				 $temp['url'] = $pi->url;
+				 
+                return $temp;
+           }
+		   
+		   function getImages($sku)
+		   {
+			   $ret = [];
+			   $records = $this->getProductImages($sku);
+			   
+			   $coverImage = ProductImages::where('sku',$sku)
+			                              ->where('cover',"yes")->first();
+										  
+               $otherImages = ProductImages::where('sku',$sku)
+			                              ->where('cover',"!=","yes")->get();
+			  
+               if($coverImage != null)
+			   {
+				   $temp = $this->getImage($coverImage);
+				   array_push($ret,$temp);
+			   }
+
+               if($otherImages != null)
+			   {
+				   foreach($otherImages as $oi)
+				   {
+					   $temp = $this->getImage($oi);
+				       array_push($ret,$temp);
+				   }
+			   }
+			   
+			   return $ret;
+		   }
+		   
+		   function getCloudinaryImages($dt)
+		   {
+			   $ret = [];
+                         
+               if(count($dt) < 1) { $ret = ["img/no-image.png"]; }
+               
+			   else
+			   {
+                   $ird = $dt[0]['url'];
+				   if($ird == "none")
+					{
+					   $ret = ["img/no-image.png"];
+					}
+				   else
+					{
+                       for($x = 0; $x < count($dt); $x++)
+						 {
+							 $ird = $dt[$x]['url'];
+                            $imgg = "https://res.cloudinary.com/dahkzo84h/image/upload/v1585236664/".$ird;
+                            array_push($ret,$imgg); 
+                         }
+					}
+                }
+				
+				return $ret;
+		   }
+		   
+		   function getCloudinaryImage($dt)
+		   {
+			   $ret = [];
+                  //dd($dt);       
+               if(is_null($dt)) { $ret = "img/no-image.png"; }
+               
+			   else
+			   {
+				    $ret = "https://res.cloudinary.com/dahkzo84h/image/upload/v1585236664/".$dt;
+                }
+				
+				return $ret;
+		   }		   		   
 		   
 		   
   function createReview($user,$data)
@@ -881,7 +1014,10 @@ function isDuplicateUser($data)
 			   }
 			   
 			   return $ret;
-		   }		 
+		   }
+
+
+
 
 
 		 
@@ -1038,113 +1174,8 @@ function isDuplicateUser($data)
                 return $ret;
            }
 
-		   function getProductImages($sku)
-           {
-           	$ret = [];
-              $pis = ProductImages::where('sku',$sku)->get();
- 
-            
-              if($pis != null)
-               {
-				  foreach($pis as $pi)
-				  {
-				    $temp = [];
-				    $temp['id'] = $pi->id;
-				    $temp['sku'] = $pi->sku;
-					$temp['cover'] = $pi->cover;
-				    $temp['url'] = $pi->url;
-				    array_push($ret,$temp);
-				  }
-               }                         
-                                                      
-                return $ret;
-           }
 		   
-		   function isCoverImage($img)
-		   {
-			   return $img['cover'] == "yes";
-		   }
 		   
-		   function getImage($pi)
-           {
-       	         $temp = [];
-				 $temp['id'] = $pi->id;
-				 $temp['sku'] = $pi->sku;
-			     $temp['cover'] = $pi->cover;
-				 $temp['url'] = $pi->url;
-				 
-                return $temp;
-           }
-		   
-		   function getImages($sku)
-		   {
-			   $ret = [];
-			   $records = $this->getProductImages($sku);
-			   
-			   $coverImage = ProductImages::where('sku',$sku)
-			                              ->where('cover',"yes")->first();
-										  
-               $otherImages = ProductImages::where('sku',$sku)
-			                              ->where('cover',"!=","yes")->get();
-			  
-               if($coverImage != null)
-			   {
-				   $temp = $this->getImage($coverImage);
-				   array_push($ret,$temp);
-			   }
-
-               if($otherImages != null)
-			   {
-				   foreach($otherImages as $oi)
-				   {
-					   $temp = $this->getImage($oi);
-				       array_push($ret,$temp);
-				   }
-			   }
-			   
-			   return $ret;
-		   }
-		   
-		   function getCloudinaryImages($dt)
-		   {
-			   $ret = [];
-                         
-               if(count($dt) < 1) { $ret = ["img/no-image.png"]; }
-               
-			   else
-			   {
-                   $ird = $dt[0]['url'];
-				   if($ird == "none")
-					{
-					   $ret = ["img/no-image.png"];
-					}
-				   else
-					{
-                       for($x = 0; $x < count($dt); $x++)
-						 {
-							 $ird = $dt[$x]['url'];
-                            $imgg = "https://res.cloudinary.com/dahkzo84h/image/upload/v1585236664/".$ird;
-                            array_push($ret,$imgg); 
-                         }
-					}
-                }
-				
-				return $ret;
-		   }
-		   
-		   function getCloudinaryImage($dt)
-		   {
-			   $ret = [];
-                  //dd($dt);       
-               if(is_null($dt)) { $ret = "img/no-image.png"; }
-               
-			   else
-			   {
-				    $ret = "https://res.cloudinary.com/dahkzo84h/image/upload/v1585236664/".$dt;
-                }
-				
-				return $ret;
-		   }
 		   
 		   function getNewArrivals()
            {

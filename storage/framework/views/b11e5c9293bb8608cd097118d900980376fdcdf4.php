@@ -5,7 +5,7 @@ $subtitle = "Post a new apartment to your listings";
 $checkoutHead = <<<EOD
                                 <div class="checkout-head">
 									<ul>
-										<li class="add-apartment-active-1 active"><span class="add-apartment-ticker-1">1</span>Hotel Information</li>
+										<li class="add-apartment-active-1 active"><span class="add-apartment-ticker-1">1</span>Apartment Information</li>
 										<li class="add-apartment-active-2"><span class="add-apartment-ticker-2">2</span>Location & Media</li>
 										<li class="add-apartment-active-3"><span class="add-apartment-ticker-3">3</span>Preview</li>
 									</ul>
@@ -41,76 +41,131 @@ let selectedSide = "1";
 									<div class="row">
 								
 										<div class="col-lg-12 col-md-12 col-sm-12">
-											<h4 class="mb-3">Hotel Information</h4>
+											<h4 class="mb-3">Basic Information</h4>
 										</div>
 										
-										<div class="col-lg-6 col-md-6 col-sm-12">
+										<div class="col-lg-12 col-md-12 col-sm-12">
 											<div class="form-group">
-												<label>First Name<i class="req">*</i></label>
-												<input type="text" class="form-control" value="Shaurya">
+												<label>Apartment ID<i class="req">*</i></label>
+												<input type="text" class="form-control" value="Will be generated" readonly>
 											</div>
 										</div>
 										
 										<div class="col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group">
-												<label>Last Name<i class="req">*</i></label>
-												<input type="text" class="form-control" value="Preet">
+												<label>Friendly Name<i class="req">*</i></label>
+												<input type="text" class="form-control" id="add-apartment-name" placeholder="Give your apartment a name e.g Royal Hibiscus">
 											</div>
 										</div>
 										
 										<div class="col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group">
-												<label>Email<i class="req">*</i></label>
-												<input type="email" class="form-control" value="themezhub@gmail.com">
+												<label>Price per day(&#8358;)<i class="req">*</i></label>
+												<input type="number" class="form-control" id="add-apartment-amount" placeholder="Enter amount in NGN">
 											</div>
 										</div>
 										
-										<div class="col-lg-6 col-md-6 col-sm-12">
+										<div class="col-lg-12 col-md-12 col-sm-12">
 											<div class="form-group">
-												<label>Phone</label>
-												<input type="text" class="form-control" value="780 052 2177">
+												<label>Description</label>
+												<textarea id="add-apartment-description" class="form-control"></textarea>
 											</div>
 										</div>
 										
+										<div class="col-lg-12 col-md-12 col-sm-12" style="margin-top: 20px;">
+											<h4 class="mb-3">Terms & Conditions</h4>
+										</div>
+										<?php
+										  $times = ['12pm' => "12:00 pm",
+										            '1pm' => "1:00 pm",
+										            '2pm' => "2:00 pm",
+										            '3pm' => "3:00 pm",
+										            '4pm' => "4:00 pm",
+										            '5pm' => "5:00 pm",
+										            '6pm' => "6:00 pm",
+										            '7pm' => "7:00 pm"
+												   ];
+										?>
 										<div class="col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group">
-												<label>Country<i class="req">*</i></label>
-												<select id="country" class="form-control">
-													<option value="">&nbsp;</option>
-													<option value="1">United State</option>
-													<option value="2">United kingdom</option>
-													<option value="3">India</option>
-													<option value="4">Canada</option>
+												<label>Check In<i class="req">*</i></label>
+												<select class="form-control" id="add-apartment-checkin">
+												  <option value="none">Select check-in time</option>
+												  <?php
+												  foreach($times as $key => $value)
+												  {
+												  ?>
+												  <option value="<?php echo e($key); ?>">From <?php echo e($value); ?></option>
+												  <?php
+												  }
+												  ?>
 												</select>
 											</div>
 										</div>
 										
 										<div class="col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group">
-												<label>City<i class="req">*</i></label>
-												<select id="choose-city" class="form-control">
-													<option value="">&nbsp;</option>
-													<option value="1">Canada, USA</option>
-													<option value="2">California</option>
-													<option value="3">Newyork</option>
-													<option value="4">Liverpool</option>
+												<label>Check Out<i class="req">*</i></label>
+												<select class="form-control" id="add-apartment-checkout">
+												  <option value="none">Select check-out time</option>
+												  <?php
+												  foreach($times as $key => $value)
+												  {
+												  ?>
+												  <option value="<?php echo e($key); ?>">By <?php echo e($value); ?></option>
+												  <?php
+												  }
+												  ?>
+												</select>
+											</div>
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-12">
+											<div class="form-group">
+												<label>Payment Type<i class="req">*</i></label>
+												<select class="form-control">
+												  <option value="none">Card</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-12">
+											<div class="form-group">
+												<label>ID Required on Check-in<i class="req">*</i></label>
+												<select class="form-control" id="add-apartment-id-required">
+												  <option value="yes">Yes</option>
+												  <option value="no">No</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-12">
+											<div class="form-group">
+												<label>Children<i class="req">*</i></label>
+												<select class="form-control" id="add-apartment-children">
+												  <option value="none">No children allowed</option>
+												  <option value="1-5yrs">1-5yrs</option>
+												  <option value="6-10yrs">6-10yrs</option>
+												  <option value="11-20yrs">11-20yrs</option>
+												  <option value=">20yrs">20yrs above</option>
+												  <option value="all">All children allowed</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-12">
+											<div class="form-group">
+												<label>Pets<i class="req">*</i></label>
+												<select class="form-control" id="add-apartment-pets">
+												  <option value="yes">Yes</option>
+												  <option value="no" selected="selected">No</option>
 												</select>
 											</div>
 										</div>
 										
 										<div class="col-lg-12 col-md-12 col-sm-12">
 											<div class="form-group">
-												<label>Special Instruction</label>
+												<label>Description</label>
 												<textarea id="add-apartment-description" class="form-control"></textarea>
 											</div>
 										</div>										
 										
-										<div class="col-lg-6 col-md-6 col-sm-12">
-											<div class="form-group">
-												<input id="a-2" class="checkbox-custom" name="a-2" type="checkbox">
-												<label for="a-2" class="checkbox-custom-label">Create An Account</label>
-											</div>
-										</div>
 										
 										<div class="col-lg-12 col-md-12 col-sm-12">
 											<div class="form-group text-center">
