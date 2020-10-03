@@ -164,12 +164,24 @@ let selectedSide = "1", facilities = [];
 										<?php
 										$services = [
 										  'air-conditioning' => "Air Conditioning",
-										  'wifi' => "WiFi",
+										  'adequate-parking' => "Adequate Parking",
+										  'bar' => "Bar",
+										  'game-room' => "Game Room",
+										  'inhouse-dining' => "In-house Dining",
+										  'drycleaning' => "Drycleaning",
+										  'iron' => "Clothing Iron",
+										  'kitchen' => "Kitchen",
+										  'pool' => "Swimming Pool",
+										  'fitness-facilities' => "Fitness Facilities",
+										  'room-service' => "Room Service",
+										  'tv' => "TV",
+										  'concierge' => "Concierge",
 										  'security' => "Luggage Storage",
-										  'electricity' => "24hrs Electricity"
+										  'electricity' => "24hrs Electricity",
+										  'king-sized-bed' => "King-sized Bed"
 										];
 										?>
-										<div class="col-lg-12 col-md-12 col-sm-12">
+										<div class="col-lg-12 col-md-12 col-sm-12" style="margin-bottom: 20px;">
 											<div class="form-group">
 											   
 												<div class="row">
@@ -178,8 +190,11 @@ let selectedSide = "1", facilities = [];
 													{
 											      ?>
 												  <div class="col-lg-3 col-md-6 col-sm-12">
-												    <label>{{$value}}</label>
- 												    <a class="btn btn-primary btn-sm text-white" id="apt-service-{{$key}}" onclick="toggleFacility('{{$key}}')" data-check="unchecked">Check</a>
+												   
+ 												    <a class="btn btn-primary btn-sm text-white" id="apt-service-{{$key}}" onclick="toggleFacility('{{$key}}')" data-check="unchecked">
+													  <center><i id="apt-service-icon-{{$key}}" class="ti-control-stop"></i></center>
+													</a>
+													 <label>{{$value}}</label>
 												  </div>
 												  <?php
 													}
@@ -212,24 +227,35 @@ let selectedSide = "1", facilities = [];
 										<div class="col-lg-12 col-md-12 col-sm-12">
 											<h4 class="mb-3">Location & Media</h4>
 										</div>
-										
-										<div class="col-lg-6 col-md-6 col-sm-12">
-											<div class="switchbtn paying">
-												<input id="pay-2" class="switchbtn-checkbox" type="radio" value="2" name="pay-2" checked>
-												<label class="switchbtn-label" for="pay-2">
-													<img src="{{asset('img/card-pay.png')}}" alt="" />
-													Pay with Credit card
-												</label>
+																			
+										<div class="col-lg-12 col-md-12 col-sm-12">
+											<div class="form-group">
+												<label>Address<i class="req">*</i></label>
+												<input type="text" class="form-control" id="add-apartment-address" placeholder="House address">
 											</div>
 										</div>
 										
 										<div class="col-lg-6 col-md-6 col-sm-12">
-											<div class="switchbtn paying">
-												<input id="pay-3" class="switchbtn-checkbox" type="radio" value="2" name="pay-2">
-												<label class="switchbtn-label" for="pay-3">
-													<img src="{{asset('img/paypal.png')}}" alt="" />
-													Pay with PayPal
-												</label>
+											<div class="form-group">
+												<label>City<i class="req">*</i></label>
+												<input type="text" class="form-control" id="add-apartment-city" placeholder="City">
+											</div>
+										</div>
+										
+										<div class="col-lg-6 col-md-6 col-sm-12">
+											<div class="form-group">
+												<label>State<i class="req">*</i></label>
+												<select class="form-control" id="add-apartment-state">
+												  <option value="none">Select state</option>
+												  <?php
+												   foreach($states as $key => $value)
+												   {
+												  ?>
+												    <option value="{{$key}}">{{$value}}</option>
+												  <?php
+												   }
+												  ?>
+												</select>
 											</div>
 										</div>
 									</div>

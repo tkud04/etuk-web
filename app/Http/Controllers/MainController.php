@@ -354,6 +354,7 @@ class MainController extends Controller {
 		$c = $this->helpers->getCategories();
 		//dd($bs);
 		$signals = $this->helpers->signals;
+		$states = $this->helpers->states;
 		
 		$ads = $this->helpers->getAds("wide-ad");
 		$plugins = $this->helpers->getPlugins();
@@ -361,7 +362,7 @@ class MainController extends Controller {
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
         
-    	return view("add-apartment",compact(['user','cart','c','ad','signals','plugins']));
+    	return view("add-apartment",compact(['user','cart','c','ad','states','signals','plugins']));
     }
 	
 	/**

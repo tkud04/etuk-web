@@ -255,13 +255,14 @@ const switchMode = dt => {
 function toggleFacility(dt){
 	  console.log(`selecting facility ${dt}`);
 	  f = $(`a#apt-service-${dt}`);
+	  i = $(`i#apt-service-icon-${dt}`);
 	  ft = f.attr('data-check');
 	  ret = {id: dt, selected: false};
-	  ih = "Check", rc = 'btn-primary', ac = 'btn-warning'; dc = "unchecked";
+	  ih = "Check", rc = 'btn-warning', ac = 'btn-primary', iac = "ti-control-stop", idc = "ti-check-box",  dc = "unchecked";
 	  
 	  if(f){
 		  if(ft == "unchecked"){
-			ih = "Uncheck", rc = 'btn-warning', ac = 'btn-primary'; dc = "checked";
+			ih = "Uncheck", rc = 'btn-primary', ac = 'btn-warning',iac = "ti-check-box", idc = "ti-control-stop", dc = "checked";
 	        ret.selected = true;
 		  } 
 		   let ss = facilities.find(i => i.id == dt);
@@ -273,9 +274,11 @@ function toggleFacility(dt){
 			facilities.push(ret);  
 		  }
 		  
-		  f.html(ih);
+		 // f.html(ih);
 		  f.removeClass(rc);
-		  f.addClass('btn-warning');
+		  f.addClass(ac);
+		  i.removeClass(idc);
+		  i.addClass(iac);
 		  f.attr({'data-check':dc});
 	  }
 }

@@ -723,6 +723,33 @@ function isDuplicateUser($data)
                 return $ret;
            }
 		   
+		   function deleteCloudImage($id)
+          {
+          	$dt = ['cloud_name' => "etuk-ng",'invalidate' => true];
+          	$rett = \Cloudinary\Uploader::destroy($id,$dt);
+                                                     
+             return $rett; 
+         }
+		 
+		 function resizeImage($res,$size)
+		 {
+			  $ret = Image::make($res)->resize($size[0],$size[1])->save(sys_get_temp_dir()."/upp");			   
+              // dd($ret);
+			   $fname = $ret->dirname."/".$ret->basename;
+			   $fsize = getimagesize($fname);
+			  return $fname;		   
+		 }
+		   
+		    function uploadCloudImage($path)
+          {
+          	$ret = [];
+          	$dt = ['cloud_name' => "etuk-ng"];
+              $preset = "uwh1p75e";
+          	$rett = \Cloudinary\Uploader::unsigned_upload($path,$preset,$dt);
+                                                      
+             return $rett; 
+         }
+		   
 		   
 
      function getApartments($user)
@@ -746,7 +773,7 @@ function isDuplicateUser($data)
            }
 
 
-    function getApartment($id)
+    function getApartment($id,$imgId=false)
            {
            	$ret = [];
               $apartment = Apartments::where('id',$id)
@@ -763,11 +790,13 @@ function isDuplicateUser($data)
 				  $temp['discounts'] = $this->getDiscounts($product->sku);
 				  $temp['data'] = $this->getApartmentData($apartment->apartment_id);
 				  $temp['address'] = $this->getApartmentAddress($apartment->apartment_id);
-				  $temp['media'] = $this->getApartmentMedia(['apartment_id'=>$apartment->apartment_id,'type' => "all"]);
+				  $media = $this->getMedia(['apartment_id'=>$apartment->apartment_id,'type' => "all"]);
+				  if($imgId) $temp['media'] = $media;
+				  $temp['cmedia'] = [
+				    'images' => $this->getCloudinaryMedia($media['images']),
+				    'video' => $this->getCloudinaryMedia($media['video']),
+				  ];
 				  $temp['reviews'] = $this->getReviews($apartment->apartment_id);
-				  $imgs = $this->getImages($product->sku);
-				  #dd($imgs);
-				  $temp['imggs'] = $this->getCloudinaryImages($imgs);
 				  $ret = $temp;
                }                         
                                                       
@@ -849,48 +878,42 @@ function isDuplicateUser($data)
 		   {
 			   return $img['cover'] == "yes";
 		   }
+
 		   
-		   function getImage($pi)
-           {
-       	         $temp = [];
-				 $temp['id'] = $pi->id;
-				 $temp['sku'] = $pi->sku;
-			     $temp['cover'] = $pi->cover;
-				 $temp['url'] = $pi->url;
-				 
-                return $temp;
-           }
-		   
-		   function getImages($sku)
+		   function getMedia($dt)
 		   {
-			   $ret = [];
-			   $records = $this->getProductImages($sku);
+			   $ret = ['images' => [],'video' => []];
+			   $records = collect($this->getApartmentMedia($dt));
 			   
-			   $coverImage = ProductImages::where('sku',$sku)
-			                              ->where('cover',"yes")->first();
+			   $coverImage = $records->where('apartment_id',$dt['apartment_id'])
+			                              ->where('cover',"yes")
+										  ->where('type',"image")->first();
 										  
-               $otherImages = ProductImages::where('sku',$sku)
-			                              ->where('cover',"!=","yes")->get();
+               $otherImages = $records->where('apartment_id',$dt['apartment_id'])
+			                              ->where('cover',"!=","yes")
+										  ->where('type',"image")->first();
+				
+  			   
+	           if($dt['type'] == "all") $video = $records->where('apartment_id',$dt['apartment_id'])
+			                              ->where('type',"video")->first();
 			  
                if($coverImage != null)
 			   {
-				   $temp = $this->getImage($coverImage);
-				   array_push($ret,$temp);
+				   array_push($ret['images'],$temp);
 			   }
 
                if($otherImages != null)
 			   {
 				   foreach($otherImages as $oi)
 				   {
-					   $temp = $this->getImage($oi);
-				       array_push($ret,$temp);
+				       array_push($ret['images'],$temp);
 				   }
 			   }
 			   
 			   return $ret;
 		   }
 		   
-		   function getCloudinaryImages($dt)
+		   function getCloudinaryMedia($dt)
 		   {
 			   $ret = [];
                          
@@ -908,7 +931,7 @@ function isDuplicateUser($data)
                        for($x = 0; $x < count($dt); $x++)
 						 {
 							 $ird = $dt[$x]['url'];
-                            $imgg = "https://res.cloudinary.com/dahkzo84h/image/upload/v1585236664/".$ird;
+                            $imgg = "https://res.cloudinary.com/etuk-ng/image/upload/v1585236664/".$ird;
                             array_push($ret,$imgg); 
                          }
 					}
@@ -925,7 +948,7 @@ function isDuplicateUser($data)
                
 			   else
 			   {
-				    $ret = "https://res.cloudinary.com/dahkzo84h/image/upload/v1585236664/".$dt;
+				    $ret = "https://res.cloudinary.com/etuk-ng/image/upload/v1585236664/".$dt;
                 }
 				
 				return $ret;
