@@ -252,7 +252,7 @@ const switchMode = dt => {
 	window.location = url;
 }
 
-function toggleFacility(dt){
+const toggleFacility = dt => {
 	  console.log(`selecting facility ${dt}`);
 	  f = $(`a#apt-service-${dt}`);
 	  i = $(`i#apt-service-icon-${dt}`);
@@ -281,6 +281,70 @@ function toggleFacility(dt){
 		  i.addClass(iac);
 		  f.attr({'data-check':dc});
 	  }
+}
+
+
+const aptAddImage = () => {
+	let i = $(`#add-apartment-images`), ctr = $(`#add-apartment-images div.row`).length;
+	
+	i.append(`
+			  <div id="add-apartment-image-div-${ctr}" class="row">
+				<div class="col-md-7">
+					<input type="file" class="form-control" data-ic="${ctr}" onchange="readURL(this,'${ctr}')" id="add-apartment-image-${ctr}" name="add-apartment-images[]">												    
+				</div>
+			    <div class="col-md-5">
+					<img id="add-apartment-preview-${ctr}" src="#" alt="preview" style="width: 50px; height: 50px;"/>
+					<a href="javascript:void(0)" onclick="aptSetCoverImage('${ctr}')" class="btn btn-theme btn-sm">Set as cover image</a>
+					<a href="javascript:void(0)" onclick="aptRemoveImage('${ctr}')"class="btn btn-warning btn-sm">Remove</a>
+				</div>
+			  </div>
+	  `);
+}
+
+const aptRemoveImage = ctr => {
+	let r = $(`#add-apartment-image-div-${ctr}`);
+	//console.log(r);
+	r.remove();
+}
+
+const aptSetCoverImage = ctr => {
+	let r = $(`#add-apartment-image-div-${ctr}`);
+	console.log("ctr: ", ctr);
+	//r.remove();
+}
+
+const readURL = (input,ctr) => {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    
+    reader.onload = function(e) {
+		let pv = input.getAttribute("data-ic");
+      $(`#add-apartment-preview-${ctr}`).attr({
+	      'src': e.target.result,
+	      'width': "50",
+	      'height': "50"
+	  });
+    }
+    
+    reader.readAsDataURL(input.files[0]); // convert to base64 string
+  }
+}
+
+const aptFinalPreview = () => {
+	let i = `
+	     <li>Apartment ID.<span>Will be generated</span></li>
+												<li>Friendly name<span>Shaurya</span></li>
+												<li>Price per day<span>Preet</span></li>
+												<li>Description<span>themezhub@gmail.com</span></li>
+												<li>Check in<span>91 235 458 7458</span></li>
+												<li>Check out<span>California</span></li>
+												<li>Payment type<span>United State</span></li>
+												<li>ID required on check-in<span>New Besil, Liverpool</span></li>
+												<li>Children<span>djjdjd</span></li>
+												<li>Facilities & services<span>WiFi | Breakfast | 24 hour Electricity</span></li>
+	`;
+	
+	$('#add-apartment-final-preview').html(i);
 }
 
 

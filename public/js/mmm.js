@@ -143,6 +143,7 @@ $(document).ready(function() {
        e.preventDefault();
 	  hideElem(['#add-apartment-side-1','#add-apartment-side-2']);
 	  selectCheckoutSide({side: 3,type: ".add-apartment",content: "ti-check"});
+	  aptFinalPreview();
 	  showElem(['#add-apartment-side-3']);
     });
 	$("#add-apartment-side-3-prev").click(e => {

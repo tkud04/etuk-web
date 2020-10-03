@@ -23,7 +23,7 @@ EOD;
 @section('content')
 @include('banner-2',['title' => $title,'subtitle' => $subtitle])
 <script>
-let selectedSide = "1", facilities = [];
+let selectedSide = "1", facilities = [], aptImages = [], aptImgCount = 1;
 </script>
 <!-- =================== Add Apartment Search ==================== -->
 			<section class="gray">
@@ -263,43 +263,47 @@ let selectedSide = "1", facilities = [];
 									<div class="row">
 										<div class="col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group">
-												<label>Card Holder Name</label>
-												<input type="text" class="form-control">
+												<label>Video<i class="req">*</i></label>
+												<input type="file" class="form-control" id="add-apartment-video">
+											</div>
+											<div class="form-group">
+											    <ol class="form-control-plaintext">
+												  <li>Requirements and recommendations will be displayed here</li>
+												  <li>Requirements and recommendations will be displayed here</li>
+												</ol>
 											</div>
 										</div>
 										
 										<div class="col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group">
-												<label>Card Number</label>
-												<input type="text" class="form-control">
+												<label>Images<i class="req">*</i></label>
+												<div id="add-apartment-images">
+												<div id="add-apartment-image-div-0" class="row">
+												  <div class="col-md-7">
+												    <input type="file" class="form-control" onchange="readURL(this,'0')" id="add-apartment-image-0" name="add-apartment-images[]">												    
+												  </div>
+												  <div class="col-md-5">
+												    <img id="add-apartment-preview-0" src="#" alt="preview" style="width: 50px; height: 50px;"/>
+													<a href="javascript:void(0)" onclick="aptSetCoverImage(0)" class="btn btn-theme btn-sm">Set as cover image</a>
+												    <a href="javascript:void(0)" onclick="aptRemoveImage(0)"class="btn btn-warning btn-sm">Remove</a>
+												  </div>
+												</div>
+												</div>
+											</div>
+											<div class="form-group">
+											    <a href="javascript:void(0)" onclick="aptAddImage()" class="btn btn-warning btn-sm">Add image</a>
+											    <ol class="form-control-plaintext">
+												  <li>Requirements and recommendations will be displayed here</li>
+												  <li>Requirements and recommendations will be displayed here</li>
+												</ol>
 											</div>
 										</div>									
-									
-										<div class="col-lg-5 col-md-5 col-sm-6">
-											<div class="form-group">
-												<label>Expire Month</label>
-												<input type="text" class="form-control">
-											</div>
-										</div>
-										
-										<div class="col-lg-5 col-md-5 col-sm-6">
-											<div class="form-group">
-												<label>Expire Year</label>
-												<input type="text" class="form-control">
-											</div>
-										</div>
-										
-										<div class="col-lg-2 col-md-2 col-sm-12">
-											<div class="form-group">
-												<label>CVC</label>
-												<input type="text" class="form-control">
-											</div>
-										</div>										
+												
 										
 										<div class="col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group">
 												<input id="a-2" class="checkbox-custom" name="a-2" type="checkbox">
-												<label for="a-2" class="checkbox-custom-label">By Continuing, you ar'e agree to conditions</label>
+												<label for="a-2" class="checkbox-custom-label">By Continuing, you agree to conditions</label>
 											</div>
 										</div>
 										
@@ -327,16 +331,8 @@ let selectedSide = "1", facilities = [];
 									<div class="row">
 										<div class="col-md-12 col-lg-12">
 										
-											<ul class="booking-detail-list">
-												<li>Booking ID/Num.<span>#BK1254872</span></li>
-												<li>First Name<span>Shaurya</span></li>
-												<li>Last Name<span>Preet</span></li>
-												<li>Email<span>themezhub@gmail.com</span></li>
-												<li>Phone<span>91 235 458 7458</span></li>
-												<li>City<span>California</span></li>
-												<li>Contry<span>United State</span></li>
-												<li>Location<span>New Besil, Liverpool</span></li>
-												<li>Zip<span>215467</span></li>
+											<ul class="booking-detail-list" id="add-apartment-final-preview">
+												
 											</ul>
 											<hr>
 											
