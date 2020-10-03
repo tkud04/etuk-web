@@ -122,7 +122,7 @@ let selectedSide = "1", facilities = [], aptImages = [], aptImgCount = 1;
 											<div class="form-group">
 												<label>Payment Type<i class="req">*</i></label>
 												<select class="form-control">
-												  <option value="none">Card</option>
+												  <option value="card">Card</option>
 												</select>
 											</div>
 										</div>
@@ -191,7 +191,7 @@ let selectedSide = "1", facilities = [], aptImages = [], aptImgCount = 1;
 											      ?>
 												  <div class="col-lg-3 col-md-6 col-sm-12">
 												   
- 												    <a class="btn btn-primary btn-sm text-white" id="apt-service-{{$key}}" onclick="toggleFacility('{{$key}}')" data-check="unchecked">
+ 												    <a class="btn btn-primary btn-sm text-white apt-service" id="apt-service-{{$key}}" onclick="toggleFacility('{{$key}}')" data-check="unchecked">
 													  <center><i id="apt-service-icon-{{$key}}" class="ti-control-stop"></i></center>
 													</a>
 													 <label>{{$value}}</label>

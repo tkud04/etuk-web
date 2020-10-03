@@ -155,5 +155,23 @@ $(document).ready(function() {
 	$("#add-apartment-side-3-next").click(e => {
        e.preventDefault();
 	   console.log("add apartment submit");
+	   
+	   //side 1 validation
+	   let aptName = $('#add-apartment-name').val(), aptAmount = $('#add-apartment-amount').val(),aptDescription = $('#add-apartment-description').val(),
+	       aptCheckin = $('#add-apartment-checkin').val(), aptCheckout = $('#add-apartment-checkout').val(),aptIdRequired = $('#add-apartment-id-required').val(),
+	       aptChildren = $('#add-apartment-children').val(), aptIdPets = $('#add-apartment-pets').val();
+		  
+	  
+       let side1_validation = (aptName == "" || aptAmount < 0 || aptDescription == "" || aptCheckin == "none" || aptCheckout == "none" || aptIdRequired == "none" || facilities.length < 1);	  
+	   
+	   if(side1_validation){
+		   Swal.fire({
+			 icon: 'error',
+             title: "Please fill all the required fields"
+           })
+	   }
+	   
+	   //side 2 validation
+	   
     });	
 });
