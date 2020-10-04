@@ -190,37 +190,47 @@ $(document).ready(function() {
              title: "Select a cover image."
            })
 	   }
+	   else if(aptVideo[0].size > 15000000){
+		   Swal.fire({
+			 icon: 'error',
+             title: "Video must not be larger than 10MB"
+           })
+	   }
 	   else{
 		 //let aptName = $('#add-apartment-name').val(),   
 		 console.log("final");
-		 let rep =  new FormData();
-		 /**{
-			 name: aptName,
-			 amount: aptAmount,
-			 description: aptDescription,
-			 checkin: aptCheckin,
-			 checkout: aptCheckout,
-			 id_required: aptIdRequired,
-			 children: aptChildren,
-			 pets: aptPets,
-			 address: aptAddress,
-			 city: aptCity,
-			 state: aptState,
-		 };
+		 let fd =  new FormData();
+		 fd.append("name",aptName);
+		 fd.append("description",aptDescription);
+		 fd.append("checkin",aptCheckin);
+		 fd.append("checkout",aptCheckout);
+		 fd.append("id_required",aptIdRequired);
+		 fd.append("amount",aptAmount);
+		 fd.append("children",aptChildren);
+		 fd.append("pets",aptPets);
+		 fd.append("address",aptAddress);
+		 fd.append("city",aptCity);
+		 fd.append("state",aptState);
 		 
-		 for(let r = 0; r < imgs.length; r++)
+		 fd.append("video",aptVideo[0]);
+		 fd.append("cover",aptCover);
+		 
+		 for(let r = 0; r < aptImages.length; r++)
 		 {
-		    let imgg = imgs[r];
-			let imgName = imgg.getAttribute("name");
+		    let imgg = aptImages[r];
+			let imgName = imgg.getAttribute("id");
             console.log("imgg name: ",imgName);			
-            console.log("cover: ",cover.val());
             fd.append(imgName,imgg.files[0]);   			   			
 		 }
 		 
+		 /**
+		 for(let vv of fd.values()){
+			 console.log("vv: ",vv);
+		 }
 		 **/
+		  fd.append("_token",$('#tk-apt').val());
+		 
+		 addApartment(fd);
 	   }
-	   
-	  
-	   
     });	
 });

@@ -364,6 +364,59 @@ const aptFinalPreview = () => {
 }
 
 
+const addApartment = (dt) => {
+	//create request
+	const req = new Request("add-apartment",{method: 'POST', body: dt});
+	//console.log(req);
+	
+	
+	//fetch request
+	fetch(req)
+	   .then(response => {
+		   if(response.status === 200){
+			   //console.log(response);
+			   
+			   return response.text();
+		   }
+		   else{
+			   return {status: "error", message: "Technical error"};
+		   }
+	   })
+	   .catch(error => {
+		    alert("Failed to add apartment: " + error);			
+			$('#add-apartment-loading').hide();
+		     $('#add-apartment-submit').fadeIn();
+	   })
+	   .then(res => {
+		   console.log(res);
+          
+			/**	 
+		   if(res.status == "ok"){
+                  $('#settings-bname').html(dt.bname);
+                  $('#settings-acname').html(dt.acname);
+                  $('#settings-acnum').html(dt.acnum);
+				  $('#settings-bank-side2').hide();
+				  $('#settings-bank-loading').hide();
+		     $('#settings-bank-submit').fadeIn();		
+              $('#settings-bank-side1').fadeIn();
+		   }
+		   else if(res.status == "error"){
+				     alert("An unknown error has occured. Please refresh the app or try again later");
+                   $('#settings-bank-loading').hide();
+		     $('#settings-bank-submit').fadeIn();					 
+		   }
+		   **/
+		  
+		   
+		  
+	   }).catch(error => {
+		     alert("Failed to add apartment: " + error);			
+			$('#add-apartment-loading').hide();
+		     $('#add-apartment-submit').fadeIn();			
+	   });
+}
+
+
 /**********************************************************************************************************************
                                                      OLD METHODS
 /**********************************************************************************************************************/

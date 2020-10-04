@@ -39,7 +39,7 @@ let addApartmentDescriptionEditor = new Simditor({
 				<div class="container">
 					<div class="row">
 						<div class="col-lg-9 col-md-8">
-							
+							<input type="hidden" id="tk-apt" value="{{csrf_token()}}">
 							<!-- Add Apartment Step 1 -->
 							<div class="checkout-wrap" id="add-apartment-side-1">
 								
