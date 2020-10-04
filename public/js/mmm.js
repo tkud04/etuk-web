@@ -1,4 +1,6 @@
 
+	let  toolbar = ['title', 'bold', 'italic', 'underline', 'strikethrough', 'fontScale', 'color', '|', 'ol', 'ul', 'blockquote', 'code', 'table', '|', 'link', 'image', 'hr', '|', 'indent', 'outdent', 'alignment'];
+	
 
 $(document).ready(function() {
     "use strict";
@@ -9,13 +11,9 @@ $(document).ready(function() {
 	
 	//Init wysiwyg editors
 	Simditor.locale = 'en-US';
-	let  toolbar = ['title', 'bold', 'italic', 'underline', 'strikethrough', 'fontScale', 'color', '|', 'ol', 'ul', 'blockquote', 'code', 'table', '|', 'link', 'image', 'hr', '|', 'indent', 'outdent', 'alignment'];
+	let aptDescriptionTextArea = $('#add-apartment-description');
+	//console.log('area: ',aptDescriptionTextArea);
 	
-	let addApartmentDescriptionEditor = new Simditor({
-		textarea: $('#add-apartment-description'),
-		toolbar: toolbar,
-		placeholder: `This is the description`
-	});
 	
     $("a.lno-cart").on("click", function(e) {
     	if(isMobile()){
@@ -159,19 +157,45 @@ $(document).ready(function() {
 	   //side 1 validation
 	   let aptName = $('#add-apartment-name').val(), aptAmount = $('#add-apartment-amount').val(),aptDescription = $('#add-apartment-description').val(),
 	       aptCheckin = $('#add-apartment-checkin').val(), aptCheckout = $('#add-apartment-checkout').val(),aptIdRequired = $('#add-apartment-id-required').val(),
-	       aptChildren = $('#add-apartment-children').val(), aptIdPets = $('#add-apartment-pets').val();
-		  
+	       aptChildren = $('#add-apartment-children').val(), aptIdPets = $('#add-apartment-pets').val(),
+		   side1_validation = (aptName == "" || aptAmount < 0 || aptDescription == "" || aptCheckin == "none" || aptCheckout == "none" || aptIdRequired == "none" || facilities.length < 1);	  
 	  
-       let side1_validation = (aptName == "" || aptAmount < 0 || aptDescription == "" || aptCheckin == "none" || aptCheckout == "none" || aptIdRequired == "none" || facilities.length < 1);	  
+       //side 2 validation imgs = $(`${BUUPlist[bc].id}-images-div input[type=file]`);
+	   let aptAddress = $('#add-apartment-address').val(), aptCity = $('#add-apartment-city').val(),aptState = $('#add-apartment-state').val(),
+	       aptVideo = $('#add-apartment-video')[0].files, aptImages = $(`#add-apartment-images input[type=file]`), emptyImage = false,
+           side2_validation = (aptAddress == "" || aptCity == "" || aptState == "none" || aptVideo.length < 1);
+           
+		   for(let i = 0; i < aptImages.length; i++){
+			   if(aptImages[i].files.length < 1) emptyImage = true;
+		   }
+		   
+         console.log("video: ",aptVideo);
+         console.log("images: ",aptImages);
 	   
-	   if(side1_validation){
+	   if(side1_validation || side2_validation){
 		   Swal.fire({
 			 icon: 'error',
              title: "Please fill all the required fields"
            })
 	   }
+	   else if(emptyImage){
+		   Swal.fire({
+			 icon: 'error',
+             title: "You have an empty image field."
+           })
+	   }
+	   else if(aptCover == "none"){
+		   Swal.fire({
+			 icon: 'error',
+             title: "Select a cover image."
+           })
+	   }
+	   else{
+		 //let aptName = $('#add-apartment-name').val(),   
+		 console.log("final");
+	   }
 	   
-	   //side 2 validation
+	  
 	   
     });	
 });

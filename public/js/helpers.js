@@ -308,8 +308,7 @@ const aptRemoveImage = ctr => {
 }
 
 const aptSetCoverImage = ctr => {
-	let r = $(`#add-apartment-image-div-${ctr}`);
-	console.log("ctr: ", ctr);
+	aptCover = ctr;
 	//r.remove();
 }
 

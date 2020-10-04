@@ -23,7 +23,16 @@ EOD;
 <?php $__env->startSection('content'); ?>
 <?php echo $__env->make('banner-2',['title' => $title,'subtitle' => $subtitle], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <script>
-let selectedSide = "1", facilities = [], aptImages = [], aptImgCount = 1;
+let selectedSide = "1", facilities = [], aptImages = [], aptImgCount = 1, aptCover = "none";
+
+$(document).ready(() => {
+let addApartmentDescriptionEditor = new Simditor({
+		textarea: $('#add-apartment-description'),
+		toolbar: toolbar,
+		placeholder: `This is the description`
+	});	
+});
+
 </script>
 <!-- =================== Add Apartment Search ==================== -->
 			<section class="gray">
@@ -304,8 +313,8 @@ let selectedSide = "1", facilities = [], aptImages = [], aptImgCount = 1;
 										
 										<div class="col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group">
-												<input id="a-2" class="checkbox-custom" name="a-2" type="checkbox">
-												<label for="a-2" class="checkbox-custom-label">By Continuing, you agree to conditions</label>
+												<input id="a-2" class="checkbox-custom" name="a-2" type="checkbox" checked>
+												<label for="a-2" class="checkbox-custom-label">By continuing, you agree to our <a href="<?php echo e(url('terms')); ?>">terms & conditions</a></label>
 											</div>
 										</div>
 										
