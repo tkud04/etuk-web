@@ -330,17 +330,34 @@ const readURL = (input,ctr) => {
 }
 
 const aptFinalPreview = () => {
+	 //side 1 
+	   let aptName = $('#add-apartment-name').val(), aptAmount = $('#add-apartment-amount').val(),aptDescription = $('#add-apartment-description').val(),
+	       aptCheckin = $('#add-apartment-checkin').val(), aptCheckout = $('#add-apartment-checkout').val(),aptIdRequired = $('#add-apartment-id-required').val(),
+	       aptChildren = $('#add-apartment-children').val(), aptIdPets = $('#add-apartment-pets').val(),
+		 
+       //side 2
+	       aptAddress = $('#add-apartment-address').val(), aptCity = $('#add-apartment-city').val(),aptState = $('#add-apartment-state').val(),
+	       aptVideo = $('#add-apartment-video')[0].files, aptImages = $(`#add-apartment-images input[type=file]`);
+		   
+		   
+		   let ff = `None specified`;
+		   if(facilities.length > 0){
+			   ff = `${facilities[0].id}`;
+		     for(let ii in facilities){
+			    ff += ` | ${facilities[ii].id}`;
+		     }
+		   }
 	let i = `
 	     <li>Apartment ID.<span>Will be generated</span></li>
-												<li>Friendly name<span>Shaurya</span></li>
-												<li>Price per day<span>Preet</span></li>
-												<li>Description<span>themezhub@gmail.com</span></li>
-												<li>Check in<span>91 235 458 7458</span></li>
-												<li>Check out<span>California</span></li>
-												<li>Payment type<span>United State</span></li>
-												<li>ID required on check-in<span>New Besil, Liverpool</span></li>
-												<li>Children<span>djjdjd</span></li>
-												<li>Facilities & services<span>WiFi | Breakfast | 24 hour Electricity</span></li>
+												<li>Friendly name<span>${aptName}</span></li>
+												<li>Price per day<span>&#8358;${aptAmount}</span></li>
+												<li>Description<span></span></li>
+												<li>Check in<span>${aptCheckin}</span></li>
+												<li>Check out<span>${aptCheckout}</span></li>
+												<li>Payment type<span>Card</span></li>
+												<li>ID required on check-in<span>${aptIdRequired}</span></li>
+												<li>Children<span>${aptChildren}</span></li>
+												<li>Facilities & services<span>${ff}</span></li>
 	`;
 	
 	$('#add-apartment-final-preview').html(i);
