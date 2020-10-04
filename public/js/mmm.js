@@ -157,7 +157,7 @@ $(document).ready(function() {
 	   //side 1 validation
 	   let aptName = $('#add-apartment-name').val(), aptAmount = $('#add-apartment-amount').val(),aptDescription = $('#add-apartment-description').val(),
 	       aptCheckin = $('#add-apartment-checkin').val(), aptCheckout = $('#add-apartment-checkout').val(),aptIdRequired = $('#add-apartment-id-required').val(),
-	       aptChildren = $('#add-apartment-children').val(), aptIdPets = $('#add-apartment-pets').val(),
+	       aptChildren = $('#add-apartment-children').val(), aptPets = $('#add-apartment-pets').val(),
 		   side1_validation = (aptName == "" || aptAmount < 0 || aptDescription == "" || aptCheckin == "none" || aptCheckout == "none" || aptIdRequired == "none" || facilities.length < 1);	  
 	  
        //side 2 validation imgs = $(`${BUUPlist[bc].id}-images-div input[type=file]`);
@@ -193,6 +193,31 @@ $(document).ready(function() {
 	   else{
 		 //let aptName = $('#add-apartment-name').val(),   
 		 console.log("final");
+		 let rep =  new FormData();
+		 /**{
+			 name: aptName,
+			 amount: aptAmount,
+			 description: aptDescription,
+			 checkin: aptCheckin,
+			 checkout: aptCheckout,
+			 id_required: aptIdRequired,
+			 children: aptChildren,
+			 pets: aptPets,
+			 address: aptAddress,
+			 city: aptCity,
+			 state: aptState,
+		 };
+		 
+		 for(let r = 0; r < imgs.length; r++)
+		 {
+		    let imgg = imgs[r];
+			let imgName = imgg.getAttribute("name");
+            console.log("imgg name: ",imgName);			
+            console.log("cover: ",cover.val());
+            fd.append(imgName,imgg.files[0]);   			   			
+		 }
+		 
+		 **/
 	   }
 	   
 	  
