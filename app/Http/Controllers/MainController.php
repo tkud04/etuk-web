@@ -482,7 +482,7 @@ class MainController extends Controller {
 	    	$ads = $this->helpers->getAds("wide-ad");
 		    $plugins = $this->helpers->getPlugins();
 		
-		    $apartment = $this->helpers->getApartment($req['xf']);
+		    $apartment = $this->helpers->getApartment($req['xf'],true);
 			#dd($apartment);
 		    shuffle($ads);
 		    $ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];

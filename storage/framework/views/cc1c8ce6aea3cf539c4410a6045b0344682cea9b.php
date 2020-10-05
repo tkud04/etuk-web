@@ -17,6 +17,8 @@ $adata = $apartment['data'];
 $address = $apartment['address'];
 $facilities = $apartment['facilities'];
 $cmedia = $apartment['cmedia'];
+$media = $apartment['media'];
+$rawImgs = $media['images'];
 $imgs = $cmedia['images'];
 $video = $cmedia['video'];
 
@@ -69,6 +71,14 @@ let myApartmentDescriptionEditor = new Simditor({
   ?>
     toggleFacility("<?php echo e($ff['facility']); ?>");
   <?php
+	  }
+	  
+	  foreach($rawImgs as $ri)
+	  {
+		  $imgId = $ri['id'];
+  ?>
+      $(`#sci-<?php echo e($imgId); ?>-loading`).hide();
+  <?php  
 	  }
   ?>
 	
@@ -334,7 +344,7 @@ let myApartmentDescriptionEditor = new Simditor({
 												  <?php
 												   foreach($states as $key => $value)
 												   {
-													   $ss = $key = $address['state'] ? " selected='selected'" : "";
+													   $ss = $key == $address['state'] ? " selected='selected'" : "";
 												  ?>
 												    <option value="<?php echo e($key); ?>"<?php echo e($ss); ?>><?php echo e($value); ?></option>
 												  <?php
@@ -363,6 +373,37 @@ let myApartmentDescriptionEditor = new Simditor({
 										<div class="col-lg-12 col-md-12 col-sm-12">
 											<div class="form-group">
 												<label>Images<i class="req">*</i></label>
+												<div class="row">
+												 <?php
+												  for($x = 0; $x < count($imgs); $x++)
+												  {
+													  $img = $imgs[$x];
+													  $imgId = $rawImgs[$x]['id'];
+													  $cover = $rawImgs[$x]['cover'];
+													  $dt = "{apartment_id: '".$apartment['apartment_id']."',id:".$imgId."}";
+												 ?>
+												 <div class="col-lg-4 col-md-4 col-sm-12" id="my-apartment-current-img-<?php echo e($imgId); ?>">
+												    <div>
+												      <img id="my-apartment-preview-0" src="<?php echo e($img); ?>" alt="preview" style="width: 100px; height: 100px;"/>	
+                                                       <?php if($cover == "yes"): ?>
+                                                        <label class="label label-success" id="my-apartment-cover-label">Cover image</label>
+                                                       <?php endif; ?>														   
+												    </div>
+												    <div style="margin-top: 10px;" id="sci-<?php echo e($imgId); ?>-submit">
+													  <a href="javascript:void(0)" onclick="myAptSetCurrentCoverImage(<?php echo e($dt); ?>)" class="btn btn-theme btn-sm">Set as cover image</a>
+												      <a href="javascript:void(0)" onclick="myAptRemoveCurrentImage(<?php echo e($dt); ?>)"class="btn btn-warning btn-sm">Remove</a>
+												    </div>
+													<div style="margin-top: 10px;" id="sci-<?php echo e($imgId); ?>-loading">
+													   <h4>Processing.. <img src="<?php echo e(asset('img/loading.gif')); ?>" class="img img-fluid" alt="Processing.."></h4>
+													</div>
+												  </div>
+												  <?php
+												  }
+												  ?>
+												</div>
+											</div><br>
+											<div class="form-group">
+												<label>Upload new images</label>
 												<div id="my-apartment-images">
 												<div id="my-apartment-image-div-0" class="row">
 												  <div class="col-md-7">

@@ -433,6 +433,74 @@ const addApartment = (dt) => {
 	   });
 }
 
+const myAptSetCurrentCoverImage = (dt) => {
+	console.log(dt);
+	let uu = `sci?xf=${dt.id}&apartment_id=${dt.apartment_id}`;
+	
+	//create request
+	const req = new Request("sci",{method: 'GET'});
+	//console.log(req);
+	
+	
+	//fetch request
+	fetch(req)
+	   .then(response => {
+		   if(response.status === 200){
+			   //console.log(response);
+			   
+			   return response.json();
+		   }
+		   else{
+			   return {status: "error", message: "Technical error"};
+		   }
+	   })
+	   .catch(error => {
+		    alert("Failed to set cover image: " + error);			
+			$('#add-apartment-loading').hide();
+		     $('#add-apartment-submit').fadeIn();
+	   })
+	   .then(res => {
+		   console.log(res);
+          
+		   if(res.status == "ok"){
+              Swal.fire({
+			     icon: 'success',
+                 title: "Apartment added!"
+               }).then((result) => {
+               if (result.value) {                 
+			     window.location = `my-apartments`;
+                }
+              });
+		   }
+		   else if(res.status == "error"){
+			   let hh = ``;
+			   if(res.message == "validation"){
+				 hh = `Please fill all required fields and try again.`;  
+			   }
+			   else if(res.message == "Technical error"){
+				 hh = `A technical error has occured, please try again.`;  
+			   }
+			   Swal.fire({
+			     icon: 'error',
+                 title: hh
+               }).then((result) => {
+               if (result.value) {
+                  $('#add-apartment-loading').hide();
+		          $('#add-apartment-submit').fadeIn();	
+                }
+              });					 
+		   }
+		  
+		   
+		  
+	   }).catch(error => {
+		     alert("Failed to add apartment: " + error);			
+			$('#add-apartment-loading').hide();
+		     $('#add-apartment-submit').fadeIn();			
+	   });
+
+}
+
 
 /**********************************************************************************************************************
                                                      OLD METHODS
