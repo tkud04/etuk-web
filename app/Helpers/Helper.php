@@ -833,6 +833,7 @@ function isDuplicateUser($data)
 				  $temp['facilities'] = $this->getApartmentFacilities($apartment->apartment_id);
 				  $media = $this->getMedia(['apartment_id'=>$apartment->apartment_id,'type' => "all"]);
 				  if($imgId) $temp['media'] = $media;
+				  #dd($media);
 				  $temp['cmedia'] = [
 				    'images' => $this->getCloudinaryMedia($media['images']),
 				    'video' => $this->getCloudinaryMedia($media['video']),
@@ -985,14 +986,14 @@ function isDuplicateUser($data)
 		   {
 			   $ret = ['images' => [],'video' => []];
 			   $records = collect($this->getApartmentMedia($dt));
-			   
+			
 			   $coverImage = $records->where('apartment_id',$dt['apartment_id'])
 			                              ->where('cover',"yes")
 										  ->where('type',"image")->first();
 										  
                $otherImages = $records->where('apartment_id',$dt['apartment_id'])
 			                              ->where('cover',"!=","yes")
-										  ->where('type',"image")->first();
+										  ->where('type',"image");
 				
   			   
 	           if($dt['type'] == "all") $video = $records->where('apartment_id',$dt['apartment_id'])
@@ -1000,15 +1001,20 @@ function isDuplicateUser($data)
 			  
                if($coverImage != null)
 			   {
-				   array_push($ret['images'],$temp);
+				   array_push($ret['images'],$coverImage);
 			   }
 
                if($otherImages != null)
 			   {
 				   foreach($otherImages as $oi)
 				   {
-				       array_push($ret['images'],$temp);
+				       array_push($ret['images'],$oi);
 				   }
+			   }
+			   
+			   if($video != null)
+			   {
+				   $ret['video'] = $video;
 			   }
 			   
 			   return $ret;
@@ -1017,7 +1023,7 @@ function isDuplicateUser($data)
 		   function getCloudinaryMedia($dt)
 		   {
 			   $ret = [];
-                         
+                  #dd($dt);       
                if(count($dt) < 1) { $ret = ["img/no-image.png"]; }
                
 			   else
