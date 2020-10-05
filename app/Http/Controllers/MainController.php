@@ -322,7 +322,7 @@ class MainController extends Controller {
 		$plugins = $this->helpers->getPlugins();
 		
 		$apartments = $this->helpers->getApartments($user);
-		dd($apartments);
+		#dd($apartments);
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
         
@@ -340,6 +340,12 @@ class MainController extends Controller {
 		if(Auth::check())
 		{
 			$user = Auth::user();
+			
+			if($user->mode != "host")
+			{
+				session()->flash("valid-mode-status-error","ok");
+			    return redirect()->intended('/');
+			}
 		}
 		else
 		{
@@ -376,6 +382,12 @@ class MainController extends Controller {
 		if(Auth::check())
 		{
 			$user = Auth::user();
+			
+			if($user->mode != "host")
+			{
+				session()->flash("valid-mode-status-error","ok");
+			    return redirect()->intended('/');
+			}
 		}
 		else
 		{
@@ -384,6 +396,131 @@ class MainController extends Controller {
 
 		$req = $request->all();
         #dd($req);
+		$ret = ['status' => "error",'message' => "nothing happened"];
+	    
+		$validator = Validator::make($req,[
+		                    'name' => 'required',
+		                    'description' => 'required',
+		                    'checkin' => 'required',
+		                    'checkout' => 'required',
+		                    'id_required' => 'required',
+		                    'amount' => 'required|numeric',
+		                    'children' => 'required',
+		                    'pets' => 'required',
+		                    'address' => 'required',
+		                    'city' => 'required',
+		                    'state' => 'required',
+		                    'facilities' => 'required',
+		                    'img_count' => 'required|numeric',
+		                    'cover' => 'required',
+		]);
+		
+		if($validator->fails())
+         {
+             $ret = ['message' => "validation"];
+         }
+		 else
+		 {
+			    $ird = [];
+
+                    for($i = 0; $i < $req['img_count']; $i++)
+                    {
+            		  $img = $request->file("add-apartment-image-".$i);
+             	      $imgg = $this->helpers->uploadCloudImage($img->getRealPath());
+					  $ci = ($req['cover'] != null && $req['cover'] == $i) ? "yes": "no";
+					  $temp = ['public_id' => $imgg['public_id'],'ci' => $ci,'type' => "image"];
+			          array_push($ird, $temp);
+                    } 
+					
+					$req['avb'] = "Available";
+					$req['payment_type'] = "card";
+					$req['user_id'] = $user->id;
+					$req['ird'] = $ird;
+				 
+			$this->helpers->createApartment($req);
+			$ret = ['status' => "ok"];
+		 }
+		 
+		 return json_encode($ret);
+    }
+	
+	/**
+	 * Show the profile.
+	 *
+	 * @return Response
+	 */
+	public function getMyApartment(Request $request)
+    {
+		$user = null;
+		if(Auth::check())
+		{
+			$user = Auth::user();
+			
+			if($user->mode != "host")
+			{
+				session()->flash("valid-mode-status-error","ok");
+			    return redirect()->intended('/');
+			}
+		}
+		else
+		{
+			return redirect()->intended('/');
+		}
+		
+		$req = $request->all();
+		
+		if(isset($req['xf']))
+		{
+			$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
+		    $cart = $this->helpers->getCart($user,$gid);
+		    #dd($user);
+		    $c = $this->helpers->getCategories();
+		    //dd($bs);
+		    $signals = $this->helpers->signals;
+		    $states = $this->helpers->states;
+		
+	    	$ads = $this->helpers->getAds("wide-ad");
+		    $plugins = $this->helpers->getPlugins();
+		
+		    $apartment = $this->helpers->getApartment($req['xf']);
+			dd($apartment);
+		    shuffle($ads);
+		    $ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
+        
+    	    return view("my-apartment",compact(['user','cart','c','ad','states','signals','plugins']));
+		}
+		else
+		{
+			return redirect()->intended('my-apartments');
+		}
+		
+    }
+	
+	/**
+	 * Handle profile update.
+	 *
+	 * @return Response
+	 */
+	public function postMyApartment(Request $request)
+    {
+		$user = null;
+		if(Auth::check())
+		{
+			$user = Auth::user();
+			
+			if($user->mode != "host")
+			{
+				session()->flash("valid-mode-status-error","ok");
+			    return redirect()->intended('/');
+			}
+		}
+		else
+		{
+			return redirect()->intended('/');
+		}
+
+		$req = $request->all();
+        dd($req);
 		$ret = ['status' => "error",'message' => "nothing happened"];
 	    
 		$validator = Validator::make($req,[

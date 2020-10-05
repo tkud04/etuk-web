@@ -31,9 +31,12 @@ Route::get('profile', 'MainController@getProfile');
 Route::post('profile', 'MainController@postProfile');
 Route::get('sm', 'MainController@getSwitchMode');
 
+Route::get('apartment', 'MainController@getApartment');
 Route::get('my-apartments', 'MainController@getMyApartments');
 Route::get('add-apartment', 'MainController@getAddApartment');
 Route::post('add-apartment', 'MainController@postAddApartment');
+Route::get('my-apartment', 'MainController@getMyApartment');
+Route::post('my-apartment', 'MainController@postMyApartment');
 
 
 
