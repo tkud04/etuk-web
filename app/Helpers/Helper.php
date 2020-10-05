@@ -12,7 +12,10 @@ use App\Carts;
 use App\Categories;
 use App\Apartments;
 use App\ApartmentAddresses;
+use App\ApartmentData;
 use App\ApartmentMedia;
+use App\ApartmentTerms;
+use App\ApartmentFacilities;
 use App\Reviews;
 use App\Ads;
 use App\Banners;
@@ -672,7 +675,18 @@ function isDuplicateUser($data)
                  $data['apartment_id'] = $ret->apartment_id;                         
                 $adt = $this->createApartmentData($data);
                 $aa = $this->createApartmentAddress($data);
-
+                $at = $this->createApartmentTerms($data);
+				$facilities = json_decode($data['facilities']);
+				
+				foreach($facilities as $f)
+				{
+					$af = $this->createApartmentFacilities([
+					    'apartment_id' => $data['apartment_id'],
+					    'facility' => $f->id,
+					    'selected' => "true",
+					]);
+				}
+                
 				$ird = "none";
 				$irdc = 0;
 				if(isset($data['ird']) && count($data['ird']) > 0)
@@ -707,6 +721,30 @@ function isDuplicateUser($data)
            	$ret = ApartmentData::create(['apartment_id' => $data['apartment_id'], 
                                                       'description' => $data['description'],                                                       
                                                       'amount' => $data['amount']                                                       
+                                                      ]);
+                              
+                return $ret;
+           }
+		   
+		   function createApartmentFacilities($data)
+           {
+           	$ret = ApartmentFacilities::create(['apartment_id' => $data['apartment_id'], 
+                                                      'facility' => $data['facility'],                                                       
+                                                      'selected' => "true"                                                       
+                                                      ]);
+                              
+                return $ret;
+           }
+		   
+		   function createApartmentTerms($data)
+           {
+           	$ret = ApartmentTerms::create(['apartment_id' => $data['apartment_id'], 
+                                                      'checkin' => $data['checkin'],                                                       
+                                                      'checkout' => $data['checkout'],                                                      
+                                                      'id_required' => $data['id_required'],                                                      
+                                                      'children' => $data['children'],                                                      
+                                                      'pets' => $data['pets'],                                                      
+                                                      'payment_type' => $data['payment_type']                                                      
                                                       ]);
                               
                 return $ret;
@@ -782,14 +820,17 @@ function isDuplicateUser($data)
               if($apartment != null)
                {
 				  $temp = [];
-				  $temp['id'] = $product->id;
-				  $temp['name'] = $product->name;
-				  $temp['sku'] = $product->sku;
-				  $temp['qty'] = $product->qty;
-				  $temp['status'] = $product->status;
-				  $temp['discounts'] = $this->getDiscounts($product->sku);
+				  $temp['id'] = $apartment->id;
+				  $temp['apartment_id'] = $apartment->apartment_id;
+				  $temp['name'] = $apartment->name;
+				  $temp['avb'] = $apartment->avb;
+				  $temp['in_catalog'] = $apartment->in_catalog;
+				  $temp['status'] = $apartment->status;
+				  //$temp['discounts'] = $this->getDiscounts($product->sku);
 				  $temp['data'] = $this->getApartmentData($apartment->apartment_id);
 				  $temp['address'] = $this->getApartmentAddress($apartment->apartment_id);
+				  $temp['terms'] = $this->getApartmentTerms($apartment->apartment_id);
+				  $temp['facilities'] = $this->getApartmentFacilities($apartment->apartment_id);
 				  $media = $this->getMedia(['apartment_id'=>$apartment->apartment_id,'type' => "all"]);
 				  if($imgId) $temp['media'] = $media;
 				  $temp['cmedia'] = [
@@ -797,6 +838,7 @@ function isDuplicateUser($data)
 				    'video' => $this->getCloudinaryMedia($media['video']),
 				  ];
 				  $temp['reviews'] = $this->getReviews($apartment->apartment_id);
+				   $temp['date'] = $apartment->created_at->format("jS F, Y h:i A");
 				  $ret = $temp;
                }                         
                                                       
@@ -843,18 +885,77 @@ function isDuplicateUser($data)
                                                       
                 return $ret;
            }
+	
+	function getApartmentTerms($id)
+           {
+           	$ret = [];
+              $at = ApartmentTerms::where('id',$id)
+			                 ->orWhere('apartment_id',$id)->first();
+ 
+              if($at != null)
+               {
+				  $temp = [];
+				  $temp['id'] = $at->id;
+				  $temp['apartment_id'] = $at->apartment_id;
+     			  $temp['checkin'] = $at->checkin;
+     			  $temp['checkout'] = $at->checkout;
+     			  $temp['children'] = $at->children;
+     			  $temp['id_required'] = $at->id_required;
+     			  $temp['payment_type'] = $at->payment_type;
+				  $ret = $temp;
+               }                         
+                                                      
+                return $ret;
+           }
+		   
+	function getApartmentFacilities($id)
+           {
+           	$ret = [];
+              $afs = ApartmentFacilities::where('id',$id)
+			                 ->orWhere('apartment_id',$id)->get();
+ 
+              if($afs != null)
+               {
+				   foreach($afs as $af)
+				   {
+					   $temp = $this->getApartmentFacility($af->id);
+					   array_push($ret,$temp);
+				   }
+               }                         
+                                                      
+                return $ret;
+           }
+
+	function getApartmentFacility($id)
+           {
+           	$ret = [];
+              $af = ApartmentFacilities::where('id',$id)
+			                 ->orWhere('apartment_id',$id)->first();
+              #dd($af);
+              if($af != null)
+               {
+				  $temp = [];
+				  $temp['id'] = $af->id;
+				  $temp['apartment_id'] = $af->apartment_id;
+     			  $temp['facility'] = $af->facility;
+				  $temp['selected'] = $af->selected;
+				  $ret = $temp;
+               }                         
+                                                      
+                return $ret;
+           }
 
      function getApartmentMedia($dt)
            {
            	$ret = [];
-			if($type == "all")
+			if($dt['type'] == "all")
 			{
-				$ams = ApartmentMedia::where('apartment_id',$apartment_id)->get();
+				$ams = ApartmentMedia::where('apartment_id',$dt['apartment_id'])->get();
 			}
 			else
 			{
-				$ams = ApartmentMedia::where('apartment_id',$apartment_id)
-			                       ->where('type',$type)->get();
+				$ams = ApartmentMedia::where('apartment_id',$dt['apartment_id'])
+			                       ->where('type',$t['type'])->get();
 			}
             
               if($ams != null)
@@ -973,7 +1074,7 @@ function isDuplicateUser($data)
 		   function getReviews($apartment_id)
            {
            	$ret = [];
-              $reviews = Reviews::where('sku',$sku)
+              $reviews = Reviews::where('apartment_id',$apartment_id)
 			                    ->where('status',"enabled")->get();
               $reviews = $reviews->sortByDesc('created_at');	
 			  

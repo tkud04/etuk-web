@@ -26,6 +26,7 @@ EOD;
 let selectedSide = "1", facilities = [], aptImages = [], aptImgCount = 1, aptCover = "none";
 
 $(document).ready(() => {
+$('#add-apartment-loading').hide();
 let addApartmentDescriptionEditor = new Simditor({
 		textarea: $('#add-apartment-description'),
 		toolbar: toolbar,
@@ -270,6 +271,7 @@ let addApartmentDescriptionEditor = new Simditor({
 									</div>
 									
 									<div class="row">
+									  <!--
 										<div class="col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group">
 												<label>Video<i class="req">*</i></label>
@@ -282,8 +284,8 @@ let addApartmentDescriptionEditor = new Simditor({
 												</ol>
 											</div>
 										</div>
-										
-										<div class="col-lg-6 col-md-6 col-sm-12">
+										-->
+										<div class="col-lg-12 col-md-12 col-sm-12">
 											<div class="form-group">
 												<label>Images<i class="req">*</i></label>
 												<div id="add-apartment-images">
@@ -351,9 +353,12 @@ let addApartmentDescriptionEditor = new Simditor({
 										</div>
 										
 										<div class="col-lg-12 col-md-12 col-sm-12">
-											<div class="form-group text-center">
+											<div class="form-group text-center" id="add-apartment-submit">
 												<a href="javascript:void(0)" id="add-apartment-side-3-prev" class="btn btn-theme">Back</a>
 												<a href="javascript:void(0)" id="add-apartment-side-3-next" class="btn btn-theme">Submit</a>
+											</div>
+											<div class="form-group text-center" id="add-apartment-loading">
+												 <h4>Adding apartment.. <img src="{{asset('img/loading.gif')}}" class="img img-fluid" alt="Adding apartment.."></h4><br>
 											</div>
 										</div>
 									</div>

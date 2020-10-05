@@ -162,15 +162,15 @@ $(document).ready(function() {
 	  
        //side 2 validation imgs = $(`${BUUPlist[bc].id}-images-div input[type=file]`);
 	   let aptAddress = $('#add-apartment-address').val(), aptCity = $('#add-apartment-city').val(),aptState = $('#add-apartment-state').val(),
-	       aptVideo = $('#add-apartment-video')[0].files, aptImages = $(`#add-apartment-images input[type=file]`), emptyImage = false,
-           side2_validation = (aptAddress == "" || aptCity == "" || aptState == "none" || aptVideo.length < 1);
+	       aptImages = $(`#add-apartment-images input[type=file]`), emptyImage = false,
+           side2_validation = (aptAddress == "" || aptCity == "" || aptState == "none");
            
 		   for(let i = 0; i < aptImages.length; i++){
 			   if(aptImages[i].files.length < 1) emptyImage = true;
 		   }
 		   
-         console.log("video: ",aptVideo);
-         console.log("images: ",aptImages);
+        // console.log("video: ",aptVideo);
+         //console.log("images: ",aptImages);
 	   
 	   if(side1_validation || side2_validation){
 		   Swal.fire({
@@ -190,15 +190,23 @@ $(document).ready(function() {
              title: "Select a cover image."
            })
 	   }
+	   /**
 	   else if(aptVideo[0].size > 15000000){
 		   Swal.fire({
 			 icon: 'error',
              title: "Video must not be larger than 10MB"
            })
 	   }
+	   **/
 	   else{
 		 //let aptName = $('#add-apartment-name').val(),   
 		 console.log("final");
+		 
+		 let ff = [];
+		 for(let y = 0; y < facilities.length; y++){
+			 if(facilities[y].selected) ff.push(facilities[y]);
+		 }
+		 
 		 let fd =  new FormData();
 		 fd.append("name",aptName);
 		 fd.append("description",aptDescription);
@@ -211,15 +219,17 @@ $(document).ready(function() {
 		 fd.append("address",aptAddress);
 		 fd.append("city",aptCity);
 		 fd.append("state",aptState);
+		 fd.append("facilities",JSON.stringify(ff));
 		 
-		 fd.append("video",aptVideo[0]);
+		 //fd.append("video",aptVideo[0]);
 		 fd.append("cover",aptCover);
+		 fd.append("img_count",aptImages.length);
 		 
 		 for(let r = 0; r < aptImages.length; r++)
 		 {
 		    let imgg = aptImages[r];
 			let imgName = imgg.getAttribute("id");
-            console.log("imgg name: ",imgName);			
+            //console.log("imgg name: ",imgName);			
             fd.append(imgName,imgg.files[0]);   			   			
 		 }
 		 
@@ -229,8 +239,10 @@ $(document).ready(function() {
 		 }
 		 **/
 		  fd.append("_token",$('#tk-apt').val());
-		 
-		 addApartment(fd);
+		  
+		  $('#add-apartment-submit').hide();
+		  $('#add-apartment-loading').fadeIn();
+		  addApartment(fd);
 	   }
     });	
 });

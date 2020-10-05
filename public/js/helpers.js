@@ -337,14 +337,19 @@ const aptFinalPreview = () => {
 		 
        //side 2
 	       aptAddress = $('#add-apartment-address').val(), aptCity = $('#add-apartment-city').val(),aptState = $('#add-apartment-state').val(),
-	       aptVideo = $('#add-apartment-video')[0].files, aptImages = $(`#add-apartment-images input[type=file]`);
+	       aptImages = $(`#add-apartment-images input[type=file]`);
 		   
+		   let fff = [];
+		   for(let y = 0; y < facilities.length; y++){
+			 if(facilities[y].selected) fff.push(facilities[y]);
+		   }
 		   
 		   let ff = `None specified`;
-		   if(facilities.length > 0){
-			   ff = `${facilities[0].id}`;
-		     for(let ii in facilities){
-			    ff += ` | ${facilities[ii].id}`;
+		   if(fff.length > 0){
+			   ff = `${fff[0].id}`;
+		     for(let y = 1; y < fff.length; y++){
+				 let ii = fff[y];
+			   if(ii.selected) ff += ` | ${ii.id}`;
 		     }
 		   }
 	let i = `
@@ -376,7 +381,7 @@ const addApartment = (dt) => {
 		   if(response.status === 200){
 			   //console.log(response);
 			   
-			   return response.text();
+			   return response.json();
 		   }
 		   else{
 			   return {status: "error", message: "Technical error"};
@@ -390,22 +395,34 @@ const addApartment = (dt) => {
 	   .then(res => {
 		   console.log(res);
           
-			/**	 
 		   if(res.status == "ok"){
-                  $('#settings-bname').html(dt.bname);
-                  $('#settings-acname').html(dt.acname);
-                  $('#settings-acnum').html(dt.acnum);
-				  $('#settings-bank-side2').hide();
-				  $('#settings-bank-loading').hide();
-		     $('#settings-bank-submit').fadeIn();		
-              $('#settings-bank-side1').fadeIn();
+              Swal.fire({
+			     icon: 'success',
+                 title: "Apartment added!"
+               }).then((result) => {
+               if (result.value) {                 
+			     window.location = `my-apartments`;
+                }
+              });
 		   }
 		   else if(res.status == "error"){
-				     alert("An unknown error has occured. Please refresh the app or try again later");
-                   $('#settings-bank-loading').hide();
-		     $('#settings-bank-submit').fadeIn();					 
+			   let hh = ``;
+			   if(res.message == "validation"){
+				 hh = `Please fill all required fields and try again.`;  
+			   }
+			   else if(res.message == "Technical error"){
+				 hh = `A technical error has occured, please try again.`;  
+			   }
+			   Swal.fire({
+			     icon: 'error',
+                 title: hh
+               }).then((result) => {
+               if (result.value) {
+                  $('#add-apartment-loading').hide();
+		          $('#add-apartment-submit').fadeIn();	
+                }
+              });					 
 		   }
-		   **/
 		  
 		   
 		  

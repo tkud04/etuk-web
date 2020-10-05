@@ -322,7 +322,7 @@ class MainController extends Controller {
 		$plugins = $this->helpers->getPlugins();
 		
 		$apartments = $this->helpers->getApartments($user);
-		#dd($apartments);
+		dd($apartments);
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
         
@@ -383,26 +383,53 @@ class MainController extends Controller {
 		}
 
 		$req = $request->all();
-       dd($req);
+        #dd($req);
+		$ret = ['status' => "error",'message' => "nothing happened"];
 	    
 		$validator = Validator::make($req,[
-		                    'xf' => 'required',
-		                    'fname' => 'required',
-		                    'lname' => 'required',
-		                    'email' => 'required',
-		                    'phone' => 'required',
+		                    'name' => 'required',
+		                    'description' => 'required',
+		                    'checkin' => 'required',
+		                    'checkout' => 'required',
+		                    'id_required' => 'required',
+		                    'amount' => 'required|numeric',
+		                    'children' => 'required',
+		                    'pets' => 'required',
+		                    'address' => 'required',
+		                    'city' => 'required',
+		                    'state' => 'required',
+		                    'facilities' => 'required',
+		                    'img_count' => 'required|numeric',
+		                    'cover' => 'required',
 		]);
 		
 		if($validator->fails())
          {
-             return redirect()->back()->withInput()->with('errors',$messages);
+             $ret = ['message' => "validation"];
          }
 		 else
 		 {
-			$this->helpers->updateProfile($req);
-			session()->flash("update-profile-status","ok");
-			return redirect()->intended('profile');
+			    $ird = [];
+
+                    for($i = 0; $i < $req['img_count']; $i++)
+                    {
+            		  $img = $request->file("add-apartment-image-".$i);
+             	      $imgg = $this->helpers->uploadCloudImage($img->getRealPath());
+					  $ci = ($req['cover'] != null && $req['cover'] == $i) ? "yes": "no";
+					  $temp = ['public_id' => $imgg['public_id'],'ci' => $ci,'type' => "image"];
+			          array_push($ird, $temp);
+                    } 
+					
+					$req['avb'] = "Available";
+					$req['payment_type'] = "card";
+					$req['user_id'] = $user->id;
+					$req['ird'] = $ird;
+				 
+			$this->helpers->createApartment($req);
+			$ret = ['status' => "ok"];
 		 }
+		 
+		 return json_encode($ret);
     }
 	
 	
