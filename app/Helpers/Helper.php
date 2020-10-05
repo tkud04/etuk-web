@@ -903,6 +903,7 @@ function isDuplicateUser($data)
      			  $temp['checkin'] = $at->checkin;
      			  $temp['checkout'] = $at->checkout;
      			  $temp['children'] = $at->children;
+     			  $temp['pets'] = $at->pets;
      			  $temp['id_required'] = $at->id_required;
      			  $temp['payment_type'] = $at->payment_type;
 				  $ret = $temp;

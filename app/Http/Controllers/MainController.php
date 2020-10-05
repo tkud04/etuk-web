@@ -483,11 +483,11 @@ class MainController extends Controller {
 		    $plugins = $this->helpers->getPlugins();
 		
 		    $apartment = $this->helpers->getApartment($req['xf']);
-			dd($apartment);
+			#dd($apartment);
 		    shuffle($ads);
 		    $ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
         
-    	    return view("my-apartment",compact(['user','cart','c','ad','states','signals','plugins']));
+    	    return view("my-apartment",compact(['user','cart','c','ad','apartment','states','signals','plugins']));
 		}
 		else
 		{
