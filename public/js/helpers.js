@@ -253,7 +253,7 @@ const switchMode = dt => {
 }
 
 const toggleFacility = dt => {
-	  console.log(`selecting facility ${dt}`);
+	 // console.log(`selecting facility ${dt}`);
 	  f = $(`a#apt-service-${dt}`);
 	  i = $(`i#apt-service-icon-${dt}`);
 	  ft = f.attr('data-check');
@@ -329,15 +329,15 @@ const readURL = (input,ctr) => {
   }
 }
 
-const aptFinalPreview = () => {
+const aptFinalPreview = (id) => {
 	 //side 1 
-	   let aptName = $('#add-apartment-name').val(), aptAmount = $('#add-apartment-amount').val(),aptDescription = $('#add-apartment-description').val(),
-	       aptCheckin = $('#add-apartment-checkin').val(), aptCheckout = $('#add-apartment-checkout').val(),aptIdRequired = $('#add-apartment-id-required').val(),
-	       aptChildren = $('#add-apartment-children').val(), aptIdPets = $('#add-apartment-pets').val(),
+	   let aptName = $(`#${id}-name`).val(), aptAmount = $(`#${id}-amount`).val(),aptDescription = $(`#${id}-description`).val(),
+	       aptCheckin = $(`#${id}-checkin`).val(), aptCheckout = $(`#${id}-checkout`).val(),aptIdRequired = $(`#${id}-id-required`).val(),
+	       aptChildren = $(`#${id}-children`).val(), aptIdPets = $(`#${id}-pets`).val(),
 		 
        //side 2
-	       aptAddress = $('#add-apartment-address').val(), aptCity = $('#add-apartment-city').val(),aptState = $('#add-apartment-state').val(),
-	       aptImages = $(`#add-apartment-images input[type=file]`);
+	       aptAddress = $(`#${id}-address`).val(), aptCity = $(`#${id}-city`).val(),aptState = $(`#${id}-state`).val(),
+	       aptImages = $(`#${id}-images input[type=file]`);
 		   
 		   let fff = [];
 		   for(let y = 0; y < facilities.length; y++){
@@ -365,7 +365,7 @@ const aptFinalPreview = () => {
 												<li>Facilities & services<span>${ff}</span></li>
 	`;
 	
-	$('#add-apartment-final-preview').html(i);
+	$(`#${id}-final-preview`).html(i);
 }
 
 

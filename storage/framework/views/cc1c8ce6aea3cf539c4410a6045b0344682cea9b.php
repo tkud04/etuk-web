@@ -14,6 +14,7 @@ EOD;
 
 $terms = $apartment['terms'];
 $adata = $apartment['data'];
+$address = $apartment['address'];
 $facilities = $apartment['facilities'];
 $cmedia = $apartment['cmedia'];
 $imgs = $cmedia['images'];
@@ -97,7 +98,7 @@ let myApartmentDescriptionEditor = new Simditor({
 										<div class="col-lg-12 col-md-12 col-sm-12">
 											<div class="form-group">
 												<label>Apartment ID<i class="req">*</i></label>
-												<input type="text" class="form-control" value="<?php echo e($apartment['id']); ?>" readonly>
+												<input type="text" class="form-control" value="<?php echo e($apartment['apartment_id']); ?>" readonly>
 											</div>
 										</div>
 										
@@ -146,7 +147,7 @@ let myApartmentDescriptionEditor = new Simditor({
 												  {
 													  $ss = $key == $terms['checkin'] ? " selected='selected'" : "";
 												  ?>
-												  <option value="<?php echo e($key); ?><?php echo e($ss); ?>">From <?php echo e($value); ?></option>
+												  <option value="<?php echo e($key); ?>"<?php echo e($ss); ?>>From <?php echo e($value); ?></option>
 												  <?php
 												  }
 												  ?>
@@ -164,7 +165,7 @@ let myApartmentDescriptionEditor = new Simditor({
 												  {
 													    $ss = $key == $terms['checkout'] ? " selected='selected'" : "";
 												  ?>
-												  <option value="<?php echo e($key); ?><?php echo e($ss); ?>">By <?php echo e($value); ?></option>
+												  <option value="<?php echo e($key); ?>"<?php echo e($ss); ?>>By <?php echo e($value); ?></option>
 												  <?php
 												  }
 												  ?>
@@ -179,7 +180,7 @@ let myApartmentDescriptionEditor = new Simditor({
 												?>
 												<select class="form-control">
 												<?php
-												  foreach($paymentTypes as $pt)
+												  foreach($paymentTypes as $key => $value)
 												  {
 													  $ss = $key == $terms['payment_type'] ? " selected='selected'" : "";
 												?>
@@ -198,7 +199,7 @@ let myApartmentDescriptionEditor = new Simditor({
 												?>
 												<select class="form-control">
 												<?php
-												  foreach($opts1 as $o1)
+												  foreach($opts1 as $key => $value)
 												  {
 													  $ss = $key == $terms['id_required'] ? " selected='selected'" : "";
 												?>
@@ -225,7 +226,7 @@ let myApartmentDescriptionEditor = new Simditor({
 												?>
 												<select class="form-control">
 												<?php
-												  foreach($opts2 as $pt)
+												  foreach($opts2 as $key => $value)
 												  {
 													  $ss = $key == $terms['children'] ? " selected='selected'" : "";
 												?>
@@ -247,7 +248,7 @@ let myApartmentDescriptionEditor = new Simditor({
 												?>
 												<select class="form-control">
 												<?php
-												  foreach($opts3 as $pt)
+												  foreach($opts3 as $key => $value)
 												  {
 													  $ss = $key == $terms['pets'] ? " selected='selected'" : "";
 												?>
@@ -314,14 +315,14 @@ let myApartmentDescriptionEditor = new Simditor({
 										<div class="col-lg-12 col-md-12 col-sm-12">
 											<div class="form-group">
 												<label>Address<i class="req">*</i></label>
-												<input type="text" class="form-control" id="my-apartment-address" placeholder="House address">
+												<input type="text" class="form-control" id="my-apartment-address" value="<?php echo e($address['address']); ?>" placeholder="House address">
 											</div>
 										</div>
 										
 										<div class="col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group">
 												<label>City<i class="req">*</i></label>
-												<input type="text" class="form-control" id="my-apartment-city" placeholder="City">
+												<input type="text" class="form-control" id="my-apartment-city" value="<?php echo e($address['city']); ?>" placeholder="City">
 											</div>
 										</div>
 										
@@ -333,8 +334,9 @@ let myApartmentDescriptionEditor = new Simditor({
 												  <?php
 												   foreach($states as $key => $value)
 												   {
+													   $ss = $key = $address['state'] ? " selected='selected'" : "";
 												  ?>
-												    <option value="<?php echo e($key); ?>"><?php echo e($value); ?></option>
+												    <option value="<?php echo e($key); ?>"<?php echo e($ss); ?>><?php echo e($value); ?></option>
 												  <?php
 												   }
 												  ?>
