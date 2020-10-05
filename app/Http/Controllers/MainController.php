@@ -569,6 +569,41 @@ class MainController extends Controller {
 		 return json_encode($ret);
     }
 	
+	/**
+	 * Show the profile.
+	 *
+	 * @return Response
+	 */
+	public function getDeleteApartment(Request $request)
+    {
+		$user = null;
+		if(Auth::check())
+		{
+			$user = Auth::user();
+			
+			if($user->mode != "host")
+			{
+				session()->flash("valid-mode-status-error","ok");
+			    return redirect()->intended('/');
+			}
+		}
+		else
+		{
+			return redirect()->intended('/');
+		}
+		
+		$req = $request->all();
+		
+		if(isset($req['xf']))
+		{
+		    $this->helpers->deleteApartment($req['xf']);
+			session()->flash("delete-apartment-status","ok");
+		}
+		
+		return redirect()->intended('my-apartments');
+		
+    }
+	
 	
 	
 

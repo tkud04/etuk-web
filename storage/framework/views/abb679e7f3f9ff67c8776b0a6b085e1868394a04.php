@@ -37,10 +37,12 @@ $subtitle = "Manage everything about your apartments here";
 											   $uu = url('my-apartment')."?xf=".$a['apartment_id'];
 											   $du = url('delete-apartment')."?xf=".$a['apartment_id'];
 											   
+											   $imgs = $a['cmedia']['images'];
+											   
 									   ?>
 										<li>
 											<div class="list-box-listing">
-												<div class="list-box-listing-img"><a href="<?php echo e($uu); ?>"><img src="assets/img/destination/des-2.jpg" alt=""></a></div>
+												<div class="list-box-listing-img"><a href="<?php echo e($uu); ?>"><img src="<?php echo e($imgs[0]); ?>" alt="<?php echo e($name); ?>"></a></div>
 												<div class="list-box-listing-content">
 													<div class="inner">
 														<h3><a href="<?php echo e($uu); ?>"><?php echo e($name); ?></a></h3>
@@ -48,9 +50,9 @@ $subtitle = "Manage everything about your apartments here";
 														<div class="star-rating">
 															<div class="rating-counter">(<?php echo e(count($reviews)); ?> reviews)</div>
 															<?php
-															$rating = 8;
+															$rating = 8; $stars = $rating / 2;
 															
-															 for($u = 0; $u < $rating; $u++)
+															 for($u = 0; $u < $stars; $u++)
 															 {
 															?>
 															   <span class="ti-star"></span>
@@ -59,7 +61,7 @@ $subtitle = "Manage everything about your apartments here";
 															?>
 															
 															<?php
-															 for($v = 0; $v < (5 - ($rating / 2)); $v++)
+															 for($v = 0; $v < (5 - $stars); $v++)
 															 {
 															?>
 															   <span class="ti-star empty"></span>

@@ -37,7 +37,7 @@ Route::get('add-apartment', 'MainController@getAddApartment');
 Route::post('add-apartment', 'MainController@postAddApartment');
 Route::get('my-apartment', 'MainController@getMyApartment');
 Route::post('my-apartment', 'MainController@postMyApartment');
-
+Route::get('delete-apartment', 'MainController@getDeleteApartment');
 
 
 

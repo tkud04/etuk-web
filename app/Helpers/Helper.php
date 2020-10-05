@@ -755,7 +755,8 @@ function isDuplicateUser($data)
            	$ret = ApartmentMedia::create(['apartment_id' => $data['apartment_id'], 
                                                       'url' => $data['url'],                                                       
                                                       'cover' => $data['cover'],                                                    
-                                                      'type' => $data['type']                                                       
+                                                      'type' => $data['type'],                                                      
+                                                      'type' => $data['delete_token']                                                      
                                                       ]);
                               
                 return $ret;
@@ -764,6 +765,7 @@ function isDuplicateUser($data)
 		   function deleteCloudImage($id)
           {
           	$dt = ['cloud_name' => "etuk-ng",'invalidate' => true];
+			 $preset = "uwh1p75e";
           	$rett = \Cloudinary\Uploader::destroy($id,$dt);
                                                      
              return $rett; 
@@ -969,6 +971,7 @@ function isDuplicateUser($data)
 					$temp['cover'] = $am->cover;
 					$temp['type'] = $am->type;
 				    $temp['url'] = $am->url;
+				    $temp['delete_token'] = $am->delete_token;
 				    array_push($ret,$temp);
 				  }
                }                         
@@ -1059,7 +1062,36 @@ function isDuplicateUser($data)
                 }
 				
 				return $ret;
-		   }		   		   
+		   }
+
+
+  function deleteApartment($id)
+  {
+	  $apartment = Apartments::where('id',$id)
+	                         ->orWhere('apartment_id',$id)->first();
+	  
+	  if($apartment != null)
+	  {
+		  $aa = ApartmentAddresses::where('id',$id)
+	                         ->orWhere('apartment_id',$id)->first();
+		  $af = ApartmentFacilities::where('id',$id)
+	                         ->orWhere('apartment_id',$id)->first();
+		  $ad = ApartmentData::where('id',$id)
+	                         ->orWhere('apartment_id',$id)->first();
+		  $am = ApartmentMedia::where('id',$id)
+	                         ->orWhere('apartment_id',$id)->first();
+		  $at = ApartmentTerms::where('id',$id)
+	                         ->orWhere('apartment_id',$id)->first();
+		  
+          if($aa != null) $aa->delete();		  
+          if($af != null) $af->delete();		  
+          if($ad != null) $ad->delete();		  
+          if($am != null) $am->delete();		  
+          if($at != null) $at->delete();
+		  
+		  $apartment->delete();
+	  }
+  }		   
 		   
 		   
   function createReview($user,$data)
