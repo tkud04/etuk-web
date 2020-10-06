@@ -130,6 +130,15 @@ $(document).ready(function() {
 	//ADD APARTMENT
 	$("#add-apartment-side-1-next").click(e => {
        e.preventDefault();
+	   
+	   if(facilities.length > 0){
+		   let aptSidebarFacilitiesHTML = ``;
+		   for(let adf = 0; adf < facilities.length; adf++){
+			   aptSidebarFacilitiesHTML += `<li>${facilities[adf].id}</li>`;
+		   }
+		   $('#apt-sidebar-facilities').html(aptSidebarFacilitiesHTML);
+	   }
+	   
 	  hideElem(['#add-apartment-side-1','#add-apartment-side-3']);
 	  selectCheckoutSide({side: 2,type: ".add-apartment",content: "ti-check"});
 	  showElem(['#add-apartment-side-2']);
@@ -253,6 +262,14 @@ $(document).ready(function() {
 	//MY APARTMENT
 	$("#my-apartment-side-1-next").click(e => {
        e.preventDefault();
+	   
+	   if(facilities.length > 0){
+		   let aptSidebarFacilitiesHTML = ``;
+		   for(let adf = 0; adf < facilities.length; adf++){
+			   aptSidebarFacilitiesHTML += `<li>${facilities[adf].id}</li>`;
+		   }
+		   $('#apt-sidebar-facilities').html(aptSidebarFacilitiesHTML);
+	   }
 	  hideElem(['#my-apartment-side-1','#my-apartment-side-3']);
 	  selectCheckoutSide({side: 2,type: ".my-apartment",content: "ti-check"});
 	  showElem(['#my-apartment-side-2']);

@@ -41,6 +41,7 @@ let addApartmentDescriptionEditor = new Simditor({
 					<div class="row">
 						<div class="col-lg-9 col-md-8">
 							<input type="hidden" id="tk-apt" value="<?php echo e(csrf_token()); ?>">
+							<input type="hidden" id="tk-axf" value="<?php echo e(url('apartments')); ?>">
 							<!-- Add Apartment Step 1 -->
 							<div class="checkout-wrap" id="add-apartment-side-1">
 								
@@ -54,10 +55,16 @@ let addApartmentDescriptionEditor = new Simditor({
 											<h4 class="mb-3">Basic Information</h4>
 										</div>
 										
-										<div class="col-lg-12 col-md-12 col-sm-12">
+										<div class="col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group">
 												<label>Apartment ID<i class="req">*</i></label>
 												<input type="text" class="form-control" value="Will be generated" readonly>
+											</div>
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-12">
+											<div class="form-group">
+												<label>Friendly URL<i class="req">*</i></label>
+												<input type="text" class="form-control" id="add-apartment-url" placeholder="URL e.g my-apartment">
 											</div>
 										</div>
 										
@@ -298,16 +305,16 @@ let addApartmentDescriptionEditor = new Simditor({
 												  <div class="col-md-5">
 												    <img id="add-apartment-preview-0" src="#" alt="preview" style="width: 50px; height: 50px;"/>
 													<a href="javascript:void(0)" onclick="aptSetCoverImage(0)" class="btn btn-theme btn-sm">Set as cover image</a>
-												    <a href="javascript:void(0)" onclick="aptRemoveImage(0)"class="btn btn-warning btn-sm">Remove</a>
+												    <a href="javascript:void(0)" onclick="aptRemoveImage({id: 'add-apartment',ctr: '0'})" class="btn btn-warning btn-sm">Remove</a>
 												  </div>
 												</div>
 												</div>
 											</div>
 											<div class="form-group">
-											    <a href="javascript:void(0)" onclick="aptAddImage()" class="btn btn-warning btn-sm">Add image</a>
+											    <a href="javascript:void(0)" onclick="aptAddImage({id: 'add-apartment'})" class="btn btn-warning btn-sm">Add image</a>
 											    <ol class="form-control-plaintext">
-												  <li>Requirements and recommendations will be displayed here</li>
-												  <li>Requirements and recommendations will be displayed here</li>
+												  <li>Recommended dimensions: Your images should not exceed <b>1280x880</b></li>
+												  <li>Maximum file size: Your images must not be more than <b>1.5MB</b></li>
 												</ol>
 											</div>
 										</div>									
@@ -350,8 +357,8 @@ let addApartmentDescriptionEditor = new Simditor({
 											</ul>
 											<hr>
 											
-											<h4>Payment Detail</h4>
-											<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit</p>
+											<h4>Final Notes</h4>
+											<p>Take a moment to preview the information about your apartment to ensure there are no errors or mistypes as your request will be reviewed by an admin. If you are sure all your information is correct click on <b>Submit</b> below. To make changes click on <b>Back</b>.</p>
 											
 										</div>
 										
@@ -375,99 +382,7 @@ let addApartmentDescriptionEditor = new Simditor({
 						<!-- Sidebar End -->
 							
 						<div class="col-lg-3 col-md-4">
-							<div class="checkout-side">
-							
-								<div class="booking-short">
-									<img src="<?php echo e(asset('img/des-5.jpg')); ?>" class="img-fluid" alt="" />
-									<h4>Manali To Paris, London</h4>
-									<span>5 Days Tour</span>
-								</div>
-								
-								<div class="booking-short-side">
-									<div class="accordion" id="accordionExample">
-										<div class="card">
-											<div class="card-header" id="bookinDet">
-											  <h2 class="mb-0">
-												<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#bookinSer" aria-expanded="true" aria-controls="bookinSer">
-												  Booking Detail
-												</button>
-											  </h2>
-											</div>
-
-											<div id="bookinSer" class="collapse show" aria-labelledby="bookinDet" data-parent="#accordionExample">
-												<div class="card-body">
-													<ul class="booking-detail-list">
-														<li>10 May 2020- 20 May 2020</li>
-														<li>Tour Days<span>5 Days</span></li>
-														<li>Adults<span>4</span></li>
-														<li>Children<span>3</span></li>
-													</ul>
-												</div>
-											</div>
-										</div>
-										
-										<div class="card">
-											<div class="card-header" id="extraFeat">
-											  <h2 class="mb-0">
-												<button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#extraSer" aria-expanded="false" aria-controls="extraSer">
-												  Extra Features
-												</button>
-											  </h2>
-											</div>
-											<div id="extraSer" class="collapse" aria-labelledby="extraFeat" data-parent="#accordionExample">
-												<div class="card-body">
-													<ul class="booking-detail-list">
-														<li>Breakfast</li>
-														<li>Rooms Service</li>
-														<li>Wifi Free</li>
-														<li>Car Driving</li>
-													</ul>
-												</div>
-											</div>
-										  </div>
-										  
-										  <div class="card">
-											<div class="card-header" id="CouponCode">
-											  <h2 class="mb-0">
-												<button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#couponcd" aria-expanded="false" aria-controls="couponcd">
-												  Coupon Code
-												</button>
-											  </h2>
-											</div>
-											<div id="couponcd" class="collapse show" aria-labelledby="CouponCode" data-parent="#accordionExample">
-												<div class="card-body">
-													<div class="form-group">
-														<input type="text" class="form-control" placeholder="Code">
-														<button type="button" class="btn btn-black black full-width mt-2">Apply</button>
-													</div>
-												</div>
-											</div>
-										</div>
-										
-										<div class="card">
-											<div class="card-header" id="PayMents">
-											  <h2 class="mb-0">
-												<button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#payser" aria-expanded="false" aria-controls="payser">
-												  Payment
-												</button>
-											  </h2>
-											</div>
-											<div id="payser" class="collapse" aria-labelledby="PayMents" data-parent="#accordionExample">
-												<div class="card-body">
-													<ul class="booking-detail-list">
-														<li>Sub Total<span>$224</span></li>
-														<li>Extra Price<span>$70</span></li>
-														<li>Tax<span>$20</span></li>
-														<li><b>Pay Ammount</b><span>$314</span></li>
-													</ul>
-												</div>
-											</div>
-										</div>
-										
-									</div>
-								</div>
-								
-							</div>
+							<?php echo $__env->make('apt-sidebar',['cmedia' => [],'media' => []], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 						</div>
 					</div>
 				</div>
