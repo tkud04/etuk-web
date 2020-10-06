@@ -38,9 +38,12 @@ class Helper implements HelperContract
 {
 
  public $signals = ['okays'=> ["login-status" => "Welcome back!",            
-                     "update-profile-status" => "Profile updated!",
+                     "update-profile-status" => "Profile updated.",
                      "switch-mode-status" => "You have now switched your account mode.",
-					 "valid-mode-status-error" => "Access denied. Switch your account mode to grant permission for that action",
+					 "valid-mode-status-error" => "Access denied. Try switching your account mode to access the resource.",
+					 "sci-status" => "Cover image updated.",
+					 "cover-image-status-error" => "You cannot delete the cover image.",
+					 "ri-status" => "Image deleted.",
                      ],
                      'errors'=> ["login-status-error" => "Wrong username or password, please try again.",
 					 "signup-status-error" => "There was a problem creating your account, please try again.",
@@ -668,6 +671,7 @@ function isDuplicateUser($data)
                                                       'apartment_id' => $apartment_id, 
                                                       'user_id' => $data['user_id'],                                                       
                                                       'avb' => $data['avb'],                                                       
+                                                      'url' => $data['url'],                                                       
                                                       'in_catalog' => "no", 
                                                       'status' => "enabled", 
                                                       ]);
@@ -826,6 +830,7 @@ function isDuplicateUser($data)
 				  $temp['apartment_id'] = $apartment->apartment_id;
 				  $temp['name'] = $apartment->name;
 				  $temp['avb'] = $apartment->avb;
+				  $temp['url'] = $apartment->url;
 				  $temp['in_catalog'] = $apartment->in_catalog;
 				  $temp['status'] = $apartment->status;
 				  //$temp['discounts'] = $this->getDiscounts($product->sku);
@@ -1076,23 +1081,66 @@ function isDuplicateUser($data)
 		  $aa = ApartmentAddresses::where('id',$id)
 	                         ->orWhere('apartment_id',$id)->first();
 		  $af = ApartmentFacilities::where('id',$id)
-	                         ->orWhere('apartment_id',$id)->first();
+	                         ->orWhere('apartment_id',$id)->get();
 		  $ad = ApartmentData::where('id',$id)
 	                         ->orWhere('apartment_id',$id)->first();
 		  $am = ApartmentMedia::where('id',$id)
-	                         ->orWhere('apartment_id',$id)->first();
+	                         ->orWhere('apartment_id',$id)->get();
 		  $at = ApartmentTerms::where('id',$id)
 	                         ->orWhere('apartment_id',$id)->first();
 		  
           if($aa != null) $aa->delete();		  
-          if($af != null) $af->delete();		  
+          if($af != null)
+		  {
+			foreach($af as $aff) $aff->delete();  
+		  }		  
           if($ad != null) $ad->delete();		  
-          if($am != null) $am->delete();		  
+          if($am != null)
+		  {
+			foreach($am as $amm) $amm->delete();  
+		  }		  
           if($at != null) $at->delete();
 		  
 		  $apartment->delete();
 	  }
-  }		   
+  }
+
+  function deleteApartmentImage($dt)
+  {
+	  $ret = "ok";
+	  
+	  $img = ApartmentMedia::where('id',$dt['xf'])
+	                     ->where('apartment_id',$dt['apartment_id'])->first();
+	  
+	  if($img != null)
+	  {
+		  if($img->cover == "yes")
+		  {
+			  $ret = "isCover";
+		  }
+		  else
+		  {
+			$img->delete();  
+		  }
+		  
+	  }
+	  return $ret;
+  }  
+
+  function setCoverImage($dt)
+  {
+	  $img = ApartmentMedia::where('id',$dt['xf'])
+	                     ->where('apartment_id',$dt['apartment_id'])->first();
+	  
+	  $currentCover = ApartmentMedia::where('cover',"yes")
+	                     ->where('apartment_id',$dt['apartment_id'])->first();
+	  
+	  if($img != null && $currentCover != null && $img != $currentCover)
+	  {
+		  $currentCover->update(['cover' => "no"]);
+		  $img->update(['cover' => "yes"]);
+	  }
+  }  
 		   
 		   
   function createReview($user,$data)

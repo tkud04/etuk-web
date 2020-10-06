@@ -330,7 +330,7 @@ class MainController extends Controller {
     }
 	
 	/**
-	 * Show the profile.
+	 * Show the add apartment view.
 	 *
 	 * @return Response
 	 */
@@ -372,7 +372,7 @@ class MainController extends Controller {
     }
 	
 	/**
-	 * Handle profile update.
+	 * Handle add new apartment.
 	 *
 	 * @return Response
 	 */
@@ -400,6 +400,7 @@ class MainController extends Controller {
 	    
 		$validator = Validator::make($req,[
 		                    'name' => 'required',
+		                    'url' => 'required',
 		                    'description' => 'required',
 		                    'checkin' => 'required',
 		                    'checkout' => 'required',
@@ -445,7 +446,7 @@ class MainController extends Controller {
     }
 	
 	/**
-	 * Show the profile.
+	 * Show the apartment.
 	 *
 	 * @return Response
 	 */
@@ -497,7 +498,7 @@ class MainController extends Controller {
     }
 	
 	/**
-	 * Handle profile update.
+	 * Handle apartment update.
 	 *
 	 * @return Response
 	 */
@@ -525,6 +526,8 @@ class MainController extends Controller {
 	    
 		$validator = Validator::make($req,[
 		                    'name' => 'required',
+		                    'url' => 'required',
+		                    'avb' => 'required',
 		                    'description' => 'required',
 		                    'checkin' => 'required',
 		                    'checkout' => 'required',
@@ -570,7 +573,7 @@ class MainController extends Controller {
     }
 	
 	/**
-	 * Show the profile.
+	 * Delete an apartment.
 	 *
 	 * @return Response
 	 */
@@ -601,6 +604,77 @@ class MainController extends Controller {
 		}
 		
 		return redirect()->intended('my-apartments');
+		
+    }
+	
+	/**
+	 * Set apartment's current image.
+	 *
+	 * @return Response
+	 */
+	public function getSetCoverImage(Request $request)
+    {
+		$user = null;
+		if(Auth::check())
+		{
+			$user = Auth::user();
+			
+			if($user->mode != "host")
+			{
+				session()->flash("valid-mode-status-error","ok");
+			    return redirect()->intended('/');
+			}
+		}
+		else
+		{
+			return redirect()->intended('/');
+		}
+		
+		$req = $request->all();
+		
+		if(isset($req['xf']) && isset($req['apartment_id']))
+		{
+		    $this->helpers->setCoverImage($req);
+			session()->flash("sci-status","ok");
+		}
+		
+		return redirect()->back();
+		
+    }
+	
+	/**
+	 * Delete an apartment image.
+	 *
+	 * @return Response
+	 */
+	public function getRemoveImage(Request $request)
+    {
+		$user = null;
+		if(Auth::check())
+		{
+			$user = Auth::user();
+			
+			if($user->mode != "host")
+			{
+				session()->flash("valid-mode-status-error","ok");
+			    return redirect()->intended('/');
+			}
+		}
+		else
+		{
+			return redirect()->intended('/');
+		}
+		
+		$req = $request->all();
+		
+		if(isset($req['xf']) && isset($req['apartment_id']))
+		{
+		    $ret = $this->helpers->deleteApartmentImage($req);
+			if($ret == "isCover") session()->flash("cover-image-status-error","ok");
+			else if($ret == "ok") session()->flash("ri-status","ok");
+		}
+		
+		return redirect()->back();
 		
     }
 	

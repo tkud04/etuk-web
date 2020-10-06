@@ -39,6 +39,9 @@ Route::get('my-apartment', 'MainController@getMyApartment');
 Route::post('my-apartment', 'MainController@postMyApartment');
 Route::get('delete-apartment', 'MainController@getDeleteApartment');
 
+Route::get('sci', 'MainController@getSetCoverImage');
+Route::get('ri', 'MainController@getRemoveImage');
+
 
 
 Route::get('payment/callback', 'PaymentController@getPaymentCallback');

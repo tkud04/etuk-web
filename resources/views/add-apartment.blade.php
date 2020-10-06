@@ -41,6 +41,7 @@ let addApartmentDescriptionEditor = new Simditor({
 					<div class="row">
 						<div class="col-lg-9 col-md-8">
 							<input type="hidden" id="tk-apt" value="{{csrf_token()}}">
+							<input type="hidden" id="tk-axf" value="{{url('apartments')}}">
 							<!-- Add Apartment Step 1 -->
 							<div class="checkout-wrap" id="add-apartment-side-1">
 								
@@ -53,10 +54,16 @@ let addApartmentDescriptionEditor = new Simditor({
 											<h4 class="mb-3">Basic Information</h4>
 										</div>
 										
-										<div class="col-lg-12 col-md-12 col-sm-12">
+										<div class="col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group">
 												<label>Apartment ID<i class="req">*</i></label>
 												<input type="text" class="form-control" value="Will be generated" readonly>
+											</div>
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-12">
+											<div class="form-group">
+												<label>Friendly URL<i class="req">*</i></label>
+												<input type="text" class="form-control" id="add-apartment-url" placeholder="URL e.g my-apartment">
 											</div>
 										</div>
 										
@@ -296,13 +303,13 @@ let addApartmentDescriptionEditor = new Simditor({
 												  <div class="col-md-5">
 												    <img id="add-apartment-preview-0" src="#" alt="preview" style="width: 50px; height: 50px;"/>
 													<a href="javascript:void(0)" onclick="aptSetCoverImage(0)" class="btn btn-theme btn-sm">Set as cover image</a>
-												    <a href="javascript:void(0)" onclick="aptRemoveImage(0)"class="btn btn-warning btn-sm">Remove</a>
+												    <a href="javascript:void(0)" onclick="aptRemoveImage({id: 'add-apartment',ctr: '0'})" class="btn btn-warning btn-sm">Remove</a>
 												  </div>
 												</div>
 												</div>
 											</div>
 											<div class="form-group">
-											    <a href="javascript:void(0)" onclick="aptAddImage()" class="btn btn-warning btn-sm">Add image</a>
+											    <a href="javascript:void(0)" onclick="aptAddImage({id: 'add-apartment'})" class="btn btn-warning btn-sm">Add image</a>
 											    <ol class="form-control-plaintext">
 												  <li>Requirements and recommendations will be displayed here</li>
 												  <li>Requirements and recommendations will be displayed here</li>

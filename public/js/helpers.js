@@ -284,25 +284,25 @@ const toggleFacility = dt => {
 }
 
 
-const aptAddImage = () => {
-	let i = $(`#add-apartment-images`), ctr = $(`#add-apartment-images div.row`).length;
+const aptAddImage = dt => {
+	let i = $(`#${dt.id}-images`), ctr = $(`#${dt.id}-images div.row`).length;
 	
 	i.append(`
-			  <div id="add-apartment-image-div-${ctr}" class="row">
+			  <div id="${dt.id}-image-div-${ctr}" class="row">
 				<div class="col-md-7">
-					<input type="file" class="form-control" data-ic="${ctr}" onchange="readURL(this,'${ctr}')" id="add-apartment-image-${ctr}" name="add-apartment-images[]">												    
+					<input type="file" class="form-control" data-ic="${ctr}" onchange="readURL(this,{id: '${dt.id}',ctr: '${ctr}'})" id="${dt.id}-image-${ctr}" name="${dt.id}-images[]">												    
 				</div>
 			    <div class="col-md-5">
-					<img id="add-apartment-preview-${ctr}" src="#" alt="preview" style="width: 50px; height: 50px;"/>
+					<img id="${dt.id}-preview-${ctr}" src="#" alt="preview" style="width: 50px; height: 50px;"/>
 					<a href="javascript:void(0)" onclick="aptSetCoverImage('${ctr}')" class="btn btn-theme btn-sm">Set as cover image</a>
-					<a href="javascript:void(0)" onclick="aptRemoveImage('${ctr}')"class="btn btn-warning btn-sm">Remove</a>
+					<a href="javascript:void(0)" onclick="aptRemoveImage({id: '${dt.id}', ctr: '${ctr}'})"class="btn btn-warning btn-sm">Remove</a>
 				</div>
 			  </div>
 	  `);
 }
 
-const aptRemoveImage = ctr => {
-	let r = $(`#add-apartment-image-div-${ctr}`);
+const aptRemoveImage = dt => {
+	let r = $(`#${dt.id}-image-div-${dt.ctr}`);
 	//console.log(r);
 	r.remove();
 }
@@ -312,13 +312,13 @@ const aptSetCoverImage = ctr => {
 	//r.remove();
 }
 
-const readURL = (input,ctr) => {
+const readURL = (input,dt) => {
   if (input.files && input.files[0]) {
     var reader = new FileReader();
     
     reader.onload = function(e) {
 		let pv = input.getAttribute("data-ic");
-      $(`#add-apartment-preview-${ctr}`).attr({
+      $(`#${dt.id}-preview-${dt.ctr}`).attr({
 	      'src': e.target.result,
 	      'width': "50",
 	      'height': "50"
@@ -331,13 +331,13 @@ const readURL = (input,ctr) => {
 
 const aptFinalPreview = (id) => {
 	 //side 1 
-	   let aptName = $(`#${id}-name`).val(), aptAmount = $(`#${id}-amount`).val(),aptDescription = $(`#${id}-description`).val(),
+	   let aptName = $(`#${id}-name`).val(), aptUrl = $(`#${id}-url`).val(), aptAmount = $(`#${id}-amount`).val(),aptDescription = $(`#${id}-description`).val(),
 	       aptCheckin = $(`#${id}-checkin`).val(), aptCheckout = $(`#${id}-checkout`).val(),aptIdRequired = $(`#${id}-id-required`).val(),
 	       aptChildren = $(`#${id}-children`).val(), aptIdPets = $(`#${id}-pets`).val(),
 		 
        //side 2
 	       aptAddress = $(`#${id}-address`).val(), aptCity = $(`#${id}-city`).val(),aptState = $(`#${id}-state`).val(),
-	       aptImages = $(`#${id}-images input[type=file]`);
+	       aptImages = $(`#${id}-images input[type=file]`), axf = $(`#tk-axf`).val();
 		   
 		   let fff = [];
 		   for(let y = 0; y < facilities.length; y++){
@@ -352,9 +352,12 @@ const aptFinalPreview = (id) => {
 			   if(ii.selected) ff += ` | ${ii.id}`;
 		     }
 		   }
+		   
+		   if(aptUrl == "") aptUrl = "not specified";
 	let i = `
 	     <li>Apartment ID.<span>Will be generated</span></li>
 												<li>Friendly name<span>${aptName}</span></li>
+												<li>Friendly URL<span>${axf}?xf=<b>${aptUrl}</b></span></li>
 												<li>Price per day<span>&#8358;${aptAmount}</span></li>
 												<li>Description<span></span></li>
 												<li>Check in<span>${aptCheckin}</span></li>
@@ -436,69 +439,13 @@ const addApartment = (dt) => {
 const myAptSetCurrentCoverImage = (dt) => {
 	console.log(dt);
 	let uu = `sci?xf=${dt.id}&apartment_id=${dt.apartment_id}`;
-	
-	//create request
-	const req = new Request("sci",{method: 'GET'});
-	//console.log(req);
-	
-	
-	//fetch request
-	fetch(req)
-	   .then(response => {
-		   if(response.status === 200){
-			   //console.log(response);
-			   
-			   return response.json();
-		   }
-		   else{
-			   return {status: "error", message: "Technical error"};
-		   }
-	   })
-	   .catch(error => {
-		    alert("Failed to set cover image: " + error);			
-			$('#add-apartment-loading').hide();
-		     $('#add-apartment-submit').fadeIn();
-	   })
-	   .then(res => {
-		   console.log(res);
-          
-		   if(res.status == "ok"){
-              Swal.fire({
-			     icon: 'success',
-                 title: "Apartment added!"
-               }).then((result) => {
-               if (result.value) {                 
-			     window.location = `my-apartments`;
-                }
-              });
-		   }
-		   else if(res.status == "error"){
-			   let hh = ``;
-			   if(res.message == "validation"){
-				 hh = `Please fill all required fields and try again.`;  
-			   }
-			   else if(res.message == "Technical error"){
-				 hh = `A technical error has occured, please try again.`;  
-			   }
-			   Swal.fire({
-			     icon: 'error',
-                 title: hh
-               }).then((result) => {
-               if (result.value) {
-                  $('#add-apartment-loading').hide();
-		          $('#add-apartment-submit').fadeIn();	
-                }
-              });					 
-		   }
-		  
-		   
-		  
-	   }).catch(error => {
-		     alert("Failed to add apartment: " + error);			
-			$('#add-apartment-loading').hide();
-		     $('#add-apartment-submit').fadeIn();			
-	   });
+	window.location = uu;
+}
 
+const myAptRemoveCurrentImage = (dt) => {
+	console.log(dt);
+	let uu = `ri?xf=${dt.id}&apartment_id=${dt.apartment_id}`;
+	window.location = uu;
 }
 
 

@@ -81,7 +81,7 @@ let myApartmentDescriptionEditor = new Simditor({
   <?php  
 	  }
   ?>
-	
+	aptRemoveImage({id: 'my-apartment',ctr: '0'});
 });
 
 </script>
@@ -92,6 +92,7 @@ let myApartmentDescriptionEditor = new Simditor({
 						<div class="col-lg-9 col-md-8">
 							<input type="hidden" id="tk-apt" value="<?php echo e(csrf_token()); ?>">
 							<input type="hidden" id="tk-xf" value="<?php echo e($apartment['apartment_id']); ?>">
+							<input type="hidden" id="tk-axf" value="<?php echo e(url('apartments')); ?>">
 							<!-- Add Apartment Step 1 -->
 							<div class="checkout-wrap" id="my-apartment-side-1">
 								
@@ -105,10 +106,16 @@ let myApartmentDescriptionEditor = new Simditor({
 											<h4 class="mb-3">Basic Information</h4>
 										</div>
 										
-										<div class="col-lg-12 col-md-12 col-sm-12">
+										<div class="col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group">
 												<label>Apartment ID<i class="req">*</i></label>
 												<input type="text" class="form-control" value="<?php echo e($apartment['apartment_id']); ?>" readonly>
+											</div>
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-12">
+											<div class="form-group">
+												<label>Friendly URL<i class="req">*</i></label>
+												<input type="text" class="form-control" id="my-apartment-url" value="<?php echo e($apartment['url']); ?>">
 											</div>
 										</div>
 										
@@ -188,7 +195,7 @@ let myApartmentDescriptionEditor = new Simditor({
 												<?php
 												 $paymentTypes = ['none' => "Select payment type",'card' => "Card"];
 												?>
-												<select class="form-control">
+												<select class="form-control" id="my-apartment-payment-type">
 												<?php
 												  foreach($paymentTypes as $key => $value)
 												  {
@@ -207,7 +214,7 @@ let myApartmentDescriptionEditor = new Simditor({
 												<?php
 												 $opts1 = ['none' => "ID required on check-in?",'yes' => "Yes",'no' => "No"];
 												?>
-												<select class="form-control">
+												<select class="form-control" id="my-apartment-id-required">
 												<?php
 												  foreach($opts1 as $key => $value)
 												  {
@@ -234,7 +241,7 @@ let myApartmentDescriptionEditor = new Simditor({
 													'all' => "All children allowed"
 												 ];
 												?>
-												<select class="form-control">
+												<select class="form-control" id="my-apartment-children">
 												<?php
 												  foreach($opts2 as $key => $value)
 												  {
@@ -256,7 +263,7 @@ let myApartmentDescriptionEditor = new Simditor({
 													'yes' => "Yes"
 												 ];
 												?>
-												<select class="form-control">
+												<select class="form-control" id="my-apartment-pets">
 												<?php
 												  foreach($opts3 as $key => $value)
 												  {
@@ -384,14 +391,16 @@ let myApartmentDescriptionEditor = new Simditor({
 												 ?>
 												 <div class="col-lg-4 col-md-4 col-sm-12" id="my-apartment-current-img-<?php echo e($imgId); ?>">
 												    <div>
-												      <img id="my-apartment-preview-0" src="<?php echo e($img); ?>" alt="preview" style="width: 100px; height: 100px;"/>	
+												      <img src="<?php echo e($img); ?>" alt="preview" style="width: 100px; height: 100px;"/>	
                                                        <?php if($cover == "yes"): ?>
                                                         <label class="label label-success" id="my-apartment-cover-label">Cover image</label>
                                                        <?php endif; ?>														   
 												    </div>
 												    <div style="margin-top: 10px;" id="sci-<?php echo e($imgId); ?>-submit">
-													  <a href="javascript:void(0)" onclick="myAptSetCurrentCoverImage(<?php echo e($dt); ?>)" class="btn btn-theme btn-sm">Set as cover image</a>
-												      <a href="javascript:void(0)" onclick="myAptRemoveCurrentImage(<?php echo e($dt); ?>)"class="btn btn-warning btn-sm">Remove</a>
+													   <?php if($cover == "no"): ?>
+													   <a href="javascript:void(0)" onclick="myAptSetCurrentCoverImage(<?php echo e($dt); ?>)" class="btn btn-theme btn-sm">Set as cover image</a>
+												       <?php endif; ?>
+													   <a href="javascript:void(0)" onclick="myAptRemoveCurrentImage(<?php echo e($dt); ?>)"class="btn btn-warning btn-sm">Remove</a>
 												    </div>
 													<div style="margin-top: 10px;" id="sci-<?php echo e($imgId); ?>-loading">
 													   <h4>Processing.. <img src="<?php echo e(asset('img/loading.gif')); ?>" class="img img-fluid" alt="Processing.."></h4>
@@ -412,13 +421,13 @@ let myApartmentDescriptionEditor = new Simditor({
 												  <div class="col-md-5">
 												    <img id="my-apartment-preview-0" src="#" alt="preview" style="width: 50px; height: 50px;"/>
 													<a href="javascript:void(0)" onclick="aptSetCoverImage(0)" class="btn btn-theme btn-sm">Set as cover image</a>
-												    <a href="javascript:void(0)" onclick="aptRemoveImage(0)"class="btn btn-warning btn-sm">Remove</a>
+												    <a href="javascript:void(0)" onclick="aptRemoveImage({id: 'add-apartment',ctr: '0'})" class="btn btn-warning btn-sm">Remove</a>
 												  </div>
 												</div>
 												</div>
 											</div>
 											<div class="form-group">
-											    <a href="javascript:void(0)" onclick="aptAddImage()" class="btn btn-warning btn-sm">Add image</a>
+											    <a href="javascript:void(0)" onclick="aptAddImage({id: 'my-apartment'})" class="btn btn-warning btn-sm">Add image</a>
 											    <ol class="form-control-plaintext">
 												  <li>Requirements and recommendations will be displayed here</li>
 												  <li>Requirements and recommendations will be displayed here</li>
@@ -475,7 +484,7 @@ let myApartmentDescriptionEditor = new Simditor({
 												<a href="javascript:void(0)" id="my-apartment-side-3-next" class="btn btn-theme">Submit</a>
 											</div>
 											<div class="form-group text-center" id="my-apartment-loading">
-												 <h4>Adding apartment.. <img src="<?php echo e(asset('img/loading.gif')); ?>" class="img img-fluid" alt="Adding apartment.."></h4><br>
+												 <h4>Updating apartment.. <img src="<?php echo e(asset('img/loading.gif')); ?>" class="img img-fluid" alt="Adding apartment.."></h4><br>
 											</div>
 										</div>
 									</div>
