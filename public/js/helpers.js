@@ -331,7 +331,8 @@ const readURL = (input,dt) => {
 
 const aptFinalPreview = (id) => {
 	 //side 1 
-	   let aptName = $(`#${id}-name`).val(), aptUrl = $(`#${id}-url`).val(), aptAmount = $(`#${id}-amount`).val(),aptDescription = $(`#${id}-description`).val(),
+	   let aptName = $(`#${id}-name`).val(), aptUrl = $(`#${id}-url`).val(), aptMaxAdults = $(`#${id}-max-adults`).val(),
+	    aptMaxChildren = $(`#${id}-max-children`).val(), aptAmount = $(`#${id}-amount`).val(),aptDescription = $(`#${id}-description`).val(),
 	       aptCheckin = $(`#${id}-checkin`).val(), aptCheckout = $(`#${id}-checkout`).val(),aptIdRequired = $(`#${id}-id-required`).val(),
 	       aptChildren = $(`#${id}-children`).val(), aptIdPets = $(`#${id}-pets`).val(),
 		 
@@ -358,6 +359,8 @@ const aptFinalPreview = (id) => {
 	     <li>Apartment ID.<span>Will be generated</span></li>
 												<li>Friendly name<span>${aptName}</span></li>
 												<li>Friendly URL<span>${axf}?xf=<b>${aptUrl}</b></span></li>
+												<li>Max. adults<span>${aptMaxAdults}</span></li>
+												<li>Max. children<span>${aptMaxChildren}</span></li>
 												<li>Price per day<span>&#8358;${aptAmount}</span></li>
 												<li>Description<span></span></li>
 												<li>Check in<span>${aptCheckin}</span></li>

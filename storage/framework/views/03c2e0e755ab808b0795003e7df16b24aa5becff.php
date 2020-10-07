@@ -34,10 +34,14 @@ $video = $cmedia['video'];
 											<div id="bookinSer" class="collapse show" aria-labelledby="bookinDet" data-parent="#accordionExample">
 												<div class="card-body">
 													<ul class="booking-detail-list">
-														<li>10 May 2020- 20 May 2020</li>
-														<li>Tour Days<span>5 Days</span></li>
-														<li>Adults<span>4</span></li>
-														<li>Children<span>3</span></li>
+														<li>Check in from: <span id="apt-sidebar-checkin"></span></li>
+														<li>Check out by: <span id="apt-sidebar-checkout"></span></li>
+														<li>Max adults: <span id="apt-sidebar-max-adults"></span></li>
+														<li>Max children: <span id="apt-sidebar-max-children"></span></li>
+														<li>Payment type: <span id="apt-sidebar-payment-type"></span></li>
+														<li>ID required on check-in: <span id="apt-sidebar-id-required"></span></li>
+														<li>Children: <span id="apt-sidebar-children"></span></li>
+														<li>Pets allowed: <span id="apt-sidebar-pets"></span></li>
 													</ul>
 												</div>
 											</div>

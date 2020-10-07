@@ -81,6 +81,20 @@ let addApartmentDescriptionEditor = new Simditor({
 											</div>
 										</div>
 										
+										<div class="col-lg-6 col-md-6 col-sm-12">
+											<div class="form-group">
+												<label>Max. adults<i class="req">*</i></label>
+												<input type="number" class="form-control" id="add-apartment-max-adults" placeholder="The max number of adults allowed to check-in">
+											</div>
+										</div>
+										
+										<div class="col-lg-6 col-md-6 col-sm-12">
+											<div class="form-group">
+												<label>Max. children<i class="req">*</i></label>
+												<input type="number" class="form-control" id="add-apartment-max-children" placeholder="The max number of children allowed to check-in">
+											</div>
+										</div>
+										
 										<div class="col-lg-12 col-md-12 col-sm-12">
 											<div class="form-group">
 												<label>Description</label>

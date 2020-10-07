@@ -167,10 +167,11 @@ $(document).ready(function() {
 	   console.log("add apartment submit");
 	   
 	   //side 1 validation
-	   let aptUrl = $('#add-apartment-url').val(), aptName = $('#add-apartment-name').val(), aptAmount = $('#add-apartment-amount').val(),aptDescription = $('#add-apartment-description').val(),
+	   let aptUrl = $('#add-apartment-url').val(), aptName = $('#add-apartment-name').val(), aptAmount = $('#add-apartment-amount').val(),
+	   aptMaxAdults = $('#add-apartment-max-adults').val(),aptMaxChildren = $('#add-apartment-max-children').val(),aptDescription = $('#add-apartment-description').val(),
 	       aptCheckin = $('#add-apartment-checkin').val(), aptCheckout = $('#add-apartment-checkout').val(),aptIdRequired = $('#add-apartment-id-required').val(),
 	       aptChildren = $('#add-apartment-children').val(), aptPets = $('#add-apartment-pets').val(),
-		   side1_validation = (aptUrl == "" || aptName == "" || aptAmount < 0 || aptDescription == "" || aptCheckin == "none" || aptCheckout == "none" || aptIdRequired == "none" || facilities.length < 1);	  
+		   side1_validation = (aptUrl == "" || aptName == "" || aptMaxAdults == "" || aptMaxChildren == "" || aptAmount < 0 || aptDescription == "" || aptCheckin == "none" || aptCheckout == "none" || aptIdRequired == "none" || facilities.length < 1);	  
 	  
        //side 2 validation imgs = $(`${BUUPlist[bc].id}-images-div input[type=file]`);
 	   let aptAddress = $('#add-apartment-address').val(), aptCity = $('#add-apartment-city').val(),aptState = $('#add-apartment-state').val(),
@@ -222,6 +223,8 @@ $(document).ready(function() {
 		 let fd =  new FormData();
 		 fd.append("url",aptUrl);
 		 fd.append("name",aptName);
+		 fd.append("max_adults",aptMaxAdults);
+		 fd.append("max_children",aptMaxChildren);
 		 fd.append("description",aptDescription);
 		 fd.append("checkin",aptCheckin);
 		 fd.append("checkout",aptCheckout);
@@ -298,10 +301,11 @@ $(document).ready(function() {
 	   console.log("my apartment submit");
 	   
 	   //side 1 validation
-	   let aptUrl = $('#my-apartment-url').val(), aptName = $('#my-apartment-name').val(), aptAmount = $('#my-apartment-amount').val(),aptDescription = $('#my-apartment-description').val(),
+	   let aptUrl = $('#my-apartment-url').val(), aptName = $('#my-apartment-name').val(), aptAmount = $('#my-apartment-amount').val(),
+	   aptMaxAdults = $('#my-apartment-max-adults').val(),aptMaxChildren = $('#my-apartment-max-children').val(),aptDescription = $('#my-apartment-description').val(),
 	       aptCheckin = $('#my-apartment-checkin').val(), aptCheckout = $('#my-apartment-checkout').val(),aptIdRequired = $('#my-apartment-id-required').val(),
 	       aptChildren = $('#my-apartment-children').val(), aptPets = $('#my-apartment-pets').val(),
-		   side1_validation = (aptUrl == "" || aptName == "" || aptAmount < 0 || aptDescription == "" || aptCheckin == "none" || aptCheckout == "none" || aptIdRequired == "none" || facilities.length < 1);	  
+		   side1_validation = (aptUrl == "" || aptName == "" || aptMaxAdults == "" || aptMaxChildren == "" || aptAmount < 0 || aptDescription == "" || aptCheckin == "none" || aptCheckout == "none" || aptIdRequired == "none" || facilities.length < 1);	  
 	  
        //side 2 validation imgs = $(`${BUUPlist[bc].id}-images-div input[type=file]`);
 	   let aptAddress = $('#my-apartment-address').val(), aptCity = $('#my-apartment-city').val(),aptState = $('#my-apartment-state').val(),
@@ -353,6 +357,8 @@ $(document).ready(function() {
 		 let fd =  new FormData();
 		 fd.append("url",aptUrl);
 		 fd.append("name",aptName);
+		 fd.append("max_adults",aptMaxAdults);
+		 fd.append("max_children",aptMaxChildren);
 		 fd.append("description",aptDescription);
 		 fd.append("checkin",aptCheckin);
 		 fd.append("checkout",aptCheckout);
