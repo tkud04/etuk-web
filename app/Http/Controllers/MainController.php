@@ -441,7 +441,7 @@ class MainController extends Controller {
 			          array_push($ird, $temp);
                     } 
 					
-					$req['avb'] = "Available";
+					$req['avb'] = "available";
 					$req['payment_type'] = "card";
 					$req['user_id'] = $user->id;
 					$req['ird'] = $ird;
@@ -529,7 +529,7 @@ class MainController extends Controller {
 		}
 
 		$req = $request->all();
-        dd($req);
+        #dd($req);
 		$ret = ['status' => "error",'message' => "nothing happened"];
 	    
 		$validator = Validator::make($req,[
@@ -549,8 +549,7 @@ class MainController extends Controller {
 		                    'city' => 'required',
 		                    'state' => 'required',
 		                    'facilities' => 'required',
-		                    'img_count' => 'required|numeric',
-		                    'cover' => 'required',
+		                    'img_count' => 'required|numeric'
 		]);
 		
 		if($validator->fails())
@@ -560,22 +559,30 @@ class MainController extends Controller {
 		 else
 		 {
 			    $ird = [];
-
-                    for($i = 0; $i < $req['img_count']; $i++)
-                    {
-            		  $img = $request->file("add-apartment-image-".$i);
-             	      $imgg = $this->helpers->uploadCloudImage($img->getRealPath());
-					  $ci = ($req['cover'] != null && $req['cover'] == $i) ? "yes": "no";
-					  $temp = ['public_id' => $imgg['public_id'],'ci' => $ci,'type' => "image"];
-			          array_push($ird, $temp);
-                    } 
+                    
+					if($req['img_count'] > 0)
+					{
+						for($i = 0; $i < $req['img_count']; $i++)
+                        {
+            		      $img = $request->file("my-apartment-image-".$i);
+             	          $imgg = $this->helpers->uploadCloudImage($img->getRealPath());
+					      $ci = "no";
+					     $temp = [
+					       'public_id' => $imgg['public_id'],
+					       'delete_token' => $imgg['delete_token'],
+					       'deleted' => "no",
+					       'ci' => $ci,
+						   'type' => "image"
+						 ];
+			              array_push($ird, $temp);
+                        }
+					}
+                     
 					
-					$req['avb'] = "Available";
-					$req['payment_type'] = "card";
 					$req['user_id'] = $user->id;
 					$req['ird'] = $ird;
 				 
-			$this->helpers->createApartment($req);
+			$this->helpers->updateApartment($req);
 			$ret = ['status' => "ok"];
 		 }
 		 

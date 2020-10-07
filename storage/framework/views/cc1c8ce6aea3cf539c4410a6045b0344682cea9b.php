@@ -53,7 +53,8 @@ $services = [
 <?php $__env->startSection('content'); ?>
 <?php echo $__env->make('banner-2',['title' => $title,'subtitle' => $subtitle], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <script>
-let selectedSide = "1", facilities = [], aptImages = [], aptImgCount = <?php echo e(count($cmedia['images'])); ?>, aptCover = "0";
+let selectedSide = "1", facilities = [], aptImages = [], aptImgCount = <?php echo e(count($cmedia['images'])); ?>,
+    aptCover = "0", aptCurrentImgCount = "<?php echo e(count($imgs)); ?>";
 
 $(document).ready(() => {
 $('#my-apartment-loading').hide();
@@ -133,17 +134,41 @@ let myApartmentDescriptionEditor = new Simditor({
 											</div>
 										</div>
 										
+										<div class="col-lg-12 col-md-12 col-sm-12">
+										<?php
+										  $av = ['available' => "Available",
+										         'occupied' => "Occupied",
+										         'unavailable' => "Unavailable"
+												 ];
+										?>
+											<div class="form-group">
+												<label>Availability<i class="req">*</i></label>
+												<select class="form-control" id="my-apartment-avb">
+												  <option value="none">Select availability</option>
+												  <?php
+												  foreach($av as $key => $value)
+												  {
+													  $ss = $key == $apartment['avb'] ? " selected='selected'" : "";
+												  ?>
+												  <option value="<?php echo e($key); ?>"<?php echo e($ss); ?>><?php echo e($value); ?></option>
+												  <?php
+												  }
+												  ?>
+												</select>
+											</div>
+										</div>
+										
 										<div class="col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group">
 												<label>Max. adults<i class="req">*</i></label>
-												<input type="number" class="form-control" id="my-apartment-max-adults" placeholder="The max number of adults allowed to check-in">
+												<input type="number" class="form-control" id="my-apartment-max-adults" value="<?php echo e($adata['max_adults']); ?>" placeholder="The max number of adults allowed to check-in">
 											</div>
 										</div>
 										
 										<div class="col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group">
 												<label>Max. children<i class="req">*</i></label>
-												<input type="number" class="form-control" id="my-apartment-max-children" placeholder="The max number of children allowed to check-in">
+												<input type="number" class="form-control" id="my-apartment-max-children" value="<?php echo e($adata['max_children']); ?>" placeholder="The max number of children allowed to check-in">
 											</div>
 										</div>
 										

@@ -53,7 +53,8 @@ $services = [
 @section('content')
 @include('banner-2',['title' => $title,'subtitle' => $subtitle])
 <script>
-let selectedSide = "1", facilities = [], aptImages = [], aptImgCount = {{count($cmedia['images'])}}, aptCover = "0";
+let selectedSide = "1", facilities = [], aptImages = [], aptImgCount = {{count($cmedia['images'])}},
+    aptCover = "0", aptCurrentImgCount = "{{count($imgs)}}";
 
 $(document).ready(() => {
 $('#my-apartment-loading').hide();
@@ -132,17 +133,41 @@ let myApartmentDescriptionEditor = new Simditor({
 											</div>
 										</div>
 										
+										<div class="col-lg-12 col-md-12 col-sm-12">
+										<?php
+										  $av = ['available' => "Available",
+										         'occupied' => "Occupied",
+										         'unavailable' => "Unavailable"
+												 ];
+										?>
+											<div class="form-group">
+												<label>Availability<i class="req">*</i></label>
+												<select class="form-control" id="my-apartment-avb">
+												  <option value="none">Select availability</option>
+												  <?php
+												  foreach($av as $key => $value)
+												  {
+													  $ss = $key == $apartment['avb'] ? " selected='selected'" : "";
+												  ?>
+												  <option value="{{$key}}"{{$ss}}>{{$value}}</option>
+												  <?php
+												  }
+												  ?>
+												</select>
+											</div>
+										</div>
+										
 										<div class="col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group">
 												<label>Max. adults<i class="req">*</i></label>
-												<input type="number" class="form-control" id="my-apartment-max-adults" placeholder="The max number of adults allowed to check-in">
+												<input type="number" class="form-control" id="my-apartment-max-adults" value="{{$adata['max_adults']}}" placeholder="The max number of adults allowed to check-in">
 											</div>
 										</div>
 										
 										<div class="col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group">
 												<label>Max. children<i class="req">*</i></label>
-												<input type="number" class="form-control" id="my-apartment-max-children" placeholder="The max number of children allowed to check-in">
+												<input type="number" class="form-control" id="my-apartment-max-children" value="{{$adata['max_children']}}" placeholder="The max number of children allowed to check-in">
 											</div>
 										</div>
 										

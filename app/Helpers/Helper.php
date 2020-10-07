@@ -1149,6 +1149,105 @@ function isDuplicateUser($data)
 		   }
 
 
+function updateApartment($data)
+           {
+			   $apartment_id = $data['apartment_id'];
+           	$apartment = Apartments::where('apartment_id',$apartment_id)->first();
+			
+			if($apartment != null)
+			{
+			  //Basic information
+              $apartment->update([
+			      'name' => $data['name'],                                                                                                          
+                  'apartment_id' => $apartment_id, 
+                  'user_id' => $data['user_id'],                                                       
+                  'avb' => $data['avb'],                                                       
+                  'url' => $data['url'],   
+			  ]);			  
+			}
+                              
+                $this->updateApartmentData($data);
+                $this->updateApartmentAddress($data);
+                $this->updateApartmentTerms($data);
+				$facilities = json_decode($data['facilities']);
+				ApartmentFacilities::where('apartment_id',$apartment_id)->delete();
+				foreach($facilities as $f)
+				{
+					$af = $this->createApartmentFacilities([
+					    'apartment_id' => $apartment_id,
+					    'facility' => $f->id,
+					    'selected' => "true",
+					]);
+				}
+                
+				if(isset($data['ird']) && count($data['ird']) > 0)
+				{
+					foreach($data['ird'] as $i)
+                    {
+                    	$this->createApartmentMedia([
+						           'apartment_id' => $apartment_id,
+								   'url' => $i['public_id'],
+								   'delete_token' => $i['delete_token'],
+								   'deleted' => $i['deleted'],
+								   'cover' => $i['ci'],
+								   'type' => $i['type']
+                         ]);
+                    }
+				}
+                
+           }
+		   
+          function updateApartmentAddress($data)
+           {
+			   $apartment_id = $data['apartment_id'];
+           	   $aa = ApartmentAddresses::where('apartment_id',$apartment_id)->first();
+			
+			   if($aa != null)
+			   {
+           	       $aa->update([
+                                                      'address' => $data['address'],                                                       
+                                                      'city' => $data['city'],                                                       
+                                                      'state' => $data['state']
+                                                      ]);
+			   }               
+           }
+		   
+		   function updateApartmentData($data)
+           {
+			   $apartment_id = $data['apartment_id'];
+           	   $adt = ApartmentData::where('apartment_id',$apartment_id)->first();
+			
+			   if($adt != null)
+			   {
+           	       $adt->update([
+                                                     'description' => $data['description'],                                                       
+                                                      'max_adults' => $data['max_adults'],                                                       
+                                                      'max_children' => $data['max_children'],                                                       
+                                                      'amount' => $data['amount']                                                       
+                                                       ]);
+			   }
+           }
+		   
+
+		   function updateApartmentTerms($data)
+           {
+			    $apartment_id = $data['apartment_id'];
+           	   $at = ApartmentTerms::where('apartment_id',$apartment_id)->first();
+			   
+           	if($at != null)
+			   {
+           	       $at->update([
+                                                      'checkin' => $data['checkin'],                                                       
+                                                      'checkout' => $data['checkout'],                                                      
+                                                      'id_required' => $data['id_required'],                                                      
+                                                      'children' => $data['children'],                                                      
+                                                      'pets' => $data['pets'],                                                      
+                                                      'payment_type' => $data['payment_type']                                                      
+                                                      ]);
+                }
+           }
+
+
   function deleteApartment($id)
   {
 	  $apartment = Apartments::where('id',$id)
