@@ -1,0 +1,28 @@
+Auth
+reset password (finish up later)
+sign up with Facebook and google (later)
+sign in with Facebook and google (later)
+edit profile
+Messages
+
+General
+about us
+terms
+privacy policy
+faq
+footer
+
+Host
+Dashboard
+Apartment mode changed when booked (available/occupied)
+
+Guest
+Apartments
+Search apartments
+View apartment(video tour,map)
+Add to cart
+chat with host
+checkout
+Dashboard
+Booking History
+Payment Methods

@@ -69,7 +69,7 @@
 					
 					<div class="row">
 						<?php
-						 $popularApartments = [
+						 $popularApartmentss = [
 						   ['img' => asset('img/des-2.jpg'),'href' => "javascript-void(0)", 'tc' => "5",'location' => "Ikeja, Lagos",'stars' => "5", 'amount' => "20000"],
 						   ['img' => asset('img/des-3.jpg'),'href' => "javascript-void(0)", 'tc' => "6",'location' => "Ikorodu, Lagos",'stars' => "3", 'amount' => "10000"],
 						   ['img' => asset('img/des-4.jpg'),'href' => "javascript-void(0)", 'tc' => "5",'location' => "Victoria Island, Lagos",'stars' => "5", 'amount' => "20000"],
@@ -78,19 +78,31 @@
 						   ['img' => asset('img/des-7.jpg'),'href' => "javascript-void(0)", 'tc' => "7",'location' => "Yaba, Lagos",'stars' => "4", 'amount' => "10000"],
 						 ];
 						 
-						 foreach($popularApartments as $pt)
+						 foreach($popularApartments as $pa)
 						 {
+							 $pt = [];
+$adata = $pa['data'];
+$address = $pa['address'];
+$cmedia = $pa['cmedia'];
+$imgs = $cmedia['images'];
+
+$pt['img'] = $imgs[0];
+$pt['href'] = url('apartment')."?xf=".$pa['url'];
+$pt['tc'] = $adata['max_adults'];
+$pt['location'] = $address['city'].", ".$address['state'];
+$pt['stars'] = $pa['rating'];
+$pt['amount'] = $adata['amount'];
 						?>
 						<!-- Single Tour Place -->
 						<div class="col-lg-4 col-md-6 col-sm-12">
 							<div class="tour-simple-wrap">
 								<div class="tour-simple-thumb">
-									<a href="{{$pt['href']}}"><img src="{{$pt['img']}}" class="img-fluid img-responsive" alt="" /></a>
+									<a href="javascript:void(0)"><img src="{{$pt['img']}}" class="img-fluid img-responsive" alt="" /></a>
 								</div>
 								<div class="tour-simple-caption">
 									<div class="ts-caption-left">
-										<h4 class="ts-title"><a href="tour-detail.html">{{$pt['location']}}</a></h4>
-										<span>{{$pt['tc']}} persons max.</span>
+										<h4 class="ts-title"><a href="javascript:void(0)">{{$pt['location']}}</a></h4>
+										<span>{{$pt['tc']}} adults max.</span>
 									</div>
 									<div class="ts-caption-right">
 										<div class="ts-caption-rating">

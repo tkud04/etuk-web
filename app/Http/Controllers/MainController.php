@@ -48,11 +48,13 @@ class MainController extends Controller {
 		
 		#dd($hasUnpaidOrders);
 		
+		$popularApartments = $this->helpers->getPopularApartments();
+		
 		shuffle($ads);
 		shuffle($banners);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
 
-    	return view("index",compact(['user','cart','c','banners','hasUnpaidOrders','ad','signals','plugins']));
+    	return view("index",compact(['user','cart','c','banners','hasUnpaidOrders','popularApartments','ad','signals','plugins']));
     }
 	
 	/**
@@ -239,6 +241,52 @@ class MainController extends Controller {
 			session()->flash("update-profile-status","ok");
 			return redirect()->intended('profile');
 		 }
+    }
+	
+	/**
+	 * Show the apartment.
+	 *
+	 * @return Response
+	 */
+	public function getApartment(Request $request)
+    {
+		$user = null;
+		if(Auth::check())
+		{
+			$user = Auth::user();
+		}
+		else
+		{
+			return redirect()->intended('/');
+		}
+		
+		$req = $request->all();
+		
+		if(isset($req['xf']))
+		{
+			$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
+		    $cart = $this->helpers->getCart($user,$gid);
+		    #dd($user);
+		    $c = $this->helpers->getCategories();
+		    //dd($bs);
+		    $signals = $this->helpers->signals;
+		    $states = $this->helpers->states;
+		
+	    	$ads = $this->helpers->getAds("wide-ad");
+		    $plugins = $this->helpers->getPlugins();
+		
+		    $apartment = $this->helpers->getApartment($req['xf'],true);
+			#dd($apartment);
+		    shuffle($ads);
+		    $ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
+        
+    	    return view("apartment",compact(['user','cart','c','ad','apartment','states','signals','plugins']));
+		}
+		else
+		{
+			return redirect()->intended('my-apartments');
+		}
+		
     }
 
 	/**

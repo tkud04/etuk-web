@@ -26,12 +26,19 @@ Route::get('hello', 'LoginController@getHello');
 Route::post('hello', 'LoginController@postHello');
 Route::get('bye', 'LoginController@getBye');
 
+
+
 Route::get('dashboard', 'MainController@getDashboard');
 Route::get('profile', 'MainController@getProfile');
 Route::post('profile', 'MainController@postProfile');
 Route::get('sm', 'MainController@getSwitchMode');
 
+
+//Guests
 Route::get('apartment', 'MainController@getApartment');
+
+
+//Hosts
 Route::get('my-apartments', 'MainController@getMyApartments');
 Route::get('add-apartment', 'MainController@getAddApartment');
 Route::post('add-apartment', 'MainController@postAddApartment');
@@ -45,6 +52,7 @@ Route::get('tcdi', 'MainController@getTCDI');
 
 
 
+//Payments
 Route::get('payment/callback', 'PaymentController@getPaymentCallback');
 Route::get('pay', 'MainController@getPay');
 Route::post('pay', 'PaymentController@postRedirectToGateway');

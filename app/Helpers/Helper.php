@@ -871,7 +871,27 @@ function isDuplicateUser($data)
 		   
 		   
 
-     function getApartments($user)
+     function getPopularApartments()
+           {
+           	$ret = [];
+              $apartments = Apartments::where('id',">","0")
+			                       ->where('status',"enabled")->get();
+								   
+				$apartments = $apartments->sortByDesc('created_at');				   
+ 
+              if($apartments != null)
+               {
+				  foreach($apartments as $a)
+				  {
+					     $aa = $this->getApartment($a->id);
+					     array_push($ret,$aa); 
+				  }
+               }                         
+                                                      
+                return $ret;
+           }
+	 
+	 function getApartments($user)
            {
            	$ret = [];
               $apartments = Apartments::where('user_id',$user->id)
@@ -896,7 +916,8 @@ function isDuplicateUser($data)
            {
            	$ret = [];
               $apartment = Apartments::where('id',$id)
-			                 ->orWhere('apartment_id',$id)->first();
+			                 ->orWhere('apartment_id',$id)
+			                 ->orWhere('url',$id)->first();
  
               if($apartment != null)
                {
@@ -920,7 +941,9 @@ function isDuplicateUser($data)
 				    'images' => $this->getCloudinaryMedia($media['images']),
 				    'video' => $this->getCloudinaryMedia($media['video']),
 				  ];
-				  $temp['reviews'] = $this->getReviews($apartment->apartment_id);
+				  $reviews = $this->getReviews($apartment->apartment_id);
+				  $temp['reviews'] = $reviews;
+				  $temp['rating'] = $this->getRating($reviews);
 				   $temp['date'] = $apartment->created_at->format("jS F, Y h:i A");
 				  $ret = $temp;
                }                         
