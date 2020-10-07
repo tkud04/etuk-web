@@ -46,6 +46,7 @@ class Helper implements HelperContract
 					 "ri-status" => "Image deleted.",
 					 "delete-apartment-status" => "Apartment removed.",
 					 "update-apartment-status" => "Apartment information updated.",
+					 "invalid-apartment-id-status-error" => "Apartment not found.",
                      ],
                      'errors'=> ["login-status-error" => "Wrong username or password, please try again.",
 					 "signup-status-error" => "There was a problem creating your account, please try again.",

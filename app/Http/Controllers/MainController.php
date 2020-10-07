@@ -276,15 +276,26 @@ class MainController extends Controller {
 		    $plugins = $this->helpers->getPlugins();
 		
 		    $apartment = $this->helpers->getApartment($req['xf'],true);
-			#dd($apartment);
-		    shuffle($ads);
-		    $ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
+			
+			if($count($apartment) > 0)
+			{
+			   #dd($apartment);
+		       shuffle($ads);
+		       $ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
         
-    	    return view("apartment",compact(['user','cart','c','ad','apartment','states','signals','plugins']));
+    	       return view("apartment",compact(['user','cart','c','ad','apartment','states','signals','plugins']));
+			}
+			else
+			{
+				session()->flash("invalid-apartment-id-status-error","ok");
+				return redirect()->intended('/');
+			}
+			
 		}
 		else
 		{
-			return redirect()->intended('my-apartments');
+			session()->flash("invalid-apartment-id-status-error","ok");
+				return redirect()->intended('/');
 		}
 		
     }

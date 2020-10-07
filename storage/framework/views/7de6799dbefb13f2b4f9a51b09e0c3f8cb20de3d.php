@@ -89,16 +89,20 @@ $pt['tc'] = $adata['max_adults'];
 $pt['location'] = $address['city'].", ".$address['state'];
 $pt['stars'] = $pa['rating'];
 $pt['amount'] = $adata['amount'];
+$pt['name'] = $pa['name'];
 						?>
 						<!-- Single Tour Place -->
 						<div class="col-lg-4 col-md-6 col-sm-12">
 							<div class="tour-simple-wrap">
 								<div class="tour-simple-thumb">
-									<a href="<?php echo e($pt['href']); ?>"><img src="<?php echo e($pt['img']); ?>" class="img-fluid img-responsive" alt="" /></a>
+									<a href="<?php echo e($pt['href']); ?>"><img src="<?php echo e($pt['img']); ?>" class="img-fluid img-responsive" alt="<?php echo e($pt['name']); ?>" style="width: 348px; height: 237px;"/></a>
 								</div>
 								<div class="tour-simple-caption">
 									<div class="ts-caption-left">
-										<h4 class="ts-title"><a href="tour-detail.html"><?php echo e($pt['location']); ?></a></h4>
+										<h4 class="ts-title">
+										 <a href="<?php echo e($pt['href']); ?>"><?php echo e($pt['name']); ?></a><br>
+										 <a href="javascript:void(0)"><?php echo e($pt['location']); ?></a>
+										</h4>
 										<span><?php echo e($pt['tc']); ?> adults max.</span>
 									</div>
 									<div class="ts-caption-right">
