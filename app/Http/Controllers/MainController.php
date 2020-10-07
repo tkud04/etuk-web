@@ -277,7 +277,7 @@ class MainController extends Controller {
 		
 		    $apartment = $this->helpers->getApartment($req['xf'],true);
 			
-			if($count($apartment) > 0)
+			if(count($apartment) > 0)
 			{
 			   #dd($apartment);
 		       shuffle($ads);
