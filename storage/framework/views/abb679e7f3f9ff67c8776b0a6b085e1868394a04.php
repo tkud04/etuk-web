@@ -42,7 +42,7 @@ $subtitle = "Manage everything about your apartments here";
 									   ?>
 										<li>
 											<div class="list-box-listing">
-												<div class="list-box-listing-img"><a href="<?php echo e($uu); ?>"><img src="<?php echo e($imgs[0]); ?>" alt="<?php echo e($name); ?>"></a></div>
+												<div class="list-box-listing-img"><a href="<?php echo e($uu); ?>"><img src="<?php echo e($imgs[0]); ?>" alt="<?php echo e($name); ?>" style="width: 150px; height: 150px;"></a></div>
 												<div class="list-box-listing-content">
 													<div class="inner">
 														<h3><a href="<?php echo e($uu); ?>"><?php echo e($name); ?></a></h3>

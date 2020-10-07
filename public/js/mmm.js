@@ -153,7 +153,29 @@ $(document).ready(function() {
        e.preventDefault();
 	  hideElem(['#add-apartment-side-1','#add-apartment-side-2']);
 	  selectCheckoutSide({side: 3,type: ".add-apartment",content: "ti-check"});
-	  aptFinalPreview("add-apartment");
+	  aptFinalPreview("add-apartment"); 
+	  
+	  let aptImages = $(`#add-apartment-images input[type=file]`)
+	  let ac = aptCover == "none" ? 0 : aptCover;
+	  //Add the cover image to the apt sidebar
+	  if (aptImages[ac].files && aptImages[ac].files[0]) {
+        let reader = new FileReader();
+    
+        reader.onload = function(e) {
+		  $(`#apt-sidebar-cover`).attr({
+	        'src': e.target.result,
+	        'width': "236",
+	        'height': "161"
+	      });
+        }
+    
+        reader.readAsDataURL(aptImages[ac].files[0]); // convert to base64 string
+		
+		let ii = aptImages.length == 1 ? "image" : "images";
+		$('#apt-sidebar-img-count').html(`${aptImages.length} ${ii}`);
+     }
+	  
+	  
 	  showElem(['#add-apartment-side-3']);
     });
 	$("#add-apartment-side-3-prev").click(e => {

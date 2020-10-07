@@ -42,7 +42,7 @@ $subtitle = "Manage everything about your apartments here";
 									   ?>
 										<li>
 											<div class="list-box-listing">
-												<div class="list-box-listing-img"><a href="{{$uu}}"><img src="{{$imgs[0]}}" alt="{{$name}}"></a></div>
+												<div class="list-box-listing-img"><a href="{{$uu}}"><img src="{{$imgs[0]}}" alt="{{$name}}" style="width: 150px; height: 150px;"></a></div>
 												<div class="list-box-listing-content">
 													<div class="inner">
 														<h3><a href="{{$uu}}">{{$name}}</a></h3>

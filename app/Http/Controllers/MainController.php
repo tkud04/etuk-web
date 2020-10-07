@@ -431,7 +431,13 @@ class MainController extends Controller {
             		  $img = $request->file("add-apartment-image-".$i);
              	      $imgg = $this->helpers->uploadCloudImage($img->getRealPath());
 					  $ci = ($req['cover'] != null && $req['cover'] == $i) ? "yes": "no";
-					  $temp = ['public_id' => $imgg['public_id'],'ci' => $ci,'type' => "image"];
+					  $temp = [
+					       'public_id' => $imgg['public_id'],
+					       'delete_token' => $imgg['delete_token'],
+					       'deleted' => "no",
+					       'ci' => $ci,
+						   'type' => "image"
+						 ];
 			          array_push($ird, $temp);
                     } 
 					
@@ -679,6 +685,38 @@ class MainController extends Controller {
 		}
 		
 		return redirect()->back();
+		
+    }
+	
+	/**
+	 * Delete an apartment image.
+	 *
+	 * @return Response
+	 */
+	public function getTCDI(Request $request)
+    {
+		$user = null;
+		if(Auth::check())
+		{
+			$user = Auth::user();
+		}
+		else
+		{
+			return redirect()->intended('/');
+		}
+		
+		$req = $request->all();
+		
+		if(isset($req['xf']))
+		{
+		    $ret = $this->helpers->deleteCloudImage($req['xf']);
+			return $ret;
+		}
+		else
+		{
+			return ['status' => "error",'message' => "validation"];
+		}
+		
 		
     }
 	

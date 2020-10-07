@@ -13,6 +13,6 @@ class ApartmentMedia extends Model
      * @var array
      */
     protected $fillable = [
-        'id', 'apartment_id', 'cover', 'type', 'url'
+        'id', 'apartment_id', 'cover', 'type', 'url', 'deleted', 'delete_token'
     ];
 }

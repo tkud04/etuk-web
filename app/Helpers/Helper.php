@@ -44,6 +44,8 @@ class Helper implements HelperContract
 					 "sci-status" => "Cover image updated.",
 					 "cover-image-status-error" => "You cannot delete the cover image.",
 					 "ri-status" => "Image deleted.",
+					 "delete-apartment-status" => "Apartment removed.",
+					 "update-apartment-status" => "Apartment information updated.",
                      ],
                      'errors'=> ["login-status-error" => "Wrong username or password, please try again.",
 					 "signup-status-error" => "There was a problem creating your account, please try again.",
@@ -700,6 +702,8 @@ function isDuplicateUser($data)
                     	$this->createApartmentMedia([
 						           'apartment_id' => $data['apartment_id'],
 								   'url' => $i['public_id'],
+								   'delete_token' => $i['delete_token'],
+								   'deleted' => $i['deleted'],
 								   'cover' => $i['ci'],
 								   'type' => $i['type']
                          ]);
@@ -762,19 +766,86 @@ function isDuplicateUser($data)
                                                       'url' => $data['url'],                                                       
                                                       'cover' => $data['cover'],                                                    
                                                       'type' => $data['type'],                                                      
-                                                      'type' => $data['delete_token']                                                      
+                                                      'delete_token' => $data['delete_token'],                                                 
+                                                      'deleted' => $data['deleted']                                                      
                                                       ]);
                               
                 return $ret;
            }
 		   
-		   function deleteCloudImage($id)
+		   function deleteCloudImage($imgId)
           {
-          	$dt = ['cloud_name' => "etuk-ng",'invalidate' => true];
-			 $preset = "uwh1p75e";
-          	$rett = \Cloudinary\Uploader::destroy($id,$dt);
-                                                     
-             return $rett; 
+			  $ret = [];
+			  $img = ApartmentMedia::where('id',$imgId)->first();
+          	  # dd($img);
+			 //https://api.cloudinary.com/v1_1/demo/delete_by_token -X POST --data 'token=delete_token'
+
+			   if($img == null)
+			   {
+				    $ret = json_encode(["status" => "ok","message" => "Invalid ID"]);
+			   }
+			   else
+			    {  
+			       $url = "https://api.cloudinary.com/v1_1/etuk-ng/delete_by_token";
+			   
+			     $client = new Client([
+                 // Base URI is used with relative requests
+                 'base_uri' => 'http://httpbin.org',
+                 // You can set any number of default request options.
+                 //'timeout'  => 2.0,
+				 'headers' => [
+                     'MIME-Version' => '1.0',
+                     'Content-Type'     => 'text/html; charset=ISO-8859-1',           
+                    ]
+                 ]);
+                  
+				
+				 $dt = [
+				   //'auth' => [env('TWILIO_SID', ''),env('TWILIO_TOKEN', '')],
+				    'multipart' => [
+					   [
+					      'name' => 'public_id',
+						  'contents' => substr($img->url,8)
+					   ],
+					   [
+					      'name' => 'token',
+						  'contents' => $img->delete_token
+					   ]
+					]
+				 ];
+				 
+				 #dd($dt);
+				 try
+				 {
+			       //$res = $client->request('POST', $url,['json' => $dt]);
+			       $res = $client->request('POST',$url,$dt);
+			  
+                   $ret = $res->getBody()->getContents(); 
+			       
+				 }
+				 catch(RequestException $e)
+				 {
+					 $mm = (is_null($e->getResponse())) ? null: Psr7\str($e->getResponse());
+					 $ret = json_encode(["status" => "error","message" => $mm]);
+				 }
+				 dd($ret);
+			     $rett = json_decode($ret);
+			     if($rett->status == "queued" || $rett->status == "ok")
+			     {
+					 //$nb = $user->balance - 1;
+					 //$user->update(['balance' => $nb]);
+					//  $this->setNextLead();
+			    	//$lead->update(["status" =>"sent"]);					
+			     }
+			     /**
+				 
+				 else
+			     {
+			    	// $lead->update(["status" =>"pending"]);
+			     }**/
+			    }
+				
+              return $ret; 
          }
 		 
 		 function resizeImage($res,$size)
@@ -795,6 +866,8 @@ function isDuplicateUser($data)
                                                       
              return $rett; 
          }
+		 
+		 
 		   
 		   
 
@@ -981,6 +1054,7 @@ function isDuplicateUser($data)
 					$temp['cover'] = $am->cover;
 					$temp['type'] = $am->type;
 				    $temp['url'] = $am->url;
+				    $temp['deleted'] = $am->deleted;
 				    $temp['delete_token'] = $am->delete_token;
 				    array_push($ret,$temp);
 				  }
@@ -1096,12 +1170,13 @@ function isDuplicateUser($data)
           if($aa != null) $aa->delete();		  
           if($af != null)
 		  {
-			foreach($af as $aff) $aff->delete();  
+		    foreach($af as $aff) $aff->delete();  
 		  }		  
           if($ad != null) $ad->delete();		  
           if($am != null)
 		  {
-			foreach($am as $amm) $amm->delete();  
+			 #dd($am);
+			foreach($am as $amm) $amm->update(['deleted' => "yes"]);  
 		  }		  
           if($at != null) $at->delete();
 		  

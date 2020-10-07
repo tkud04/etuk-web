@@ -312,7 +312,7 @@ let addApartmentDescriptionEditor = new Simditor({
 												<div id="add-apartment-images">
 												<div id="add-apartment-image-div-0" class="row">
 												  <div class="col-md-7">
-												    <input type="file" class="form-control" onchange="readURL(this,'0')" id="add-apartment-image-0" name="add-apartment-images[]">												    
+												    <input type="file" class="form-control" onchange="readURL(this,{id: 'add-apartment',ctr: '0'})" id="add-apartment-image-0" name="add-apartment-images[]">												    
 												  </div>
 												  <div class="col-md-5">
 												    <img id="add-apartment-preview-0" src="#" alt="preview" style="width: 50px; height: 50px;"/>

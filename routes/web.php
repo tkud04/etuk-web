@@ -41,6 +41,7 @@ Route::get('delete-apartment', 'MainController@getDeleteApartment');
 
 Route::get('sci', 'MainController@getSetCoverImage');
 Route::get('ri', 'MainController@getRemoveImage');
+Route::get('tcdi', 'MainController@getTCDI');
 
 
 
