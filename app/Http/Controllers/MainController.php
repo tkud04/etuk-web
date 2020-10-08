@@ -256,11 +256,6 @@ class MainController extends Controller {
 		{
 			$user = Auth::user();
 		}
-		else
-		{
-			return redirect()->intended('/');
-		}
-		
 		$req = $request->all();
 		
 		if(isset($req['xf']))
@@ -277,7 +272,7 @@ class MainController extends Controller {
 		    $plugins = $this->helpers->getPlugins();
 		    $services = $this->helpers->getServices();
 		
-		    $apartment = $this->helpers->getApartment($req['xf'],true);
+		    $apartment = $this->helpers->getApartment($req['xf'],['host' => true,'imgId' => true]);
 			
 			if(count($apartment) > 0)
 			{
@@ -554,7 +549,7 @@ class MainController extends Controller {
 			$services = $this->helpers->getServices();
 		    $plugins = $this->helpers->getPlugins();
 		
-		    $apartment = $this->helpers->getApartment($req['xf'],true);
+		    $apartment = $this->helpers->getApartment($req['xf'],['imgId' => true]);
 			#dd($apartment);
 		    shuffle($ads);
 		    $ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];

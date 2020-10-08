@@ -2,6 +2,9 @@
 $title = $apartment['name'];
 $subtitle = "View this apartment";
 
+$host = $apartment['host'];
+$hostName = $host['fname']." ".substr($host['lname'],0,1);
+
 $terms = $apartment['terms'];
 $adata = $apartment['data'];
 $address = $apartment['address'];
@@ -657,7 +660,7 @@ $as = $apartment['avb'];
 									<div class="agent-title">
 										<div class="agent-photo"><img src="assets/img/user-3.jpg" alt=""></div>
 										<div class="agent-details">
-											<h4><a href="author-detail.html">Kajal Shreekesh</a></h4>
+											<h4><a href="javascript:void(0)"><?php echo e($hostName); ?></a></h4>
 											<span><i class="ti-mobile"></i>91 123 456 8547</span>
 										</div>
 										<div class="clearfix"></div>
@@ -681,7 +684,7 @@ $as = $apartment['avb'];
 								<!-- Statics Info -->
 								<div class="tr-single-box">
 									<div class="tr-single-header">
-										<h4><i class="ti-bar-chart"></i> Statics Info</h4>
+										<h4><i class="ti-bar-chart"></i> Stats</h4>
 									</div>
 									
 									<div class="tr-single-body">
@@ -706,7 +709,7 @@ $as = $apartment['avb'];
 															<i class="ti-bookmark"></i>
 														</div>
 														<div class="icon-box-text">
-															20 Bookmark
+															20 Bookmarked
 														</div>
 													</a>
 												</div>
@@ -719,7 +722,7 @@ $as = $apartment['avb'];
 															<i class="ti-eye"></i>
 														</div>
 														<div class="icon-box-text">
-															785 View
+															785 Views
 														</div>
 													</a>
 												</div>
@@ -732,7 +735,7 @@ $as = $apartment['avb'];
 															<i class="ti-share"></i>
 														</div>
 														<div class="icon-box-text">
-															110 Share
+															110 Shared
 														</div>
 													</a>
 												</div>
@@ -772,62 +775,31 @@ $as = $apartment['avb'];
 								<!-- Business Info -->
 								<div class="tr-single-box">
 									<div class="tr-single-header">
-										<h4><i class="ti-direction"></i> Listing Info</h4>
+										<h4><i class="ti-direction"></i>Landmarks/Interesting Places</h4>
 									</div>
 									
 									<div class="tr-single-body">
 										<ul class="extra-service">
+										   <?php
+										    for($i = 0; $i < 5; $i++)
+											{
+										   ?>
 											<li>
 												<div class="icon-box-icon-block">
-													<a href="#">
+													<a href="javascript:void(0)">
 														<div class="icon-box-round">
 															<i class="lni-map-marker"></i>
 														</div>
 														<div class="icon-box-text">
-															524 New Ave, CA 548, USA
+															Landmark <?php echo e($i + 1); ?>
+
 														</div>
 													</a>
 												</div>
 											</li>
-											
-											<li>
-												<div class="icon-box-icon-block">
-													<a href="#">
-														<div class="icon-box-round">
-															<i class="lni-phone-handset"></i>
-														</div>
-														<div class="icon-box-text">
-															+1 415-989-1002
-														</div>
-													</a>
-												</div>
-											</li>
-											
-											<li>
-												<div class="icon-box-icon-block">
-													<a href="#">
-														<div class="icon-box-round">
-															<i class="lni-envelope"></i>
-														</div>
-														<div class="icon-box-text">
-															<span>support@bookly.com</span>
-														</div>
-													</a>
-												</div>
-											</li>
-											
-											<li>
-												<div class="icon-box-icon-block">
-													<a href="#">
-														<div class="icon-box-round">
-															<i class="lni-world"></i>
-														</div>
-														<div class="icon-box-text">
-															www.myfinding.com
-														</div>
-													</a>
-												</div>
-											</li>
+											<?php
+											}
+											?>
 											
 										</ul>
 									</div>

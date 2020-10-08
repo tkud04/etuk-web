@@ -914,9 +914,12 @@ function isDuplicateUser($data)
            }
 
 
-    function getApartment($id,$imgId=false)
+    function getApartment($id,$optionalParams=[])
            {
-           	$ret = [];
+			   $imgId = isset($optionalParams['imgId']) ? $optionalParams['imgId'] : false;
+			   $host = isset($optionalParams['host']) ? $optionalParams['host'] : false;
+           	  
+			  $ret = [];
               $apartment = Apartments::where('id',$id)
 			                 ->orWhere('apartment_id',$id)
 			                 ->orWhere('url',$id)->first();
@@ -926,6 +929,7 @@ function isDuplicateUser($data)
 				  $temp = [];
 				  $temp['id'] = $apartment->id;
 				  $temp['apartment_id'] = $apartment->apartment_id;
+				  if($host) $temp['host'] = $this->getUser($apartment->user_id);
 				  $temp['name'] = $apartment->name;
 				  $temp['avb'] = $apartment->avb;
 				  $temp['url'] = $apartment->url;
