@@ -149,7 +149,7 @@ $as = $apartment['avb'];
 							<div class="block-wrap">
 								
 								<div class="block-header">
-									<h4 class="block-title">Ameneties</h4>
+									<h4 class="block-title">Facilities</h4>
 								</div>
 								
 								<div class="block-body">

@@ -422,6 +422,7 @@ class MainController extends Controller {
 		//dd($bs);
 		$signals = $this->helpers->signals;
 		$states = $this->helpers->states;
+		$services = $this->helpers->getServices();
 		
 		$ads = $this->helpers->getAds("wide-ad");
 		$plugins = $this->helpers->getPlugins();
@@ -429,7 +430,7 @@ class MainController extends Controller {
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
         
-    	return view("add-apartment",compact(['user','cart','c','ad','states','signals','plugins']));
+    	return view("add-apartment",compact(['user','cart','c','ad','services','states','signals','plugins']));
     }
 	
 	/**
@@ -550,6 +551,7 @@ class MainController extends Controller {
 		    $states = $this->helpers->states;
 		
 	    	$ads = $this->helpers->getAds("wide-ad");
+			$services = $this->helpers->getServices();
 		    $plugins = $this->helpers->getPlugins();
 		
 		    $apartment = $this->helpers->getApartment($req['xf'],true);
@@ -557,7 +559,7 @@ class MainController extends Controller {
 		    shuffle($ads);
 		    $ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
         
-    	    return view("my-apartment",compact(['user','cart','c','ad','apartment','states','signals','plugins']));
+    	    return view("my-apartment",compact(['user','cart','c','ad','services','apartment','states','signals','plugins']));
 		}
 		else
 		{

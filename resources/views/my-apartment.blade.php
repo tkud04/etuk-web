@@ -21,25 +21,6 @@ $media = $apartment['media'];
 $rawImgs = $media['images'];
 $imgs = $cmedia['images'];
 $video = $cmedia['video'];
-
-$services = [
-										  'air-conditioning' => "Air Conditioning",
-										  'adequate-parking' => "Adequate Parking",
-										  'bar' => "Bar",
-										  'game-room' => "Game Room",
-										  'inhouse-dining' => "In-house Dining",
-										  'drycleaning' => "Drycleaning",
-										  'iron' => "Clothing Iron",
-										  'kitchen' => "Kitchen",
-										  'pool' => "Swimming Pool",
-										  'fitness-facilities' => "Fitness Facilities",
-										  'room-service' => "Room Service",
-										  'tv' => "TV",
-										  'concierge' => "Concierge",
-										  'security' => "Luggage Storage",
-										  'electricity' => "24hrs Electricity",
-										  'king-sized-bed' => "King-sized Bed"
-										];
 ?>
 
 @extends('layout')
@@ -324,8 +305,10 @@ let myApartmentDescriptionEditor = new Simditor({
 											   
 												<div class="row">
 												  <?php
-											        foreach($services as $key => $value)
+											        foreach($services as $s)
 													{
+														$key = $s['tag'];
+														$value = $s['name'];
 											      ?>
 												  <div class="col-lg-3 col-md-6 col-sm-12">
 												   

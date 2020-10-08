@@ -193,33 +193,16 @@ let addApartmentDescriptionEditor = new Simditor({
                                         <div class="col-lg-12 col-md-12 col-sm-12" style="margin-top: 20px;">
 											<h4 class="mb-3">Facilities & Services</h4>
 										</div>										
-										<?php
-										$services = [
-										  'air-conditioning' => "Air Conditioning",
-										  'adequate-parking' => "Adequate Parking",
-										  'bar' => "Bar",
-										  'game-room' => "Game Room",
-										  'inhouse-dining' => "In-house Dining",
-										  'drycleaning' => "Drycleaning",
-										  'iron' => "Clothing Iron",
-										  'kitchen' => "Kitchen",
-										  'pool' => "Swimming Pool",
-										  'fitness-facilities' => "Fitness Facilities",
-										  'room-service' => "Room Service",
-										  'tv' => "TV",
-										  'concierge' => "Concierge",
-										  'security' => "Luggage Storage",
-										  'electricity' => "24hrs Electricity",
-										  'king-sized-bed' => "King-sized Bed"
-										];
-										?>
+										
 										<div class="col-lg-12 col-md-12 col-sm-12" style="margin-bottom: 20px;">
 											<div class="form-group">
 											   
 												<div class="row">
-												  <?php
-											        foreach($services as $key => $value)
+												 <?php
+											        foreach($services as $s)
 													{
+														$key = $s['tag'];
+														$value = $s['name'];
 											      ?>
 												  <div class="col-lg-3 col-md-6 col-sm-12">
 												   
