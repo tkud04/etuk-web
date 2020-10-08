@@ -22,6 +22,7 @@ use App\Banners;
 use App\Senders;
 use App\Settings;
 use App\Plugins;
+use App\Services;
 use App\Comparisons;
 use App\Guests;
 use \Swift_Mailer;
@@ -1439,7 +1440,7 @@ function updateApartment($data)
 				   foreach($services as $s)
 				   {
 					   $temp = [];
-					   $temp['key'] = $s->key;
+					   $temp['tag'] = $s->tag;
 					   $temp['name'] = $s->name;
 					   array_push($ret,$temp);
 				   }

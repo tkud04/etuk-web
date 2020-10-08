@@ -14,7 +14,24 @@ $video = $cmedia['video'];
 
 $as = $apartment['avb'];
 
-
+$services = [
+										  'air-conditioning' => "Air Conditioning",
+										  'adequate-parking' => "Adequate Parking",
+										  'bar' => "Bar",
+										  'game-room' => "Game Room",
+										  'inhouse-dining' => "In-house Dining",
+										  'drycleaning' => "Drycleaning",
+										  'iron' => "Clothing Iron",
+										  'kitchen' => "Kitchen",
+										  'pool' => "Swimming Pool",
+										  'fitness-facilities' => "Fitness Facilities",
+										  'room-service' => "Room Service",
+										  'tv' => "TV",
+										  'concierge' => "Concierge",
+										  'security' => "Luggage Storage",
+										  'electricity' => "24hrs Electricity",
+										  'king-sized-bed' => "King-sized Bed"
+										];
 ?>
 
 @extends('layout')

@@ -13,6 +13,6 @@ class Services extends Model
      * @var array
      */
     protected $fillable = [
-        'id', 'key', 'name'
+        'id', 'tag', 'name'
 	];
 }

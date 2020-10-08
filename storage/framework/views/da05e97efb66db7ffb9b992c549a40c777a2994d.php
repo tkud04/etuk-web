@@ -12,6 +12,8 @@ $rawImgs = $media['images'];
 $imgs = $cmedia['images'];
 $video = $cmedia['video'];
 
+$as = $apartment['avb'];
+
 $services = [
 										  'air-conditioning' => "Air Conditioning",
 										  'adequate-parking' => "Adequate Parking",
@@ -80,8 +82,8 @@ $services = [
 															<i class="icofont-stopwatch"></i>
 														</div>
 														<div class="info">
-															<h4 class="name">Duration</h4>
-															<p class="value">7 days</p>
+															<h4 class="name">Availability</h4>
+															<p class="value"><?php echo e($as); ?></p>
 														</div>
 													</div>
 												</div>
