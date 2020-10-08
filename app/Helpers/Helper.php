@@ -432,7 +432,8 @@ $subject = $data['subject'];
                        $temp['phone'] = $u->phone; 
                        $temp['email'] = $u->email; 
                        $temp['role'] = $u->role; 
-                       $temp['status'] = $u->status; 
+                       $temp['status'] = $u->status;
+					   $temp['avatar'] = $this->getCloudinaryMedia([['url' => $u->avatar]]);
                        $temp['verified'] = $u->verified; 
                        $temp['id'] = $u->id; 
                        $temp['date'] = $u->created_at->format("jS F, Y"); 
@@ -1148,6 +1149,10 @@ function isDuplicateUser($data)
 				   if($ird == "none")
 					{
 					   $ret = ["img/no-image.png"];
+					}
+					else if($ird == "")
+					{
+						$ret = "";
 					}
 				   else
 					{

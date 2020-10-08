@@ -4,6 +4,13 @@ $subtitle = "View this apartment";
 
 $host = $apartment['host'];
 $hostName = $host['fname']." ".substr($host['lname'],0,1);
+$hostNum = "Send ".$host['fname']." a message to book this apartment.";
+$myName = ""; $myEmail = "";
+
+if($user != null)
+{
+	$myName = $user->fname." ".$user->lname;
+}
 
 $terms = $apartment['terms'];
 $adata = $apartment['data'];
@@ -660,24 +667,24 @@ $as = $apartment['avb'];
 										<div class="agent-photo"><img src="assets/img/user-3.jpg" alt=""></div>
 										<div class="agent-details">
 											<h4><a href="javascript:void(0)">{{$hostName}}</a></h4>
-											<span><i class="ti-mobile"></i>91 123 456 8547</span>
+											<span><i class="ti-mobile"></i>{{$hostNum}}</span>
 										</div>
 										<div class="clearfix"></div>
 									</div>
 
 									<div class="form-group">
 										<label>Full Name</label>
-										<input type="text" class="form-control" placeholder="Your Name">
+										<input type="text" class="form-control" id="apt-message-name" value="{{$myName}}" placeholder="Your Name">
 									</div>
 									<div class="form-group">
 										<label>Your Email</label>
-										<input type="text" class="form-control" placeholder="Your Email">
+										<input type="text" class="form-control" id="apt-message-email" value="{{$myEmail}}" placeholder="Your Email">
 									</div>
 									<div class="form-group">
 										<label>Message</label>
-										<textarea class="form-control" placeholder="Send Message to author..."></textarea>
+										<textarea class="form-control" id="apt-message-msg" placeholder="Send a message to {{$host['fname']}}..."></textarea>
 									</div>
-									<button class="btn btn-theme full-width">Send Message</button>
+									<button class="btn btn-theme full-width">Send</button>
 								</div>
 								
 								<!-- Statics Info -->

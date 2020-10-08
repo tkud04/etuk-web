@@ -436,12 +436,11 @@ let myApartmentDescriptionEditor = new Simditor({
 												<div id="my-apartment-images">
 												<div id="my-apartment-image-div-0" class="row">
 												  <div class="col-md-7">
-												    <input type="file" class="form-control" onchange="readURL(this,'0')" id="my-apartment-image-0" name="my-apartment-images[]">												    
+												    <input type="file" class="form-control" onchange="readURL(this,{id: 'my-apartment',ctr: '0'})" id="my-apartment-image-0" name="my-apartment-images[]">												    
 												  </div>
 												  <div class="col-md-5">
 												    <img id="my-apartment-preview-0" src="#" alt="preview" style="width: 50px; height: 50px;"/>
-													<a href="javascript:void(0)" onclick="aptSetCoverImage(0)" class="btn btn-theme btn-sm">Set as cover image</a>
-												    <a href="javascript:void(0)" onclick="aptRemoveImage({id: 'add-apartment',ctr: '0'})" class="btn btn-warning btn-sm">Remove</a>
+													<a href="javascript:void(0)" onclick="aptRemoveImage({id: 'my-apartment',ctr: '0'})" class="btn btn-warning btn-sm">Remove</a>
 												  </div>
 												</div>
 												</div>
