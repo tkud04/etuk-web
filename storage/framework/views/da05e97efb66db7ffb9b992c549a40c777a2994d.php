@@ -1,16 +1,6 @@
 <?php
 $title = $apartment['name'];
-$subtitle = "Edit your apartment information";
-
-$checkoutHead = <<<EOD
-                                <div class="checkout-head">
-									<ul>
-										<li class="my-apartment-active-1 active"><span class="my-apartment-ticker-1">1</span>Apartment Information</li>
-										<li class="my-apartment-active-2"><span class="my-apartment-ticker-2">2</span>Location & Media</li>
-										<li class="my-apartment-active-3"><span class="my-apartment-ticker-3">3</span>Preview</li>
-									</ul>
-								</div>
-EOD;
+$subtitle = "View this apartment";
 
 $terms = $apartment['terms'];
 $adata = $apartment['data'];
@@ -116,8 +106,8 @@ $services = [
 															<i class="icofont-travelling"></i>
 														</div>
 														<div class="info">
-															<h4 class="name">Members</h4>
-															<p class="value">3-4 Members</p>
+															<h4 class="name">Max. adults</h4>
+															<p class="value"><?php echo e($adata['max_adults']); ?></p>
 														</div>
 													</div>
 												</div>
@@ -130,7 +120,7 @@ $services = [
 														</div>
 														<div class="info">
 															<h4 class="name">Location</h4>
-															<p class="value">New York, USA</p>
+															<p class="value"><?php echo e($address['city'].", ".$address['state']); ?></p>
 														</div>
 													</div>
 												</div>

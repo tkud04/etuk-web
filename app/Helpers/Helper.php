@@ -1428,6 +1428,25 @@ function updateApartment($data)
 			   
 			   return $ret;
 		   }
+		   
+		   function getServices()
+		   {
+			   $ret = [];
+			   $services = Services::where('id','>',"0")->get();
+			   
+			   if($services != null)
+			   {
+				   foreach($services as $s)
+				   {
+					   $temp = [];
+					   $temp['key'] = $s->key;
+					   $temp['name'] = $s->name;
+					   array_push($ret,$temp);
+				   }
+			   }
+			   
+			   return $ret;
+		   }
 
 
 

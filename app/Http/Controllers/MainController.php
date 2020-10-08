@@ -274,6 +274,7 @@ class MainController extends Controller {
 		
 	    	$ads = $this->helpers->getAds("wide-ad");
 		    $plugins = $this->helpers->getPlugins();
+		    $services = $this->helpers->getServices();
 		
 		    $apartment = $this->helpers->getApartment($req['xf'],true);
 			
@@ -283,7 +284,7 @@ class MainController extends Controller {
 		       shuffle($ads);
 		       $ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
         
-    	       return view("apartment",compact(['user','cart','c','ad','apartment','states','signals','plugins']));
+    	       return view("apartment",compact(['user','cart','c','ad','apartment','services','states','signals','plugins']));
 			}
 			else
 			{

@@ -1,16 +1,6 @@
 <?php
 $title = $apartment['name'];
-$subtitle = "Edit your apartment information";
-
-$checkoutHead = <<<EOD
-                                <div class="checkout-head">
-									<ul>
-										<li class="my-apartment-active-1 active"><span class="my-apartment-ticker-1">1</span>Apartment Information</li>
-										<li class="my-apartment-active-2"><span class="my-apartment-ticker-2">2</span>Location & Media</li>
-										<li class="my-apartment-active-3"><span class="my-apartment-ticker-3">3</span>Preview</li>
-									</ul>
-								</div>
-EOD;
+$subtitle = "View this apartment";
 
 $terms = $apartment['terms'];
 $adata = $apartment['data'];
@@ -22,24 +12,9 @@ $rawImgs = $media['images'];
 $imgs = $cmedia['images'];
 $video = $cmedia['video'];
 
-$services = [
-										  'air-conditioning' => "Air Conditioning",
-										  'adequate-parking' => "Adequate Parking",
-										  'bar' => "Bar",
-										  'game-room' => "Game Room",
-										  'inhouse-dining' => "In-house Dining",
-										  'drycleaning' => "Drycleaning",
-										  'iron' => "Clothing Iron",
-										  'kitchen' => "Kitchen",
-										  'pool' => "Swimming Pool",
-										  'fitness-facilities' => "Fitness Facilities",
-										  'room-service' => "Room Service",
-										  'tv' => "TV",
-										  'concierge' => "Concierge",
-										  'security' => "Luggage Storage",
-										  'electricity' => "24hrs Electricity",
-										  'king-sized-bed' => "King-sized Bed"
-										];
+$as = $apartment['avb'];
+
+
 ?>
 
 @extends('layout')
@@ -90,8 +65,8 @@ $services = [
 															<i class="icofont-stopwatch"></i>
 														</div>
 														<div class="info">
-															<h4 class="name">Duration</h4>
-															<p class="value">7 days</p>
+															<h4 class="name">Availability</h4>
+															<p class="value">{{$as}}</p>
 														</div>
 													</div>
 												</div>
@@ -116,8 +91,8 @@ $services = [
 															<i class="icofont-travelling"></i>
 														</div>
 														<div class="info">
-															<h4 class="name">Members</h4>
-															<p class="value">3-4 Members</p>
+															<h4 class="name">Max. adults</h4>
+															<p class="value">{{$adata['max_adults']}}</p>
 														</div>
 													</div>
 												</div>
@@ -130,7 +105,7 @@ $services = [
 														</div>
 														<div class="info">
 															<h4 class="name">Location</h4>
-															<p class="value">New York, USA</p>
+															<p class="value">{{$address['city'].", ".$address['state']}}</p>
 														</div>
 													</div>
 												</div>
