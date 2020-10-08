@@ -139,8 +139,7 @@ $as = $apartment['avb'];
 								</div>
 								
 								<div class="block-body">
-									<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-									<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+								{!! $adata['description'] !!}
 								</div>
 								
 							</div>
@@ -149,7 +148,7 @@ $as = $apartment['avb'];
 							<div class="block-wrap">
 								
 								<div class="block-header">
-									<h4 class="block-title">Ameneties</h4>
+									<h4 class="block-title">Facilities</h4>
 								</div>
 								
 								<div class="block-body">
