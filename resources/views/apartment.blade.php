@@ -153,18 +153,23 @@ $as = $apartment['avb'];
 								
 								<div class="block-body">
 									<ul class="avl-features third">
-										<li>Air Conditioning</li>
-										<li>Swimming Pool</li>
-										<li>Central Heating</li>
-										<li>Laundry Room</li>
-										<li>Gym</li>
-										<li>Alarm</li>
-										<li>Window Covering</li>
-										<li>Internet</li>
-										<li>Pets Allow</li>
-										<li>Free WiFi</li>
-										<li>Car Parking</li>
-										<li>Spa & Massage</li>
+									<?php
+											        foreach($facilities as $f)
+													{
+														$facility = $f['facility'];
+														
+														foreach($services as $s)
+														{
+									                      if($s['tag'] == $facility)
+														  {															  
+														
+					                 ?>
+										<li>{{$s['name']}}</li>
+									<?php
+														  }
+														}
+													}
+									?>
 									</ul>
 								</div>
 								
