@@ -45,7 +45,7 @@ class MainController extends Controller {
 		$ads = $this->helpers->getAds("wide-ad");
 		$banners = $this->helpers->getBanners();
 		$plugins = $this->helpers->getPlugins();
-		$this->helpers->populateServices();
+		#$this->helpers->populateServices();
 		
 		#dd($hasUnpaidOrders);
 		
