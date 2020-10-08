@@ -1430,6 +1430,15 @@ function updateApartment($data)
 			   return $ret;
 		   }
 		   
+		    function createService($data)
+           {
+           	$ret = Services::create(['name' => $data['name'], 
+                                                      'tag' => $data['tag'] 
+                                                      ]);
+                                                      
+                return $ret;
+           }
+		   
 		   function getServices()
 		   {
 			   $ret = [];

@@ -14,24 +14,6 @@ $video = $cmedia['video'];
 
 $as = $apartment['avb'];
 
-$services = [
-										  'air-conditioning' => "Air Conditioning",
-										  'adequate-parking' => "Adequate Parking",
-										  'bar' => "Bar",
-										  'game-room' => "Game Room",
-										  'inhouse-dining' => "In-house Dining",
-										  'drycleaning' => "Drycleaning",
-										  'iron' => "Clothing Iron",
-										  'kitchen' => "Kitchen",
-										  'pool' => "Swimming Pool",
-										  'fitness-facilities' => "Fitness Facilities",
-										  'room-service' => "Room Service",
-										  'tv' => "TV",
-										  'concierge' => "Concierge",
-										  'security' => "Luggage Storage",
-										  'electricity' => "24hrs Electricity",
-										  'king-sized-bed' => "King-sized Bed"
-										];
 ?>
 
 @extends('layout')
@@ -79,11 +61,11 @@ $services = [
 												<div class="col-xs-6 col-lg-3 col-md-6">
 													<div class="singles_item">
 														<div class="icon">
-															<i class="icofont-stopwatch"></i>
+															<i class="icofont-home"></i>
 														</div>
 														<div class="info">
 															<h4 class="name">Availability</h4>
-															<p class="value">{{$as}}</p>
+															<p class="value">{{ucwords($as)}}</p>
 														</div>
 													</div>
 												</div>
