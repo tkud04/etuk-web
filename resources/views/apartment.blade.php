@@ -552,12 +552,12 @@ $as = $apartment['avb'];
 															
 																<div class="guest-type">
 																	<h5>Adults</h5>
-																	<span>Max 4</span>
+																	<span>{{$adata['max_adults']}} max.</span>
 																</div>
 																
 																<div class="guests-box">
 																	  <button class="counter-btn" type="button" id="cnt-down"><i class="ti-minus"></i></button>
-																	  <input type="text" id="guestNo" name="guests" value="2"/>
+																	  <input type="text" id="guestNo" name="guests" value="2" max="{{$adata['max_children']}}"/>
 																	  <button class="counter-btn" type="button" id="cnt-up"><i class="ti-plus"></i></button>
 																</div>
 																
@@ -573,12 +573,12 @@ $as = $apartment['avb'];
 															
 																<div class="guest-type">
 																	<h5>Child</h5>
-																	<span>Max 4</span>
+																	<span>{{$adata['max_children']}} max.</span>
 																</div>
 																
 																<div class="guests-box">
 																	<button class="counter-btn" type="button" id="kcnt-down"><i class="ti-minus"></i></button>
-																	<input type="text" id="kidsNo" name="kids" value="0"/>
+																	<input type="text" id="kidsNo" name="kids" value="0" max="{{$adata['max_children']}}"/>
 																	<button class="counter-btn" type="button" id="kcnt-up"><i class="ti-plus"></i></button>
 																</div>
 																
@@ -591,58 +591,6 @@ $as = $apartment['avb'];
 										</div>
 										<!-- Single Row Booking -->
 										
-										<!-- Single Row Booking -->
-										<div class="single-row-booking">
-											<span class="onsale-section"><span class="onsale">$107<small>per night</small></span></span>
-											<div class="row">
-												<div class="col-lg-12 col-md-12 col-sm-12 small-spilx">
-													<h4 class="booking-title">Private Room</h4>
-												</div>
-												<div class="col-lg-6 col-md-6 col-sm-6 col-6 small-spilx">
-													<div class="form-group">
-														<div class="guests">
-															<div class="advance-bboking">
-															
-																<div class="guest-type">
-																	<h5>Adults</h5>
-																	<span>Max 2</span>
-																</div>
-																
-																<div class="guests-box">
-																	  <button class="counter-btn" type="button" id="rom-down"><i class="ti-minus"></i></button>
-																	  <input type="text" id="roomNo" name="rooms" value="2"/>
-																	  <button class="counter-btn" type="button" id="rom-up"><i class="ti-plus"></i></button>
-																</div>
-																
-															</div>
-														</div>
-													</div>
-												</div>
-
-												<div class="col-lg-6 col-md-6 col-sm-6 col-6 small-spilx brl">
-													<div class="form-group">
-														<div class="guests">
-															<div class="advance-bboking">
-															
-																<div class="guest-type">
-																	<h5>Child</h5>
-																	<span>Max 2</span>
-																</div>
-																
-																<div class="guests-box">
-																	<button class="counter-btn" type="button" id="krom-down"><i class="ti-minus"></i></button>
-																	<input type="text" id="kidsroomNo" name="kidsroom" value="0"/>
-																	<button class="counter-btn" type="button" id="krom-up"><i class="ti-plus"></i></button>
-																</div>
-																
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-											
-										</div>
-										<!-- Single Row Booking -->
 										
 									</div>
 									
@@ -652,11 +600,11 @@ $as = $apartment['avb'];
 												<h5 class="st-subtitle">Total Amount</h5>
 												<span>Expected Tax</span>
 											</div>
-											<h4 class="stbooking-title">$240</h4>
+											<h4 class="stbooking-title">&#8358;{{number_format($adata['amount'],2)}}</h4>
 										</div>
 										<div class="stbooking-footer-bottom">
-											<a href="#" class="books-btn btn-theme">Request TO Book</a>
-											<a href="#" class="books-btn black">Instant Booking</a>
+											<a href="javascript:void(0)" class="books-btn btn-theme">Request To Book</a>
+											<!--<a href="#" class="books-btn black">Instant Booking</a>-->
 										</div>
 									</div>
 									

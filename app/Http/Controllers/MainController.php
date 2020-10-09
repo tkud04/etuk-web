@@ -299,6 +299,38 @@ class MainController extends Controller {
     }
 
 	/**
+	 * Show the apartment.
+	 *
+	 * @return Response
+	 */
+	public function getApartments(Request $request)
+    {
+		$user = null;
+		if(Auth::check())
+		{
+			$user = Auth::user();
+		}
+		$req = $request->all();
+		
+			$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
+		    $cart = $this->helpers->getCart($user,$gid);
+
+		    $c = $this->helpers->getCategories();
+		    
+		    $signals = $this->helpers->signals;
+		
+	    	$ads = $this->helpers->getAds("wide-ad");
+		    $plugins = $this->helpers->getPlugins();
+		
+		    $apartments = $this->helpers->getApartments(null);
+			#dd($apartments);
+		       shuffle($ads);
+		       $ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
+        
+    	       return view("apartments",compact(['user','cart','c','ad','apartments','signals','plugins']));		
+    }
+
+	/**
 	 * Switch user mode (host/guest).
 	 *
 	 * @return Response
