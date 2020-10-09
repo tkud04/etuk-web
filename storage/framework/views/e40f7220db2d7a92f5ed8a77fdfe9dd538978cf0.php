@@ -17,6 +17,8 @@
 		<!-- Custom Color Option -->
 		<link href="<?php echo e(asset('css/colors.css')); ?>" rel="stylesheet">
 		
+		<?php echo $__env->yieldContent('styles'); ?>
+		
 		<link rel="icon" type="image/png" href="<?php echo e(asset('img/favicon.png')); ?>" sizes="16x16">
 		
 		<script src="<?php echo e(asset('js/jquery.min.js')); ?>"></script>
@@ -25,6 +27,7 @@
 		<script src="<?php echo e(asset('js/helpers.js').'?ver='.rand(23,999)); ?>"></script>
 		<script src="<?php echo e(asset('js/mmm.js').'?ver='.rand(23,999)); ?>"></script>
 		
+		<?php echo $__env->yieldContent('scripts'); ?>
 		 <!--Simeditor--> 
         <link rel="stylesheet" type="text/css" href="<?php echo e(asset('lib/simeditor/css/simditor.css')); ?>" />
         <script type="text/javascript" src="<?php echo e(asset('lib/simeditor/js/module.js')); ?>"></script>

@@ -17,6 +17,8 @@
 		<!-- Custom Color Option -->
 		<link href="{{asset('css/colors.css')}}" rel="stylesheet">
 		
+		@yield('styles')
+		
 		<link rel="icon" type="image/png" href="{{asset('img/favicon.png')}}" sizes="16x16">
 		
 		<script src="{{asset('js/jquery.min.js')}}"></script>
@@ -25,6 +27,7 @@
 		<script src="{{asset('js/helpers.js').'?ver='.rand(23,999)}}"></script>
 		<script src="{{asset('js/mmm.js').'?ver='.rand(23,999)}}"></script>
 		
+		@yield('scripts')
 		 <!--Simeditor--> 
         <link rel="stylesheet" type="text/css" href="{{asset('lib/simeditor/css/simditor.css')}}" />
         <script type="text/javascript" src="{{asset('lib/simeditor/js/module.js')}}"></script>
