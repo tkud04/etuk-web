@@ -15,6 +15,9 @@ if($user != null)
 $terms = $apartment['terms'];
 $adata = $apartment['data'];
 $address = $apartment['address'];
+$location = $address['city'].", ".$address['state'];
+$stars = $apartment['rating'];
+$reviews = $apartment['reviews'];
 $facilities = $apartment['facilities'];
 $cmedia = $apartment['cmedia'];
 $media = $apartment['media'];
@@ -494,21 +497,22 @@ $as = $apartment['avb'];
 										<div class="author-with-rate">
 											<div class="head-author">
 												<div class="hau-thumb">
-													<img src="assets/img/p-1.png" alt="" />
+													<img src="<?php echo e($imgs[0]); ?>" alt="" style="width=100px; height: 100px;" />
 												</div>
-												<h5>Shaurya Preet</h5>
-												<span><i class="ti-location-pin"></i>Elixa Bridge, London</span>
+												<h4 class="head-list-titleup"><?php echo e($apartment['name']); ?></h4>
+												<span><i class="ti-location-pin"></i><?php echo e($location); ?></span>
 											</div>
 											<div class="head-ratting">
 												<div class="ht-star">
+												    <?php for($i = 0; $i < $stars; $i++): ?>
 													<i class="fa fa-star filled"></i>
-													<i class="fa fa-star filled"></i>
-													<i class="fa fa-star filled"></i>
-													<i class="fa fa-star filled"></i>
+												    <?php endfor; ?>
+										            <?php for($i = 0; $i < 5 - $stars; $i++): ?>									
 													<i class="fa fa-star"></i>
-													<span>102 Reviews</span>
+												    <?php endfor; ?>
+													<span><?php echo e(count($reviews)); ?> Reviews</span>
 												</div>
-												<h4 class="head-list-titleup">Green Plaza Hotel</h4>
+												
 											</div>
 										</div>
 									</div>
