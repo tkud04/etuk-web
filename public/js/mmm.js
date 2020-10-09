@@ -424,4 +424,13 @@ $(document).ready(function() {
 	   }
     });	
 	
+	
+	//APARTMENTS
+	$('#apartments-loading').load(e => {
+		e.preventDefault();
+		setTimeout(() => {
+			console.log("loading more");
+		},3000);
+	});
+	
 });

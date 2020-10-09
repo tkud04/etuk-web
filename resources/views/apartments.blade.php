@@ -12,7 +12,52 @@ $subtitle = "List of available apartments on ".date("jS F, Y");
 
 @section('content')
 @include('banner-2',['title' => $title,'subtitle' => $subtitle])
+<script>
+ let page = 1, perPage = 9, apartments = [];
+ 
+  <?php
+		   foreach($apartments as $a)
+		   {
+			   $terms = $a['terms'];
+			   $facilities = $a['facilities'];
+$adata = $a['data'];
+$address = $a['address'];
+$cmedia = $a['cmedia'];
+$imgs = $cmedia['images'];
+$video = $cmedia['video'];
 
+$img = $imgs[0];
+$uu = url('apartment')."?xf=".$a['url'];
+$lu = url('like')."?xf=".$a['url'];
+$bu = url('bookmark')."?xf=".$a['url'];
+$tc = $adata['max_adults'];
+$location = $address['city'].", ".$address['state'];
+$stars = $a['rating'];
+$amount = $adata['amount'];
+$description = $adata['description'];
+			    
+	?>
+		  
+		  temp = {
+			   apartment_id: "{{$a['apartment_id']}}",
+			   name: "{{$a['name']}}",
+			   uu: "{{$uu}}",
+			   lu: "{{$lu}}",
+			   bu: "{{$bu}}",
+			   location: "{{$location}}",
+			   description: `{{$description}}`,
+			   stars: "{{$stars}}",
+			   facilities: "{{json_encode($facilities,JSON_HEX_APOS|JSON_HEX_QUOT) }}".replace(/&quot;/g, '\"'),
+			   reviews: "{{count($a['reviews'])}}",
+			   amount: "{{number_format($amount,2)}}",
+			   img: "{{$img}}",
+		   };
+		   apartments.push(temp);
+	<?php
+		   }	
+	?>
+ 
+</script>
 <!-- =================== Sidebar Search ==================== -->
 			<section class="gray">
 				<div class="container">
@@ -32,10 +77,22 @@ $subtitle = "List of available apartments on ".date("jS F, Y");
 													<span class="selection">Most Rated</span>
 												</a>
 												<div class="drp-select dropdown-menu">
-													<a class="dropdown-item" href="JavaScript:Void(0);">Most Rated</a>
-													<a class="dropdown-item" href="JavaScript:Void(0);">Most Viewd</a>
-													<a class="dropdown-item" href="JavaScript:Void(0);">News Listings</a>
-													<a class="dropdown-item" href="JavaScript:Void(0);">High Rated</a>
+													<a class="dropdown-item" href="javascript:void(0);">Most Rated</a>
+													<a class="dropdown-item" href="javascript:void(0);">Most Viewd</a>
+													<a class="dropdown-item" href="javascript:void(0);">News Listings</a>
+													<a class="dropdown-item" href="javascript:void(0);">High Rated</a>
+												</div>
+											</div>
+										</div>
+										<div class="shorting-right" style="margin-left: 20px;">
+											<label>View:</label>
+											<div class="dropdown show">
+												<a class="btn btn-filter dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+													<span class="selection">Grid</span>
+												</a>
+												<div class="drp-select dropdown-menu">
+													<a class="dropdown-item" href="javascript:void(0);" onclick="aptShowGrid()">Grid</a>
+													<a class="dropdown-item" href="javascript:void(0);" onclick="aptShowList()">List</a>
 												</div>
 											</div>
 										</div>
@@ -228,7 +285,13 @@ $subtitle = "List of available apartments on ".date("jS F, Y");
 							
 							<div class="row m-0">
 
-								<div class="col-md-12 col-sm-12 mt-3">
+								<div class="col-md-12 col-sm-12 mt-3" id="apartments-loading">
+									<div class="text-center">
+									  <a class="btn btn-theme" onclick="showPreviousPage();">Previous</a>
+									  <a class="btn btn-theme" onclick="showNextPage();">Next</a>
+									</div>
+								</div>	
+								<div class="col-md-12 col-sm-12 mt-3" id="apartments-loading">
 									<div class="text-center">
 										
 										<div class="spinner-grow text-danger" role="status">
