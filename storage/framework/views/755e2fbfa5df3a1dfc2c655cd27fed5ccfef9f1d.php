@@ -57,6 +57,10 @@ $description = $adata['description'];
 		   }	
 	?>
  
+ 
+  $(document).ready(() => {
+	  $('#apartments-loading').hide();
+  });
 </script>
 <!-- =================== Sidebar Search ==================== -->
 			<section class="gray">
@@ -285,9 +289,18 @@ $description = $adata['description'];
 							
 							<div class="row m-0">
 
-								<div class="col-md-12 col-sm-12 mt-3" id="apartments-loading">
+								<div class="col-md-12 col-sm-12 mt-3" id="apartments-submit">
 									<div class="text-center">
 									  <a class="btn btn-theme" onclick="showPreviousPage();">Previous</a>
+									  <?php
+						               $pages = (count($apartments) < 9) ? 1 : ceil(count($apartments) / 9);
+					                   for($i = 0; $i < $pages; $i++)
+						                {
+					                  ?>
+									  <a class="btn btn-info" onclick="showNextPage(<?php echo e($i+1); ?>);"><?php echo e($i+1); ?></a>
+									   <?php
+						                }
+						               ?>
 									  <a class="btn btn-theme" onclick="showNextPage();">Next</a>
 									</div>
 								</div>	

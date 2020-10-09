@@ -426,7 +426,7 @@ $(document).ready(function() {
 	
 	
 	//APARTMENTS
-	$('#apartments-loading').load(e => {
+	$('#apgartments-loading').load(e => {
 		e.preventDefault();
 		setTimeout(() => {
 			console.log("loading more");
