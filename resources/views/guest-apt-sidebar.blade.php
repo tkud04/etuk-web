@@ -8,8 +8,20 @@
 									
 									<div class="form-group">
 										<div class="input-with-icon">
-											<input type="text" class="form-control" placeholder="Destination">
+											<input id="guest-apt-sidebar-city" type="text" class="form-control" placeholder="City">
 											<i class="ti-location-pin"></i>
+										</div>
+									</div>
+									
+									<div class="form-group">
+										<div class="input-with-icon">
+											<select id="guest-apt-sidebar-state" class="form-control">
+												<option value="">Select state</option>
+												@foreach($states as $k => $v)
+												<option value="{{$k}}">{{ucwords($v)}}</option>
+												@endforeach
+											</select>
+											<i class="ti-briefcase"></i>
 										</div>
 									</div>
 									
@@ -20,148 +32,41 @@
 										</div>
 									</div>
 									
-									<div class="form-group">
-										<div class="input-with-icon">
-											<select id="tour-category" class="form-control">
-												<option value="">&nbsp;</option>
-												<option value="1">City trips</option>
-												<option value="2">Ecotourism</option>
-												<option value="3">Escorted Tour</option>
-												<option value="4">Group Tour</option>
-												<option value="5">Hosted tours</option>
-												<option value="6">Ligula</option>
-											</select>
-											<i class="ti-briefcase"></i>
-										</div>
-									</div>
 									
+									<!--
 									<div class="range-slider">
 										<label>Radius</label>
 										<div class="distance-title">around selected destination <span class="theme-cl"></span> km</div>
 										<input class="distance-radius rangeslider--horizontal" type="range" min="1" max="100" step="1" value="1" data-title="Radius around selected destination">
 									</div>
-
-									<div class="ameneties-features">
-										<label>Advance Features</label>
+                                    -->
+									<div class="ameneties-features mt-5">
+										<label>Show apartments with:</label>
 										<ul class="no-ul-list">
+										   <?php
+										    foreach($services as $s)
+											{
+										   ?>
 											<li>
-												<input id="a-1" class="checkbox-custom" name="a-1" type="checkbox">
-												<label for="a-1" class="checkbox-custom-label">Air Condition</label>
+												<input id="guest-apt-sidebar-{{$s['tag']}}" class="checkbox-custom" name="guest-apt-sidebar-{{$s['tag']}}" type="checkbox">
+												<label for="guest-apt-sidebar-{{$s['tag']}}" class="checkbox-custom-label">{{ucwords($s['name'])}}</label>
 											</li>
-											<li>
-												<input id="a-2" class="checkbox-custom" name="a-2" type="checkbox">
-												<label for="a-2" class="checkbox-custom-label">Bedding</label>
-											</li>
-											<li>
-												<input id="a-3" class="checkbox-custom" name="a-3" type="checkbox">
-												<label for="a-3" class="checkbox-custom-label">Heating</label>
-											</li>
-											<li>
-												<input id="a-4" class="checkbox-custom" name="a-4" type="checkbox">
-												<label for="a-4" class="checkbox-custom-label">Internet</label>
-											</li>
-											<li>
-												<input id="a-5" class="checkbox-custom" name="a-5" type="checkbox">
-												<label for="a-5" class="checkbox-custom-label">Microwave</label>
-											</li>
-											<li>
-												<input id="a-6" class="checkbox-custom" name="a-6" type="checkbox">
-												<label for="a-6" class="checkbox-custom-label">Smoking Allow</label>
-											</li>
-											<li>
-												<input id="a-7" class="checkbox-custom" name="a-7" type="checkbox">
-												<label for="a-7" class="checkbox-custom-label">Terrace</label>
-											</li>
-											<li>
-												<input id="a-8" class="checkbox-custom" name="a-8" type="checkbox">
-												<label for="a-8" class="checkbox-custom-label">Balcony</label>
-											</li>
-											<li>
-												<input id="a-9" class="checkbox-custom" name="a-9" type="checkbox">
-												<label for="a-9" class="checkbox-custom-label">Icon</label>
-											</li>
+											<?php
+											}
+											?>
 										</ul>
 									
 									</div>
 									
-									<div class="ameneties-features mt-3">
-										<label>Review Score</label>
-										<ul class="no-ul-list">
-											<li>
-												<input id="mo-1" class="checkbox-custom" name="mo-1" type="checkbox">
-												<label for="mo-1" class="checkbox-custom-label search-review">
-													<span><i class="fa fa-star filled"></i></span>
-													<span><i class="fa fa-star filled"></i></span>
-													<span><i class="fa fa-star filled"></i></span>
-													<span><i class="fa fa-star filled"></i></span>
-													<span><i class="fa fa-star filled"></i></span>
-												</label>
-											</li>
-											<li>
-												<input id="mo-2" class="checkbox-custom" name="mo-2" type="checkbox">
-												<label for="mo-2" class="checkbox-custom-label search-review">
-													<span><i class="fa fa-star filled"></i></span>
-													<span><i class="fa fa-star filled"></i></span>
-													<span><i class="fa fa-star filled"></i></span>
-													<span><i class="fa fa-star filled"></i></span>
-													<span><i class="fa fa-star"></i></span>
-												</label>
-											</li>
-											<li>
-												<input id="mo-3" class="checkbox-custom" name="mo-3" type="checkbox">
-												<label for="mo-3" class="checkbox-custom-label search-review">
-													<span><i class="fa fa-star filled"></i></span>
-													<span><i class="fa fa-star filled"></i></span>
-													<span><i class="fa fa-star filled"></i></span>
-													<span><i class="fa fa-star"></i></span>
-													<span><i class="fa fa-star"></i></span>
-												</label>
-											</li>
-											<li>
-												<input id="mo-4" class="checkbox-custom" name="mo-4" type="checkbox">
-												<label for="mo-4" class="checkbox-custom-label search-review">
-													<span><i class="fa fa-star filled"></i></span>
-													<span><i class="fa fa-star filled"></i></span>
-													<span><i class="fa fa-star"></i></span>
-													<span><i class="fa fa-star"></i></span>
-													<span><i class="fa fa-star"></i></span>
-												</label>
-											</li>
-											<li>
-												<input id="mo-5" class="checkbox-custom" name="mo-5" type="checkbox">
-												<label for="mo-5" class="checkbox-custom-label search-review">
-													<span><i class="fa fa-star filled"></i></span>
-													<span><i class="fa fa-star"></i></span>
-													<span><i class="fa fa-star"></i></span>
-													<span><i class="fa fa-star"></i></span>
-													<span><i class="fa fa-star"></i></span>
-												</label>
-											</li>
-											
-										</ul>
-									
+									<div class="range-slider mt-5">
+										<label>Show apartments with</label>
+										<div class="distance-title">a rating of at least <span class="theme-cl"></span> stars</div>
+										<input id="guest-apt-sidebar-rating" class="distance-radius rangeslider--horizontal" type="range" min="1" max="5" step="1" value="1" data-title="Rating of at least">
 									</div>
 									
-									<div class="ameneties-features mt-3">
-										<label>Lanhuages</label>
-										<ul class="no-ul-list">
-											<li>
-												<input id="ml-1" class="checkbox-custom" name="ml-1" type="checkbox">
-												<label for="ml-1" class="checkbox-custom-label">English</label>
-											</li>
-											<li>
-												<input id="ml-2" class="checkbox-custom" name="ml-2" type="checkbox">
-												<label for="ml-2" class="checkbox-custom-label">Fench</label>
-											</li>
-											<li>
-												<input id="ml-3" class="checkbox-custom" name="ml-3" type="checkbox">
-												<label for="ml-3" class="checkbox-custom-label">Spanish</label>
-											</li>
-											
-										</ul>
-									
-									</div>
-							
+									<center>
+									<a class="btn btn-theme" href="javascript:void(0)" onclick="search()">SUBMIT</a>
+							        </center>
 								</div>
 							</div>
 						</div>

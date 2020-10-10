@@ -31,11 +31,11 @@ $uu = url('apartment')."?xf=".$a['url'];
 $lu = url('like')."?xf=".$a['url'];
 $bu = url('bookmark')."?xf=".$a['url'];
 $tc = $adata['max_adults'];
-$location = $address['city'].", ".$address['state'];
+$location = ucwords($address['city'].", ".$address['state']);
 $stars = $a['rating'];
 $amount = $adata['amount'];
 $description = $adata['description'];
-			    
+$rr = count($apartments) == 1 ? "Result" : "Results";
 	?>
 		  
 		  temp = {
@@ -45,12 +45,13 @@ $description = $adata['description'];
 			   lu: "{{$lu}}",
 			   bu: "{{$bu}}",
 			   location: "{{$location}}",
-			   description: `{{$description}}`,
+			   description: `{!! $description !!}`,
 			   stars: "{{$stars}}",
 			   facilities: "{{json_encode($facilities,JSON_HEX_APOS|JSON_HEX_QUOT) }}".replace(/&quot;/g, '\"'),
 			   reviews: "{{count($a['reviews'])}}",
 			   amount: "{{number_format($amount,2)}}",
 			   img: "{{$img}}",
+			   status: "{{$a['status']}}",
 		   };
 		   apartments.push(temp);
 	<?php
@@ -76,7 +77,7 @@ $description = $adata['description'];
 							
 								<div class="col-lg-12 col-md-12 col-sm-12">
 									<div class="shorting-wrap">
-										<h5 class="shorting-title">507 Results</h5>
+										<h5 class="shorting-title">{{count($apartments)}} {{$rr}}</h5>
 										<div class="shorting-right">
 											<label>Short By:</label>
 											<div class="dropdown show">

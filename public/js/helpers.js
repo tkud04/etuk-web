@@ -522,18 +522,20 @@ const updateApartment = (dt) => {
 const aptShowGrid = () => {
 	viewType = "grid";
 	perPage = 8;
-	$('apartments-list').hide();
-	$('apartments-grid').fadeIn();
+	//$('apartments-list').hide();
+	//$('apartments-grid').fadeIn();
+	showPage(page,true);
 }
 
 const aptShowList = () => {
 	viewType = "list";
 	perPage = 5;
-	$('apartments-grid').hide();
-	$('apartments-list').fadeIn();
+	//$('apartments-grid').hide();
+	//$('apartments-list').fadeIn();
+	showPage(page,true);
 }
 
-const showPage = (p) => {
+const showPage = (p,changeViewType=false) => {
 	//console.log("arr length: ",productsLength);
 	//console.log("show per page: ",perPage);
 	$('#pagination-row').hide();
@@ -548,12 +550,12 @@ const showPage = (p) => {
 		end = p * perPage;
 	}
 	
-	console.log(`start: ${start}, end: ${end},page: ${page}, p: ${p}`);
+	console.log(`start: ${start}, end: ${end},page: ${page}, p: ${p}, changeViewType: ${changeViewType}`);
 
 	let hh = "", cids = [];
     
 	
-	if(page != p){
+	if(page != p || changeViewType){
 		$('#apartments').hide();
         $('#apartments').html(``);
 		for(let i = start; i < end; i++){
@@ -579,7 +581,8 @@ const showPage = (p) => {
 			starsText += "<i class='fa fa-star'></i>";
 		}
  	
-		hh = `
+	    if(viewType == "grid"){
+			hh = `
 				    <!-- Single Place -->
 								<div class="col-lg-6 col-md-6 col-sm-12">
 									<div class="singlePlaceitem">
@@ -595,7 +598,7 @@ const showPage = (p) => {
 													${starsText}
 													<span>${a.reviews} Reviews</span>
 												</div>
-												<h4 class="title"><a href="${a.uu}">Atlantis Seaside Hotel</a></h4>
+												<h4 class="title"><a href="${a.uu}">${nnn}</a></h4>
 												<span class="placeDetail-detail"><i class="ti-location-pin"></i>${a.location}</span>
 											</div>
 											<div class="pricedetail-box">
@@ -605,7 +608,57 @@ const showPage = (p) => {
 										</div>
 									</div>
 								</div>
-		`;
+		   `;
+		}
+		else if(viewType == "list"){
+			hh = `
+			    <!-- Single List -->
+								<div class="book_list_box popular_item">
+									<div class="row no-gutters">
+										
+										<div class="col-lg-4 col-md-4">
+											<figure>
+												<a href="${a.uu}"><img src="${a.img}" class="img-responsive" alt=""></a>
+											</figure>
+										</div>
+										
+										<div class="col-lg-6 col-md-6 pl-5 side-br">
+											<div class="book_list_header">
+												<div class="view-ratting">
+													${starsText}
+												</div>
+												<h4 class="book_list_title"><a href="${a.uu}">${a.name}</a></h4>
+												<span class="location"><i class="ti-location-pin"></i>${a.location}</span>
+											</div>
+											<div class="book_list_description">
+												<p>${a.description.substr(0,100)}..</p>
+											</div>
+											<div class="book_list_rate">
+												<h5 class="over_all_rate high"><span class="rating_status">${a.stars}</span>Very Good<small>(${a.reviews} Reviews)</small></h5>
+											</div>
+											<div class="book_list_offers">
+												<ul>
+													<li><i class="ti-location-pin"></i>Free WiFi</li>
+													<li><i class="ti-car"></i>Parking</li>
+													<li><i class="ti-cup"></i>Breakfast</li>
+												</ul>
+											</div>
+										</div>
+										
+										<div class="col-lg-2 col-md-2 padd-l-0">
+											<div class="book_list_foot">
+												<span class="off-status theme-cl">${a.status}</span>
+												<h4 class="book_list_price">&#8358;${a.amount}</h4>
+												<span class="booking-time">per night</span>
+												<a href="${a.uu}" class="book_list_btn btn-theme">View</a>
+											</div>
+										</div>
+										
+									</div>
+								</div>
+			`;
+		}
+		
 		$('#apartments').append(hh);
 	  }
 	}
@@ -650,6 +703,11 @@ const changePerPage = () =>{
 const isMobile = () =>{
 	let isMobile = window.matchMedia("only screen and (max-width: 760px)").matches;
 	return isMobile;
+}
+
+
+const search = () => {
+	console.log("searching apartments..");
 }
 /**********************************************************************************************************************
                                                      OLD METHODS

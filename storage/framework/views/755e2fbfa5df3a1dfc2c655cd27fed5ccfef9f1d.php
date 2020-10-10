@@ -31,11 +31,11 @@ $uu = url('apartment')."?xf=".$a['url'];
 $lu = url('like')."?xf=".$a['url'];
 $bu = url('bookmark')."?xf=".$a['url'];
 $tc = $adata['max_adults'];
-$location = $address['city'].", ".$address['state'];
+$location = ucwords($address['city'].", ".$address['state']);
 $stars = $a['rating'];
 $amount = $adata['amount'];
 $description = $adata['description'];
-			    
+$rr = count($apartments) == 1 ? "Result" : "Results";
 	?>
 		  
 		  temp = {
@@ -45,12 +45,13 @@ $description = $adata['description'];
 			   lu: "<?php echo e($lu); ?>",
 			   bu: "<?php echo e($bu); ?>",
 			   location: "<?php echo e($location); ?>",
-			   description: `<?php echo e($description); ?>`,
+			   description: `<?php echo $description; ?>`,
 			   stars: "<?php echo e($stars); ?>",
 			   facilities: "<?php echo e(json_encode($facilities,JSON_HEX_APOS|JSON_HEX_QUOT)); ?>".replace(/&quot;/g, '\"'),
 			   reviews: "<?php echo e(count($a['reviews'])); ?>",
 			   amount: "<?php echo e(number_format($amount,2)); ?>",
 			   img: "<?php echo e($img); ?>",
+			   status: "<?php echo e($a['status']); ?>",
 		   };
 		   apartments.push(temp);
 	<?php
@@ -76,7 +77,7 @@ $description = $adata['description'];
 							
 								<div class="col-lg-12 col-md-12 col-sm-12">
 									<div class="shorting-wrap">
-										<h5 class="shorting-title">507 Results</h5>
+										<h5 class="shorting-title"><?php echo e(count($apartments)); ?> <?php echo e($rr); ?></h5>
 										<div class="shorting-right">
 											<label>Short By:</label>
 											<div class="dropdown show">

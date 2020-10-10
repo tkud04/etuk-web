@@ -323,11 +323,13 @@ class MainController extends Controller {
 		    $plugins = $this->helpers->getPlugins();
 		
 		    $apartments = $this->helpers->getApartments(null);
-			#dd($apartments);
+			$services = $this->helpers->getServices();
+			$states = $this->helpers->states;
+			#dd($services);
 		       shuffle($ads);
 		       $ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
         
-    	       return view("apartments",compact(['user','cart','c','ad','apartments','signals','plugins']));		
+    	       return view("apartments",compact(['user','cart','c','ad','apartments','services','states','signals','plugins']));		
     }
 
 	/**
