@@ -426,11 +426,23 @@ $(document).ready(function() {
 	
 	
 	//APARTMENTS
-	$('#apgartments-loading').load(e => {
+	$('#guest-apt-sidebar-submit').click(e => {
 		e.preventDefault();
-		setTimeout(() => {
-			console.log("loading more");
-		},3000);
+		let dt = {}, validation = true;
+		
+		if(validation){
+			  Swal.fire({
+			 icon: 'error',
+             title: "Please fill all the required fields"
+           })
+		}
+		else{
+			dt = {};
+			search(dt);
+		}
+			
 	});
+	
+	
 	
 });

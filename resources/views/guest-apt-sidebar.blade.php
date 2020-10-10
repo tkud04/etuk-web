@@ -65,7 +65,7 @@
 									</div>
 									
 									<center>
-									<a class="btn btn-theme" href="javascript:void(0)" onclick="search()">SUBMIT</a>
+									<a class="btn btn-theme" href="javascript:void(0)" id="guest-apt-sidebar-submit">SUBMIT</a>
 							        </center>
 								</div>
 							</div>
