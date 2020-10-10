@@ -631,7 +631,7 @@ const showPage = (p,changeViewType=false) => {
 												<span class="location"><i class="ti-location-pin"></i>${a.location}</span>
 											</div>
 											<div class="book_list_description">
-												<p>${a.description.substr(0,100)}..</p>
+												<p>${a.description}</p>
 											</div>
 											<div class="book_list_rate">
 												<h5 class="over_all_rate high"><span class="rating_status">${a.stars}</span>Very Good<small>(${a.reviews} Reviews)</small></h5>
