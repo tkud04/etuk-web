@@ -13,7 +13,7 @@ $subtitle = "List of available apartments on ".date("jS F, Y");
 @section('content')
 @include('banner-2',['title' => $title,'subtitle' => $subtitle])
 <script>
- let page = 1, perPage = 8, apartments = [], viewType = "grid", apartmentsLength = 0;
+ let page = 0, perPage = 8, apartments = [], viewType = "grid", apartmentsLength = 0;
  
   <?php
 		   foreach($apartments as $a)
@@ -60,7 +60,7 @@ $description = $adata['description'];
  
   $(document).ready(() => {
 	  $('#apartments-loading').hide();
-	  console.log("apartments: ",apartments);
+	  //console.log("apartments: ",apartments);
       apartmentsLength = apartments.length;
       showPage(1);
   });
@@ -122,7 +122,7 @@ $description = $adata['description'];
 					                   for($i = 0; $i < $pages; $i++)
 						                {
 					                  ?>
-									  <a class="btn btn-info" onclick="showNextPage({{$i+1}});">{{$i+1}}</a>
+									  <a class="btn btn-info" onclick="showPage({{$i+1}});">{{$i+1}}</a>
 									   <?php
 						                }
 						               ?>

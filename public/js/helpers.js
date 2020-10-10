@@ -548,11 +548,15 @@ const showPage = (p) => {
 		end = p * perPage;
 	}
 	
-	console.log(`start: ${start}, end: ${end}`);
+	console.log(`start: ${start}, end: ${end},page: ${page}, p: ${p}`);
 
 	let hh = "", cids = [];
-
-	for(let i = start; i < end; i++){
+    
+	
+	if(page != p){
+		$('#apartments').hide();
+        $('#apartments').html(``);
+		for(let i = start; i < end; i++){
 		if(i < apartmentsLength)
 		{
 		let a = apartments[i];
@@ -606,26 +610,19 @@ const showPage = (p) => {
 	  }
 	}
 	
-	/**
-	//Pagination
-	$('ul.cd-pagination').html("");
-	let pages = productsLength < perPage ? 1 : Math.ceil(productsLength / perPage);
-	$('ul.cd-pagination').append(` <li class="button"><a href="javascript:void(0)" onclick="showPreviousPage();">Prev</a> </li>`);
-	for(let x = 0; x < pages; x++){
-		$('ul.cd-pagination').append(`<li><a href="javascript:void(0)" onclick="showPage(${x+1});">${x+1}</a> </li>`);
-	}
-	$('ul.cd-pagination').append(`<li class="button"><a href="javascript:void(0)" onclick="showNextPage();">Next</a></li>`);
-	
 	page = p;
-	$('#pagination-row').fadeIn();
+	$('#apartments').fadeIn();
 	//fbq('track', 'ViewContent', {content_ids: cids, currency: "NGN", content_type: 'product'});
-	**/
+	
+	}
+	
+	
 }
 
 const showPreviousPage = () => {
 	let sp = apartmentsLength < perPage ? 1 : Math.ceil(apartmentsLength / perPage), pp = page - 1;
 	//console.log(`page: ${page},sp: ${sp},pp: ${pp}`);
-	
+	if(pp < 1) pp = 1;
 	if(sp > pp && pp > 0){
 		showPage(pp);
 	}
@@ -635,6 +632,7 @@ const showPreviousPage = () => {
 const showNextPage = () => {
 
 		let sp = apartmentsLength < perPage ? 1 : Math.ceil(apartmentsLength / perPage), pp = page - 1;
+		if(pp < 1) pp = 1;
 	console.log(`page: ${page},sp: ${sp},pp: ${pp}`);
 	
 	if(sp >= pp){

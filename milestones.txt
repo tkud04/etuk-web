@@ -17,7 +17,6 @@ Dashboard
 Apartment mode changed when booked (available/occupied)
 
 Guest
-Apartments
 Search apartments
 View apartment(video tour,map)
 Add to cart

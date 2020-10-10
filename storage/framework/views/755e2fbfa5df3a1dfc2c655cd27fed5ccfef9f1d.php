@@ -13,7 +13,7 @@ $subtitle = "List of available apartments on ".date("jS F, Y");
 <?php $__env->startSection('content'); ?>
 <?php echo $__env->make('banner-2',['title' => $title,'subtitle' => $subtitle], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <script>
- let page = 1, perPage = 8, apartments = [], viewType = "grid", apartmentsLength = 0;
+ let page = 0, perPage = 8, apartments = [], viewType = "grid", apartmentsLength = 0;
  
   <?php
 		   foreach($apartments as $a)
@@ -60,7 +60,7 @@ $description = $adata['description'];
  
   $(document).ready(() => {
 	  $('#apartments-loading').hide();
-	  console.log("apartments: ",apartments);
+	  //console.log("apartments: ",apartments);
       apartmentsLength = apartments.length;
       showPage(1);
   });
@@ -122,7 +122,7 @@ $description = $adata['description'];
 					                   for($i = 0; $i < $pages; $i++)
 						                {
 					                  ?>
-									  <a class="btn btn-info" onclick="showNextPage(<?php echo e($i+1); ?>);"><?php echo e($i+1); ?></a>
+									  <a class="btn btn-info" onclick="showPage(<?php echo e($i+1); ?>);"><?php echo e($i+1); ?></a>
 									   <?php
 						                }
 						               ?>
