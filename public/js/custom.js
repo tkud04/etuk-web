@@ -393,7 +393,6 @@ $(function() {
 	  ]
 	});
 	
-	console.log("lists-slide owl");
 	$('#lists-slide').owlCarousel({
 		loop:true,
 		margin:20,

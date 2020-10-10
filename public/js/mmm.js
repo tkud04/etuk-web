@@ -428,8 +428,12 @@ $(document).ready(function() {
 	//APARTMENTS
 	$('#guest-apt-sidebar-submit').click(e => {
 		e.preventDefault();
-		let dt = {}, validation = true;
+		let dt = {}, city = $('#guest-apt-sidebar-city').val(), state = $('#guest-apt-sidebar-state').val(),
+ 		 validation = true,  dates = $('#guest-apt-sidebar-dates').val(),
+ 		 facilities = $('input.guest-apt-sidebar-facility:checked'),  rating = $('#guest-apt-sidebar-rating').val();
 		
+		console.log(facilities);
+		validation = (facilities.length < 1 || city == "" || state == "" || dates == "" || rating == "");
 		if(validation){
 			  Swal.fire({
 			 icon: 'error',
@@ -437,7 +441,19 @@ $(document).ready(function() {
            })
 		}
 		else{
-			dt = {};
+			let ff = [];
+			for(let i = 0; i < facilities.length; i++){
+				let f = facilities[i];
+				console.log(f);
+				ff.push($(f).attr('data-tag'));
+			}
+			dt = {
+				city: city,
+				state: state,
+				dates: dates,
+				facilities: ff,
+				rating: rating
+			};
 			search(dt);
 		}
 			

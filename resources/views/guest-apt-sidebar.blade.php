@@ -27,7 +27,7 @@
 									
 									<div class="form-group">
 										<div class="input-with-icon">
-											<input type="text" class="form-control check-in-out" name="dates" value="01/01/2018 - 01/15/2018" />
+											<input id="guest-apt-sidebar-dates" type="text" class="form-control check-in-out" name="dates" value="{{date('m/d/Y')}} - 01/15/2018" />
 											<i class="ti-calendar"></i>
 										</div>
 									</div>
@@ -48,7 +48,7 @@
 											{
 										   ?>
 											<li>
-												<input id="guest-apt-sidebar-{{$s['tag']}}" class="checkbox-custom" name="guest-apt-sidebar-{{$s['tag']}}" type="checkbox">
+												<input id="guest-apt-sidebar-{{$s['tag']}}" class="guest-apt-sidebar-facility" data-tag="{{$s['tag']}}" class="checkbox-custom" name="guest-apt-sidebar-{{$s['tag']}}" type="checkbox">
 												<label for="guest-apt-sidebar-{{$s['tag']}}" class="checkbox-custom-label">{{ucwords($s['name'])}}</label>
 											</li>
 											<?php

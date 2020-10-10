@@ -562,7 +562,7 @@ const showPage = (p,changeViewType=false) => {
 		if(i < apartmentsLength)
 		{
 		let a = apartments[i];
-	    console.log(a);
+	    //console.log(a);
 	
 		cids.push(a.apartment_id);
 		let nnn = a.name;
@@ -706,8 +706,8 @@ const isMobile = () =>{
 }
 
 
-const search = () => {
-	console.log("searching apartments..");
+const search = dt => {
+	console.log("dt: ",dt);
 }
 /**********************************************************************************************************************
                                                      OLD METHODS
