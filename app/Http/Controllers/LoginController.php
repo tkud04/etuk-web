@@ -164,9 +164,14 @@ class LoginController extends Controller {
 			{
 				$user =  $this->helpers->createUser($dt);
 				Auth::login($user);
+				$ret = ['status' => "ok",'message' => "Signup successful"];			
+			}
+			else
+			{
+				$ret = ['status' => "error",'message' => "duplicate"];			
 			}
             
-            $ret = ['status' => "ok",'message' => "Signup successful"];			
+            
           }	 
 		 }
 		
