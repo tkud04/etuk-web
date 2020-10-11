@@ -299,7 +299,7 @@ class MainController extends Controller {
     }
 
 	/**
-	 * Show the apartment.
+	 * Show a list of apartments.
 	 *
 	 * @return Response
 	 */
@@ -332,6 +332,41 @@ class MainController extends Controller {
     	       return view("apartments",compact(['user','cart','c','ad','apartments','services','states','signals','plugins']));		
     }
 
+	/**
+	 * Switch user mode (host/guest).
+	 *
+	 * @return Response
+	 */
+	public function getSearch(Request $request)
+    {
+		$user = null;
+		if(Auth::check())
+		{
+			$user = Auth::user();
+		}
+		else
+		{
+			return redirect()->intended('/');
+		}
+		
+		$req = $request->all();
+		
+		$validator = Validator::make($req, [
+                             'dt' => 'required'
+         ]);
+         
+         if($validator->fails())
+         {
+             return redirect()->back();
+         }
+		 else
+		 {
+			$results = $this->helpers->search($req['dt']);
+			 session()->flash("switch-mode-status","ok");
+			 return redirect()->intended('/');
+		 }
+    }
+	
 	/**
 	 * Switch user mode (host/guest).
 	 *

@@ -63,7 +63,9 @@
 										<div class="distance-title">a rating of at least <span class="theme-cl"></span> stars</div>
 										<input id="guest-apt-sidebar-rating" class="distance-radius rangeslider--horizontal" type="range" min="1" max="5" step="1" value="1" data-title="Rating of at least">
 									</div>
-									
+									<form method="get" id="guest-apt-sidebar-form" action="search">
+									  <input type="hidden" name="dt" id="guest-apt-sidebar-dt">
+									</form>
 									<center>
 									<a class="btn btn-theme" href="javascript:void(0)" id="guest-apt-sidebar-submit">SUBMIT</a>
 							        </center>

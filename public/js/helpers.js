@@ -708,6 +708,8 @@ const isMobile = () =>{
 
 const search = dt => {
 	console.log("dt: ",dt);
+	$('#guest-apt-sidebar-dt').val(JSON.stringify(dt));
+	$('#guest-apt-sidebar-form').submit();
 }
 /**********************************************************************************************************************
                                                      OLD METHODS

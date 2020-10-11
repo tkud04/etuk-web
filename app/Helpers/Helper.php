@@ -1516,6 +1516,65 @@ function updateApartment($data)
 					]);
 				}
 		   }
+		   
+		   
+		   function search($data)
+		   {
+			   $dt = json_decode($data);
+			 #dd($dt);
+			 $city = $dt->city;
+			 $state = $dt->state;
+			 $rating = $dt->rating;
+			 $dates = $dt->dates;
+			 $facilities = $dt->facilities;
+			 
+			 $byAddress = ApartmentAddresses::where('city',"LIKE","%$city%")
+			                  ->orWhere('state',"LIKE","%$state%")->get();
+							  
+			 //$byRating = Apartments::where('rating',"LIKE","%$rating%")->get();
+			 $byFacilities = ApartmentFacilities::whereIn('facility',$facilities)->get();
+			 
+			 //collect all
+			 $ret = [];
+			 if($byAddress != null)
+			 {
+				 foreach($byAddress as $ba)
+				 {
+					 array_push($ret,$ba->apartment_id);
+				 }
+			 }
+			 
+			 if($byFacilities != null)
+			 {
+				 foreach($byFacilities as $bf)
+				 {
+					 array_push($ret,$bf->apartment_id);
+				 }
+			 }
+			 
+			 /**
+			 if($byRating != null)
+			 {
+				 foreach($byRating as $br)
+				 {
+					 array_push($ret,$br->apartment_id);
+				 }
+			 }
+			 **/
+			 $ret = array_unique($ret);
+			 $ratings = [];
+			 
+			 
+			 //Get the reviews of each result and filter by rating
+			 foreach($ret as $r)
+			 {
+				 $reviews = $this->getReviews($r);
+				 $rating = $this->getRating($reviews);
+				 $ratings[$r] = $rating;
+			 }
+			 dd($ratings);
+			 
+		   }
 
 
 
@@ -2618,42 +2677,7 @@ function updateApartment($data)
 			   }
 		   }	
 
-    function search($q)
-		   {
-			   $ret = [];
-			   $uu = null;
-			   
-			   $results1 = Products::where('sku',"LIKE","%".$q."%")->get();
-			   $results2 = ProductData::where('description',"LIKE","%".$q."%")
-			                          ->orWhere('amount',"LIKE","%".$q."%")
-			                          ->orWhere('in_stock',"LIKE","%".$q."%")
-			                          ->orWhere('category',"LIKE","%".$q."%")->get();
-			   
-			   if(!is_null($results1))
-			   {
-				   foreach($results1 as $r1)
-				   {
-					   $temp = [];
-					   $temp['product'] = $this->getProduct($r1->sku);
-					   $temp['rating'] = $this->getRating($r1->sku);
-					   array_push($ret,$temp);
-				   }
-			   }
-			   
-			   if(!is_null($results2))
-			   {
-				   foreach($results2 as $r2)
-				   {
-					   $temp = [];
-					   $temp['product'] = $this->getProduct($r2->sku);
-					    $temp['rating'] = $this->getRating($r2->sku);
-					   array_push($ret,$temp);
-				   }
-			   }
-
-			   //dd($ret);
-			   return $ret;
-		   }
+   
 
     function confirmPayment($u,$data)
 	{
