@@ -1647,7 +1647,7 @@ function createSocial($data)
 		   
 		   function oauth($dt)
 		   {
-			   dd($dt);
+			   #dd($dt);
 			   /**
 ^ array:5 [▼
   "name" => "Tobi Kudayisi"
@@ -1668,7 +1668,6 @@ function createSocial($data)
 					   //user exists. Log user in
 					   $u = User::where('email',$dt['email'])->first();
 					   Auth::login($u);
-					   
 				   }
 				   else
 				   {
