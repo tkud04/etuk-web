@@ -26,7 +26,7 @@ Route::get('hello', 'LoginController@getHello');
 Route::post('hello', 'LoginController@postHello');
 Route::get('bye', 'LoginController@getBye');
 Route::get('oauth', 'LoginController@getOauth');
-Route::get('{type}/rd', 'LoginController@getOauthRedirect');
+Route::get('{type}/oauth', 'LoginController@getOauthRedirect');
 
 
 
