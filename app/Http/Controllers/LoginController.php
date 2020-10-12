@@ -257,8 +257,9 @@ class LoginController extends Controller {
 		}
 		
 		 $req = $request->all();
-		 dd($req);
-		  #$user = Socialite::driver('github')->user();
+		  $user = Socialite::driver('twitter')->user();
+		 dd($user);
+		 
 		 if(isset($req['type']))
 		 {
 			 return Socialite::driver('twitter')->redirect();
