@@ -1671,7 +1671,22 @@ function createSocial($data)
 				   }
 				   else
 				   {
-					   
+					   //user does not exist. create new user
+            $nn = explode(" ",$dt['name']);
+            $dt['fname'] = $nn[0];
+            $dt['lname'] = $nn[1];
+            $dt['phone'] = "";
+            $dt['password'] = "";
+            $dt['role'] = "user";    
+            $dt['status'] = "enabled";           
+            $dt['mode'] = "guest";           
+            $dt['currency'] = "ngn";           
+            $dt['verified'] = "yes";
+            
+            $user = $this->helpers->createUser($dt);
+            
+            //set password for new user
+            
 				   }
 			   }
 		   }
