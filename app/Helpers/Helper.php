@@ -48,6 +48,7 @@ class Helper implements HelperContract
 					 "ri-status" => "Image deleted.",
 					 "delete-apartment-status" => "Apartment removed.",
 					 "update-apartment-status" => "Apartment information updated.",
+					 "oauth-sp-status" => "Welcome to Etuk NG! You can now use your new account.",
 					 "invalid-apartment-id-status-error" => "Apartment not found.",
 					 "oauth-status-error" => "Social login failed, please try again.",
                      ],
@@ -1672,8 +1673,7 @@ function createSocial($data)
 					   $u = User::where('email',$dt['email'])->first();
 					   Auth::login($u);
 					    $ret = ['status' => "ok",
-					           'message' => "existing-user",
-							   'user' => $uu
+					           'message' => "existing-user"
 							  ];
 				   }
 				   else
