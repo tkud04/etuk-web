@@ -257,17 +257,25 @@ class LoginController extends Controller {
 		}
 		
 		 $req = $request->all();
-		  $user = Socialite::driver('twitter')->user();
-		 dd($user);
+		  $twitterUser = Socialite::driver('twitter')->user();
+		 dd($twitterUser);
 		 
-		 if(isset($req['type']))
+		 if($twitterUser != null)
 		 {
-			 return Socialite::driver('twitter')->redirect();
+			 $dt = [
+			   'name' => $twitterUser->name,
+			   'email' => $twitterUser->email,
+			   'img' => $twitterUser->avatar,
+			 ];
+			 
+			 $this->helpers->oauth($dt);
 		 }
 		 else
 		 {
-			return redirect()->intended("/"); 
+			session()->flash("oauth-status-error","ok");
 		 }
+		 
+		 return redirect()->intended("/"); 
 		
     }/**
 	 * Show the application welcome screen to the user.

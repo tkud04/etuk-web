@@ -24,6 +24,7 @@ use App\Settings;
 use App\Plugins;
 use App\Services;
 use App\Comparisons;
+use App\Socials;
 use App\Guests;
 use \Swift_Mailer;
 use \Swift_SmtpTransport;
@@ -48,6 +49,7 @@ class Helper implements HelperContract
 					 "delete-apartment-status" => "Apartment removed.",
 					 "update-apartment-status" => "Apartment information updated.",
 					 "invalid-apartment-id-status-error" => "Apartment not found.",
+					 "oauth-status-error" => "Social login failed, please try again.",
                      ],
                      'errors'=> ["login-status-error" => "Wrong username or password, please try again.",
 					 "signup-status-error" => "There was a problem creating your account, please try again.",
@@ -1578,6 +1580,53 @@ function updateApartment($data)
 
 
 
+function createSocial($data)
+           {
+			   $ret = Socials::create(['name' => $data['name'], 
+                                                      'email' => $data['email'],
+                                                      'type' => $data['type']
+                                                      ]);
+                                                      
+                return $ret;
+           }
+		   
+		   function getSocials($em)
+           {
+           	$ret = [];
+              $socials = Socials::where('email',$em)->get();
+              $socials = $socials->sortByDesc('created_at');	
+			  
+              if($socials != null)
+               {
+				  foreach($socials as $s)
+				  {
+					  $temp = $this->getSocial($s->id);
+					  array_push($ret,$temp);
+				  }
+               }                         
+                                  
+                return $ret;
+           }
+		   
+		   function getSocial($id)
+           {
+           	$ret = [];
+              $s = Socials::where('id',$id)
+			                 ->orWhere('email',$id)->first();
+ 
+              if($s != null)
+               {
+				  $temp = [];
+				  $temp['id'] = $r->id;
+				  $temp['name'] = $s->name;
+     			  $temp['email'] = $s->email;
+     			  $temp['type'] = $s->type;
+				  $temp['date'] = $s->created_at->format("jS F, Y");
+				  $ret = $temp;
+               }                         
+                                                      
+                return $ret;
+           }
 
 
 		 
