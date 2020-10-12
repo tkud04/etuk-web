@@ -361,9 +361,15 @@
 							</div>
 							<div class="modal-divider"><span>Or login via</span></div>
 							<div class="social-login mb-3">
+							<?php
+							$fbLogin = url('oauth-login')."?type=facebook";
+							$twLogin = url('oauth-login')."?type=twitter";
+							$gLogin = url('oauth-login')."?type=google";
+							?>
 								<ul>
-									<li><a href="javascript:void(0)" class="btn connect-fb"><i class="ti-facebook"></i>Facebook</a></li>
-									<li><a href="javascript:void(0)" class="btn connect-twitter"><i class="ti-twitter"></i>Twitter</a></li>
+									<li><a href="{{$fbLogin}}" class="btn connect-fb"><i class="ti-facebook"></i>Facebook</a></li>
+									<li><a href="{{$twLogin}}" class="btn connect-twitter"><i class="ti-twitter"></i>Twitter</a></li>
+									<li><a href="{{$gLogin}}" class="btn connect-google"><i class="ti-google"></i>Google</a></li>
 								</ul>
 							</div>
 							<div class="text-center">
@@ -458,14 +464,19 @@
 							</div>
 							<div class="modal-divider"><span>Or login via</span></div>
 							<div class="social-login mb-3">
+							<?php
+							$fbSignup = url('oauth')."?type=facebook";
+							$twSignup = url('oauth')."?type=twitter";
+							$gSignup = url('oauth')."?type=google";
+							?>
 								<ul>
 									<li><a href="javascript:void(0)" class="btn connect-fb"><i class="ti-facebook"></i>Facebook</a></li>
-									<li><a href="javascript:void(0)" class="btn connect-twitter"><i class="ti-twitter"></i>Twitter</a></li>
-									<li><a href="javascript:void(0)" class="btn connect-twitter"><i class="ti-google"></i>Google</a></li>
+									<li><a href="{{$twSignup}}" class="btn connect-twitter"><i class="ti-twitter"></i>Twitter</a></li>
+									<li><a href="{{$gSignup}}" class="btn connect-google"><i class="ti-google"></i>Google</a></li>
 								</ul>
 							</div>
 							<div class="text-center">
-								<p class="mt-5"><i class="ti-user mr-1"></i>Already Have An Account? <a href="javascript:void(0)" class="link">Log in</a></p>
+								<p class="mt-5"><i class="ti-user mr-1"></i>Already Have An Account? <a href="javascript:void(0)" class="link" data-toggle="modal" data-target="#login">Log in</a></p>
 							</div>
 						</div>
 					</div>

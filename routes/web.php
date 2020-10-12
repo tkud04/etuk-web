@@ -15,7 +15,7 @@ Route::get('/', 'MainController@getIndex');
 Route::get('temp', 'MainController@getTemp');
 Route::get('about', 'MainController@getAbout');
 
-
+//Authentication
 Route::get('signup', 'LoginController@getSignup');
 Route::post('signup', 'LoginController@postSignup');
 Route::get('forgot-password', 'LoginController@getForgotPassword');
@@ -25,6 +25,7 @@ Route::post('reset', 'LoginController@postPasswordReset');
 Route::get('hello', 'LoginController@getHello');
 Route::post('hello', 'LoginController@postHello');
 Route::get('bye', 'LoginController@getBye');
+Route::get('oauth', 'LoginController@getOauth');
 
 
 

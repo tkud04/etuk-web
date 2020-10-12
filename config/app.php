@@ -167,6 +167,7 @@ return [
 		Unicodeveloper\Paystack\PaystackServiceProvider::class,
 		Barryvdh\DomPDF\ServiceProvider::class,
         App\Providers\AgentServiceProvider::class, 
+        App\Providers\AgentServiceProvider::class, 
     ],
 
     /*

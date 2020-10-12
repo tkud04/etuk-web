@@ -10,6 +10,7 @@ use Session;
 use Validator; 
 use Carbon\Carbon; 
 use App\User;
+use Laravel\Socialite\Facades\Socialite;
 
 class LoginController extends Controller {
 
@@ -177,6 +178,70 @@ class LoginController extends Controller {
 		
         return json_encode($ret);
     }
+	
+	/**
+	 * Show the application welcome screen to the user.
+	 *
+	 * @return Response
+	 */
+	 
+    /**
+	 * Show the application welcome screen to the user.
+	 *
+	 * @return Response
+	 */
+	public function getOauth(Request $request)
+    {
+        $user = null;
+		$cart = [];
+		if(Auth::check())
+		{
+			return redirect()->intended('dashboard');
+		}
+		
+		 $req = $request->all();
+		 #dd($req);
+		 if(isset($req['type']))
+		 {
+			 $type = $req['type'];
+			 
+			 return Socialite::driver($type)->redirect();
+		 }
+		 else
+		 {
+			return redirect()->intended("/"); 
+		 }
+		
+    }
+	
+	/**
+	 * Show the application welcome screen to the user.
+	 *
+	 * @return Response
+	 */
+	public function getOauthRedirect(Request $request)
+    {
+        $user = null;
+		$cart = [];
+		if(Auth::check())
+		{
+			return redirect()->intended('dashboard');
+		}
+		
+		 $req = $request->all();
+		 dd($req);
+		  #$user = Socialite::driver('github')->user();
+		 if(isset($req['type']))
+		 {
+			 return Socialite::driver('twitter')->redirect();
+		 }
+		 else
+		 {
+			return redirect()->intended("/"); 
+		 }
+		
+    }
+
     
     public function getForgotPassword()
     {
