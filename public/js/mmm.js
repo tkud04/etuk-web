@@ -4,8 +4,12 @@
 
 $(document).ready(function() {
     "use strict";
-	hideInputErrors(["signup","login","forgot-password","reset-password"]);
-	hideElem(["#signup-loading","#signup-finish","#login-loading","#login-finish","#fp-loading","#fp-finish","#rp-loading","#rp-finish"]);
+	hideInputErrors(["signup","login","forgot-password","reset-password","oauth-sp"]);
+	hideElem(["#signup-loading","#signup-finish",
+	          "#login-loading","#login-finish",
+			  "#fp-loading","#fp-finish",
+			  "#rp-loading","#rp-finish"
+			  ]);
 	hideElem(["#add-apartment-side-2","#add-apartment-side-3"]);
 	hideElem(["#my-apartment-side-2","#my-apartment-side-3"]);
 	
@@ -123,6 +127,22 @@ $(document).ready(function() {
 		 rp({
 			 email: id
 		 });   
+	   }
+    });
+	
+	$("#osp-submit").click(e => {
+       e.preventDefault();
+	  
+       hideInputErrors("oauth-sp");	  
+      let p = $('#osp-pass').val(), p2 = $('#osp-pass2').val();
+		  
+		  
+	   if(p == "" || p2 == "" || p != p2){
+		   if(p == "") showElem('#osp-pass-error');
+		   if(p2 == "" || p != p2) showElem('#osp-pass-2-error');
+	   }
+	   else{
+		 $('#osp-form').submit();   
 	   }
     });
 	

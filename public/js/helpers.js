@@ -59,6 +59,10 @@ const hideInputErrors = type => {
 		  $('#rp-finish').html(`<b>Password reset!</b><p class='text-primary'>You can now <a href="#" data-toggle="modal" data-target="#login">sign in</a>.</p>`);
 	      ret = ['#rp-pass-error','#rp-pass-2-error','#fp-finish'];	 
 		break;
+		
+		case "oauth-sp":
+		  ret = ['#osp-pass-error','#osp-pass-2-error'];	 
+		break;
 	  }
 	  hideElem(ret);
 	}

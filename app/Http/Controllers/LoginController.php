@@ -241,7 +241,21 @@ class LoginController extends Controller {
 			   'img' => $socialUser->avatar,
 			   'token' => $socialUser->token,
 			 ];
-			 $this->helpers->oauth($dt);
+			$auth = $this->helpers->oauth($dt);
+			
+			if($auth['status'] == "ok")
+			{
+				if($auth['message'] == "new-user")
+				{
+					//set password for new user
+					$uu = $auth['user'];
+					return redirect()->intended('oauth-sp')."?xf=".$uu->email;
+				}
+			}
+			else
+			{
+				session()->flash("oauth-status-error","ok");
+			}
 		 }
 		 else
 		 {
@@ -251,6 +265,77 @@ class LoginController extends Controller {
 		 return redirect()->intended("/"); 
 		
     }
+	
+	 /**
+	 * Show the application welcome screen to the user.
+	 *
+	 * @return Response
+	 */
+	public function getOAuthSP(Request $request)
+    {
+       $user = null;
+		
+		if(Auth::check())
+		{
+			$user = Auth::user();
+			return redirect()->intended('/');
+		}
+		$signals = $this->helpers->signals;
+		$plugins = $this->helpers->getPlugins();
+		$cart = [];
+            $req = $request->all();
+			#dd($req);
+			if(isset($req['xf']))
+            {
+				$xf = $req['xf'];
+				return view("oauth-sp",compact(['cart','user','xf','return','plugins']));
+            }
+            
+            else
+            {
+            	return redirect()->intended('/');
+            }
+    }
+    
+    
+    /**
+     * Send username to the given user.
+     * @param  \Illuminate\Http\Request  $request
+     */
+    public function postOAuthSP(Request $request)
+    {
+    	$req = $request->all(); 
+        $validator = Validator::make($req, [
+                             'pass' => 'required|min:6|confirmed',
+                             'acsrf' => 'required'
+                  ]);
+                  
+        if($validator->fails())
+         {
+             $messages = $validator->messages();
+             //dd($messages);
+             
+             return redirect()->back()->withInput()->with('errors',$messages);
+         }
+         
+         else
+		 {
+         	$id = $req['acsrf'];
+             $ret = $req['pass'];
+
+            $user = User::where('email',$id)->first();
+			if($user != null)
+			{
+				$user->update(['password' => bcrypt($ret)]);
+                Auth::login($user);
+                session()->flash("oauth-sp-status","ok");                  
+			}
+            
+            return redirect()->intended('/');
+
+         }
+                  
+    }    
 
     
     public function getForgotPassword()

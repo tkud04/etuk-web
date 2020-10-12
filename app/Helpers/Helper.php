@@ -1657,7 +1657,10 @@ function createSocial($data)
   "token" => "ya29.a0AfH6SMCXQrY-b4cp1DDLepffsJKBg7tHsoGTuDuXCGguKJ-IAuK3ZGCu2bSJ3MByO2H4YQmLDJ1T2z2QC5JiyZkASGWN_xc1gI4UBv9TOu4S15w5r4XdusffD_xKdo8P-BCvzX0Ti5pa4zTVUl3YDcZvw ▶"
 ]
 			   **/
-			   
+			    $ret = ['status' => "error",
+					           'message' => "oauth"
+							  ];
+							  
 			   if($dt != null && count($dt) > 0)
 			   {
 				   //check if user exists in db
@@ -1668,27 +1671,36 @@ function createSocial($data)
 					   //user exists. Log user in
 					   $u = User::where('email',$dt['email'])->first();
 					   Auth::login($u);
+					    $ret = ['status' => "ok",
+					           'message' => "existing-user",
+							   'user' => $uu
+							  ];
 				   }
 				   else
 				   {
 					   //user does not exist. create new user
-            $nn = explode(" ",$dt['name']);
-            $dt['fname'] = $nn[0];
-            $dt['lname'] = $nn[1];
-            $dt['phone'] = "";
-            $dt['password'] = "";
-            $dt['role'] = "user";    
-            $dt['status'] = "enabled";           
-            $dt['mode'] = "guest";           
-            $dt['currency'] = "ngn";           
-            $dt['verified'] = "yes";
+                       $nn = explode(" ",$dt['name']);
+                       $dt['fname'] = $nn[0];
+                       $dt['lname'] = $nn[1];
+                       $dt['phone'] = "";
+                       $dt['password'] = "";
+                       $dt['role'] = "user";    
+                       $dt['status'] = "enabled";           
+                       $dt['mode'] = "guest";           
+                       $dt['currency'] = "ngn";           
+                       $dt['verified'] = "yes";
             
-            $user = $this->helpers->createUser($dt);
+                       $uu = $this->helpers->createUser($dt);
             
-            //set password for new user
-            
+                       //set password for new user
+                       $ret = ['status' => "ok",
+					           'message' => "new-user",
+							   'user' => $uu
+							  ];
 				   }
 			   }
+			   
+			   return $ret;
 		   }
 
 
