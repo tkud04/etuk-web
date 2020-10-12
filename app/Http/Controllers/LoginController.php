@@ -236,6 +236,7 @@ class LoginController extends Controller {
 		 {
 			 $dt = [
 			   'name' => $socialUser->name,
+			   'type' => $type,
 			   'email' => $socialUser->email,
 			   'img' => $socialUser->avatar,
 			   'token' => $socialUser->token,
