@@ -26,6 +26,9 @@ Route::get('hello', 'LoginController@getHello');
 Route::post('hello', 'LoginController@postHello');
 Route::get('bye', 'LoginController@getBye');
 Route::get('oauth', 'LoginController@getOauth');
+Route::get('facebook-oauth', 'LoginController@getFacebookOauth');
+Route::get('twitter-oauth', 'LoginController@getTwitterOauth');
+Route::get('google-oauth', 'LoginController@getGoogleOauth');
 
 
 

@@ -1,7 +1,7 @@
 Auth
 reset password (finish up later)
-sign up with Facebook and google (later)
-sign in with Facebook and google (later)
+sign up with Facebook, twitter and google (later)
+sign in with Facebook, twitter and google (later)
 edit profile
 Messages
 

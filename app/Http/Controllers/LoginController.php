@@ -219,7 +219,61 @@ class LoginController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function getOauthRedirect(Request $request)
+	public function getFacebookOAuth(Request $request)
+    {
+        $user = null;
+		$cart = [];
+		if(Auth::check())
+		{
+			return redirect()->intended('dashboard');
+		}
+		
+		 $req = $request->all();
+		 dd($req);
+		  #$user = Socialite::driver('github')->user();
+		 if(isset($req['type']))
+		 {
+			 return Socialite::driver('twitter')->redirect();
+		 }
+		 else
+		 {
+			return redirect()->intended("/"); 
+		 }
+		
+    }
+	
+	/**
+	 * Show the application welcome screen to the user.
+	 *
+	 * @return Response
+	 */
+	public function getTwitterOAuth(Request $request)
+    {
+        $user = null;
+		$cart = [];
+		if(Auth::check())
+		{
+			return redirect()->intended('dashboard');
+		}
+		
+		 $req = $request->all();
+		 dd($req);
+		  #$user = Socialite::driver('github')->user();
+		 if(isset($req['type']))
+		 {
+			 return Socialite::driver('twitter')->redirect();
+		 }
+		 else
+		 {
+			return redirect()->intended("/"); 
+		 }
+		
+    }/**
+	 * Show the application welcome screen to the user.
+	 *
+	 * @return Response
+	 */
+	public function getGoogleOAuth(Request $request)
     {
         $user = null;
 		$cart = [];
