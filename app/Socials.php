@@ -13,6 +13,6 @@ class Socials extends Model
      * @var array
      */
     protected $fillable = [
-        'id', 'type', 'email', 'name'
+        'id', 'type', 'email', 'name', 'token'
     ];
 }

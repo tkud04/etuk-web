@@ -1582,8 +1582,10 @@ function updateApartment($data)
 
 function createSocial($data)
            {
+			   $token = isset($data['token']) ? $data['token'] : "";
 			   $ret = Socials::create(['name' => $data['name'], 
                                                       'email' => $data['email'],
+                                                      'token' => $token,
                                                       'type' => $data['type']
                                                       ]);
                                                       
@@ -1619,6 +1621,7 @@ function createSocial($data)
 				  $temp = [];
 				  $temp['id'] = $r->id;
 				  $temp['name'] = $s->name;
+				  $temp['token'] = $s->token;
      			  $temp['email'] = $s->email;
      			  $temp['type'] = $s->type;
 				  $temp['date'] = $s->created_at->format("jS F, Y");
@@ -1627,6 +1630,17 @@ function createSocial($data)
                                                       
                 return $ret;
            }
+		   
+		   
+		   function oauth($dt)
+		   {
+			   dd($dt);
+			   switch($dt['type'])
+			   {
+				   case "twitter":
+				   break;
+			   }
+		   }
 
 
 		 

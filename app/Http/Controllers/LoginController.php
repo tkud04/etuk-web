@@ -258,7 +258,6 @@ class LoginController extends Controller {
 		
 		 $req = $request->all();
 		  $twitterUser = Socialite::driver('twitter')->user();
-		 dd($twitterUser);
 		 
 		 if($twitterUser != null)
 		 {
@@ -266,8 +265,8 @@ class LoginController extends Controller {
 			   'name' => $twitterUser->name,
 			   'email' => $twitterUser->email,
 			   'img' => $twitterUser->avatar,
+			   'token' => $twitterUser->token,
 			 ];
-			 
 			 $this->helpers->oauth($dt);
 		 }
 		 else
