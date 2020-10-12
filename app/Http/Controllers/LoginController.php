@@ -249,7 +249,7 @@ class LoginController extends Controller {
 				{
 					//set password for new user
 					$uu = $auth['user'];
-					return redirect()->intended('oauth-sp')."?xf=".$uu->email;
+					return redirect()->intended("oauth-sp?xf=".$uu->email);
 				}
 			}
 			else
