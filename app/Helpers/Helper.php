@@ -1635,6 +1635,15 @@ function createSocial($data)
 		   function oauth($dt)
 		   {
 			   dd($dt);
+			   /**
+			    ^ array:4 [▼
+  "name" => "Tobi Kudayisi"
+  "email" => "aquarius4tkud@yahoo.com"
+  "img" => "http://pbs.twimg.com/profile_images/1282987347869667329/5GY7kvlv_normal.jpg"
+  "token" => "44586913-THBgJB7bMaEvcboo5K0SqTObuU5pYYiToOuhpD8HR"
+]
+			   **/
+			   
 			   switch($dt['type'])
 			   {
 				   case "twitter":

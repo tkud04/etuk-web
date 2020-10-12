@@ -247,7 +247,7 @@ class LoginController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function getTwitterOAuth(Request $request)
+	public function getOAuthRedirect(Request $request,$type)
     {
         $user = null;
 		$cart = [];
