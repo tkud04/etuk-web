@@ -544,6 +544,19 @@ function isDuplicateUser($data)
 		return $ret;
 	}
 	
+	function isValidUser($data)
+	{
+		$ret = false;
+        $email = isset($data['email']) ? $data['email'] : "none";
+        $phone = isset($data['phone']) ? $data['phone'] : "none";
+		
+		$dup = User::where('email',$email)
+		           ->orWhere('phone',$phone)->get();
+
+       if(count($dup) == 1) $ret = true;		
+		return $ret;
+	}
+	
 	function getPasswordResetCode($user)
            {
            	$u = $user; 
@@ -1636,18 +1649,31 @@ function createSocial($data)
 		   {
 			   dd($dt);
 			   /**
-			    ^ array:4 [▼
+^ array:5 [▼
   "name" => "Tobi Kudayisi"
-  "email" => "aquarius4tkud@yahoo.com"
-  "img" => "http://pbs.twimg.com/profile_images/1282987347869667329/5GY7kvlv_normal.jpg"
-  "token" => "44586913-THBgJB7bMaEvcboo5K0SqTObuU5pYYiToOuhpD8HR"
+  "type" => "google"
+  "email" => "kudayisitobi@gmail.com"
+  "img" => "https://lh5.googleusercontent.com/-4mnp7uOSAcQ/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucnPGlNuP-mD3NeQ2yJaa3I_OzCrzQ/photo.jpg"
+  "token" => "ya29.a0AfH6SMCXQrY-b4cp1DDLepffsJKBg7tHsoGTuDuXCGguKJ-IAuK3ZGCu2bSJ3MByO2H4YQmLDJ1T2z2QC5JiyZkASGWN_xc1gI4UBv9TOu4S15w5r4XdusffD_xKdo8P-BCvzX0Ti5pa4zTVUl3YDcZvw ▶"
 ]
 			   **/
 			   
-			   switch($dt['type'])
+			   if($dt != null && count($dt) > 0)
 			   {
-				   case "twitter":
-				   break;
+				   //check if user exists in db
+				   $userExists = $this->isValidUser($dt);
+				   
+				   if($userExists)
+				   {
+					   //user exists. Log user in
+					   $u = User::where('email',$dt['email'])->first();
+					   Auth::login($u);
+					   
+				   }
+				   else
+				   {
+					   
+				   }
 			   }
 		   }
 
