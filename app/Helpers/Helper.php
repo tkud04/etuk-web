@@ -319,16 +319,20 @@ $subject = $data['subject'];
 		   
            function createUser($data)
            {
-           	$ret = User::create(['fname' => $data['fname'], 
+			   $avatar = isset($data['avatar']) ? $data['avatar'] : "";
+			   $pass = (isset($data['pass']) && $data['pass'] != "") ? bcrypt($data['pass']) : "";
+			   
+           	   $ret = User::create(['fname' => $data['fname'], 
                                                       'lname' => $data['lname'], 
                                                       'email' => $data['email'], 
                                                       'phone' => $data['phone'], 
                                                       'role' => $data['role'], 
                                                       'mode' => $data['mode'], 
+                                                      'avatar' => $avatar, 
                                                       'currency' => $data['currency'], 
                                                       'status' => $data['status'], 
                                                       'verified' => $data['verified'], 
-                                                      'password' => bcrypt($data['pass']), 
+                                                      'password' => $pass, 
                                                       ]);
                                                       
                 return $ret;
@@ -1683,20 +1687,34 @@ function createSocial($data)
                        $dt['fname'] = $nn[0];
                        $dt['lname'] = $nn[1];
                        $dt['phone'] = "";
-                       $dt['password'] = "";
+                       $dt['pass'] = "";
                        $dt['role'] = "user";    
                        $dt['status'] = "enabled";           
                        $dt['mode'] = "guest";           
                        $dt['currency'] = "ngn";           
                        $dt['verified'] = "yes";
+					   
+					   $s = [
+					          'name' => $dt['name'],
+					          'email' => $dt['email'],
+					          'type' => $dt['type'],
+					          'token' => $dt['token']
+					        ];
             
-                       $uu = $this->helpers->createUser($dt);
-            
+                       $uu = $this->createUser($dt);
+                       
+					   //set avatar 
+					   $uu->update(['avatar' => $dt['img']]);
+					   
+					   //save social profile						
+					   $s = $this->createSocial($dt);
+					   
                        //set password for new user
                        $ret = ['status' => "ok",
 					           'message' => "new-user",
 							   'user' => $uu
 							  ];
+						
 				   }
 			   }
 			   
