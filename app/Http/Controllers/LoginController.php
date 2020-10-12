@@ -278,7 +278,6 @@ class LoginController extends Controller {
 		if(Auth::check())
 		{
 			$user = Auth::user();
-			return redirect()->intended('/');
 		}
 		$signals = $this->helpers->signals;
 		$plugins = $this->helpers->getPlugins();
