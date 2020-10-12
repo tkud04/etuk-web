@@ -27,7 +27,8 @@ Route::post('hello', 'LoginController@postHello');
 Route::get('bye', 'LoginController@getBye');
 Route::get('oauth', 'LoginController@getOauth');
 Route::get('{type}/oauth', 'LoginController@getOauthRedirect');
-
+Route::get('oauth-sp', 'LoginController@getOAuthSP');
+Route::post('oauth-sp', 'LoginController@postOAuthSP');
 
 
 Route::get('dashboard', 'MainController@getDashboard');
