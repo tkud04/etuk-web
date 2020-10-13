@@ -231,7 +231,7 @@ class LoginController extends Controller {
 		
 		 $req = $request->all();
 		  $socialUser = Socialite::driver($type)->user();
-		 dd($socialUser);
+		 
 		 if($socialUser != null)
 		 {
 			 $dt = [
@@ -242,7 +242,7 @@ class LoginController extends Controller {
 			   'token' => $socialUser->token,
 			 ];
 			$auth = $this->helpers->oauth($dt);
-			
+			dd($auth);
 			if($auth['status'] == "ok")
 			{
 				if($auth['message'] == "new-user" || $auth['message'] == "existing-user-no-pass")
