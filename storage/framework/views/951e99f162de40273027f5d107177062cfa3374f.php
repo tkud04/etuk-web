@@ -22,7 +22,7 @@ $subtitle = "Who we are & What we strive for";
 					<div class="row align-items-center">
 
 						<div class="col-lg-6 col-md-6">
-							<img src="<?php echo e(asset('img/about.png')); ?>" class="img-fluid" alt="About Us" />
+							<img src="<?php echo e(asset('img/about.jpg')); ?>" class="img-fluid" alt="About Us" />
 						</div>
 
 						<div class="col-lg-6 col-md-6">
