@@ -1689,7 +1689,7 @@ function createSocial($data)
 						  
                             $ret = [
 							   'status' => "ok",
-					           'message' => " existing-user-no-pass",
+					           'message' => "existing-user-no-pass",
 							   'user' => $u
 							  ];
 					   }

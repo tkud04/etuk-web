@@ -249,7 +249,6 @@ class LoginController extends Controller {
 				{
 					//set password for new user
 					$uu = $auth['user'];
-					dd($uu);
 					return redirect()->intended("oauth-sp?xf=".$uu->email);
 				}
 			}
@@ -284,7 +283,7 @@ class LoginController extends Controller {
 		$plugins = $this->helpers->getPlugins();
 		$cart = [];
             $req = $request->all();
-			dd($req);
+			#dd($req);
 			if(isset($req['xf']))
             {
 				$xf = $req['xf'];
