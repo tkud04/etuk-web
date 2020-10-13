@@ -1683,10 +1683,25 @@ function createSocial($data)
 				   {
 					   //user exists. Log user in
 					   $u = User::where('email',$dt['email'])->first();
-					   Auth::login($u);
-					    $ret = ['status' => "ok",
-					           'message' => "existing-user"
+					   if($u->password == "")
+					   {
+						   //User signed up via social and has not set password
+						  
+                            $ret = [
+							   'status' => "ok",
+					           'message' => " existing-user-no-pass",
+							   'user' => $u
 							  ];
+					   }
+					   else
+					   {
+						  //User exists and has password. Sign user in 
+						  Auth::login($u);
+					      $ret = [
+						          'status' => "ok",
+					              'message' => "existing-user"
+							     ];  
+					   }
 				   }
 				   else
 				   {

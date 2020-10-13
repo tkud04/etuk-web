@@ -245,7 +245,7 @@ class LoginController extends Controller {
 			
 			if($auth['status'] == "ok")
 			{
-				if($auth['message'] == "new-user")
+				if($auth['message'] == "new-user" || $auth['message'] == "existing-user-no-pass")
 				{
 					//set password for new user
 					$uu = $auth['user'];
