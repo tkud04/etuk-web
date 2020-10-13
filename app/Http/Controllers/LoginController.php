@@ -231,7 +231,7 @@ class LoginController extends Controller {
 		
 		 $req = $request->all();
 		  $socialUser = Socialite::driver($type)->user();
-		 
+		 dd($socialUser);
 		 if($socialUser != null)
 		 {
 			 $dt = [
