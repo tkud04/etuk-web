@@ -39,7 +39,7 @@ $subtitle = "Set your account password here";
 												<span class="text-danger text-bold input-error" id="osp-pass2-error">This field is required and passwords must match</span>
 											</div>
 											<div class="form-group col-md-12">
-											  <button class="btn btn-theme" id="osp-form-submit">Submit</button>											 
+											  <button class="btn btn-theme" id="osp-submit">Submit</button>											 
 											</div>
 										</div>
 									</div>
