@@ -1668,9 +1668,17 @@ function createSocial($data)
 							  
 			   if($dt != null && count($dt) > 0)
 			   {
+				    $s = [
+					          'name' => $dt['name'],
+					          'email' => $dt['email'],
+					          'type' => $dt['type'],
+					          'token' => $dt['token']
+					        ];
+							
 				   //check if user exists in db
 				   $userExists = $this->isValidUser($dt);
-				   
+				   $social =  Socials::where('email',$dt['email'])
+				                           ->where('type',$dt['type'])->first();
 				   if($userExists)
 				   {
 					   //user exists. Log user in
@@ -1693,22 +1701,12 @@ function createSocial($data)
                        $dt['mode'] = "guest";           
                        $dt['currency'] = "ngn";           
                        $dt['verified'] = "yes";
-					   
-					   $s = [
-					          'name' => $dt['name'],
-					          'email' => $dt['email'],
-					          'type' => $dt['type'],
-					          'token' => $dt['token']
-					        ];
-            
+					  
                        $uu = $this->createUser($dt);
                        
 					   //set avatar 
 					   $uu->update(['avatar' => $dt['img']]);
-					   
-					   //save social profile						
-					   $s = $this->createSocial($dt);
-					   
+					  
                        //set password for new user
                        $ret = ['status' => "ok",
 					           'message' => "new-user",
@@ -1716,6 +1714,9 @@ function createSocial($data)
 							  ];
 						
 				   }
+				   
+				   //save social profile
+                   if($social == null) $s = $this->createSocial($s);
 			   }
 			   
 			   return $ret;
