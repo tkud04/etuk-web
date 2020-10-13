@@ -246,6 +246,41 @@ class MainController extends Controller {
     }
 	
 	/**
+	 * Delete a profile avatar.
+	 *
+	 * @return Response
+	 */
+	public function getDeleteAvatar(Request $request)
+    {
+		$user = null;
+		if(Auth::check())
+		{
+			$user = Auth::user();
+			
+			if($user->mode != "host")
+			{
+				session()->flash("valid-mode-status-error","ok");
+			    return redirect()->intended('/');
+			}
+		}
+		else
+		{
+			return redirect()->intended('/');
+		}
+		
+		$req = $request->all();
+		
+		if(isset($req['xf']))
+		{
+		    $this->helpers->deleteApartment($req['xf']);
+			session()->flash("delete-apartment-status","ok");
+		}
+		
+		return redirect()->intended('my-apartments');
+		
+    }
+	
+	/**
 	 * Show the apartment.
 	 *
 	 * @return Response

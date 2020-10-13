@@ -33,6 +33,7 @@ Route::post('oauth-sp', 'LoginController@postOAuthSP');
 
 Route::get('dashboard', 'MainController@getDashboard');
 Route::get('profile', 'MainController@getProfile');
+Route::get('delete-avatar', 'MainController@getDeleteAvatar');
 Route::post('profile', 'MainController@postProfile');
 Route::get('sm', 'MainController@getSwitchMode');
 

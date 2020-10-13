@@ -442,7 +442,7 @@ $subject = $data['subject'];
                        $temp['email'] = $u->email; 
                        $temp['role'] = $u->role; 
                        $temp['status'] = $u->status;
-					   $temp['avatar'] = $this->getCloudinaryMedia([[ 'url' => $u->avatar,'type' => $temp['avatar_type'] ]]);
+					   $temp['avatar'] = $this->getCloudinaryMedia([[ 'url' => $u->avatar,'type' => $u->avatar_type ]]);
                        $temp['verified'] = $u->verified; 
                        $temp['id'] = $u->id; 
                        $temp['date'] = $u->created_at->format("jS F, Y"); 
