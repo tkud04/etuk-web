@@ -252,25 +252,21 @@
 							</div>		
 							<div class="col-lg-3 col-md-4">
 								<div class="footer-widget">
-									<h4 class="widget-title">My Account</h4>
+									<h4 class="widget-title">Navigate</h4>
 									<ul class="footer-menu">
-										<li><a href="javascript:void(0)">Dashboard</a></li>
-										<li><a href="javascript:void(0)">Applications</a></li>
-										<li><a href="javascript:void(0)">Packages</a></li>
-										<li><a href="javascript:void(0)">resume.html</a></li>
-										<li><a href="javascript:void(0)">SignUp Page</a></li>
+										<li><a href="<?php echo e(url('about')); ?>">About Us</a></li>
+										<li><a href="<?php echo e(url('terms')); ?>">Terms & Conditions</a></li>
+										<li><a href="<?php echo e(url('privacy')); ?>">Privacy Policy</a></li>
 									</ul>
 								</div>
 							</div>
 							<div class="col-lg-3 col-md-4">
 								<div class="footer-widget">
-									<h4 class="widget-title">My Account</h4>
+									<h4 class="widget-title">Learn More</h4>
 									<ul class="footer-menu">
-										<li><a href="javascript:void(0)">Dashboard</a></li>
-										<li><a href="javascript:void(0)">Applications</a></li>
-										<li><a href="javascript:void(0)">Packages</a></li>
-										<li><a href="javascript:void(0)">resume.html</a></li>
-										<li><a href="javascript:void(0)">SignUp Page</a></li>
+										<li><a href="javascript:void(0)">Blog</a></li>
+										<li><a href="javascript:void(0)">Host Orientation Center</a></li>
+										<li><a href="javascript:void(0)">Forums</a></li>
 									</ul>
 								</div>
 							</div>

@@ -1,5 +1,4 @@
 Auth
-reset password (finish up later)
 sign up with Facebook(later)
 sign in with Facebook(later)
 edit profile
