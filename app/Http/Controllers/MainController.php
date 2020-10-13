@@ -268,15 +268,11 @@ class MainController extends Controller {
 			return redirect()->intended('/');
 		}
 		
-		$req = $request->all();
 		
-		if(isset($req['xf']))
-		{
-		    $this->helpers->deleteApartment($req['xf']);
-			session()->flash("delete-apartment-status","ok");
-		}
+		    $user->update(['avatar' => "", 'avatat_type' => ""]);
+			session()->flash("delete-avatar-status","ok");
 		
-		return redirect()->intended('my-apartments');
+		return redirect()->intended('profile');
 		
     }
 	

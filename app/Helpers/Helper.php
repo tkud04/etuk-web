@@ -46,6 +46,7 @@ class Helper implements HelperContract
 					 "sci-status" => "Cover image updated.",
 					 "cover-image-status-error" => "You cannot delete the cover image.",
 					 "ri-status" => "Image deleted.",
+					 "delete-avatar-status" => "Avatar removed.",
 					 "delete-apartment-status" => "Apartment removed.",
 					 "update-apartment-status" => "Apartment information updated.",
 					 "oauth-sp-status" => "Welcome to Etuk NG! You can now use your new account.",
