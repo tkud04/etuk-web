@@ -287,7 +287,7 @@ class LoginController extends Controller {
 			if(isset($req['xf']))
             {
 				$xf = $req['xf'];
-				return view("oauth-sp",compact(['cart','user','xf','return','plugins']));
+				return view("oauth-sp",compact(['cart','user','xf','plugins']));
             }
             
             else
