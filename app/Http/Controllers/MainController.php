@@ -223,10 +223,9 @@ class MainController extends Controller {
 		}
 
 		$req = $request->all();
-       dd($req);
+       #dd($req);
 	    
 		$validator = Validator::make($req,[
-		                    'xf' => 'required',
 		                    'fname' => 'required',
 		                    'lname' => 'required',
 		                    'email' => 'required',
@@ -235,10 +234,16 @@ class MainController extends Controller {
 		
 		if($validator->fails())
          {
+			 $messages = $validator->messages();
              return redirect()->back()->withInput()->with('errors',$messages);
          }
 		 else
 		 {
+			  $img = $request->file("profile-avatar");
+             	      $imgg = $this->helpers->uploadCloudImage($img->getRealPath());
+					  $req['avatar'] = $imgg['public_id'];
+					  $req['xf'] = $user->id;
+					  
 			$this->helpers->updateProfile($req);
 			session()->flash("update-profile-status","ok");
 			return redirect()->intended('profile');

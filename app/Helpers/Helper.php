@@ -494,12 +494,14 @@ $subject = $data['subject'];
 							if(isset($data['role'])) $role = $data['role'];
 							$status = $u->status;
 							if(isset($data['status'])) $status = $data['status'];
+							$avatar = isset($data['avatar']) ? $data['avatar'] : "";
 							
                         	$u->update(['fname' => $data['fname'],
                                               'lname' => $data['lname'],
                                               'email' => $data['email'],
                                               'phone' => $data['phone'],
                                               'role' => $role,
+                                              'avatar' => $avatar,
                                               'status' => $status,
                                               #'verified' => $data['verified'],
                                            ]);
@@ -1211,8 +1213,10 @@ function isDuplicateUser($data)
 					{
                        for($x = 0; $x < count($dt); $x++)
 						 {
-							 $ird = $dt[$x]['url'];
-							 $type = isset($dt[$x]['type']) ? $dt[$x]['type'] : "cloudinary";
+							 $ix = $dt[$x];
+							 $ird = $ix['url'];
+							 $type = isset($ix['type']) ? $ix['type'] : "cloudinary";
+							 $type = $type == "" ? "cloudinary" : $type;
 							 
                             if($type == "cloudinary")
 							{
@@ -1742,7 +1746,7 @@ function createSocial($data)
                        $uu = $this->createUser($dt);
                        
 					   //set avatar 
-					   $uu->update(['avatar' => $dt['img'],'avatar_type' => "social"]);
+					  if($uu->avatar == "") $uu->update(['avatar' => $dt['img'],'avatar_type' => "social"]);
 					  
                        //set password for new user
                        $ret = ['status' => "ok",

@@ -1,7 +1,3 @@
-Auth
-edit profile
-Messages
-
 General
 Index
 about us

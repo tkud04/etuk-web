@@ -23,6 +23,8 @@ $subtitle = "Edit your account information";
 						<div class="col-lg-12 col-md-12 col-sm-12">
 							<div class="dashboard-wraper">
 							<form method="post" id="profile-form" action="<?php echo e(url('profile')); ?>" enctype="multipart/form-data">
+							    <?php echo csrf_field(); ?>
+
 								<!-- Basic Information -->
 								<div class="form-submit">	
 									<h4>Account Information</h4>
@@ -40,13 +42,13 @@ $subtitle = "Edit your account information";
 											
 											<div class="form-group col-md-6">
 												<label>Email</label>
-												<input type="email" class="form-control" value="<?php echo e($u['email']); ?>">
+												<input type="email" name="email" class="form-control" value="<?php echo e($u['email']); ?>">
 											</div>
 											
 											
 											<div class="form-group col-md-6">
 												<label>Phone</label>
-												<input type="text" class="form-control" value="<?php echo e($u['phone']); ?>">
+												<input type="text" name="phone" class="form-control" value="<?php echo e($u['phone']); ?>">
 											</div>
 											
 											<div class="form-group col-md-12">
