@@ -242,10 +242,10 @@ class LoginController extends Controller {
 			   'token' => $socialUser->token,
 			 ];
 			$auth = $this->helpers->oauth($dt);
-			dd($auth);
+			
 			if($auth['status'] == "ok")
 			{
-				if($auth['message'] == "new-user" || $auth['message'] == "existing-user-no-pass")
+				if(($auth['message'] == "new-user") || ($auth['message'] == "existing-user-no-pass"))
 				{
 					//set password for new user
 					$uu = $auth['user'];
@@ -283,7 +283,7 @@ class LoginController extends Controller {
 		$plugins = $this->helpers->getPlugins();
 		$cart = [];
             $req = $request->all();
-			#dd($req);
+			dd($req);
 			if(isset($req['xf']))
             {
 				$xf = $req['xf'];
