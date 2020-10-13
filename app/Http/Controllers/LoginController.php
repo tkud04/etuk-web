@@ -434,14 +434,14 @@ class LoginController extends Controller {
 			#dd($req);
 			if(isset($req['code']))
             {
-				$user = $this->helpers->verifyPasswordResetCode($req['code']);
+				$uu = $this->helpers->verifyPasswordResetCode($req['code']);
 				#dd($user);
-                if($user == null)   
+                if($uu == null)   
                 { 
                 	return redirect()->back()->withErrors("The code is invalid or has expired. ","errors"); 
                 }
-                $v = ($user->role == "user") ? 'reset' : 'admin.reset';
-				return view($v,compact(['cart','user','return','plugins']));
+                $v = ($uu->role == "user") ? 'reset' : 'admin.reset';
+				return view($v,compact(['cart','user','uu','plugins']));
             }
             
             else
@@ -458,32 +458,41 @@ class LoginController extends Controller {
     public function postPasswordReset(Request $request)
     {
     	$req = $request->all(); 
-        $validator = Validator::make($req, [
-                             'pass' => 'required|min:6|confirmed',
-                             'acsrf' => 'required'
-                  ]);
-                  
-        if($validator->fails())
+        $ret = ['status' => "error",'message' => "Nothing happened"];
+        
+		$reqValidator = Validator::make($req,[
+		                    'dt' => 'required'
+		]);
+		
+		if($reqValidator->fails())
          {
-             $messages = $validator->messages();
-             //dd($messages);
-             
-             return redirect()->back()->withInput()->with('errors',$messages);
+             $ret['message'] = "dt-validation";
          }
+		 else
+		 {
+			 $dt = json_decode($req['dt'],true);
+			 $validator = Validator::make($dt, [
+                             'id' => 'required',
+                             'pass' => 'required|min:6'							 
+             ]);
          
-         else{
-         	$id = $req['acsrf'];
-             $ret = $req['pass'];
+            if($validator->fails())
+            {
+              $ret['message'] = "validation";
+            }
+			else
+			{
+				$id = $dt['id'];
+               $ret = $dt['pass'];
 
-            $user = User::where('id',$id)->first();
-            $user->update(['password' => bcrypt($ret)]);
+               $user = User::where('id',$id)->first();
+               $user->update(['password' => bcrypt($ret)]);
                 
-            session()->flash("reset-status","ok");  
-            $v = ($user->role == "user") ? 'login' : 'admin';         
-            return redirect()->intended($v);
-
-      }
-                  
+               $ret = ['status' => "ok",'message' => "Password reset"];
+			}
+        }
+         
+         return json_encode($ret);         
     }    
 
    

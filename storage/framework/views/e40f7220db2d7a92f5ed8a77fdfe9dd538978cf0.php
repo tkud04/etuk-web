@@ -362,9 +362,9 @@
 							<div class="modal-divider"><span>Or login via</span></div>
 							<div class="social-login mb-3">
 							<?php
-							$fbLogin = url('oauth-login')."?type=facebook";
-							$twLogin = url('oauth-login')."?type=twitter";
-							$gLogin = url('oauth-login')."?type=google";
+							$fbLogin = url('oauth')."?type=facebook";
+							$twLogin = url('oauth')."?type=twitter";
+							$gLogin = url('oauth')."?type=google";
 							?>
 								<ul>
 									<li><a href="<?php echo e($fbLogin); ?>" class="btn connect-fb"><i class="ti-facebook"></i>Facebook</a></li>

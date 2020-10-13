@@ -2,16 +2,16 @@
 $title = "Reset Password";
 $subtitle = "Reset your password here";
 ?>
-@extends('layout')
 
-@section('title',$title)
 
-@section('top-header')
-@include('top-header')
-@stop
+<?php $__env->startSection('title',$title); ?>
 
-@section('content')
-@include('banner-2',['title' => $title,'subtitle' => $subtitle])
+<?php $__env->startSection('top-header'); ?>
+<?php echo $__env->make('top-header', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+<?php echo $__env->make('banner-2',['title' => $title,'subtitle' => $subtitle], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
 	<!-- ============================ Reset Password Start ================================== -->
 			<section class="gray">
@@ -24,8 +24,8 @@ $subtitle = "Reset your password here";
 								<div class="form-submit">	
 									<h4>Reset your password:</h4>
 									<div class="submit-section">
-									    <input type="hidden" id="acsrf" value="{{$uu->id}}"/>
-									    <input type="hidden" id="tk-rp" value="{{csrf_token()}}"/>
+									    <input type="hidden" id="acsrf" value="<?php echo e($uu->id); ?>"/>
+									    <input type="hidden" id="tk-rp" value="<?php echo e(csrf_token()); ?>"/>
 										
 										<div class="form-row">
 		                                     									
@@ -41,7 +41,7 @@ $subtitle = "Reset your password here";
 											</div>
 											<div class="form-group col-md-12">
 											  <button class="btn btn-theme" id="rp-submit">Submit</button>
-											  <h4 class="text-primary" id="rp-loading">Processing your request.. <img alt="Loading.." src="{{asset('img/loading.gif')}}"></h4>
+											  <h4 class="text-primary" id="rp-loading">Processing your request.. <img alt="Loading.." src="<?php echo e(asset('img/loading.gif')); ?>"></h4>
 										      <h4 class="text-primary" id="rp-finish"><b>Password reset!</b><p class='text-primary'>You can now <a href="#" data-toggle="modal" data-target="#login">sign in</a>.</p></h4>
 											</div>
 										</div>
@@ -55,4 +55,5 @@ $subtitle = "Reset your password here";
 				</div>
 			</section>
 			<!-- ============================ Forgot Password End ================================== -->
-@stop
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\bkupp\lokl\repo\etuk-web\resources\views/reset.blade.php ENDPATH**/ ?>

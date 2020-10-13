@@ -113,19 +113,20 @@ $(document).ready(function() {
        e.preventDefault();
 	  
        hideInputErrors("reset-password");	  
-      let p = $('#rp-pass').val(), p2 = $('#rp-pass2').val();
+      let id = $('#acsrf').val(), p = $('#rp-pass').val(), p2 = $('#rp-pass2').val();
 		  
 		  
 	   if(p == "" || p2 == "" || p != p2){
 		   if(p == "") showElem('#rp-pass-error');
-		   if(p2 == "" || p != p2) showElem('#rp-pass-2-error');
+		   if(p2 == "" || p != p2) showElem('#rp-pass2-error');
 	   }
 	   else{
 		  hideElem("#rp-submit");
 		  showElem("#rp-loading");
 		  
 		 rp({
-			 email: id
+			 id: id,
+			 pass: p
 		 });   
 	   }
     });

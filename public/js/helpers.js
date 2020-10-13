@@ -57,7 +57,7 @@ const hideInputErrors = type => {
 		
 		case "reset-password":
 		  $('#rp-finish').html(`<b>Password reset!</b><p class='text-primary'>You can now <a href="#" data-toggle="modal" data-target="#login">sign in</a>.</p>`);
-	      ret = ['#rp-pass-error','#rp-pass-2-error','#fp-finish'];	 
+	      ret = ['#rp-pass-error','#rp-pass2-error','#rp-finish'];	 
 		break;
 		
 		case "oauth-sp":
@@ -247,6 +247,63 @@ const fp = dt => {
 		    alert("Failed to sign you in: " + error);	
             hideElem('#login-loading');
 		     showElem('#login-submit');		
+	   });
+}
+
+const rp = dt => {
+
+     let fd = new FormData();
+		 fd.append("dt",JSON.stringify(dt));
+		 fd.append("_token",$('#tk-rp').val());
+		 
+	//create request
+	let url = "reset";
+	const req = new Request(url,{method: 'POST', body: fd});
+	
+	//fetch request
+	fetch(req)
+	   .then(response => {
+		   if(response.status === 200){
+			   return response.json();
+		   }
+		   else{
+			   return {status: "error", message: "Technical error"};
+		   }
+	   })
+	   .catch(error => {
+		    alert("Failed to send new password request: " + error);			
+			hideElem('#rp-loading');
+		     showElem('#rp-submit');
+	   })
+	   .then(res => {
+		   console.log(res);
+			 hideElem(['#rp-loading','#rp-submit']); 
+             	 
+		   if(res.status == "ok"){
+               $('#rp-finish').html(`<b>Password reset!</b><p class='text-primary'>You can now <a href="#" data-toggle="modal" data-target="#login">sign in</a>.</p>`);
+				 showElem(['#rp-finish','#rp-submit']);			   
+		   }
+		   else if(res.status == "error"){
+			   console.log(res.message);
+			 if(res.message == "auth"){
+				 $('#rp-finish').html(`<p class='text-primary'>No user exists with that email address.</p>`);
+				 showElem(['#rp-finish','#rp-submit']);
+			 }
+			 else if(res.message == "validation" || res.message == "dt-validation"){
+				 $('#rp-finish').html(`<p class='text-primary'>Please enter a valid email address.</p>`);
+				 showElem(['#rp-finish','#rp-submit']);
+			 }
+			 else{
+			   alert("An unknown error has occured, please try again.");			
+			   hideElem('#rp-loading');
+		       showElem('#rp-submit');	 
+			 }					 
+		   }
+		   		     
+	   }).catch(error => {
+		    alert("Failed to sign you in: " + error);	
+            hideElem('#rp-loading');
+		     showElem('#rp-submit');		
 	   });
 }
 
