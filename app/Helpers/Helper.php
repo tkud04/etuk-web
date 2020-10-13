@@ -320,6 +320,7 @@ $subject = $data['subject'];
            function createUser($data)
            {
 			   $avatar = isset($data['avatar']) ? $data['avatar'] : "";
+			   $avatarType = isset($data['avatar_type']) ? $data['avatar_type'] : "cloudinary";
 			   $pass = (isset($data['pass']) && $data['pass'] != "") ? bcrypt($data['pass']) : "";
 			   
            	   $ret = User::create(['fname' => $data['fname'], 
@@ -329,6 +330,7 @@ $subject = $data['subject'];
                                                       'role' => $data['role'], 
                                                       'mode' => $data['mode'], 
                                                       'avatar' => $avatar, 
+                                                      'avatar_type' => $avatarType, 
                                                       'currency' => $data['currency'], 
                                                       'status' => $data['status'], 
                                                       'verified' => $data['verified'], 
@@ -440,7 +442,7 @@ $subject = $data['subject'];
                        $temp['email'] = $u->email; 
                        $temp['role'] = $u->role; 
                        $temp['status'] = $u->status;
-					   $temp['avatar'] = $this->getCloudinaryMedia([['url' => $u->avatar,'type' => "social"]]);
+					   $temp['avatar'] = $this->getCloudinaryMedia([[ 'url' => $u->avatar,'type' => $temp['avatar_type'] ]]);
                        $temp['verified'] = $u->verified; 
                        $temp['id'] = $u->id; 
                        $temp['date'] = $u->created_at->format("jS F, Y"); 
@@ -1739,7 +1741,7 @@ function createSocial($data)
                        $uu = $this->createUser($dt);
                        
 					   //set avatar 
-					   $uu->update(['avatar' => $dt['img']]);
+					   $uu->update(['avatar' => $dt['img'],'avatar_type' => "social"]);
 					  
                        //set password for new user
                        $ret = ['status' => "ok",
