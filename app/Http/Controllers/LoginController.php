@@ -284,7 +284,7 @@ class LoginController extends Controller {
 		$cart = [];
             $req = $request->all();
 			#dd($req);
-			if(isset($req['xf']))
+			if(isset($req['xf']) && $this->helpers->isOAuthSP($req['xf']))
             {
 				$xf = $req['xf'];
 				return view("oauth-sp",compact(['cart','user','xf','plugins']));

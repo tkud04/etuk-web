@@ -561,6 +561,16 @@ function isDuplicateUser($data)
        if(count($dup) == 1) $ret = true;		
 		return $ret;
 	}
+
+	function isOAuthSP($em)
+	{
+		$ret = false;
+		
+		$u = User::where('email',$email)->first();
+
+       if($u->password == "") $ret = true;		
+		return $ret;
+	}
 	
 	function getPasswordResetCode($user)
            {
