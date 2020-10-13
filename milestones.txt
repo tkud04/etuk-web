@@ -1,6 +1,4 @@
 Auth
-sign up with Facebook(later)
-sign in with Facebook(later)
 edit profile
 Messages
 
@@ -10,7 +8,6 @@ about us
 terms
 privacy policy
 faq
-footer
 
 Host
 Dashboard
@@ -25,3 +22,9 @@ checkout
 Dashboard
 Booking History
 Payment Methods
+
+Blog
+
+Forum
+
+Knowledge Center

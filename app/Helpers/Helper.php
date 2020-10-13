@@ -440,7 +440,7 @@ $subject = $data['subject'];
                        $temp['email'] = $u->email; 
                        $temp['role'] = $u->role; 
                        $temp['status'] = $u->status;
-					   $temp['avatar'] = $this->getCloudinaryMedia([['url' => $u->avatar]]);
+					   $temp['avatar'] = $this->getCloudinaryMedia([['url' => $u->avatar,'type' => "social"]]);
                        $temp['verified'] = $u->verified; 
                        $temp['id'] = $u->id; 
                        $temp['date'] = $u->created_at->format("jS F, Y"); 
@@ -1209,7 +1209,16 @@ function isDuplicateUser($data)
                        for($x = 0; $x < count($dt); $x++)
 						 {
 							 $ird = $dt[$x]['url'];
-                            $imgg = "https://res.cloudinary.com/etuk-ng/image/upload/v1585236664/".$ird;
+							 $type = isset($dt[$x]['type']) ? $dt[$x]['type'] : "cloudinary";
+							 
+                            if($type == "cloudinary")
+							{
+								$imgg = "https://res.cloudinary.com/etuk-ng/image/upload/v1585236664/".$ird;
+							}
+                            else
+							{
+								$imgg = $ird;
+							}							
                             array_push($ret,$imgg); 
                          }
 					}
