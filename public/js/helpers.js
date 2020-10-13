@@ -61,7 +61,7 @@ const hideInputErrors = type => {
 		break;
 		
 		case "oauth-sp":
-		  ret = ['#osp-pass-error','#osp-pass-2-error'];	 
+		  ret = ['#osp-pass-error','#osp-pass2-error'];	 
 		break;
 	  }
 	  hideElem(ret);

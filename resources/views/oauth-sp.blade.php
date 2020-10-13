@@ -30,12 +30,12 @@ $subtitle = "Set your account password here";
 											
 											<div class="form-group col-md-12">
 												<label>New password</label>
-												<input type="password" class="form-control" id="osp-pass" placeholder="Your email address">
+												<input type="password" class="form-control" id="osp-pass" placeholder="Your new password">
 												<span class="text-danger text-bold input-error" id="osp-pass-error">This field is required</span>
 											</div>
 											<div class="form-group col-md-12">
 												<label>Confirm password</label>
-												<input type="password" class="form-control" id="osp-pass2" placeholder="Your email address">
+												<input type="password" class="form-control" id="osp-pass2" placeholder="Confirm your new password">
 												<span class="text-danger text-bold input-error" id="osp-pass2-error">This field is required and passwords must match</span>
 											</div>
 											<div class="form-group col-md-12">

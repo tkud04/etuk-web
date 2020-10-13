@@ -139,7 +139,7 @@ $(document).ready(function() {
 		  
 	   if(p == "" || p2 == "" || p != p2){
 		   if(p == "") showElem('#osp-pass-error');
-		   if(p2 == "" || p != p2) showElem('#osp-pass-2-error');
+		   if(p2 == "" || p != p2) showElem('#osp-pass2-error');
 	   }
 	   else{
 		 $('#osp-form').submit();   

@@ -28,12 +28,12 @@ $subtitle = "Reset your password here";
 											
 											<div class="form-group col-md-12">
 												<label>New password</label>
-												<input type="password" class="form-control" id="rp-pass" placeholder="Your email address">
+												<input type="password" class="form-control" id="rp-pass" placeholder="New password">
 												<span class="text-danger text-bold input-error" id="rp-pass-error">This field is required</span>
 											</div>
 											<div class="form-group col-md-12">
 												<label>Confirm password</label>
-												<input type="password" class="form-control" id="rp-pass2" placeholder="Your email address">
+												<input type="password" class="form-control" id="rp-pass2" placeholder="Confirm password">
 												<span class="text-danger text-bold input-error" id="rp-pass2-error">This field is required and passwords must match</span>
 											</div>
 											<div class="form-group col-md-12">
