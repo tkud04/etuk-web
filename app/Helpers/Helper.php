@@ -566,7 +566,7 @@ function isDuplicateUser($data)
 	{
 		$ret = false;
 		
-		$u = User::where('email',$email)->first();
+		$u = User::where('email',$em)->first();
 
        if($u->password == "") $ret = true;		
 		return $ret;
