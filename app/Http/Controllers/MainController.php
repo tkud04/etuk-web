@@ -463,6 +463,89 @@ class MainController extends Controller {
     }
 	
 	/**
+	 * Get chat history with host.
+	 *
+	 * @return Response
+	 */
+	public function getChat(Request $request)
+    {
+		$user = null;
+		$ret = ['status' => "error",'message' => "Nothing happened"];
+		
+		if(Auth::check())
+		{
+			$user = Auth::user();
+		}
+		else
+		{
+			$ret['message'] = "auth";
+		}
+		
+		$req = $request->all();
+		
+		$validator = Validator::make($req, [
+                             'apt' => 'required'
+         ]);
+         
+         if($validator->fails())
+         {
+             $ret['message'] = "validation";
+         }
+		 else
+		 {
+			$history = $this->helpers->getChatHistory($req['apt']);
+			$ret = ['status' => "ok",'data' => $history];
+		 }
+		 
+		 return json_encode($ret);
+    }
+	
+	/**
+	 * Handle profile update.
+	 *
+	 * @return Response
+	 */
+	public function postChat(Request $request)
+    {
+		$user = null;
+		if(Auth::check())
+		{
+			$user = Auth::user();
+		}
+		else
+		{
+			return redirect()->intended('/');
+		}
+
+		$req = $request->all();
+       #dd($req);
+	    
+		$validator = Validator::make($req,[
+		                    'fname' => 'required',
+		                    'lname' => 'required',
+		                    'email' => 'required',
+		                    'phone' => 'required',
+		]);
+		
+		if($validator->fails())
+         {
+			 $messages = $validator->messages();
+             return redirect()->back()->withInput()->with('errors',$messages);
+         }
+		 else
+		 {
+			  $img = $request->file("profile-avatar");
+             	      $imgg = $this->helpers->uploadCloudImage($img->getRealPath());
+					  $req['avatar'] = $imgg['public_id'];
+					  $req['xf'] = $user->id;
+					  
+			$this->helpers->updateProfile($req);
+			session()->flash("update-profile-status","ok");
+			return redirect()->intended('profile');
+		 }
+    }
+	
+	/**
 	 * Show the about page.
 	 *
 	 * @return Response

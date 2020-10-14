@@ -25,6 +25,7 @@ use App\Plugins;
 use App\Services;
 use App\Comparisons;
 use App\Socials;
+use App\Messages;
 use App\Guests;
 use \Swift_Mailer;
 use \Swift_SmtpTransport;
@@ -1663,7 +1664,7 @@ function createSocial($data)
               if($s != null)
                {
 				  $temp = [];
-				  $temp['id'] = $r->id;
+				  $temp['id'] = $s->id;
 				  $temp['name'] = $s->name;
 				  $temp['token'] = $s->token;
      			  $temp['email'] = $s->email;
@@ -1758,6 +1759,72 @@ function createSocial($data)
 				   
 				   //save social profile
                    if($social == null) $s = $this->createSocial($s);
+			   }
+			   
+			   return $ret;
+		   }
+		   
+		   
+		   function createMessage($dt)
+		   {
+			   $ret = Messages::create(['user_id' => $data['user_id'], 
+                                                      'host' => $data['host'], 
+                                                      'msg' => $data['msg'], 
+                                                      ]);
+                                                      
+                return $ret;
+		   }
+		   
+		   function getMessage($id)
+		   {
+			   $ret = [];
+			   $m = Messages::where('id',$id)->first();
+			   
+			   if($m != null)
+               {
+				  $temp = [];
+				  $temp['id'] = $m->id;
+				  $temp['user_id'] = $m->user_id;
+				  $temp['host'] = $m->host;
+     			  $temp['msg'] = $m->msg;
+     			  $temp['date'] = $m->created_at->format("jS F, Y");
+				  $ret = $temp;
+               }
+
+               return $ret;			   
+		   }
+		   
+		   function getMessages($dt)
+           {
+           	$ret = [];
+              $messages = Messages::where(['user_id' => $dt['user_id'],'host' => $dt['host']])->get();
+              
+              if($messages != null)
+               {
+				   $messages = $messages->sortByDesc('created_at');	
+			  
+				  foreach($messages as $m)
+				  {
+					  $temp = $this->getMessage($m->id);
+					  array_push($ret,$temp);
+				  }
+               }                         
+                                  
+                return $ret;
+           }
+		   
+		   function getChatHistory($dt)
+		   {
+			   $ret = [];
+			   
+			   if(isset($dt['user_id']) && isset($dt['apt']))
+			   {
+				   $apt = Apartment::where('apartment_id',$apt)->first();
+				   
+				   if($apt != null)
+				   {
+					   $ret = $this->getMessages(['user_id' => $dt['user_id'],'host' => $apt->user_id]);
+				   }
 			   }
 			   
 			   return $ret;

@@ -10,6 +10,7 @@ $myName = ""; $myEmail = "";
 if($user != null)
 {
 	$myName = $user->fname." ".$user->lname;
+	$myEmail = $user->email;
 }
 
 $terms = $apartment['terms'];
@@ -26,6 +27,7 @@ $imgs = $cmedia['images'];
 $video = $cmedia['video'];
 
 $as = $apartment['avb'];
+$asText = $as == "available" ? "Available for booking" : "Apartment is currently occupied";
 
 ?>
 
@@ -71,14 +73,14 @@ $as = $apartment['avb'];
 											<div class="row">
 											
 												<!-- Single Items -->
-												<div class="col-xs-6 col-lg-3 col-md-6">
+												<div class="col-xs-6 col-lg-4 col-md-6">
 													<div class="singles_item">
 														<div class="icon">
 															<i class="icofont-home"></i>
 														</div>
 														<div class="info">
 															<h4 class="name"><?php echo e(ucwords($as)); ?></h4>
-															<p class="value">Availability</p>
+															<p class="value"><?php echo e($asText); ?></p>
 														</div>
 													</div>
 												</div>
@@ -97,7 +99,7 @@ $as = $apartment['avb'];
 												</div>
 												
 												<!-- Single Items -->
-												<div class="col-xs-6 col-lg-3 col-md-6">
+												<div class="col-xs-6 col-lg-2 col-md-6">
 													<div class="singles_item">
 														<div class="icon">
 															<i class="icofont-travelling"></i>
@@ -116,8 +118,8 @@ $as = $apartment['avb'];
 															<i class="icofont-island"></i>
 														</div>
 														<div class="info">
-															<h4 class="name"><?php echo e($address['city'].", ".$address['state']); ?></h4>
-															<p class="value">Location</p>
+															<h4 class="name"><em>[Address hidden]</em></h4>
+															<p class="value"><?php echo e($address['city'].", ".$address['state']); ?></p>
 														</div>
 													</div>
 												</div>
@@ -640,7 +642,7 @@ $as = $apartment['avb'];
 										<label>Message</label>
 										<textarea class="form-control" id="apt-message-msg" placeholder="Send a message to <?php echo e($host['fname']); ?>..."></textarea>
 									</div>
-									<button class="btn btn-theme full-width">Send</button>
+									<button class="btn btn-theme full-width" id="apartment-chat-btn">Send</button>
 								</div>
 								
 								<!-- Statics Info -->
