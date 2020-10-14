@@ -481,5 +481,14 @@ $(document).ready(function() {
 	});
 	
 	
+	//APARTMENT
+	$('#apartment-hostchat-btn').click(e => {
+		e.preventDefault();
+		document.querySelector('#apartment-hostchat').scrollIntoView({
+          behavior: 'smooth' 
+        });
+			
+	});
+	
 	
 });

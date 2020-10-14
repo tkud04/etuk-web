@@ -77,8 +77,8 @@ $as = $apartment['avb'];
 															<i class="icofont-home"></i>
 														</div>
 														<div class="info">
-															<h4 class="name">Availability</h4>
-															<p class="value"><?php echo e(ucwords($as)); ?></p>
+															<h4 class="name"><?php echo e(ucwords($as)); ?></h4>
+															<p class="value">Availability</p>
 														</div>
 													</div>
 												</div>
@@ -87,11 +87,11 @@ $as = $apartment['avb'];
 												<div class="col-xs-6 col-lg-3 col-md-6">
 													<div class="singles_item">
 														<div class="icon">
-															<i class="icofont-beach"></i>
+															<i class="icofont-credit-card"></i>
 														</div>
 														<div class="info">
-															<h4 class="name">Tour Type</h4>
-															<p class="value">Ligula</p>
+															<h4 class="name">&#8358;<?php echo e(number_format($adata['amount'],2)); ?> </h4>
+															<p class="value">per night</p>
 														</div>
 													</div>
 												</div>
@@ -103,8 +103,8 @@ $as = $apartment['avb'];
 															<i class="icofont-travelling"></i>
 														</div>
 														<div class="info">
-															<h4 class="name">Max. adults</h4>
-															<p class="value"><?php echo e($adata['max_adults']); ?></p>
+															<h4 class="name"><?php echo e($adata['max_adults']); ?></h4>
+															<p class="value">Max. adults</p>
 														</div>
 													</div>
 												</div>
@@ -116,8 +116,8 @@ $as = $apartment['avb'];
 															<i class="icofont-island"></i>
 														</div>
 														<div class="info">
-															<h4 class="name">Location</h4>
-															<p class="value"><?php echo e($address['city'].", ".$address['state']); ?></p>
+															<h4 class="name"><?php echo e($address['city'].", ".$address['state']); ?></h4>
+															<p class="value">Location</p>
 														</div>
 													</div>
 												</div>
@@ -518,13 +518,16 @@ $as = $apartment['avb'];
 									</div>
 									
 									<div class="side-booking-body">
+									<?php
+									$checkin = date("m/d/Y");
+									?>
 										<div class="row mb-4">
 											<div class="col-lg-6 col-md-6 col-sm-6">
 												<div class="form-group">
 													<label>Check In</label>
 													<div class="cld-box">
 														<i class="ti-calendar"></i>
-														<input type="text" name="checkin" class="form-control" value="10/24/2020" />
+														<input type="text" name="checkin" id="apartment-checkin" class="form-control" value="<?php echo e($checkin); ?>" />
 													</div>
 												</div>
 											</div>
@@ -533,7 +536,7 @@ $as = $apartment['avb'];
 													<label>Check Out</label>
 													<div class="cld-box">
 														<i class="ti-calendar"></i>
-														<input type="text" name="checkout" class="form-control" value="10/24/2020" />
+														<input type="text" name="checkout" id="apartment-checkout" class="form-control" value="10/24/2020" />
 													</div>
 												</div>
 											</div>
@@ -541,10 +544,10 @@ $as = $apartment['avb'];
 									
 										<!-- Single Row Booking -->
 										<div class="single-row-booking">
-											<span class="onsale-section blacks"><span class="onsale">$110<small>per night</small></span></span>
+											<span class="onsale-section blacks"><span class="onsale">Guests<small></small></span></span>
 											<div class="row">
 												<div class="col-lg-12 col-md-12 col-sm-12 small-spilx">
-													<h4 class="booking-title">Deluxe Room</h4>
+													<h4 class="booking-title">How many are you?</h4>
 												</div>
 												<div class="col-lg-6 col-md-6 col-sm-6 col-6 small-spilx">
 													<div class="form-group">
@@ -598,21 +601,21 @@ $as = $apartment['avb'];
 									<div class="side-booking-footer light">
 										<div class="stbooking-footer-top">
 											<div class="stbooking-left">
-												<h5 class="st-subtitle">Total Amount</h5>
+												<h5 class="st-subtitle">Total:</h5>
 												<span>Expected Tax</span>
 											</div>
 											<h4 class="stbooking-title">&#8358;<?php echo e(number_format($adata['amount'],2)); ?></h4>
 										</div>
 										<div class="stbooking-footer-bottom">
-											<a href="javascript:void(0)" class="books-btn btn-theme">Request To Book</a>
-											<!--<a href="#" class="books-btn black">Instant Booking</a>-->
+											<a href="javascript:void(0)" id="apartment-hostchat-btn" class="books-btn btn-theme">Chat with host</a>
+											<a href="<?php echo e(url('checkout')); ?>" id="apartment-book-now-btn" class="books-btn black">Checkout</a>
 										</div>
 									</div>
 									
 								</div>
 							</div>
 							
-							<div class="page-sidebar">
+							<div class="page-sidebar" id="apartment-hostchat">
 							
 								<!-- Agent Detail -->
 								<div class="agent-widget">

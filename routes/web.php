@@ -43,6 +43,10 @@ Route::get('sm', 'MainController@getSwitchMode');
 //Guests
 Route::get('apartments', 'MainController@getApartments');
 Route::get('apartment', 'MainController@getApartment');
+Route::get('chat', 'MainController@getApartmentHostChat');
+Route::post('chat', 'MainController@postApartmentHostChat');
+Route::get('checkout', 'MainController@getCheckout');
+Route::post('checkout', 'MainController@postCheckout');
 Route::get('search', 'MainController@getSearch');
 
 

@@ -16,6 +16,7 @@ checkout
 Dashboard
 Booking History
 Payment Methods
+Apartment providers contact form
 
 Blog
 

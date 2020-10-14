@@ -1,27 +1,27 @@
 <?php
-$title = "Checkout";
-$subtitle = "Make payment or book for later";
+$title = "Add Apartment";
+$subtitle = "Post a new apartment to your listings";
 
 $checkoutHead = <<<EOD
                                 <div class="checkout-head">
 									<ul>
-										<li class="add-apartment-active-1 active"><span class="add-apartment-ticker-1">1</span>Billing Information</li>
-										<li class="add-apartment-active-2"><span class="add-apartment-ticker-2">2</span>Payment Method</li>
+										<li class="add-apartment-active-1 active"><span class="add-apartment-ticker-1">1</span>Apartment Information</li>
+										<li class="add-apartment-active-2"><span class="add-apartment-ticker-2">2</span>Location & Media</li>
 										<li class="add-apartment-active-3"><span class="add-apartment-ticker-3">3</span>Preview</li>
 									</ul>
 								</div>
 EOD;
 ?>
-@extends('layout')
 
-@section('title',$title)
 
-@section('top-header')
-@include('top-header')
-@stop
+<?php $__env->startSection('title',$title); ?>
 
-@section('content')
-@include('banner-2',['title' => $title,'subtitle' => $subtitle])
+<?php $__env->startSection('top-header'); ?>
+<?php echo $__env->make('top-header', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+<?php echo $__env->make('banner-2',['title' => $title,'subtitle' => $subtitle], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <script>
 let selectedSide = "1", facilities = [], aptImages = [], aptImgCount = 1, aptCover = "none";
 
@@ -40,12 +40,13 @@ let addApartmentDescriptionEditor = new Simditor({
 				<div class="container">
 					<div class="row">
 						<div class="col-lg-9 col-md-8">
-							<input type="hidden" id="tk-apt" value="{{csrf_token()}}">
-							<input type="hidden" id="tk-axf" value="{{url('apartments')}}">
+							<input type="hidden" id="tk-apt" value="<?php echo e(csrf_token()); ?>">
+							<input type="hidden" id="tk-axf" value="<?php echo e(url('apartments')); ?>">
 							<!-- Add Apartment Step 1 -->
 							<div class="checkout-wrap" id="add-apartment-side-1">
 								
-								{!! $checkoutHead !!}
+								<?php echo $checkoutHead; ?>
+
 								
 								<div class="checkout-body">
 									<div class="row">
@@ -125,7 +126,7 @@ let addApartmentDescriptionEditor = new Simditor({
 												  foreach($times as $key => $value)
 												  {
 												  ?>
-												  <option value="{{$key}}">From {{$value}}</option>
+												  <option value="<?php echo e($key); ?>">From <?php echo e($value); ?></option>
 												  <?php
 												  }
 												  ?>
@@ -142,7 +143,7 @@ let addApartmentDescriptionEditor = new Simditor({
 												  foreach($times as $key => $value)
 												  {
 												  ?>
-												  <option value="{{$key}}">By {{$value}}</option>
+												  <option value="<?php echo e($key); ?>">By <?php echo e($value); ?></option>
 												  <?php
 												  }
 												  ?>
@@ -205,10 +206,10 @@ let addApartmentDescriptionEditor = new Simditor({
 											      ?>
 												  <div class="col-lg-3 col-md-6 col-sm-12">
 												   
- 												    <a class="btn btn-primary btn-sm text-white apt-service" id="apt-service-{{$key}}" onclick="toggleFacility('{{$key}}')" data-check="unchecked">
-													  <center><i id="apt-service-icon-{{$key}}" class="ti-control-stop"></i></center>
+ 												    <a class="btn btn-primary btn-sm text-white apt-service" id="apt-service-<?php echo e($key); ?>" onclick="toggleFacility('<?php echo e($key); ?>')" data-check="unchecked">
+													  <center><i id="apt-service-icon-<?php echo e($key); ?>" class="ti-control-stop"></i></center>
 													</a>
-													 <label>{{$value}}</label>
+													 <label><?php echo e($value); ?></label>
 												  </div>
 												  <?php
 													}
@@ -233,7 +234,8 @@ let addApartmentDescriptionEditor = new Simditor({
 							<!-- Add Apartment Step 2 -->
 							<div class="checkout-wrap" id="add-apartment-side-2">
 								
-								{!! $checkoutHead !!}
+								<?php echo $checkoutHead; ?>
+
 								
 								<div class="checkout-body">
 									<div class="row mb-5">
@@ -265,7 +267,7 @@ let addApartmentDescriptionEditor = new Simditor({
 												   foreach($states as $key => $value)
 												   {
 												  ?>
-												    <option value="{{$key}}">{{$value}}</option>
+												    <option value="<?php echo e($key); ?>"><?php echo e($value); ?></option>
 												  <?php
 												   }
 												  ?>
@@ -318,7 +320,7 @@ let addApartmentDescriptionEditor = new Simditor({
 										<div class="col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group">
 												<input id="a-2" class="checkbox-custom" name="a-2" type="checkbox" checked>
-												<label for="a-2" class="checkbox-custom-label">By continuing, you agree to our <a href="{{url('terms')}}">terms & conditions</a></label>
+												<label for="a-2" class="checkbox-custom-label">By continuing, you agree to our <a href="<?php echo e(url('terms')); ?>">terms & conditions</a></label>
 											</div>
 										</div>
 										
@@ -338,7 +340,8 @@ let addApartmentDescriptionEditor = new Simditor({
 							<!-- Add Apartment Step 3 -->
 							<div class="checkout-wrap" id="add-apartment-side-3">
 								
-								{!! $checkoutHead !!}
+								<?php echo $checkoutHead; ?>
+
 								
 								<div class="checkout-body">
 									
@@ -362,7 +365,7 @@ let addApartmentDescriptionEditor = new Simditor({
 												<a href="javascript:void(0)" id="add-apartment-side-3-next" class="btn btn-theme">Submit</a>
 											</div>
 											<div class="form-group text-center" id="add-apartment-loading">
-												 <h4>Adding apartment.. <img src="{{asset('img/loading.gif')}}" class="img img-fluid" alt="Adding apartment.."></h4><br>
+												 <h4>Adding apartment.. <img src="<?php echo e(asset('img/loading.gif')); ?>" class="img img-fluid" alt="Adding apartment.."></h4><br>
 											</div>
 										</div>
 									</div>
@@ -376,10 +379,11 @@ let addApartmentDescriptionEditor = new Simditor({
 						<!-- Sidebar End -->
 							
 						<div class="col-lg-3 col-md-4">
-							@include('apt-sidebar',['cmedia' => [],'media' => []])
+							<?php echo $__env->make('apt-sidebar',['cmedia' => [],'media' => []], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 						</div>
 					</div>
 				</div>
 			</section>
 			<!-- =================== Add Apartment Search ==================== -->
-@stop
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\bkupp\lokl\repo\etuk-web\resources\views/checkout.blade.php ENDPATH**/ ?>
