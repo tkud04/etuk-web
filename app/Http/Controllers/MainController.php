@@ -373,8 +373,7 @@ class MainController extends Controller {
 			
 			if(count($apartment) > 0)
 			{
-			   #dd($apartment);
-		       shuffle($ads);
+			   shuffle($ads);
 		       $ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
         
     	       return view("apartment",compact(['user','cart','c','ad','apartment','services','states','signals','plugins']));

@@ -998,7 +998,7 @@ function isDuplicateUser($data)
 				  $temp['facilities'] = $this->getApartmentFacilities($apartment->apartment_id);
 				  $media = $this->getMedia(['apartment_id'=>$apartment->apartment_id,'type' => "all"]);
 				  if($imgId) $temp['media'] = $media;
-				  #dd($media);
+				  
 				  $temp['cmedia'] = [
 				    'images' => $this->getCloudinaryMedia($media['images']),
 				    'video' => $this->getCloudinaryMedia($media['video']),
@@ -1195,8 +1195,8 @@ function isDuplicateUser($data)
 		   function getCloudinaryMedia($dt)
 		   {
 			   $ret = [];
-                  #dd($dt);       
-               if(count($dt) < 1) { $ret = ["img/no-image.png"]; }
+                  
+				  if(count($dt) < 1) { $ret = ["img/no-image.png"]; }
                
 			   else
 			   {
@@ -1215,10 +1215,10 @@ function isDuplicateUser($data)
 						 {
 							 $ix = $dt[$x];
 							 $ird = $ix['url'];
-							 $type = isset($ix['type']) ? $ix['type'] : "cloudinary";
-							 $type = $type == "" ? "cloudinary" : $type;
 							 
-                            if($type == "cloudinary")
+							 $type = $ix['type'];
+							 #dd($type);
+                            if($type == "cloudinary" || $type == "" || $type == "image" || $type == "video")
 							{
 								$imgg = "https://res.cloudinary.com/etuk-ng/image/upload/v1585236664/".$ird;
 							}
