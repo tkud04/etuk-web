@@ -45,6 +45,7 @@ Route::get('apartments', 'MainController@getApartments');
 Route::get('apartment', 'MainController@getApartment');
 Route::get('chat-history', 'MainController@getChatHistory');
 Route::get('chat', 'MainController@getChat');
+Route::get('test-chat', 'MainController@getTestChat');
 Route::post('chat', 'MainController@postChat');
 Route::get('checkout', 'MainController@getCheckout');
 Route::post('checkout', 'MainController@postCheckout');

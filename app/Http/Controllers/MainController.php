@@ -519,30 +519,69 @@ class MainController extends Controller {
 
 		$req = $request->all();
        #dd($req);
+	   $ret = ['status' => "error",'message' => "nothing happened"];
 	    
 		$validator = Validator::make($req,[
-		                    'fname' => 'required',
-		                    'lname' => 'required',
-		                    'email' => 'required',
-		                    'phone' => 'required',
+		                    'name' => 'required',
+		                    'email' => 'required|email',
+		                    'msg' => 'required',
+		                    'apartment_id' => 'required',
 		]);
 		
 		if($validator->fails())
          {
-			 $messages = $validator->messages();
-             return redirect()->back()->withInput()->with('errors',$messages);
+			 $ret['message'] = "validation";
          }
 		 else
-		 {
-			  $img = $request->file("profile-avatar");
-             	      $imgg = $this->helpers->uploadCloudImage($img->getRealPath());
-					  $req['avatar'] = $imgg['public_id'];
-					  $req['xf'] = $user->id;
-					  
-			$this->helpers->updateProfile($req);
-			session()->flash("update-profile-status","ok");
-			return redirect()->intended('profile');
+		 {  
+            $req['user_id'] = $user->id;	 
+			$this->helpers->chat($req);
+			$ret = ['status' => "ok",'message' => "sent"];
 		 }
+		 
+		 return json_encode($ret);
+    }
+	
+	/**
+	 * Handle profile update.
+	 *
+	 * @return Response
+	 */
+	public function getTestChat(Request $request)
+    {
+		$user = null;
+		if(Auth::check())
+		{
+			$user = Auth::user();
+		}
+		else
+		{
+			return redirect()->intended('/');
+		}
+
+		$req = $request->all();
+       #dd($req);
+	   $ret = ['status' => "error",'message' => "nothing happened"];
+	    
+		$validator = Validator::make($req,[
+		                    'name' => 'required',
+		                    'email' => 'required|email',
+		                    'msg' => 'required',
+		                    'apartment_id' => 'required',
+		]);
+		
+		if($validator->fails())
+         {
+			 $ret['message'] = "validation";
+         }
+		 else
+		 {  
+            $req['user_id'] = $user->id;	 
+			$this->helpers->chat($req);
+			$ret = ['status' => "ok",'message' => "sent"];
+		 }
+		 
+		 return json_encode($ret);
     }
 	
 	/**

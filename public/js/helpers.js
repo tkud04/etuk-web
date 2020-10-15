@@ -772,6 +772,69 @@ const search = dt => {
 	$('#guest-apt-sidebar-dt').val(JSON.stringify(dt));
 	$('#guest-apt-sidebar-form').submit();
 }
+
+const sendMessage = dt => {
+	//create request
+	const req = new Request("chat",{method: 'POST', body: dt});
+	//console.log(req);
+	
+	
+	//fetch request
+	fetch(req)
+	   .then(response => {
+		   if(response.status === 200){
+			   //console.log(response);
+			   
+			   return response.json();
+		   }
+		   else{
+			   return {status: "error", message: "Technical error"};
+		   }
+	   })
+	   .catch(error => {
+		    alert("Failed to send message: " + error);			
+			$('#apt-chat-loading').hide();
+		     $('#apt-chat-btn').fadeIn();
+	   })
+	   .then(res => {
+		   console.log(res);
+          
+		   if(res.status == "ok"){
+              Swal.fire({
+			     icon: 'success',
+                 title: "Message sent!"
+               });
+		   }
+		   else if(res.status == "error"){
+			   let hh = `nothing happened`;
+			   if(res.message == "validation"){
+				 hh = `Please fill all required fields and try again.`;  
+			   }
+			   else if(res.message == "Technical error"){
+				 hh = `A technical error has occured, please try again.`;  
+			   }
+			   Swal.fire({
+			     icon: 'error',
+                 title: hh
+               }).then((result) => {
+               if (result.value) {
+                  $('#apt-chat-loading').hide();
+		          $('#apt-chat-btn').fadeIn();	
+                }
+              });
+
+               $('#apt-chat-loading').hide();
+		       $('#apt-chat-btn').fadeIn();			  
+		   }
+		  
+		   
+		  
+	   }).catch(error => {
+		     alert("Failed to send message: " + error);			
+			$('#apt-chat-loading').hide();
+		     $('#apt-chat-btn').fadeIn();			
+	   });
+}
 /**********************************************************************************************************************
                                                      OLD METHODS
 /**********************************************************************************************************************/

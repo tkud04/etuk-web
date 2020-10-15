@@ -8,7 +8,8 @@ $(document).ready(function() {
 	hideElem(["#signup-loading","#signup-finish",
 	          "#login-loading","#login-finish",
 			  "#fp-loading","#fp-finish",
-			  "#rp-loading","#rp-finish"
+			  "#rp-loading","#rp-finish",
+			  "#apt-chat-loading","#apt-chat-finish",
 			  ]);
 	hideElem(["#add-apartment-side-2","#add-apartment-side-3"]);
 	hideElem(["#my-apartment-side-2","#my-apartment-side-3"]);
@@ -487,6 +488,31 @@ $(document).ready(function() {
 		document.querySelector('#apartment-hostchat').scrollIntoView({
           behavior: 'smooth' 
         });
+			
+	});
+	
+	$('#apt-chat-btn').click(e => {
+		e.preventDefault();
+		let name = $('#apt-message-name').val(), em = $('#apt-message-email').val(),
+   		    msg = $('#apt-message-msg').val(), aptID = $('#apt-id').val();
+		
+		if(name == "" || em == "" || msg == ""){
+			Swal.fire({
+			 icon: 'error',
+             title: "Please fill all the required fields"
+           });
+		}
+		else{
+			 $('#apt-chat-btn').hide();
+		  $('#apt-chat-loading').fadeIn();
+		   let fd =  new FormData();
+		   fd.append("_token",$('#tk-apt-chat').val());
+		   fd.append("name",name);
+		   fd.append("email",em);
+		   fd.append("apartment_id",aptID);
+		   fd.append("msg",msg);
+			sendMessage(fd);
+		}
 			
 	});
 	

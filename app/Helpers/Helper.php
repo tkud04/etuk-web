@@ -1767,9 +1767,9 @@ function createSocial($data)
 		   
 		   function createMessage($dt)
 		   {
-			   $ret = Messages::create(['user_id' => $data['user_id'], 
-                                                      'host' => $data['host'], 
-                                                      'msg' => $data['msg'], 
+			   $ret = Messages::create(['user_id' => $dt['user_id'], 
+                                                      'host' => $dt['host'], 
+                                                      'msg' => $dt['msg'], 
                                                       ]);
                                                       
                 return $ret;
@@ -1819,7 +1819,7 @@ function createSocial($data)
 			   
 			   if(isset($dt['user_id']) && isset($dt['apt']))
 			   {
-				   $apt = Apartment::where('apartment_id',$apt)->first();
+				   $apt = Apartments::where('apartment_id',$apt)->first();
 				   
 				   if($apt != null)
 				   {
@@ -1827,6 +1827,19 @@ function createSocial($data)
 				   }
 			   }
 			   
+			   return $ret;
+		   }
+		   
+		   function chat($dt)
+		   {
+			   $ret = null;
+			    $apt = Apartments::where('apartment_id',$dt['apartment_id'])->first();
+				
+				if($apt != null)
+				{
+					$dt['host'] = $apt->user_id;
+					$ret = $this->createMessage($dt);							   
+				}
 			   return $ret;
 		   }
 
