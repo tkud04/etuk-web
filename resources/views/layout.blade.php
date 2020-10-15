@@ -170,6 +170,71 @@
 									</div>
 								</li>
 								
+								<li class="login-attri">
+									<div class="btn-group account-drop">
+										<button type="button" class="btn btn-order-by-filt theme-cl" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											<i class="ti-email"></i>
+											<span class="cart-count">4</span>
+										</button>
+										<div class="dropdown-menu p-0 dm-lg pull-right animated flipInX">
+											<div class="cart-card">
+												<div class="cart-card-header">
+													<h4>Your Messages</h4>
+												</div>
+												
+												<div class="cart-card-body">
+												
+													<!-- Single Cart Wrap -->
+													<div class="single-cart-wrap">
+														<a href="#" class="cart-close"><i class="ti-close"></i></a>
+														<div class="single-cart-thumb">
+															<img src="{{asset('img/hotel-1.jpg')}}" alt=""/>
+														</div>
+														<div class="single-cart-detail">
+															<h3 class="sc-title">Goa To Mumbai</h3>
+															<span><i class="ti-location-pin mr-1"></i>Canada</span>
+															<h4 class="sc-price theme-cl">$120</h4>
+														</div>
+													</div>
+													
+													<!-- Single Cart Wrap -->
+													<div class="single-cart-wrap">
+														<a href="#" class="cart-close"><i class="ti-close"></i></a>
+														<div class="single-cart-thumb">
+															<img src="{{asset('img/hotel-1.jpg')}}" alt=""/>
+														</div>
+														<div class="single-cart-detail">
+															<h3 class="sc-title">Goa To Mumbai</h3>
+															<span><i class="ti-location-pin mr-1"></i>Canada</span>
+															<h4 class="sc-price theme-cl">$120</h4>
+														</div>
+													</div>
+													
+													<!-- Single Cart Wrap -->
+													<div class="single-cart-wrap">
+														<a href="#" class="cart-close"><i class="ti-close"></i></a>
+														<div class="single-cart-thumb">
+															<img src="{{asset('img/hotel-1.jpg')}}" alt=""/>
+														</div>
+														<div class="single-cart-detail">
+															<h3 class="sc-title">Goa To Mumbai</h3>
+															<span><i class="ti-location-pin mr-1"></i>Canada</span>
+															<h4 class="sc-price theme-cl">$120</h4>
+														</div>
+													</div>
+													
+												</div>
+												
+												<div class="cart-card-footer">
+													<a href="#" class="btn btn-theme">Go To Checkout</a>
+													<h4 class="totla-prc">$516</h4>
+												</div>
+												
+											</div>
+										</div>
+									</div>
+								</li>
+								
 								<?php
 								if(isset($user) && $user != null)
 								{
