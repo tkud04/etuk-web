@@ -803,7 +803,15 @@ const sendMessage = dt => {
               Swal.fire({
 			     icon: 'success',
                  title: "Message sent!"
-               });
+               }).then((result) => {
+               if (result.value) {
+                  $('#apt-chat-loading').hide();
+		          $('#apt-chat-btn').fadeIn();	
+                }
+              });
+			   
+			    $('#apt-chat-loading').hide();
+		       $('#apt-chat-btn').fadeIn();	
 		   }
 		   else if(res.status == "error"){
 			   let hh = `nothing happened`;
@@ -821,10 +829,7 @@ const sendMessage = dt => {
                   $('#apt-chat-loading').hide();
 		          $('#apt-chat-btn').fadeIn();	
                 }
-              });
-
-               $('#apt-chat-loading').hide();
-		       $('#apt-chat-btn').fadeIn();			  
+              });		  
 		   }
 		  
 		   
