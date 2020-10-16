@@ -840,6 +840,13 @@ const sendMessage = dt => {
 const checkForMessages = () => {
 	console.log("checking for new messages..");
 }
+
+const showChat = (gxf) => {
+	console.log(`showing messages for ${gxf}`);
+	 let chats = msgs.filter(m => m.gxf == gxf);
+	console.log('chats: ',chats);
+}
+
 /**********************************************************************************************************************
                                                      OLD METHODS
 /**********************************************************************************************************************/

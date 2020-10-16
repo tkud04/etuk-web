@@ -61,16 +61,24 @@ foreach($messages as $m)
 <script>
 let msgs = [
 <?php
+$firstContact = ""; $ctr = 0;
+
 foreach($messages as $m)
 {
 	$guest = $m['guest'];
 	$img = $guest['avatar'] == ""  ? asset("img/avatar.png") : $guest['avatar'][0];
+	
+	if($ctr == 0) $firstContact = $guest['id'];
 ?>
 {gxf:"{{$guest['id']}}",d:"{{$m['date']}}",m:"{{$m['msg']}}",a:"{{$img}}"},
 <?php
 }
 ?>
 ];
+
+$(document).ready(() => {
+      showChat({{$firstContact}});
+    });
 </script>
 <!-- ============================ Messages Start ================================== -->
 			<section>
