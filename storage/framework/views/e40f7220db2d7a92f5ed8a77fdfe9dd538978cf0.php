@@ -194,7 +194,7 @@
 													$msg = $m['msg'];
 													$date = $m['date'];
 													$uu = url('message')."?xf=".$m['id'];
-													$img = count($guest['avatar']) > 0 ? $guest['avatar'][0] : asset("img/avatar.png");
+													$img = $guest['avatar'] == ""  ? asset("img/avatar.png") : $guest['avatar'][0];
 												?>
 													<!-- Single Cart Wrap -->
 													<div class="single-cart-wrap">
@@ -609,4 +609,5 @@
 
 
 	</body>
-</html><?php /**PATH C:\bkupp\lokl\repo\etuk-web\resources\views/layout.blade.php ENDPATH**/ ?>
+</html>
+<?php /**PATH C:\bkupp\lokl\repo\etuk-web\resources\views/layout.blade.php ENDPATH**/ ?>
