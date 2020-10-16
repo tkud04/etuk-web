@@ -222,3 +222,8 @@
 		margin-bottom: 15px !important;
 	}
 	}
+	
+	/*************************************************/
+	#contacts-ul li:hover{
+		background: rgba(0,0,0,0.3);
+	}

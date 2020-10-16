@@ -1811,6 +1811,11 @@ function createSocial($data)
 				  case "sent":
 				   $messages = Messages::where(['user_id' => $dt['user_id']])->get();
 				  break;
+				  
+				  case "all":
+				   $messages = Messages::where(['user_id' => $dt['user_id']])
+				                       ->orWhere(['host' => $dt['user_id']])->get();
+				  break;
 			  }
 			  
               if($messages != null)

@@ -2,6 +2,35 @@
 $title = "Messages";
 $subtitle = "View your messages";
 $isMessageView = true;
+
+//get unique list of contacts
+$contacts = [];
+$uniqueGuests = [];
+
+foreach($messages as $m)
+{
+	$guest = $m['guest'];
+	$img = $guest['avatar'] == ""  ? asset("img/avatar.png") : $guest['avatar'][0];
+	
+	$temp = [
+	          'name' => $guest['fname']." ".substr($guest['lname'],0,1).".",
+			  'date' => $m['date'],
+			  'id' => $guest['id'],
+			  'img' => $img
+			  
+			];
+	$isInArray = false;
+	foreach($uniqueGuests as $ug)
+	{
+		if($ug == $guest['id']) $isInArray = true;
+	}
+	if(!$isInArray)
+	{
+		array_push($uniqueGuests,$guest['id']);
+		array_push($contacts,$temp);
+	}
+	
+}
 ?>
 @extends('layout')
 
@@ -29,7 +58,20 @@ $isMessageView = true;
 
 @section('content')
 @include('banner-2',['title' => $title,'subtitle' => $subtitle])
-
+<script>
+let msgs = [
+<?php
+foreach($messages as $m)
+{
+	$guest = $m['guest'];
+	$img = $guest['avatar'] == ""  ? asset("img/avatar.png") : $guest['avatar'][0];
+?>
+{gxf:"{{$guest['id']}}",d:"{{$m['date']}}",m:"{{$m['msg']}}",a:"{{$img}}"},
+<?php
+}
+?>
+];
+</script>
 <!-- ============================ Messages Start ================================== -->
 			<section>
 			
@@ -48,67 +90,32 @@ $isMessageView = true;
 						</div>
 					</div>
 					<div class="card-body contacts_body">
-						<ul class="contacts">
-						<li class="active">
+						<ul class="contacts" id="contacts-ul">
+						<?php
+						 for($i = 0; $i < count($contacts); $i++)
+						 {
+							 $c = $contacts[$i];
+							 $liClass = $i == 0 ? "class='active'" : "";
+							 
+						?>
+						<li {{$liClass}}>
 							<div class="d-flex bd-highlight">
+							 
 								<div class="img_cont">
-									<img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img">
-									<span class="online_icon"></span>
+									<img src="{{$c['img']}}" class="rounded-circle user_img">
+									
 								</div>
+								
 								<div class="user_info">
-									<span>Khalid</span>
-									<p>Kalid is online</p>
+									<span>{{$c['name']}}</span>
+									<p>{{$c['date']}}</p>
 								</div>
 							</div>
 						</li>
-						<li>
-							<div class="d-flex bd-highlight">
-								<div class="img_cont">
-									<img src="https://2.bp.blogspot.com/-8ytYF7cfPkQ/WkPe1-rtrcI/AAAAAAAAGqU/FGfTDVgkcIwmOTtjLka51vineFBExJuSACLcBGAs/s320/31.jpg" class="rounded-circle user_img">
-									<span class="online_icon offline"></span>
-								</div>
-								<div class="user_info">
-									<span>Taherah Big</span>
-									<p>Taherah left 7 mins ago</p>
-								</div>
-							</div>
-						</li>
-						<li>
-							<div class="d-flex bd-highlight">
-								<div class="img_cont">
-									<img src="https://i.pinimg.com/originals/ac/b9/90/acb990190ca1ddbb9b20db303375bb58.jpg" class="rounded-circle user_img">
-									<span class="online_icon"></span>
-								</div>
-								<div class="user_info">
-									<span>Sami Rafi</span>
-									<p>Sami is online</p>
-								</div>
-							</div>
-						</li>
-						<li>
-							<div class="d-flex bd-highlight">
-								<div class="img_cont">
-									<img src="http://profilepicturesdp.com/wp-content/uploads/2018/07/sweet-girl-profile-pictures-9.jpg" class="rounded-circle user_img">
-									<span class="online_icon offline"></span>
-								</div>
-								<div class="user_info">
-									<span>Nargis Hawa</span>
-									<p>Nargis left 30 mins ago</p>
-								</div>
-							</div>
-						</li>
-						<li>
-							<div class="d-flex bd-highlight">
-								<div class="img_cont">
-									<img src="https://static.turbosquid.com/Preview/001214/650/2V/boy-cartoon-3D-model_D.jpg" class="rounded-circle user_img">
-									<span class="online_icon offline"></span>
-								</div>
-								<div class="user_info">
-									<span>Rashid Samim</span>
-									<p>Rashid left 50 mins ago</p>
-								</div>
-							</div>
-						</li>
+						<?php
+						}
+						?>
+						
 						</ul>
 					</div>
 					<div class="card-footer"></div>

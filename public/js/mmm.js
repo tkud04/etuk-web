@@ -518,4 +518,33 @@ $(document).ready(function() {
 	});
 	
 	
+	//CHAT
+	$('#contacts-ul li').click(e => {
+		e.preventDefault();
+		console.log("viewing chat");
+		/**
+		let name = $('#apt-message-name').val(), em = $('#apt-message-email').val(),
+   		    msg = $('#apt-message-msg').val(), aptID = $('#apt-id').val();
+		
+		if(name == "" || em == "" || msg == ""){
+			Swal.fire({
+			 icon: 'error',
+             title: "Please fill all the required fields"
+           });
+		}
+		else{
+			 $('#apt-chat-btn').hide();
+		  $('#apt-chat-loading').fadeIn();
+		   let fd =  new FormData();
+		   fd.append("_token",$('#tk-apt-chat').val());
+		   fd.append("name",name);
+		   fd.append("email",em);
+		   fd.append("apartment_id",aptID);
+		   fd.append("msg",msg);
+			sendMessage(fd);
+		}
+		**/
+			
+	});
+	
 });
