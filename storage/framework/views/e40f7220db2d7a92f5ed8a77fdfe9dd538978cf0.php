@@ -562,6 +562,43 @@
 		<script src="<?php echo e(asset('js/isotope.min.js')); ?>"></script>
 		
 		<script src="<?php echo e(asset('js/custom.js')); ?>"></script>
+		
+		<?php
+		 $unreadMessages = 0;
+		 
+		 foreach($messages as $m)
+		 {
+			 if($m['status'] == "unread") ++$unreadMessages;
+		 }
+		 $umt = $unreadMessages == 1 ? "message" : "messages";
+		 if($unreadMessages > 0)
+			 
+		 {
+		?>
+		<script>
+		let interval = 1000 * 45;
+		 $(document).ready(() => {
+			 Swal.fire({
+			 icon: 'info',
+             title: "You've got <?php echo e($unreadMessages); ?> unread <?php echo e($umt); ?>!",
+			 showCancelButton: true,
+             confirmButtonText: 'Go to messages',
+           }).then((result) => {
+              if (result.value) {
+				  window.location = "messages";
+	          }
+           });
+		   
+		   	//check for new messages every 1 minute
+			setInterval(() => {
+			  checkForMessages();
+			},interval);
+	        
+		 });
+		</script>
+		<?php
+		 }
+		?>
 		<!-- ============================================================== -->
 		<!-- This page plugins -->
 		<!-- ============================================================== -->

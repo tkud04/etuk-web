@@ -21,6 +21,7 @@ $(document).ready(function() {
 	//console.log('area: ',aptDescriptionTextArea);
 	
 	
+	
     $("a.lno-cart").on("click", function(e) {
     	if(isMobile()){
     	  window.location = "cart";
