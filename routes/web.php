@@ -39,6 +39,8 @@ Route::get('delete-avatar', 'MainController@getDeleteAvatar');
 Route::post('profile', 'MainController@postProfile');
 Route::get('sm', 'MainController@getSwitchMode');
 
+Route::get('messages', 'MainController@getMessages');
+
 
 //Guests
 Route::get('apartments', 'MainController@getApartments');

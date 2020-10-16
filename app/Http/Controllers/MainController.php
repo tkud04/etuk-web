@@ -356,6 +356,45 @@ class MainController extends Controller {
 		
     }
 	
+	 /* Get messages.
+	 *
+	 * @return Response
+	 */
+	public function getMessages(Request $request)
+    {
+		$user = null;
+		$messages = [];
+		if(Auth::check())
+		{
+			$user = Auth::user();
+			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
+		}
+		else
+		{
+			return redirect()->intended('/');
+		}
+		
+		$req = $request->all();
+		
+		$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
+		$cart = $this->helpers->getCart($user,$gid);
+		#dd($user);
+		$c = $this->helpers->getCategories();
+		//dd($bs);
+		$signals = $this->helpers->signals;
+		
+		$ads = $this->helpers->getAds("wide-ad");
+		$plugins = $this->helpers->getPlugins();
+		
+		$u = $this->helpers->getUser($user->id);
+		#dd($u);
+		shuffle($ads);
+		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
+        
+    	return view("messages",compact(['user','cart','messages','c','ad','u','signals','plugins']));
+    }
+	
+	
 	/**
 	 * Show the apartment.
 	 *

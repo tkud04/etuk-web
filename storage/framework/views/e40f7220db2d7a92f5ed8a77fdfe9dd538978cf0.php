@@ -194,7 +194,7 @@
 													$msg = $m['msg'];
 													$date = $m['date'];
 													$uu = url('message')."?xf=".$m['id'];
-													$img = $guest['avatar'][0];
+													$img = count($guest['avatar']) > 0 ? $guest['avatar'][0] : asset("img/avatar.png");
 												?>
 													<!-- Single Cart Wrap -->
 													<div class="single-cart-wrap">
@@ -576,7 +576,7 @@
 		 {
 		?>
 		<script>
-		let interval = 1000 * 45;
+		let interval = 1000 * 25;
 		 $(document).ready(() => {
 			 Swal.fire({
 			 icon: 'info',
