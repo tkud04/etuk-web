@@ -576,7 +576,7 @@
 		 {
 		?>
 		<script>
-		let interval = 1000 * 45;
+		let interval = 1000 * 25;
 		 $(document).ready(() => {
 			 Swal.fire({
 			 icon: 'info',
