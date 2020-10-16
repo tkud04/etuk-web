@@ -69,9 +69,11 @@ class MainController extends Controller {
 	public function getTemp(Request $request)
     {
 		$user = null;
+		$messages = [];
 		if(Auth::check())
 		{
 			$user = Auth::user();
+			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
 		}
 		$req = $request->all();
 		$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
@@ -90,7 +92,7 @@ class MainController extends Controller {
 		shuffle($banners);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
 
-    	return view("temp",compact(['user','cart','c','banners','ad','signals','plugins']));
+    	return view("temp",compact(['user','cart','messages','c','banners','ad','signals','plugins']));
     }
 
 	/**
@@ -101,9 +103,11 @@ class MainController extends Controller {
 	public function getAbout(Request $request)
     {
 		$user = null;
+		$messages = [];
 		if(Auth::check())
 		{
 			$user = Auth::user();
+			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
 		}
 		$req = $request->all();
 		$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
@@ -120,7 +124,7 @@ class MainController extends Controller {
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
 
-    	return view("about",compact(['user','cart','c','ad','signals','plugins']));
+    	return view("about",compact(['user','cart','messages','c','ad','signals','plugins']));
     }
 	
 	/**
@@ -131,9 +135,11 @@ class MainController extends Controller {
 	public function getTerms(Request $request)
     {
 		$user = null;
+		$messages = [];
 		if(Auth::check())
 		{
 			$user = Auth::user();
+			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
 		}
 		$req = $request->all();
 		$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
@@ -150,7 +156,7 @@ class MainController extends Controller {
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
 
-    	return view("terms",compact(['user','cart','c','ad','signals','plugins']));
+    	return view("terms",compact(['user','cart','messages','c','ad','signals','plugins']));
     }
 	
 	/**
@@ -161,9 +167,11 @@ class MainController extends Controller {
 	public function getPrivacy(Request $request)
     {
 		$user = null;
+		$messages = [];
 		if(Auth::check())
 		{
 			$user = Auth::user();
+			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
 		}
 		$req = $request->all();
 		$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
@@ -180,7 +188,7 @@ class MainController extends Controller {
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
 
-    	return view("privacy",compact(['user','cart','c','ad','signals','plugins']));
+    	return view("privacy",compact(['user','cart','messages','c','ad','signals','plugins']));
     }
 	
 	/**
@@ -191,9 +199,11 @@ class MainController extends Controller {
 	public function getDashboard(Request $request)
     {
 		$user = null;
+		$messages = [];
 		if(Auth::check())
 		{
 			$user = Auth::user();
+			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
 		}
 		else
 		{
@@ -219,12 +229,12 @@ class MainController extends Controller {
 		
 		if($user->mode == "host")
 		{
-			$cpt = ['user','cart','c','ad','signals','plugins'];
+			$cpt = ['user','cart','messages','c','ad','signals','plugins'];
 			$v = "host-dashboard";
 		}
 		else if($user->mode == "guest")
 		{
-			$cpt = ['user','cart','c','ad','signals','plugins'];
+			$cpt = ['user','cart','messages','c','ad','signals','plugins'];
 			$v = "guest-dashboard";
 		}
 		
@@ -239,9 +249,11 @@ class MainController extends Controller {
 	public function getProfile(Request $request)
     {
 		$user = null;
+		$messages = [];
 		if(Auth::check())
 		{
 			$user = Auth::user();
+			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
 		}
 		else
 		{
@@ -265,7 +277,7 @@ class MainController extends Controller {
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
         
-    	return view("profile",compact(['user','cart','c','ad','u','signals','plugins']));
+    	return view("profile",compact(['user','cart','messages','c','ad','u','signals','plugins']));
     }
 	
 	/**
@@ -352,9 +364,11 @@ class MainController extends Controller {
 	public function getApartment(Request $request)
     {
 		$user = null;
+		$messages = [];
 		if(Auth::check())
 		{
 			$user = Auth::user();
+			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
 		}
 		$req = $request->all();
 		
@@ -379,7 +393,7 @@ class MainController extends Controller {
 			   shuffle($ads);
 		       $ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
         
-    	       return view("apartment",compact(['user','cart','c','ad','apartment','services','states','signals','plugins']));
+    	       return view("apartment",compact(['user','cart','messages','c','ad','apartment','services','states','signals','plugins']));
 			}
 			else
 			{
@@ -404,9 +418,11 @@ class MainController extends Controller {
 	public function getApartments(Request $request)
     {
 		$user = null;
+		$messages = [];
 		if(Auth::check())
 		{
 			$user = Auth::user();
+			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
 		}
 		$req = $request->all();
 		
@@ -427,7 +443,7 @@ class MainController extends Controller {
 		       shuffle($ads);
 		       $ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
         
-    	       return view("apartments",compact(['user','cart','c','ad','apartments','services','states','signals','plugins']));		
+    	       return view("apartments",compact(['user','cart','messages','c','ad','apartments','services','states','signals','plugins']));		
     }
 
 	/**
@@ -438,9 +454,11 @@ class MainController extends Controller {
 	public function getSearch(Request $request)
     {
 		$user = null;
+		$messages = [];
 		if(Auth::check())
 		{
 			$user = Auth::user();
+			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
 		}
 		else
 		{
@@ -595,9 +613,11 @@ class MainController extends Controller {
 	public function getCheckout(Request $request)
     {
 		$user = null;
+		$messages = [];
 		if(Auth::check())
 		{
 			$user = Auth::user();
+			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
 		}
 		$req = $request->all();
 		$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
@@ -614,7 +634,7 @@ class MainController extends Controller {
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
 
-    	return view("checkout",compact(['user','cart','c','ad','signals','plugins']));
+    	return view("checkout",compact(['user','cart','messages','c','ad','signals','plugins']));
     }
 	
 	
@@ -672,10 +692,11 @@ class MainController extends Controller {
 	public function getMyApartments(Request $request)
     {
 		$user = null;
+		$messages = [];
 		if(Auth::check())
 		{
 			$user = Auth::user();
-			
+			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
 			if($user->mode != "host")
 			{
 				session()->flash("valid-mode-status-error","ok");
@@ -704,7 +725,7 @@ class MainController extends Controller {
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
         
-    	return view("my-apartments",compact(['user','cart','c','ad','apartments','signals','plugins']));
+    	return view("my-apartments",compact(['user','cart','messages','c','ad','apartments','signals','plugins']));
     }
 	
 	/**
@@ -715,10 +736,11 @@ class MainController extends Controller {
 	public function getAddApartment(Request $request)
     {
 		$user = null;
+		$messages = [];
 		if(Auth::check())
 		{
 			$user = Auth::user();
-			
+			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
 			if($user->mode != "host")
 			{
 				session()->flash("valid-mode-status-error","ok");
@@ -747,7 +769,7 @@ class MainController extends Controller {
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
         
-    	return view("add-apartment",compact(['user','cart','c','ad','services','states','signals','plugins']));
+    	return view("add-apartment",compact(['user','cart','messages','c','ad','services','states','signals','plugins']));
     }
 	
 	/**
@@ -840,10 +862,11 @@ class MainController extends Controller {
 	public function getMyApartment(Request $request)
     {
 		$user = null;
+		$messages = [];
 		if(Auth::check())
 		{
 			$user = Auth::user();
-			
+			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
 			if($user->mode != "host")
 			{
 				session()->flash("valid-mode-status-error","ok");
@@ -876,7 +899,7 @@ class MainController extends Controller {
 		    shuffle($ads);
 		    $ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
         
-    	    return view("my-apartment",compact(['user','cart','c','ad','services','apartment','states','signals','plugins']));
+    	    return view("my-apartment",compact(['user','cart','messages','c','ad','services','apartment','states','signals','plugins']));
 		}
 		else
 		{

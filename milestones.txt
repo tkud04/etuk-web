@@ -3,6 +3,11 @@ Index
 about us
 faq
 
+Messages
+View message
+Send message
+Delete message
+
 Host
 Dashboard
 Apartment mode changed when booked (available/occupied)
@@ -11,7 +16,6 @@ Guest
 Search apartments
 View apartment(video tour,map)
 Add to cart
-chat with host
 checkout
 Dashboard
 Booking History
