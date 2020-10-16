@@ -31,13 +31,16 @@ class MainController extends Controller {
     {
 		$hasUnpaidOrders = null;
 		$user = null;
+		$messages = [];
 		if(Auth::check())
 		{
 			$user = Auth::user();
+			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
 		}
 		$req = $request->all();
 		$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
 		$cart = $this->helpers->getCart($user,$gid);
+		
 		$c = $this->helpers->getCategories();
 		//dd($bs);
 		$signals = $this->helpers->signals;
@@ -47,7 +50,7 @@ class MainController extends Controller {
 		$plugins = $this->helpers->getPlugins();
 		#$this->helpers->populateServices();
 		
-		#dd($hasUnpaidOrders);
+		#dd($messages);
 		
 		$popularApartments = $this->helpers->getPopularApartments();
 		
@@ -55,7 +58,7 @@ class MainController extends Controller {
 		shuffle($banners);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
 
-    	return view("index",compact(['user','cart','c','banners','hasUnpaidOrders','popularApartments','ad','signals','plugins']));
+    	return view("index",compact(['user','cart','messages','c','banners','hasUnpaidOrders','popularApartments','ad','signals','plugins']));
     }
 	
 	/**

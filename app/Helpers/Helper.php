@@ -1784,10 +1784,10 @@ function createSocial($data)
                {
 				  $temp = [];
 				  $temp['id'] = $m->id;
-				  $temp['user_id'] = $m->user_id;
-				  $temp['host'] = $m->host;
-     			  $temp['msg'] = $m->msg;
-     			  $temp['date'] = $m->created_at->format("jS F, Y");
+				  $temp['guest'] = $this->getUser($m->user_id);
+				  $temp['host'] = $this->getUser($m->host);
+				  $temp['msg'] = $m->msg;
+     			  $temp['date'] = $m->created_at->format("m/d/Y h:i A");
 				  $ret = $temp;
                }
 
@@ -1797,8 +1797,20 @@ function createSocial($data)
 		   function getMessages($dt)
            {
            	$ret = [];
-              $messages = Messages::where(['user_id' => $dt['user_id'],'host' => $dt['host']])->get();
-              
+			  $messages = null;
+			  $tt = isset($dt['type']) ? $dt['type'] : "inbox";
+			  
+			  switch($tt)
+			  {
+				  case "inbox":
+				   $messages = Messages::where(['host' => $dt['user_id']])->get();
+				  break;
+				  
+				  case "sent":
+				   $messages = Messages::where(['user_id' => $dt['user_id']])->get();
+				  break;
+			  }
+			  
               if($messages != null)
                {
 				   $messages = $messages->sortByDesc('created_at');	
