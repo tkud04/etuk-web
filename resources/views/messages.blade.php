@@ -1,6 +1,7 @@
 <?php
 $title = "Messages";
 $subtitle = "View your messages";
+$isMessageView = true;
 ?>
 @extends('layout')
 
@@ -214,3 +215,4 @@ $subtitle = "View your messages";
 			    </div>
 				
 			</section>
+@stop

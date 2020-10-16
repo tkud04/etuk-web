@@ -571,7 +571,7 @@
 			 if($m['status'] == "unread") ++$unreadMessages;
 		 }
 		 $umt = $unreadMessages == 1 ? "message" : "messages";
-		 if($unreadMessages > 0)
+		 if($unreadMessages > 0 && !isset($isMessageView))
 			 
 		 {
 		?>
