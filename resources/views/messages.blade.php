@@ -17,7 +17,14 @@ $isMessageView = true;
 @stop
 
 @section('scripts')
-<link rel="stylesheet" type="text/css" href="{{asset('lib/mCustomScrollbar/jquery.mCustomScrollbar.min.js')}}">
+<script src="{{asset('lib/mCustomScrollbar/jquery.mCustomScrollbar.min.js')}}"></script>
+<script>
+	$(document).ready(() => {
+      $('#action_menu_btn').click(() => {
+	     $('.action_menu').toggle();
+      });
+    });
+</script>
 @stop
 
 @section('content')
@@ -30,7 +37,8 @@ $isMessageView = true;
 				
 					<!-- row Start -->
 					<div class="row align-items-center">
-					  <div class="col-md-4 col-xl-3 chat"><div class="card mb-sm-3 mb-md-0 contacts_card">
+					  <div class="col-md-4 col-lg-4 chat">
+					  <div class="card mb-sm-3 mb-md-0 contacts_card">
 					<div class="card-header">
 						<div class="input-group">
 							<input type="text" placeholder="Search..." name="" class="form-control search">
@@ -40,7 +48,7 @@ $isMessageView = true;
 						</div>
 					</div>
 					<div class="card-body contacts_body">
-						<ui class="contacts">
+						<ul class="contacts">
 						<li class="active">
 							<div class="d-flex bd-highlight">
 								<div class="img_cont">
@@ -101,11 +109,12 @@ $isMessageView = true;
 								</div>
 							</div>
 						</li>
-						</ui>
+						</ul>
 					</div>
 					<div class="card-footer"></div>
-				</div></div>
-				<div class="col-md-8 col-xl-6 chat">
+				  </div>
+				</div>
+				<div class="col-md-8 col-lg-8 chat">
 					<div class="card">
 						<div class="card-header msg_head">
 							<div class="d-flex bd-highlight">
