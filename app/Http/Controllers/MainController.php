@@ -581,10 +581,10 @@ class MainController extends Controller {
 	   $ret = ['status' => "error",'message' => "nothing happened"];
 	    
 		$validator = Validator::make($req,[
-		                    'name' => 'required',
-		                    'email' => 'required|email',
 		                    'msg' => 'required',
 		                    'apartment_id' => 'required',
+		                    'gxf' => 'required',
+		                    'gsb' => 'required',
 		]);
 		
 		if($validator->fails())
@@ -593,7 +593,8 @@ class MainController extends Controller {
          }
 		 else
 		 {  
-            $req['user_id'] = $user->id;	 
+            $req['user_id'] = $req['gxf'];	 
+            $req['sent_by'] = $req['gsb'];	 
 			$this->helpers->chat($req);
 			$ret = ['status' => "ok",'message' => "sent"];
 		 }

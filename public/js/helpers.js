@@ -773,7 +773,7 @@ const search = dt => {
 	$('#guest-apt-sidebar-form').submit();
 }
 
-const sendMessage = dt => {
+const sendMessage = (dt,id) => {
 	//create request
 	const req = new Request("chat",{method: 'POST', body: dt});
 	//console.log(req);
@@ -793,8 +793,8 @@ const sendMessage = dt => {
 	   })
 	   .catch(error => {
 		    alert("Failed to send message: " + error);			
-			$('#apt-chat-loading').hide();
-		     $('#apt-chat-btn').fadeIn();
+			$(`#${id}-loading`).hide();
+		     $(`#${id}-btn`).fadeIn();
 	   })
 	   .then(res => {
 		   console.log(res);
@@ -804,10 +804,8 @@ const sendMessage = dt => {
 			     icon: 'success',
                  title: "Message sent!"
                });
-			   
-			    $('#apt-chat-loading').hide();
-		       $('#apt-chat-btn').fadeIn();	
-			    $('#apt-message-msg').val("");
+			   $(`#${id}-msg`).val("");
+			  if(id == "message-reply") window.location = "messages";
 		   }
 		   else if(res.status == "error"){
 			   let hh = `nothing happened`;
@@ -820,15 +818,10 @@ const sendMessage = dt => {
 			   Swal.fire({
 			     icon: 'error',
                  title: hh
-               }).then((result) => {
-               if (result.value) {
-                  $('#apt-chat-loading').hide();
-		          $('#apt-chat-btn').fadeIn();	
-                }
-              });		  
+               });		  
 		   }
-		  
-		   
+		   $(`#${id}-loading`).hide();
+		   $(`#${id}-btn`).fadeIn();
 		  
 	   }).catch(error => {
 		     alert("Failed to send message: " + error);			
@@ -844,7 +837,52 @@ const checkForMessages = () => {
 const showChat = (gxf) => {
 	console.log(`showing messages for ${gxf}`);
 	 let chats = msgs.filter(m => m.gxf == gxf);
-	console.log('chats: ',chats);
+	$('#chat-body').hide();
+	//display chats
+   
+   let hh = ``;
+	
+	for(let i = chats.length - 1; i >=0; i--){
+		let c = chats[i];
+		
+		//set global settings for current chat
+		if(i == 0){
+		  aapt = c.apt_id;
+		  ggxf = c.gxf;
+		} 
+    console.log('i: ',i);
+    console.log('c: ',c);
+		
+	if(c.gsb == c.gxf){
+			hh += `
+			  <div class="d-flex justify-content-start mb-4">
+								<div class="img_cont_msg">
+									<img src="${c.a}" class="rounded-circle user_img_msg">
+								</div>
+								<div class="msg_cotainer">
+									${c.m}
+									<span class="msg_time">${c.d}</span>
+								</div>
+							</div>
+			`;
+		}
+		else if(c.gsb == hhxf){
+			hh += `
+			  <div class="d-flex justify-content-end mb-4">
+								<div class="msg_cotainer_send">
+									${c.m}
+									<span class="msg_time_send">${c.d}</span>
+								</div>
+								<div class="img_cont_msg">
+							<img src="${ha}" class="rounded-circle user_img_msg">
+								</div>
+							</div>
+			`;
+		}
+	}
+	
+	$('#chat-body').html(hh);
+	$('#chat-body').fadeIn();
 }
 
 /**********************************************************************************************************************

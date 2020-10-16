@@ -1770,6 +1770,8 @@ function createSocial($data)
 			   $ret = Messages::create(['user_id' => $dt['user_id'], 
                                                       'host' => $dt['host'], 
                                                       'msg' => $dt['msg'], 
+                                                      'sent_by' => $dt['sent_by'], 
+                                                      'apartment_id' => $dt['apartment_id'], 
                                                       'status' => "unread", 
                                                       ]);
                                                       
@@ -1787,6 +1789,8 @@ function createSocial($data)
 				  $temp['id'] = $m->id;
 				  $temp['guest'] = $this->getUser($m->user_id);
 				  $temp['host'] = $this->getUser($m->host);
+				  $temp['sent_by'] = $m->sent_by;
+				  $temp['apartment_id'] = $m->apartment_id;
 				  $temp['msg'] = $m->msg;
 				  $temp['status'] = $m->status;
      			  $temp['date'] = $m->created_at->format("m/d/Y h:i A");
