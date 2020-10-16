@@ -50,7 +50,7 @@ class MainController extends Controller {
 		$plugins = $this->helpers->getPlugins();
 		#$this->helpers->populateServices();
 		
-		dd($messages);
+		#dd($messages);
 		
 		$popularApartments = $this->helpers->getPopularApartments();
 		
