@@ -195,45 +195,36 @@ $asText = $as == "available" ? "Available for booking" : "Apartment is currently
 							<div class="block-wrap">
 								
 								<div class="block-header">
-									<h4 class="block-title">Travel Days</h4>
+									<h3 class="block-title">Useful Tips</h3>
 								</div>
 								
 								<div class="block-body">
+								<?php
+								  $tips = [
+								      ['title' => "Tip Title",'msg' => "Experience with the responsive and adaptive design is strongly preferred. Also, an understanding of the entire web development process, including design, development, and deployment is preferred."],
+								      ['title' => "Tip Title",'msg' => "Experience with the responsive and adaptive design is strongly preferred. Also, an understanding of the entire web development process, including design, development, and deployment is preferred."],
+								      ['title' => "Tip Title",'msg' => "Experience with the responsive and adaptive design is strongly preferred. Also, an understanding of the entire web development process, including design, development, and deployment is preferred."],
+								  ];
+								?>
 									<ul class="qa-skill-list">
-										
+										<?php
+										for($i = 0; $i < count($tips); $i++)
+										{
+											$tip = $tips[$i];
+										?>
 										<!-- Single List -->
 										<li>
 											<div class="qa-skill-box">
-												<h4 class="qa-skill-title">Days 01</h4>
-												<h5 class="qa-subtitle">Liverpool, London</h5>
+												<h4 class="qa-skill-title"><?php echo e($tip['title']); ?></h4>
 												<div class="qa-content">
-													<p>Experience with the responsive and adaptive design is strongly preferred. Also, an understanding of the entire web development process, including design, development, and deployment is preferred.</p>
+													<p><?php echo e($tip['msg']); ?></p>
 												</div>
 											</div>
 										</li>
-										
-										<!-- Single List -->
-										<li>
-											<div class="qa-skill-box">
-												<h4 class="qa-skill-title">Days 02</h4>
-												<h5 class="qa-subtitle">Hong, Newyork</h5>
-												<div class="qa-content">
-													<p>Experience with the responsive and adaptive design is strongly preferred. Also, an understanding of the entire web development process, including design, development, and deployment is preferred.</p>
-												</div>
-											</div>
-										</li>
-										
-										<!-- Single List -->
-										<li>
-											<div class="qa-skill-box">
-												<h4 class="qa-skill-title">Days 03</h4>
-												<h5 class="qa-subtitle">Elip, Paris</h5>
-												<div class="qa-content">
-													<p>Experience with the responsive and adaptive design is strongly preferred. Also, an understanding of the entire web development process, including design, development, and deployment is preferred.</p>
-												</div>
-											</div>
-										</li>
-										
+										<?php
+										}
+										?>
+
 									</ul>
 
 								</div>

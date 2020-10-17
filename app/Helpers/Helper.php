@@ -16,6 +16,7 @@ use App\ApartmentData;
 use App\ApartmentMedia;
 use App\ApartmentTerms;
 use App\ApartmentFacilities;
+use App\ApartmentTips;
 use App\Reviews;
 use App\Ads;
 use App\Banners;
@@ -1867,6 +1868,51 @@ function createSocial($data)
 		   }
 
 
+           function createApartmentTip($dt)
+		   {
+			   $ret = ApartmentTips::create(['title' => $dt['title'], 
+                                                      'msg' => $dt['msg'] 
+                                                      ]);
+                                                      
+                return $ret;
+		   }
+		   
+		   function getApartmentTip($id)
+		   {
+			   $ret = [];
+			   $t = ApartmentTips::where('id',$id)->first();
+			   
+			   if($t != null)
+               {
+				  $temp = [];
+				  $temp['id'] = $t->id;
+				  $temp['msg'] = $t->msg;
+     			  $temp['date'] = $t->created_at->format("m/d/Y h:i A");
+				  $ret = $temp;
+               }
+
+               return $ret;			   
+		   }
+		   
+		   function getApartmentTips()
+           {
+           	$ret = [];
+			 
+			$tips = ApartmentTips::where('id','>','0')->get();
+			  
+              if($tips != null)
+               {
+				   $tips = $tips->sortByDesc('created_at');	
+			  
+				  foreach($tips as $t)
+				  {
+					  $temp = $this->getApartmentTip($t->id);
+					  array_push($ret,$temp);
+				  }
+               }                         
+                                  
+                return $ret;
+           }
 		 
 		   
 		   

@@ -404,7 +404,7 @@
 									<div class="form-group">
 										<button type="submit" id="login-submit" class="btn btn-md full-width pop-login">Submit</button>
 										<h4 class="text-primary" id="login-loading">Signing you in.. <img alt="Loading.." src="<?php echo e(asset('img/loading.gif')); ?>"></h4>
-										<h4 class="text-primary" id="login-finish"><b>Signin successful!</b><p class='text-primary'>Redirecting you to your dashboard.</p></h4>
+										<h4 class="text-primary" id="login-finish"><b>Signin successful!</b><p class='text-primary'>Redirecting..</p></h4>
 									</div>
 								
 								</form>
