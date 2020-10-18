@@ -685,6 +685,7 @@ class MainController extends Controller {
 		 {
 			$req['user_id'] = $user->id;	  
 			$req['apartment_id'] = $req['apt-id'];	  
+			$req['comment'] = $req['msg'];	  
 			$this->helpers->createReview($req);
 			session()->flash("add-review-status","ok");
 			$uu = "apartment?xf=".$req['axf'];

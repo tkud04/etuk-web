@@ -1433,6 +1433,7 @@ function updateApartment($data)
                                                       'security' => $data['security'],
                                                       'cleanliness' => $data['cleanliness'],
                                                       'comfort' => $data['comfort'],
+                                                      'comment' => $data['comment'],
                                                       'status' => "pending",
                                                       ]);
                                                       
