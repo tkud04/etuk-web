@@ -198,18 +198,10 @@ $asText = $as == "available" ? "Available for booking" : "Apartment is currently
 								</div>
 								
 								<div class="block-body">
-								<?php
-								  $tips = [
-								      ['title' => "Tip Title",'msg' => "Experience with the responsive and adaptive design is strongly preferred. Also, an understanding of the entire web development process, including design, development, and deployment is preferred."],
-								      ['title' => "Tip Title",'msg' => "Experience with the responsive and adaptive design is strongly preferred. Also, an understanding of the entire web development process, including design, development, and deployment is preferred."],
-								      ['title' => "Tip Title",'msg' => "Experience with the responsive and adaptive design is strongly preferred. Also, an understanding of the entire web development process, including design, development, and deployment is preferred."],
-								  ];
-								?>
 									<ul class="qa-skill-list">
 										<?php
-										for($i = 0; $i < count($tips); $i++)
-										{
-											$tip = $tips[$i];
+										 foreach($tips as $tip)
+								  {
 										?>
 										<!-- Single List -->
 										<li>
@@ -225,7 +217,6 @@ $asText = $as == "available" ? "Available for booking" : "Apartment is currently
 										?>
 
 									</ul>
-
 								</div>
 								
 							</div>
@@ -233,57 +224,89 @@ $asText = $as == "available" ? "Available for booking" : "Apartment is currently
 							<!-- Review Block Wrap -->
 							<div class="rating-overview">
 								<div class="rating-overview-box">
-									<span class="rating-overview-box-total">4.2</span>
-									<span class="rating-overview-box-percent">out of 5.0</span>
-									<div class="star-rating" data-rating="5"><i class="ti-star"></i><i class="ti-star"></i><i class="ti-star"></i><i class="ti-star"></i><i class="ti-star"></i>
+									<span class="rating-overview-box-total">{{$stars}}</span>
+									<span class="rating-overview-box-percent">out of 5</span>
+									<div class="star-rating" data-rating="5">
+									 @for($i = 0; $i < floor($stars); $i++)
+									  <i class="ti-star"></i>
+									 @endfor
 									</div>
 								</div>
 
 								<div class="rating-bars">
+								<?php
+								$ratingColors = ['high' => "4",'mid' => "3",'low' => "2.1",'poor' => "2",];
+								$rr = [
+								  ['name' => "Service",'value' => "0"],
+								  ['name' => "Security",'value' => "0"],
+								  ['name' => "Location",'value' => "0"],
+								  ['name' => "Cleanliness",'value' => "0"],
+								  ['name' => "Comfort",'value' => "0"],
+								];
+								$reviewsLength = count($reviews);
+								
+								if($reviewsLength > 0)
+								{
+									$service = 0; $security = 0; $location = 0; $cleanliness = 0; $comfort = 0;
+									
+									foreach($reviews as $r)
+									{
+										$service += $r['service'];
+										$security += $r['security'];
+										$location += $r['location'];
+										$cleanliness += $r['cleanliness'];
+										$comfort += $r['comfort'];
+									}
+									
+									$rr = [
+								      ['name' => "Service",'value' => $service / $reviewsLength],
+								      ['name' => "Security",'value' => $security / $reviewsLength],
+								      ['name' => "Location",'value' => $location / $reviewsLength],
+								      ['name' => "Cleanliness",'value' => $cleanliness / $reviewsLength],
+								      ['name' => "Comfort",'value' => $comfort / $reviewsLength],
+								   ];
+								}
+								 foreach($rr as $r)
+								 {
+									 $rc = "poor";
+									 $n = $r['name']; $v = $r['value'];
+									 
+									 if($v > 2 && $v <= 2.9)
+									 {
+										 $rc = "low";
+									 }
+									 elseif($v > 3 && $v <= 3.9)
+									 {
+										 $rc = "mid";
+									 }
+									 elseif($v > 3.9)
+									 {
+										 $rc = "high";
+									 }
+								?>
 										<div class="rating-bars-item">
-											<span class="rating-bars-name">Service</span>
+											<span class="rating-bars-name">{{ucwords($n)}}</span>
 											<span class="rating-bars-inner">
-												<span class="rating-bars-rating high" data-rating="4.7">
-													<span class="rating-bars-rating-inner" style="width: 85%;"></span>
+												<span class="rating-bars-rating {{$rc}}" data-rating="{{$v}}">
+													<span class="rating-bars-rating-inner" style="width: {{$v * 20}}%;"></span>
 												</span>
-												<strong>4.7</strong>
+												<strong>{{$v}}</strong>
 											</span>
 										</div>
-										<div class="rating-bars-item">
-											<span class="rating-bars-name">Value for Money</span>
-											<span class="rating-bars-inner">
-												<span class="rating-bars-rating good" data-rating="3.9">
-													<span class="rating-bars-rating-inner" style="width: 75%;"></span>
-												</span>
-												<strong>3.9</strong>
-											</span>
-										</div>
-										<div class="rating-bars-item">
-											<span class="rating-bars-name">Location</span>
-											<span class="rating-bars-inner">
-												<span class="rating-bars-rating mid" data-rating="3.2">
-													<span class="rating-bars-rating-inner" style="width: 52.2%;"></span>
-												</span>
-												<strong>3.2</strong>
-											</span>
-										</div>
-										<div class="rating-bars-item">
-											<span class="rating-bars-name">Cleanliness</span>
-											<span class="rating-bars-inner">
-												<span class="rating-bars-rating poor" data-rating="2.0">
-													<span class="rating-bars-rating-inner" style="width:20%;"></span>
-												</span>
-												<strong>2.0</strong>
-											</span>
-										</div>
+								<?php
+								}
+								?>
+										
 								</div>
 							</div>
 							
 							<!-- Reviews Comments -->
 							<div class="list-single-main-item fl-wrap">
 								<div class="list-single-main-item-title fl-wrap">
-									<h3>Item Reviews -  <span> 3 </span></h3>
+									<h3>Item Reviews -  <span> {{$reviewsLength}} </span></h3>
 								</div>
+								
+								@if($reviewsLength > 0)
 								<div class="reviews-comments-wrap">
 									<!-- reviews-comments-item -->  
 									<div class="reviews-comments-item">
@@ -346,10 +369,15 @@ $asText = $as == "available" ? "Available for booking" : "Apartment is currently
 									<!--reviews-comments-item end-->
 									
 								</div>
+								@else
+								<div>
+								  <h4>Be the first to rate this apartment! <a href="javascript:void(0)" id="apartment-add-first-review-btn" class="btn btn-theme">Add review</a></h4>
+								</div>
+								@endif
 							</div>
 							
 							<!-- Add Review Wrap -->
-							<div class="block-wrap">
+							<div class="block-wrap" id="apartment-add-review">
 								
 								<div class="block-header">
 									<h4 class="block-title">Add Review</h4>

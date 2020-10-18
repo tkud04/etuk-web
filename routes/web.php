@@ -42,6 +42,7 @@ Route::get('sm', 'MainController@getSwitchMode');
 Route::get('messages', 'MainController@getMessages');
 
 
+
 //Guests
 Route::get('apartments', 'MainController@getApartments');
 Route::get('apartment', 'MainController@getApartment');

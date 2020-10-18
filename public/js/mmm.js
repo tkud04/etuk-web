@@ -486,9 +486,7 @@ $(document).ready(function() {
 	//APARTMENT
 	$('#apartment-hostchat-btn').click(e => {
 		e.preventDefault();
-		document.querySelector('#apartment-hostchat').scrollIntoView({
-          behavior: 'smooth' 
-        });
+		scrollTo({'id': "#apartment-hostchat"});
 			
 	});
 	
@@ -517,6 +515,12 @@ $(document).ready(function() {
 		   fd.append("msg",msg);
 			sendMessage(fd,"apt-chat");
 		}
+			
+	});
+	
+	$('#apartment-add-first-review-btn').click(e => {
+		e.preventDefault();
+		scrollTo({'id': "#apartment-add-review"});
 			
 	});
 	

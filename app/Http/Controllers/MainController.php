@@ -48,7 +48,7 @@ class MainController extends Controller {
 		$ads = $this->helpers->getAds("wide-ad");
 		$banners = $this->helpers->getBanners();
 		$plugins = $this->helpers->getPlugins();
-		#$this->helpers->populateServices();
+		#$this->helpers->populateTips();
 		
 		#dd($messages);
 		
@@ -424,6 +424,7 @@ class MainController extends Controller {
 	    	$ads = $this->helpers->getAds("wide-ad");
 		    $plugins = $this->helpers->getPlugins();
 		    $services = $this->helpers->getServices();
+		    $tips = $this->helpers->getApartmentTips();
 		
 		    $apartment = $this->helpers->getApartment($req['xf'],['host' => true,'imgId' => true]);
 			
@@ -431,7 +432,7 @@ class MainController extends Controller {
 			{
 			   shuffle($ads);
 		       $ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
-    	       return view("apartment",compact(['user','cart','messages','c','ad','apartment','services','states','signals','plugins']));
+    	       return view("apartment",compact(['user','cart','messages','c','ad','apartment','services','tips','states','signals','plugins']));
 			}
 			else
 			{

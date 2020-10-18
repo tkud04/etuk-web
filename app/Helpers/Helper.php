@@ -1468,6 +1468,7 @@ function updateApartment($data)
 				  $temp = [];
 				  $temp['id'] = $r->id;
 				  $temp['apartment_id'] = $r->apartment_id;
+				  $temp['user'] = $this->getUser($r->user_id);
      			  $temp['service'] = $r->service;
      			  $temp['location'] = $r->location;
      			  $temp['security'] = $r->security;
@@ -1886,6 +1887,7 @@ function createSocial($data)
                {
 				  $temp = [];
 				  $temp['id'] = $t->id;
+				  $temp['title'] = $t->title;
 				  $temp['msg'] = $t->msg;
      			  $temp['date'] = $t->created_at->format("m/d/Y h:i A");
 				  $ret = $temp;
@@ -1913,6 +1915,16 @@ function createSocial($data)
                                   
                 return $ret;
            }
+		   
+		   function populateTips()
+		   {
+			     $tips = [
+								      ['title' => "Tip 1",'msg' => "Experience with the responsive and adaptive design is strongly preferred. Also, an understanding of the entire web development process, including design, development, and deployment is preferred."],
+								      ['title' => "Tip 2",'msg' => "Experience with the responsive and adaptive design is strongly preferred. Also, an understanding of the entire web development process, including design, development, and deployment is preferred."],
+								      ['title' => "Tip 3",'msg' => "Experience with the responsive and adaptive design is strongly preferred. Also, an understanding of the entire web development process, including design, development, and deployment is preferred."],
+								  ];
+				foreach($tips as $t) $this->createApartmentTip($t);
+		   }
 		 
 		   
 		   
