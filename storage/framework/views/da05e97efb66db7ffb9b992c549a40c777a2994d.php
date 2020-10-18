@@ -4,6 +4,8 @@ $subtitle = "View this apartment";
 
 $host = $apartment['host'];
 $hostName = $host['fname']." ".substr($host['lname'],0,1);
+$himg = $host['avatar'] == ""  ? asset("img/avatar.png") : $host['avatar'][0];
+$img = $user['avatar'] == ""  ? asset("img/avatar.png") : $user['avatar'][0];
 $hostNum = "Send ".$host['fname']." a message to book this apartment.";
 $myName = ""; $myEmail = "";
 
@@ -379,7 +381,15 @@ $asText = $as == "available" ? "Available for booking" : "Apartment is currently
 							
 							<!-- Add Review Wrap -->
 							<div class="block-wrap" id="apartment-add-review">
-								
+								<?php
+								$ars = [
+								  ['name' => "Service",'id' => "svc"],
+								  ['name' => "Security",'id' => "sec"],
+								  ['name' => "Location",'id' => "loc"],
+								  ['name' => "Cleanliness",'id' => "cln"],
+								  ['name' => "Comfort",'id' => "cmf"],
+								];
+								?>
 								<div class="block-header">
 									<h4 class="block-title">Add Review</h4>
 								</div>
@@ -390,77 +400,29 @@ $asText = $as == "available" ? "Available for booking" : "Apartment is currently
 										<div class="row">
 											<div class="col-lg-8 col-md-8 col-sm-12">
 												<div class="row">
-												
+												   <?php
+												    foreach($ars as $a)
+													{
+												   ?>
 													<div class="col-lg-6 col-md-6 col-sm-12">
-														<label>Service?</label>
+														<label><?php echo e(ucwords($a['name'])); ?>?</label>
 														<div class="rate-stars">
-															<input type="checkbox" id="st1" value="1" />
-															<label for="st1"></label>
-															<input type="checkbox" id="st2" value="2" />
-															<label for="st2"></label>
-															<input type="checkbox" id="st3" value="3" />
-															<label for="st3"></label>
-															<input type="checkbox" id="st4" value="4" />
-															<label for="st4"></label>
-															<input type="checkbox" id="st5" value="5" />
-															<label for="st5"></label>
+														    <?php for($i = 0; $i < 5; $i++): ?>
+															<input type="checkbox" id="<?php echo e($a['id']); ?>-<?php echo e($i + 1); ?>" value="<?php echo e($i + 1); ?>" />
+															<label for="<?php echo e($a['id']); ?>-<?php echo e($i + 1); ?>"></label>
+															<?php endfor; ?>
+															
 														</div>
 													</div>
-													
-													<div class="col-lg-6 col-md-6 col-sm-12">
-														<label>Value for Money?</label>
-														<div class="rate-stars">
-															<input type="checkbox" id="vst1" value="1" />
-															<label for="vst1"></label>
-															<input type="checkbox" id="vst2" value="2" />
-															<label for="vst2"></label>
-															<input type="checkbox" id="vst3" value="3" />
-															<label for="vst3"></label>
-															<input type="checkbox" id="vst4" value="4" />
-															<label for="vst4"></label>
-															<input type="checkbox" id="vst5" value="5" />
-															<label for="vst5"></label>
-														</div>
-													</div>
-													
-													<div class="col-lg-6 col-md-6 col-sm-12">
-														<label>Cleanliness?</label>
-														<div class="rate-stars">
-															<input type="checkbox" id="cst1" value="1" />
-															<label for="cst1"></label>
-															<input type="checkbox" id="cst2" value="2" />
-															<label for="cst2"></label>
-															<input type="checkbox" id="cst3" value="3" />
-															<label for="cst3"></label>
-															<input type="checkbox" id="cst4" value="4" />
-															<label for="cst4"></label>
-															<input type="checkbox" id="cst5" value="5" />
-															<label for="cst5"></label>
-														</div>
-													</div>
-													
-													<div class="col-lg-6 col-md-6 col-sm-12">
-														<label>Location?</label>
-														<div class="rate-stars">
-															<input type="checkbox" id="lst1" value="1" />
-															<label for="lst1"></label>
-															<input type="checkbox" id="lst2" value="2" />
-															<label for="lst2"></label>
-															<input type="checkbox" id="lst3" value="3" />
-															<label for="lst3"></label>
-															<input type="checkbox" id="lst4" value="4" />
-															<label for="lst4"></label>
-															<input type="checkbox" id="lst5" value="5" />
-															<label for="lst5"></label>
-														</div>
-													</div>
-													
+													<?php
+													}
+													?>
 												</div>
 											</div>
 											
 											<div class="col-lg-4 col-md-4 col-sm-12">
 												<div class="avg-total-pilx">
-													<h4 class="high">4.9</h4>
+													<h4 class="high"><?php echo e($stars); ?></h4>
 													<span>Average Ratting</span>
 												</div>
 											</div>
