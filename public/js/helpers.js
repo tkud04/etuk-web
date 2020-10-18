@@ -891,6 +891,31 @@ const scrollTo = dt => {
         });
 }
 
+const setUserRating = dt => {
+	
+	switch(dt.r){
+		case "sec":
+		  sec = dt.v;
+		break;
+		
+		case "svc":
+		  svc = dt.v;
+		break;
+		
+		case "loc":
+		  loc = dt.v;
+		break;
+		
+		case "cln":
+		  cln = dt.v;
+		break;
+		
+		case "cmf":
+		  cmf = dt.v;
+		break;
+	}
+}
+
 /**********************************************************************************************************************
                                                      OLD METHODS
 /**********************************************************************************************************************/

@@ -43,6 +43,10 @@ $asText = $as == "available" ? "Available for booking" : "Apartment is currently
 
 
 <?php $__env->startSection('content'); ?>
+<script>
+let sec = 0, svc = 0, loc = 0, cln = 0, cmf = 0;
+</script>
+
 <!-- ============================ Hero Banner  Start================================== -->
 			<div class="featured-slick">
 				<div class="featured-slick-slide">
@@ -381,6 +385,12 @@ $asText = $as == "available" ? "Available for booking" : "Apartment is currently
 							
 							<!-- Add Review Wrap -->
 							<div class="block-wrap" id="apartment-add-review">
+							 <form method="post" action="add-review" id="apartment-add-review-form">
+							   <?php echo csrf_field(); ?>
+
+							   <input type="hidden" name="apt-id" value="<?php echo e($apartment['apartment_id']); ?>">
+							   <input type="hidden" name="axf" value="<?php echo e($apartment['url']); ?>">
+							   
 								<?php
 								$ars = [
 								  ['name' => "Service",'id' => "svc"],
@@ -390,6 +400,13 @@ $asText = $as == "available" ? "Available for booking" : "Apartment is currently
 								  ['name' => "Comfort",'id' => "cmf"],
 								];
 								?>
+								
+							   <input type="hidden" id="apartment-add-review-svc" name="service" value="0">
+							   <input type="hidden" id="apartment-add-review-sec" name="security" value="0">
+							   <input type="hidden" id="apartment-add-review-loc" name="location" value="0">
+							   <input type="hidden" id="apartment-add-review-cln" name="cleanliness" value="0">
+							   <input type="hidden" id="apartment-add-review-cmf" name="comfort" value="0">
+								
 								<div class="block-header">
 									<h4 class="block-title">Add Review</h4>
 								</div>
@@ -407,9 +424,9 @@ $asText = $as == "available" ? "Available for booking" : "Apartment is currently
 													<div class="col-lg-6 col-md-6 col-sm-12">
 														<label><?php echo e(ucwords($a['name'])); ?>?</label>
 														<div class="rate-stars">
-														    <?php for($i = 0; $i < 5; $i++): ?>
-															<input type="checkbox" id="<?php echo e($a['id']); ?>-<?php echo e($i + 1); ?>" value="<?php echo e($i + 1); ?>" />
-															<label for="<?php echo e($a['id']); ?>-<?php echo e($i + 1); ?>"></label>
+														    <?php for($i = 5; $i > 0; $i--): ?>
+															<input type="checkbox" id="<?php echo e($a['id']); ?>-<?php echo e($i); ?>" onclick="setUserRating({r:'<?php echo e($a['id']); ?>',v:'<?php echo e($i); ?>'})" value="<?php echo e($i); ?>" />
+															<label for="<?php echo e($a['id']); ?>-<?php echo e($i); ?>"></label>
 															<?php endfor; ?>
 															
 														</div>
@@ -423,7 +440,7 @@ $asText = $as == "available" ? "Available for booking" : "Apartment is currently
 											<div class="col-lg-4 col-md-4 col-sm-12">
 												<div class="avg-total-pilx">
 													<h4 class="high"><?php echo e($stars); ?></h4>
-													<span>Average Ratting</span>
+													<span>Average Rating</span>
 												</div>
 											</div>
 										</div>
@@ -432,31 +449,17 @@ $asText = $as == "available" ? "Available for booking" : "Apartment is currently
 									<div class="review-form-box form-submit">
 										<form>
 											<div class="row">
-												
-												<div class="col-lg-6 col-md-6 col-sm-12">
-													<div class="form-group">
-														<label>Name</label>
-														<input class="form-control" type="text" placeholder="Your Name">
-													</div>
-												</div>
-												
-												<div class="col-lg-6 col-md-6 col-sm-12">
-													<div class="form-group">
-														<label>Email</label>
-														<input class="form-control" type="email" placeholder="Your Email">
-													</div>
-												</div>
-												
+
 												<div class="col-lg-12 col-md-12 col-sm-12">
 													<div class="form-group">
 														<label>Review</label>
-														<textarea class="form-control ht-140" placeholder="Review"></textarea>
+														<textarea class="form-control ht-140" name="msg" id="apartment-add-review-msg" placeholder="Review"></textarea>
 													</div>
 												</div>
 												
 												<div class="col-lg-12 col-md-12 col-sm-12">
 													<div class="form-group">
-														<button type="submit" class="btn btn-theme">Submit Review</button>
+														<button class="btn btn-theme" id="apartment-add-review-btn">Submit Review</button>
 													</div>
 												</div>
 												
@@ -465,7 +468,7 @@ $asText = $as == "available" ? "Available for booking" : "Apartment is currently
 									</div>
 									
 								</div>
-								
+								</form>
 							</div>
 							
 						</div>

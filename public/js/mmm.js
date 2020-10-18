@@ -524,6 +524,37 @@ $(document).ready(function() {
 			
 	});
 	
+	$('#apartment-add-review-btn').click(e => {
+		e.preventDefault();
+		
+		/**
+		 <input type="hidden" id="apartment-add-review-svc" name="svc" value="0">
+							   <input type="hidden" id="apartment-add-review-sec" name="sec" value="0">
+							   <input type="hidden" id="apartment-add-review-loc" name="loc" value="0">
+							   <input type="hidden" id="apartment-add-review-cln" name="cln" value="0">
+							   <input type="hidden" id="apartment-add-review-cmf" name="cmf" value="0">
+		**/
+		
+		let msg = $('#apartment-add-review-msg').val();
+
+        let validation = sec < 1 || svc < 1 || loc < 1 || cln < 1 || cmf < 1 || msg == "";
+		
+        if(validation){
+			Swal.fire({
+			 icon: 'error',
+             title: "Please fill all required fields."
+           });
+		}
+        else{
+			$('#apartment-add-review-sec').val(sec);
+			$('#apartment-add-review-svc').val(svc);
+			$('#apartment-add-review-loc').val(loc);
+			$('#apartment-add-review-cln').val(cln);
+			$('#apartment-add-review-cmf').val(cmf);
+			$('#apartment-add-review-form').submit();
+		}		
+	});
+	
 	
 	//CHAT
 	$('#message-reply-btn').click(e => {

@@ -52,6 +52,7 @@ class Helper implements HelperContract
 					 "delete-apartment-status" => "Apartment removed.",
 					 "update-apartment-status" => "Apartment information updated.",
 					 "oauth-sp-status" => "Welcome to Etuk NG! You can now use your new account.",
+					 "add-review-status" => "Thanks for your review! It will be displayed after review by our admins.",
 					 "invalid-apartment-id-status-error" => "Apartment not found.",
 					 "oauth-status-error" => "Social login failed, please try again.",
                      ],
@@ -1423,9 +1424,9 @@ function updateApartment($data)
   }  
 		   
 		   
-  function createReview($user,$data)
+  function createReview($data)
            {
-			   $ret = Reviews::create(['user_id' => $user->id, 
+			   $ret = Reviews::create(['user_id' => $data['user_id'], 
                                                       'apartment_id' => $data['apartment_id'], 
                                                       'service' => $data['service'],
                                                       'location' => $data['location'],
@@ -1442,7 +1443,7 @@ function updateApartment($data)
            {
            	$ret = [];
               $reviews = Reviews::where('apartment_id',$apartment_id)
-			                    ->where('status',"enabled")->get();
+			                    ->where('status',"approved")->get();
               $reviews = $reviews->sortByDesc('created_at');	
 			  
               if($reviews != null)

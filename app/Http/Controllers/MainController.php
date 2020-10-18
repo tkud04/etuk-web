@@ -668,11 +668,11 @@ class MainController extends Controller {
 		$validator = Validator::make($req,[
 		                    'apt-id' => 'required',
 		                    'axf' => 'required',
-		                    'svc' => 'required',
-		                    'sec' => 'required',
-		                    'loc' => 'required',
-		                    'cln' => 'required',
-		                    'cmf' => 'required',
+		                    'service' => 'required',
+		                    'security' => 'required',
+		                    'location' => 'required',
+		                    'cleanliness' => 'required',
+		                    'comfort' => 'required',
 		                    'msg' => 'required'
 		]);
 		
@@ -684,6 +684,7 @@ class MainController extends Controller {
 		 else
 		 {
 			$req['user_id'] = $user->id;	  
+			$req['apartment_id'] = $req['apt-id'];	  
 			$this->helpers->createReview($req);
 			session()->flash("add-review-status","ok");
 			$uu = "apartment?xf=".$req['axf'];
