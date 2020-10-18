@@ -48,7 +48,7 @@ class MainController extends Controller {
 		$ads = $this->helpers->getAds("wide-ad");
 		$banners = $this->helpers->getBanners();
 		$plugins = $this->helpers->getPlugins();
-		$this->helpers->populateTips();
+		#$this->helpers->populateTips();
 		
 		#dd($messages);
 		
