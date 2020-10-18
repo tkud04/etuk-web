@@ -50,6 +50,7 @@ Route::get('chat-history', 'MainController@getChatHistory');
 Route::get('chat', 'MainController@getChat');
 Route::get('test-chat', 'MainController@getTestChat');
 Route::post('chat', 'MainController@postChat');
+Route::post('add-review', 'MainController@postAddReview');
 Route::get('checkout', 'MainController@getCheckout');
 Route::post('checkout', 'MainController@postCheckout');
 Route::get('search', 'MainController@getSearch');

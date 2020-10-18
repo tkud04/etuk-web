@@ -646,6 +646,52 @@ class MainController extends Controller {
     }
 	
 	/**
+	 * Handle profile update.
+	 *
+	 * @return Response
+	 */
+	public function postAddReview(Request $request)
+    {
+		$user = null;
+		if(Auth::check())
+		{
+			$user = Auth::user();
+		}
+		else
+		{
+			return redirect()->intended('/');
+		}
+
+		$req = $request->all();
+       #dd($req);
+	    
+		$validator = Validator::make($req,[
+		                    'apt-id' => 'required',
+		                    'axf' => 'required',
+		                    'svc' => 'required',
+		                    'sec' => 'required',
+		                    'loc' => 'required',
+		                    'cln' => 'required',
+		                    'cmf' => 'required',
+		                    'msg' => 'required'
+		]);
+		
+		if($validator->fails())
+         {
+			 $messages = $validator->messages();
+             return redirect()->back()->withInput()->with('errors',$messages);
+         }
+		 else
+		 {
+			$req['user_id'] = $user->id;	  
+			$this->helpers->createReview($req);
+			session()->flash("add-review-status","ok");
+			$uu = "apartment?xf=".$req['axf'];
+			return redirect()->intended($uu);
+		 }
+    }
+	
+	/**
 	 * Show the about page.
 	 *
 	 * @return Response

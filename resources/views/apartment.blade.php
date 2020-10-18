@@ -380,6 +380,10 @@ $asText = $as == "available" ? "Available for booking" : "Apartment is currently
 							
 							<!-- Add Review Wrap -->
 							<div class="block-wrap" id="apartment-add-review">
+							 <form method="post" action="" id="apartment-add-review-form">
+							   {!! csrf_field() !!}
+							   <input type="hidden" name="apt-id" value="{{$apartment['apartment_id']}}">
+							   <input type="hidden" name="axf" value="{{$apartment['url']}}">
 								<?php
 								$ars = [
 								  ['name' => "Service",'id' => "svc"],
@@ -435,27 +439,27 @@ $asText = $as == "available" ? "Available for booking" : "Apartment is currently
 												<div class="col-lg-6 col-md-6 col-sm-12">
 													<div class="form-group">
 														<label>Name</label>
-														<input class="form-control" type="text" placeholder="Your Name">
+														<input class="form-control" name="" type="text" placeholder="Your Name" readonly>
 													</div>
 												</div>
 												
 												<div class="col-lg-6 col-md-6 col-sm-12">
 													<div class="form-group">
 														<label>Email</label>
-														<input class="form-control" type="email" placeholder="Your Email">
+														<input class="form-control" type="email" placeholder="Your Email" readonly>
 													</div>
 												</div>
 												
 												<div class="col-lg-12 col-md-12 col-sm-12">
 													<div class="form-group">
 														<label>Review</label>
-														<textarea class="form-control ht-140" placeholder="Review"></textarea>
+														<textarea class="form-control ht-140" name="msg" id="apartment-add-review-msg" placeholder="Review"></textarea>
 													</div>
 												</div>
 												
 												<div class="col-lg-12 col-md-12 col-sm-12">
 													<div class="form-group">
-														<button type="submit" class="btn btn-theme">Submit Review</button>
+														<button class="btn btn-theme" id="apartment-add-review-btn">Submit Review</button>
 													</div>
 												</div>
 												
@@ -464,7 +468,7 @@ $asText = $as == "available" ? "Available for booking" : "Apartment is currently
 									</div>
 									
 								</div>
-								
+								</form>
 							</div>
 							
 						</div>
