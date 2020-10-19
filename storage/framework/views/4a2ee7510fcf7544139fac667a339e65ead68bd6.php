@@ -6,11 +6,21 @@ $checkoutHead = <<<EOD
                                 <div class="checkout-head">
 									<ul>
 									    <li></li>
-										<li class="active"><span class="add-apartment-ticker-1">1</span>Checkout</li>
+										<li class="active"><span class="add-apartment-ticker-1">1</span>CHECKOUT</li>
 										<li></li>
 									</ul>
 								</div>
 EOD;
+
+ //for tests
+			  $secureCheckout = "http://etukng.tobi-demos.tk/checkout";
+			  $unsecureCheckout = url('checkout');
+			  $securePay = "http://etukng.tobi-demos.tk/pay";
+			  $unsecurePay = url('pay');
+			  
+			  $isSecure = (isset($secure) && $secure);
+			  $pay = $isSecure ? $securePay : $unsecurePay;
+			  $checkout = $isSecure ? $secureCheckout : $unsecureCheckout;
 ?>
 
 
@@ -26,7 +36,7 @@ EOD;
 let selectedSide = "1", facilities = [], aptImages = [], aptImgCount = 1, aptCover = "none";
 
 $(document).ready(() => {
-aptFinalPreview("add-apartment");	
+checkoutPreview();	
 });
 
 </script>
@@ -50,7 +60,7 @@ aptFinalPreview("add-apartment");
 									<div class="row">
 										<div class="col-md-12 col-lg-12">
 										
-											<ul class="booking-detail-list" id="add-apartment-final-preview">
+											<ul class="booking-detail-list" id="checkout-preview">
 												
 											</ul>
 											<hr>
@@ -65,9 +75,11 @@ aptFinalPreview("add-apartment");
 												<a href="javascript:void(0)" id="add-apartment-side-3-prev" class="btn btn-theme">Back</a>
 												<a href="javascript:void(0)" id="add-apartment-side-3-next" class="btn btn-theme">Submit</a>
 											</div>
+											<!--
 											<div class="form-group text-center" id="add-apartment-loading">
 												 <h4>Adding apartment.. <img src="<?php echo e(asset('img/loading.gif')); ?>" class="img img-fluid" alt="Adding apartment.."></h4><br>
 											</div>
+											-->
 										</div>
 									</div>
 								</div>

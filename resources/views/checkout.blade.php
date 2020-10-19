@@ -6,7 +6,7 @@ $checkoutHead = <<<EOD
                                 <div class="checkout-head">
 									<ul>
 									    <li></li>
-										<li class="active"><span class="add-apartment-ticker-1">1</span>Checkout</li>
+										<li class="active"><span class="add-apartment-ticker-1">1</span>CHECKOUT</li>
 										<li></li>
 									</ul>
 								</div>
@@ -21,6 +21,15 @@ EOD;
 			  $isSecure = (isset($secure) && $secure);
 			  $pay = $isSecure ? $securePay : $unsecurePay;
 			  $checkout = $isSecure ? $secureCheckout : $unsecureCheckout;
+			  
+$name = $apartment['name'];
+$terms = $apartment['terms'];
+$adata = $apartment['data'];
+$address = $apartment['address'];
+$location = $address['city'].", ".$address['state'];
+$facilities = $apartment['facilities'];
+$cmedia = $apartment['cmedia'];
+$imgs = $cmedia['images'];
 ?>
 @extends('layout')
 
@@ -36,7 +45,7 @@ EOD;
 let selectedSide = "1", facilities = [], aptImages = [], aptImgCount = 1, aptCover = "none";
 
 $(document).ready(() => {
-aptFinalPreview("add-apartment");	
+checkoutPreview();	
 });
 
 </script>
@@ -59,8 +68,18 @@ aptFinalPreview("add-apartment");
 									<div class="row">
 										<div class="col-md-12 col-lg-12">
 										
-											<ul class="booking-detail-list" id="add-apartment-final-preview">
-												
+											<ul class="booking-detail-list" id="checkout-preview">
+												<li>Apartment name<span>{{$name}}</span></li>
+												<li>Adults<span>{{$a}}</span></li>
+												<li>Children<span>${aptMaxChildren}</span></li>
+												<li>Check in<span>${aptCheckin}</span></li>
+												<li>Check out<span>${aptCheckout}</span></li>
+												<li>Price per day<span>&#8358;${aptAmount}</span></li>
+												<li>Total<span>&#8358;${dt.total}</span></li>
+												<li>Payment type<span>Card</span></li>
+												<li>ID required on check-in<span>${dt.aptIdRequired}</span></li>
+												<li>Children<span>${aptChildren}</span></li>
+												<li>Facilities & services<span>${ff}</span></li>
 											</ul>
 											<hr>
 											
@@ -74,9 +93,11 @@ aptFinalPreview("add-apartment");
 												<a href="javascript:void(0)" id="add-apartment-side-3-prev" class="btn btn-theme">Back</a>
 												<a href="javascript:void(0)" id="add-apartment-side-3-next" class="btn btn-theme">Submit</a>
 											</div>
+											<!--
 											<div class="form-group text-center" id="add-apartment-loading">
 												 <h4>Adding apartment.. <img src="{{asset('img/loading.gif')}}" class="img img-fluid" alt="Adding apartment.."></h4><br>
 											</div>
+											-->
 										</div>
 									</div>
 								</div>

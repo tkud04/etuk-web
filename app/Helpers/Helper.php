@@ -58,6 +58,7 @@ class Helper implements HelperContract
 					 "add-review-status-error" => "Please sign in to add a review.",
 					 "duplicate-review-status-error" => "You have added a review already.",
 					 "oauth-status-error" => "Social login failed, please try again.",
+					 "checkout-auth-status-error" => "Please sign in to book an apartment.",
                      ],
                      'errors'=> ["login-status-error" => "Wrong username or password, please try again.",
 					 "signup-status-error" => "There was a problem creating your account, please try again.",

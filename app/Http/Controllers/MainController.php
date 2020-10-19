@@ -785,7 +785,56 @@ class MainController extends Controller {
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
 
-    	return view("checkout",compact(['user','cart','messages','ss','services','states','c','ad','signals','plugins']));
+    	return view("checkout",compact(['user','cart','messages','secure','services','states','c','ad','signals','plugins']));
+    }
+	
+	/**
+	 * Handle vote review.
+	 *
+	 * @return Response
+	 */
+	public function postCheckout(Request $request)
+    {
+		$user = null;
+		 
+		if(Auth::check())
+		{
+			$user = Auth::user();
+			
+			$req = $request->all();
+       dd($req);
+	    
+		$validator = Validator::make($req,[
+		                    'rxf' => 'required|numeric',
+		                    'type' => 'required',
+		                    'xf' => 'required|numeric|min:1'
+		]);
+		
+		if($validator->fails())
+         {
+			 $ret['message'] = "validation";
+         }
+		 else
+		 {  
+	        if($this->helpers->hasVotedReview(['user_id' => $user->id,'review_id' => $req['rxf']]))
+			{
+				$ret['message'] = "duplicate";
+			}
+			else
+			{
+			   $req['user_id'] = $user->id;	 
+			   $r = $this->helpers->voteReview($req);
+			   $ret = ['status' => "ok",'data' => $r];
+			}
+            
+		 }
+		}
+		else
+		{
+			session()->flash("checkout-auth-status-error","ok");
+			return redirect()->back();
+		}
+		 
     }
 	
 	

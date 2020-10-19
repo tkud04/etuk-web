@@ -556,6 +556,26 @@ $(document).ready(function() {
 		}		
 	});
 	
+	$('#apartment-book-now-btn').click(e => {
+		e.preventDefault();
+		
+		/**let msg = $('#apartment-add-review-msg').val();
+
+        let validation = sec < 1 || svc < 1 || loc < 1 || cln < 1 || cmf < 1 || msg == "";
+		**/
+		let validation = false;
+		
+        if(validation){
+			Swal.fire({
+			 icon: 'error',
+             title: "Please fill all required fields."
+           });
+		}
+        else{
+			$('#checkout-form').submit();
+		}		
+	});
+	
 	
 	//CHAT
 	$('#message-reply-btn').click(e => {

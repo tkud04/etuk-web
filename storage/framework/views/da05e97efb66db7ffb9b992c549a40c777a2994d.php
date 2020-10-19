@@ -465,7 +465,9 @@ let sec = 0, svc = 0, loc = 0, cln = 0, cmf = 0;
 							
 							<div class="side-booking-wraps ">
 								<div class="side-booking-wrap hotel-booking">
-						
+						         <form method="post" id="checkout-form" action="<?php echo e(url('checkout')); ?>">
+									 <?php echo csrf_field(); ?>
+
 									<div class="side-booking-header light">
 										<div class="author-with-rate">
 											<div class="head-author">
@@ -485,7 +487,6 @@ let sec = 0, svc = 0, loc = 0, cln = 0, cmf = 0;
 												    <?php endfor; ?>
 													<span><?php echo e(count($reviews)); ?> Reviews</span>
 												</div>
-												
 											</div>
 										</div>
 									</div>
@@ -577,14 +578,14 @@ let sec = 0, svc = 0, loc = 0, cln = 0, cmf = 0;
 												<h5 class="st-subtitle">Total:</h5>
 												<span>Expected Tax</span>
 											</div>
-											<h4 class="stbooking-title">&#8358;<?php echo e(number_format($adata['amount'],2)); ?></h4>
+											<h4 class="stbooking-title" id="checkout-total">&#8358;<?php echo e(number_format($adata['amount'],2)); ?></h4>
 										</div>
 										<div class="stbooking-footer-bottom">
 											<a href="javascript:void(0)" id="apartment-hostchat-btn" class="books-btn btn-theme">Chat with host</a>
-											<a href="<?php echo e(url('checkout')); ?>" id="apartment-book-now-btn" class="books-btn black">Checkout</a>
+											<a href="javascript:void(0)" id="apartment-book-now-btn" class="books-btn black">Checkout</a>
 										</div>
 									</div>
-									
+								  </form>
 								</div>
 							</div>
 							

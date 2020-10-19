@@ -976,53 +976,6 @@ $(`#review-${dt.rxf}-loading`).fadeIn();
 	   });	
 }
 
-const checkoutPreview = () => {
-	 //side 1 
-	   let aptName = $(`#${id}-name`).val(), aptUrl = $(`#${id}-url`).val(), aptMaxAdults = $(`#${id}-max-adults`).val(),
-	    aptMaxChildren = $(`#${id}-max-children`).val(), aptAmount = $(`#${id}-amount`).val(),aptDescription = $(`#${id}-description`).val(),
-	       aptCheckin = $(`#${id}-checkin`).val(), aptCheckout = $(`#${id}-checkout`).val(),aptIdRequired = $(`#${id}-id-required`).val(),
-	       aptChildren = $(`#${id}-children`).val(), aptIdPets = $(`#${id}-pets`).val(),
-		 
-       //side 2
-	       aptAddress = $(`#${id}-address`).val(), aptCity = $(`#${id}-city`).val(),aptState = $(`#${id}-state`).val(),
-	       aptImages = $(`#${id}-images input[type=file]`), axf = $(`#tk-axf`).val();
-		   
-		   let fff = [];
-		   for(let y = 0; y < facilities.length; y++){
-			 if(facilities[y].selected) fff.push(facilities[y]);
-		   }
-		   
-		   let ff = `None specified`;
-		   if(fff.length > 0){
-			   ff = `${fff[0].id}`;
-		     for(let y = 1; y < fff.length; y++){
-				 let ii = fff[y];
-			   if(ii.selected) ff += ` | ${ii.id}`;
-		     }
-		   }
-		   
-		   if(aptUrl == "") aptUrl = "not specified";
-		   
-		   let aptAvb = id == "my-apartment" ? $(`#${id}-avb`).val() : "Pending review";
-	let i = `
-	     <li>Apartment ID.<span>Will be generated</span></li>
-												<li>Friendly name<span>${aptName}</span></li>
-												<li>Friendly URL<span>${axf}?xf=<b>${aptUrl}</b></span></li>
-												<li>Max. adults<span>${aptMaxAdults}</span></li>
-												<li>Max. children<span>${aptMaxChildren}</span></li>
-												<li>Availability<span>${aptAvb}</span></li>
-												<li>Price per day<span>&#8358;${aptAmount}</span></li>
-												<li>Description<span></span></li>
-												<li>Check in<span>${aptCheckin}</span></li>
-												<li>Check out<span>${aptCheckout}</span></li>
-												<li>Payment type<span>Card</span></li>
-												<li>ID required on check-in<span>${aptIdRequired}</span></li>
-												<li>Children<span>${aptChildren}</span></li>
-												<li>Facilities & services<span>${ff}</span></li>
-	`;
-	
-	$(`#checkout-div`).html(i);
-}
 
 /**********************************************************************************************************************
                                                      OLD METHODS
