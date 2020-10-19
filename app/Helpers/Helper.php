@@ -1440,7 +1440,6 @@ function updateApartment($data)
                                                       'status' => "pending",
                                                       ]);
                
-			   $stats = $this->createReviewStats(['review_id' => $ret->id,'user_id' => $data['user_id']]);
 			   
                 return $ret;
            }
@@ -1536,14 +1535,20 @@ function updateApartment($data)
 			   $ret = false;
 			   $r = ReviewStats::where(['user_id' => $dt['user_id'],'review_id' => $dt['review_id']])->first();
 			   if($r != null) $ret = true;
+			   #dd($ret);
 			   return $ret;
 		   }
 		   
 		   function voteReview($dt)
 		   {
 			   $ret = ['u' => "0",'v' => "0"];
-			   $r = ReviewStats::where(['user_id' => $dt['xf'],'review_id' => $dt['rxf']])->first();
-			   if($r != null)
+			   $r = ReviewStats::where(['user_id' => $dt['user_id'],'review_id' => $dt['rxf']])->first();
+			   dd($r);
+			   if($r == null)
+			   {
+				   $stats = $this->createReviewStats(['review_id' => $ret->id,'user_id' => $data['user_id']]);
+			   }
+			   else
 			   {
 				   $u = $r->upvotes; $d = $r->downvotes;
 				   

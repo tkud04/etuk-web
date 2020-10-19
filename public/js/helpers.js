@@ -921,7 +921,7 @@ $(`#review-${dt.rxf}-loading`).fadeIn();
 //create request
    let url = `vote-review?rxf=${dt.r}&type=${dt.type}&xf=${dt.xf}`;
 	const req = new Request(url,{method: 'GET'});
-	//console.log(req);
+	console.log(req);
 	
 	
 	//fetch request
