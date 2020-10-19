@@ -684,13 +684,22 @@ class MainController extends Controller {
          }
 		 else
 		 {
-			$req['user_id'] = $user->id;	  
-			$req['apartment_id'] = $req['apt-id'];	  
-			$req['comment'] = $req['msg'];	  
-			$this->helpers->createReview($req);
-			session()->flash("add-review-status","ok");
-			$uu = "apartment?xf=".$req['axf'];
-			return redirect()->intended($uu);
+			if($this->helpers->hasReview(['user_id' => $user->id,'apartment_id' => $req['apt-id']]))
+			{
+				session()->flash("duplicate-review-status-error","ok");
+			    return redirect()->back();
+			}
+			else
+			{
+			   $req['user_id'] = $user->id;	  
+			   $req['apartment_id'] = $req['apt-id'];	  
+			   $req['comment'] = $req['msg'];	  
+		       $this->helpers->createReview($req);
+			   session()->flash("add-review-status","ok");
+			   $uu = "apartment?xf=".$req['axf'];
+			   return redirect()->intended($uu);	
+			}
+			
 		 }
     }
 	

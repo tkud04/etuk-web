@@ -56,6 +56,7 @@ class Helper implements HelperContract
 					 "add-review-status" => "Thanks for your review! It will be displayed after review by our admins.",
 					 "invalid-apartment-id-status-error" => "Apartment not found.",
 					 "add-review-status-error" => "Please sign in to add a review.",
+					 "duplicate-review-status-error" => "You have added a review already.",
 					 "oauth-status-error" => "Social login failed, please try again.",
                      ],
                      'errors'=> ["login-status-error" => "Wrong username or password, please try again.",
@@ -1521,6 +1522,14 @@ function updateApartment($data)
                                                       
                 return $ret;
            }
+		   
+		   function hasReview($dt)
+		   {
+			   $ret = false;
+			   $r = Reviews::where(['user_id' => $dt['user_id'],'apartment_id' => $dt['apartment_id']])->first();
+			   if($r != null) $ret = true;
+			   return $ret;
+		   }
 		   
 		   function hasVotedReview($dt)
 		   {
