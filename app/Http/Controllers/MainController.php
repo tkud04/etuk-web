@@ -781,11 +781,11 @@ class MainController extends Controller {
 		$services = $this->helpers->getServices();
 		
 		#dd($hasUnpaidOrders);
-		
+		$secure = (isset($req['ss']) && $req['ss'] == "1") ? false : true;
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
 
-    	return view("checkout",compact(['user','cart','messages','services','states','c','ad','signals','plugins']));
+    	return view("checkout",compact(['user','cart','messages','ss','services','states','c','ad','signals','plugins']));
     }
 	
 	

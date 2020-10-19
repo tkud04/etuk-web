@@ -11,6 +11,16 @@ $checkoutHead = <<<EOD
 									</ul>
 								</div>
 EOD;
+
+ //for tests
+			  $secureCheckout = "http://etukng.tobi-demos.tk/checkout";
+			  $unsecureCheckout = url('checkout');
+			  $securePay = "http://etukng.tobi-demos.tk/pay";
+			  $unsecurePay = url('pay');
+			  
+			  $isSecure = (isset($secure) && $secure);
+			  $pay = $isSecure ? $securePay : $unsecurePay;
+			  $checkout = $isSecure ? $secureCheckout : $unsecureCheckout;
 ?>
 @extends('layout')
 
