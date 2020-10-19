@@ -916,6 +916,59 @@ const setUserRating = dt => {
 	}
 }
 
+const voteReview = dt => {
+$(`#review-${dt.rxf}-loading`).fadeIn();
+//create request
+   let url = `vote-review?rxf=${dt.r}&type=${dt.type}&xf=${dt.xf}`;
+	const req = new Request("url",{method: 'GET'});
+	//console.log(req);
+	
+	
+	//fetch request
+	fetch(req)
+	   .then(response => {
+		   if(response.status === 200){
+			   //console.log(response);
+			   
+			   return response.json();
+		   }
+		   else{
+			   return {status: "error", message: "Technical error"};
+		   }
+	   })
+	   .catch(error => {
+		    alert("Failed to vote review: " + error);			
+			$(`#review-${dt.rxf}-loading`).hide();
+	   })
+	   .then(res => {
+		   console.log(res);
+          $(`#review-${dt.rxf}-loading`).hide();
+		  
+		   if(res.status == "ok"){
+			   $(`#review-${dt.rxf}-upvotes`).val(res.up);
+			   $(`#review-${dt.rxf}-downvotes`).val(res.down);
+		   }
+		   else if(res.status == "error"){
+			   let hh = `nothing happened`;
+			   if(res.message == "validation"){
+				 hh = `Please fill all required fields and try again.`;  
+			   }
+			   else if(res.message == "Technical error"){
+				 hh = `A technical error has occured, please try again.`;  
+			   }
+			   Swal.fire({
+			     icon: 'error',
+                 title: hh
+               });		  
+		   }
+		   $(`#review-${dt.rxf}-loading`).hide();
+		  
+	   }).catch(error => {
+		     alert("Failed to vote review: " + error);			
+			$(`#review-${dt.rxf}-loading`).hide();			
+	   });	
+}
+
 /**********************************************************************************************************************
                                                      OLD METHODS
 /**********************************************************************************************************************/

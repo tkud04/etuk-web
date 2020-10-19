@@ -646,7 +646,7 @@ class MainController extends Controller {
     }
 	
 	/**
-	 * Handle profile update.
+	 * Handle add review.
 	 *
 	 * @return Response
 	 */
@@ -694,7 +694,48 @@ class MainController extends Controller {
     }
 	
 	/**
-	 * Show the about page.
+	 * Handle vote review.
+	 *
+	 * @return Response
+	 */
+	public function getVoteReview(Request $request)
+    {
+		$user = null;
+		if(Auth::check())
+		{
+			$user = Auth::user();
+		}
+		else
+		{
+			return redirect()->intended('/');
+		}
+
+		$req = $request->all();
+       #dd($req);
+	   $ret = ['status' => "error",'message' => "nothing happened"];
+	    
+		$validator = Validator::make($req,[
+		                    'rxf' => 'required|numeric',
+		                    'type' => 'required',
+		                    'xf' => 'required|numeric'
+		]);
+		
+		if($validator->fails())
+         {
+			 $ret['message'] = "validation";
+         }
+		 else
+		 {  
+            $req['user_id'] = $user->id;	 
+			$this->helpers->chat($req);
+			$ret = ['status' => "ok",'message' => "sent"];
+		 }
+		 
+		 return json_encode($ret);
+    }
+	
+	/**
+	 * Show the checkout page.
 	 *
 	 * @return Response
 	 */

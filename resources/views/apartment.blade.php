@@ -5,14 +5,18 @@ $subtitle = "View this apartment";
 $host = $apartment['host'];
 $hostName = $host['fname']." ".substr($host['lname'],0,1);
 $himg = $host['avatar'] == ""  ? asset("img/avatar.png") : $host['avatar'][0];
-$img = $user['avatar'] == ""  ? asset("img/avatar.png") : $user['avatar'][0];
+$img = asset("img/avatar.png");
+$uid = "";
 $hostNum = "Send ".$host['fname']." a message to book this apartment.";
-$myName = ""; $myEmail = "";
+$myName = ""; $myEmail = ""; $xf = "";
 
 if($user != null)
 {
 	$myName = $user->fname." ".$user->lname;
 	$myEmail = $user->email;
+	$uid = $user->id;
+	$xf = $uid;
+	$img = $user['avatar'] == ""  ? asset("img/avatar.png") : $user['avatar'][0];
 }
 
 $terms = $apartment['terms'];
@@ -314,65 +318,48 @@ let sec = 0, svc = 0, loc = 0, cln = 0, cmf = 0;
 								
 								@if($reviewsLength > 0)
 								<div class="reviews-comments-wrap">
+							       <?php
+								   
+								    foreach($reviews as $r)
+									{
+										 $stats = $r['stats'];
+										$u = $r['user'];
+										$rxf = $r['id'];
+										$ru = $u['id'] == $uid ? "You" : $u['fname']." ".substr($u['lname'],0,1);
+										$av = $u['avatar'] == ""  ? asset("img/avatar.png") : $u['avatar'][0];
+								   ?>
 									<!-- reviews-comments-item -->  
 									<div class="reviews-comments-item">
 										<div class="review-comments-avatar">
-											<img src="assets/img/user-1.jpg" class="img-fluid" alt=""> 
+											<img src="{{$av}}" class="img-fluid" alt=""> 
 										</div>
 										<div class="reviews-comments-item-text">
-											<h4><a href="#">Josaph Manrty</a><span class="reviews-comments-item-date"><i class="ti-calendar theme-cl"></i>27 Oct 2019</span></h4>
+											<h4><a href="javascript:void(0)">{{$ru}}</a><span class="reviews-comments-item-date"><i class="ti-calendar theme-cl"></i>{{$r['date']}}</span></h4>
 											
-											<div class="listing-rating high" data-starrating2="5"><i class="ti-star active"></i><i class="ti-star active"></i><i class="ti-star active"></i><i class="ti-star active"></i><i class="ti-star active"></i><span class="review-count">4.9</span> </div>
+											<div class="listing-rating high" data-starrating2="5">
+											  <?php
+											  for($i = 0; $i < $stars; $i++)
+											   {
+											  ?>
+											  <i class="ti-star active"></i>
+											  <?php
+											   }
+											  ?>
+											  <span class="review-count">{{$stars}}</span> 
+											 </div>
 											<div class="clearfix"></div>
-											<p>" Commodo est luctus eget. Proin in nunc laoreet justo volutpat blandit enim. Sem felis, ullamcorper vel aliquam non, varius eget justo. Duis quis nunc tellus sollicitudin mauris. "</p>
+											<p>" {{$r['comment']}} "</p>
 											<div class="pull-left reviews-reaction">
-												<a href="#" class="comment-like active"><i class="ti-thumb-up"></i> 12</a>
-												<a href="#" class="comment-dislike active"><i class="ti-thumb-down"></i> 1</a>
-												<a href="#" class="comment-love active"><i class="ti-heart"></i> 07</a>
+												<a href="javascript:void(0)" class="comment-like active" onclick="voteReview({r: '{{$rxf}}', xf: '{{$xf}}', type: 'up'})"><i class="ti-thumb-up"></i> <span id="apartment-upvotes">{{$stats['upvotes']}}</span></a>
+												<a href="javascript:void(0)" class="comment-dislike active" onclick="voteReview({r: '{{$rxf}}', xf: '{{$xf}}', type: 'down'})"><i class="ti-thumb-down"></i> <span id="apartment-downvotes">{{$stats['downvotes']}}</span></a>
+												<a id="review-{{$rxf}}-loading" class="review-loading"><img alt="Loading.." src="{{asset('img/loading.gif')}}"></a>
 											</div>
 										</div>
 									</div>
 									<!--reviews-comments-item end-->  
-									
-									<!-- reviews-comments-item -->  
-									<div class="reviews-comments-item">
-										<div class="review-comments-avatar">
-											<img src="assets/img/user-2.jpg" class="img-fluid" alt=""> 
-										</div>
-										<div class="reviews-comments-item-text">
-											<h4><a href="#">Rita Chawla</a><span class="reviews-comments-item-date"><i class="ti-calendar theme-cl"></i>2 Nov May 2019</span></h4>
-											
-											<div class="listing-rating mid" data-starrating2="5"><i class="ti-star active"></i><i class="ti-star active"></i><i class="ti-star active"></i><i class="ti-star active"></i><i class="ti-star"></i><span class="review-count">3.7</span> </div>
-											<div class="clearfix"></div>
-											<p>" Commodo est luctus eget. Proin in nunc laoreet justo volutpat blandit enim. Sem felis, ullamcorper vel aliquam non, varius eget justo. Duis quis nunc tellus sollicitudin mauris. "</p>
-											<div class="pull-left reviews-reaction">
-												<a href="#" class="comment-like active"><i class="ti-thumb-up"></i> 12</a>
-												<a href="#" class="comment-dislike active"><i class="ti-thumb-down"></i> 1</a>
-												<a href="#" class="comment-love active"><i class="ti-heart"></i> 07</a>
-											</div>
-										</div>
-									</div>
-									<!--reviews-comments-item end-->
-									
-									<!-- reviews-comments-item -->  
-									<div class="reviews-comments-item">
-										<div class="review-comments-avatar">
-											<img src="assets/img/user-3.jpg" class="img-fluid" alt=""> 
-										</div>
-										<div class="reviews-comments-item-text">
-											<h4><a href="#">Adam Wilsom</a><span class="reviews-comments-item-date"><i class="ti-calendar theme-cl"></i>10 Nov 2019</span></h4>
-											
-											<div class="listing-rating good" data-starrating2="5"><i class="ti-star active"></i><i class="ti-star active"></i><i class="ti-star active"></i><i class="ti-star active"></i><i class="ti-star"></i> <span class="review-count">4.2</span> </div>
-											<div class="clearfix"></div>
-											<p>" Commodo est luctus eget. Proin in nunc laoreet justo volutpat blandit enim. Sem felis, ullamcorper vel aliquam non, varius eget justo. Duis quis nunc tellus sollicitudin mauris. "</p>
-											<div class="pull-left reviews-reaction">
-												<a href="#" class="comment-like active"><i class="ti-thumb-up"></i> 12</a>
-												<a href="#" class="comment-dislike active"><i class="ti-thumb-down"></i> 1</a>
-												<a href="#" class="comment-love active"><i class="ti-heart"></i> 07</a>
-											</div>
-										</div>
-									</div>
-									<!--reviews-comments-item end-->
+									<?php
+									}
+									?>
 									
 								</div>
 								@else
@@ -605,8 +592,8 @@ let sec = 0, svc = 0, loc = 0, cln = 0, cmf = 0;
 								<div class="agent-widget">
 								   <input type="hidden" id="tk-apt-chat" value="{{csrf_token()}}"/>
 								   <input type="hidden" id="apt-id" value="{{$apartment['apartment_id']}}"/>
-								   <input type="hidden" id="apt-gxf" value="{{$user->id}}"/>
-								   <input type="hidden" id="apt-gsb" value="{{$user->id}}"/>
+								   <input type="hidden" id="apt-gxf" value="{{$uid}}"/>
+								   <input type="hidden" id="apt-gsb" value="{{$uid}}"/>
 									<div class="agent-title">
 										<div class="agent-photo"><img src="assets/img/user-3.jpg" alt=""></div>
 										<div class="agent-details">

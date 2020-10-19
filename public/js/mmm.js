@@ -13,6 +13,7 @@ $(document).ready(function() {
 			  ]);
 	hideElem(["#add-apartment-side-2","#add-apartment-side-3"]);
 	hideElem(["#my-apartment-side-2","#my-apartment-side-3"]);
+	hideElem([".review-loading"]);
 	
 	
 	//Init wysiwyg editors

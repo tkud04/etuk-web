@@ -18,6 +18,7 @@ use App\ApartmentTerms;
 use App\ApartmentFacilities;
 use App\ApartmentTips;
 use App\Reviews;
+use App\ReviewStats;
 use App\Ads;
 use App\Banners;
 use App\Senders;
@@ -1436,6 +1437,18 @@ function updateApartment($data)
                                                       'comment' => $data['comment'],
                                                       'status' => "pending",
                                                       ]);
+               
+			   $stats = $this->createReviewStats($ret->id);
+			   
+                return $ret;
+           }
+		   
+		   function createReviewStats($id)
+           {
+			   $ret = ReviewStats::create(['review_id' => $id, 
+                                                      'upvotes' => "0", 
+                                                      'downvotes' => "0" 
+                                                      ]);
                                                       
                 return $ret;
            }
@@ -1459,6 +1472,26 @@ function updateApartment($data)
                 return $ret;
            }
 		   
+		   function getReviewStats($id)
+           {
+           	$ret = [];
+              $r = ReviewStats::where('review_id',$id)->first();
+ 
+              if($r != null)
+               {
+				  $temp = [];
+				  $temp['id'] = $r->id;
+				  $temp['review_id'] = $r->review_id;
+				  $temp['upvotes'] = $r->upvotes;
+     			  $temp['downvotes'] = $r->downvotes;
+				  $temp['date'] = $r->created_at->format("jS F, Y");
+				  $temp['last_updated'] = $r->updated_at->format("jS F, Y");
+				  $ret = $temp;
+               }                         
+                                                      
+                return $ret;
+           }
+
 		   function getReview($id)
            {
            	$ret = [];
@@ -1471,6 +1504,7 @@ function updateApartment($data)
 				  $temp['id'] = $r->id;
 				  $temp['apartment_id'] = $r->apartment_id;
 				  $temp['user'] = $this->getUser($r->user_id);
+				  $temp['stats'] = $this->getReviewStats($r->id);
      			  $temp['service'] = $r->service;
      			  $temp['location'] = $r->location;
      			  $temp['security'] = $r->security;
@@ -1478,7 +1512,7 @@ function updateApartment($data)
      			  $temp['comfort'] = $r->comfort;
      			  $temp['comment'] = $r->comment;
      			  $temp['status'] = $r->status;
-				  $temp['date'] = $aa->created_at->format("jS F, Y");
+				  $temp['date'] = $r->created_at->format("jS F, Y");
 				  $ret = $temp;
                }                         
                                                       
