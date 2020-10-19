@@ -774,16 +774,18 @@ class MainController extends Controller {
 		$c = $this->helpers->getCategories();
 		//dd($bs);
 		$signals = $this->helpers->signals;
+		$states = $this->helpers->states;
 		
 		$ads = $this->helpers->getAds("wide-ad");
 		$plugins = $this->helpers->getPlugins();
+		$services = $this->helpers->getServices();
 		
 		#dd($hasUnpaidOrders);
 		
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
 
-    	return view("checkout",compact(['user','cart','messages','c','ad','signals','plugins']));
+    	return view("checkout",compact(['user','cart','messages','services','states','c','ad','signals','plugins']));
     }
 	
 	

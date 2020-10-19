@@ -1,12 +1,12 @@
 <?php
-$title = "Add Apartment";
-$subtitle = "Post a new apartment to your listings";
+$title = "Checkout";
+$subtitle = "Make payment or book for later";
 
 $checkoutHead = <<<EOD
                                 <div class="checkout-head">
 									<ul>
-										<li class="add-apartment-active-1 active"><span class="add-apartment-ticker-1">1</span>Apartment Information</li>
-										<li class="add-apartment-active-2"><span class="add-apartment-ticker-2">2</span>Location & Media</li>
+										<li class="add-apartment-active-1 active"><span class="add-apartment-ticker-1">1</span>Billing Information</li>
+										<li class="add-apartment-active-2"><span class="add-apartment-ticker-2">2</span>Payment Method</li>
 										<li class="add-apartment-active-3"><span class="add-apartment-ticker-3">3</span>Preview</li>
 									</ul>
 								</div>
