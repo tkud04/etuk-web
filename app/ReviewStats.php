@@ -13,6 +13,6 @@ class ReviewStats extends Model
      * @var array
      */
     protected $fillable = [
-        'id', 'review_id', 'upvotes', 'downvotes'
+        'id', 'review_id', 'user_id', 'upvotes', 'downvotes'
     ];
 }

@@ -920,7 +920,7 @@ const voteReview = dt => {
 $(`#review-${dt.rxf}-loading`).fadeIn();
 //create request
    let url = `vote-review?rxf=${dt.r}&type=${dt.type}&xf=${dt.xf}`;
-	const req = new Request("url",{method: 'GET'});
+	const req = new Request(url,{method: 'GET'});
 	//console.log(req);
 	
 	
@@ -950,8 +950,14 @@ $(`#review-${dt.rxf}-loading`).fadeIn();
 		   }
 		   else if(res.status == "error"){
 			   let hh = `nothing happened`;
-			   if(res.message == "validation"){
+			   if(res.message == "auth"){
+				 hh = `Please sign in to vote a review.`;  
+			   }
+			   else if(res.message == "validation"){
 				 hh = `Please fill all required fields and try again.`;  
+			   }
+			   else if(res.message == "duplicate"){
+				 hh = `You've voted this review already.`;  
 			   }
 			   else if(res.message == "Technical error"){
 				 hh = `A technical error has occured, please try again.`;  

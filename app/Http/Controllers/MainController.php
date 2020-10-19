@@ -701,23 +701,20 @@ class MainController extends Controller {
 	public function getVoteReview(Request $request)
     {
 		$user = null;
+		 $ret = ['status' => "error",'message' => "nothing happened"];
+	  
+	  
 		if(Auth::check())
 		{
 			$user = Auth::user();
-		}
-		else
-		{
-			return redirect()->intended('/');
-		}
-
-		$req = $request->all();
+			
+			$req = $request->all();
        #dd($req);
-	   $ret = ['status' => "error",'message' => "nothing happened"];
 	    
 		$validator = Validator::make($req,[
 		                    'rxf' => 'required|numeric',
 		                    'type' => 'required',
-		                    'xf' => 'required|numeric'
+		                    'xf' => 'required|numeric|min:1'
 		]);
 		
 		if($validator->fails())
@@ -726,10 +723,23 @@ class MainController extends Controller {
          }
 		 else
 		 {  
-            $req['user_id'] = $user->id;	 
-			$this->helpers->chat($req);
-			$ret = ['status' => "ok",'message' => "sent"];
+	        if($this->helpers->hasVotedReview(['user_id' => $user->id,'review_id' => $rxf]))
+			{
+				$ret['message'] = "duplicate";
+			}
+			else
+			{
+			   $req['user_id'] = $user->id;	 
+			   $this->helpers->voteReview($req);
+			   $ret = ['status' => "ok",'message' => "sent"];
+			}
+            
 		 }
+		}
+		else
+		{
+			$ret['message'] = "auth";
+		}
 		 
 		 return json_encode($ret);
     }

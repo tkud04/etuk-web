@@ -51,7 +51,7 @@ Route::get('chat', 'MainController@getChat');
 Route::get('test-chat', 'MainController@getTestChat');
 Route::post('chat', 'MainController@postChat');
 Route::post('add-review', 'MainController@postAddReview');
-Route::post('vote-review', 'MainController@getVoteReview');
+Route::get('vote-review', 'MainController@getVoteReview');
 Route::get('checkout', 'MainController@getCheckout');
 Route::post('checkout', 'MainController@postCheckout');
 Route::get('search', 'MainController@getSearch');

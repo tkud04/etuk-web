@@ -1438,14 +1438,15 @@ function updateApartment($data)
                                                       'status' => "pending",
                                                       ]);
                
-			   $stats = $this->createReviewStats($ret->id);
+			   $stats = $this->createReviewStats(['review_id' => $ret->id,'user_id' => $data['user_id']]);
 			   
                 return $ret;
            }
 		   
-		   function createReviewStats($id)
+		   function createReviewStats($dt)
            {
-			   $ret = ReviewStats::create(['review_id' => $id, 
+			   $ret = ReviewStats::create(['review_id' => $dt['review_id'], 
+                                                      'user_id' => $data['user_id'], 
                                                       'upvotes' => "0", 
                                                       'downvotes' => "0" 
                                                       ]);
@@ -1482,6 +1483,7 @@ function updateApartment($data)
 				  $temp = [];
 				  $temp['id'] = $r->id;
 				  $temp['review_id'] = $r->review_id;
+				  $temp['user_id'] = $r->user_id;
 				  $temp['upvotes'] = $r->upvotes;
      			  $temp['downvotes'] = $r->downvotes;
 				  $temp['date'] = $r->created_at->format("jS F, Y");
@@ -1518,6 +1520,11 @@ function updateApartment($data)
                                                       
                 return $ret;
            }
+		   
+		   function hasVotedReview($dt)
+		   {
+			   
+		   }
 		   
 		   function getRating($reviews)
 		   {
