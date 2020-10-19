@@ -55,6 +55,7 @@ class Helper implements HelperContract
 					 "oauth-sp-status" => "Welcome to Etuk NG! You can now use your new account.",
 					 "add-review-status" => "Thanks for your review! It will be displayed after review by our admins.",
 					 "invalid-apartment-id-status-error" => "Apartment not found.",
+					 "add-review-status-error" => "Please sign in to add a review.",
 					 "oauth-status-error" => "Social login failed, please try again.",
                      ],
                      'errors'=> ["login-status-error" => "Wrong username or password, please try again.",
@@ -1446,7 +1447,7 @@ function updateApartment($data)
 		   function createReviewStats($dt)
            {
 			   $ret = ReviewStats::create(['review_id' => $dt['review_id'], 
-                                                      'user_id' => $data['user_id'], 
+                                                      'user_id' => $dt['user_id'], 
                                                       'upvotes' => "0", 
                                                       'downvotes' => "0" 
                                                       ]);
@@ -1523,7 +1524,35 @@ function updateApartment($data)
 		   
 		   function hasVotedReview($dt)
 		   {
-			   
+			   $ret = false;
+			   $r = ReviewStats::where(['user_id' => $dt['user_id'],'review_id' => $dt['review_id']])->first();
+			   if($r != null) $ret = true;
+			   return $ret;
+		   }
+		   
+		   function voteReview($dt)
+		   {
+			   $ret = ['u' => "0",'v' => "0"];
+			   $r = ReviewStats::where(['user_id' => $dt['xf'],'review_id' => $dt['rxf']])->first();
+			   if($r != null)
+			   {
+				   $u = $r->upvotes; $d = $r->downvotes;
+				   
+				   switch($dt['type'])
+				   {
+					   case "up":
+					    ++$u;
+					   break;
+					   
+					   case "down":
+					    ++$d;
+					   break;
+				   }
+				   
+				   $u->update(['upvotes' => $u,'downvotes' => $d]);
+				   $ret = ['u' => $u,'d' => $d];
+			   } 
+			   return $ret;
 		   }
 		   
 		   function getRating($reviews)

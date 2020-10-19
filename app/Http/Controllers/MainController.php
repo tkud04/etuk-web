@@ -659,7 +659,8 @@ class MainController extends Controller {
 		}
 		else
 		{
-			return redirect()->intended('/');
+			session()->flash("add-review-status-error","ok");
+			return redirect()->back();
 		}
 
 		$req = $request->all();
@@ -723,15 +724,15 @@ class MainController extends Controller {
          }
 		 else
 		 {  
-	        if($this->helpers->hasVotedReview(['user_id' => $user->id,'review_id' => $rxf]))
+	        if($this->helpers->hasVotedReview(['user_id' => $user->id,'review_id' => $req['rxf']]))
 			{
 				$ret['message'] = "duplicate";
 			}
 			else
 			{
 			   $req['user_id'] = $user->id;	 
-			   $this->helpers->voteReview($req);
-			   $ret = ['status' => "ok",'message' => "sent"];
+			   $r = $this->helpers->voteReview($req);
+			   $ret = ['status' => "ok",'data' => $r];
 			}
             
 		 }

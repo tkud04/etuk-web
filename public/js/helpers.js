@@ -945,8 +945,9 @@ $(`#review-${dt.rxf}-loading`).fadeIn();
           $(`#review-${dt.rxf}-loading`).hide();
 		  
 		   if(res.status == "ok"){
-			   $(`#review-${dt.rxf}-upvotes`).val(res.up);
-			   $(`#review-${dt.rxf}-downvotes`).val(res.down);
+			   let d = res.data;
+			   $(`#review-${dt.rxf}-upvotes`).val(d.u);
+			   $(`#review-${dt.rxf}-downvotes`).val(d.d);
 		   }
 		   else if(res.status == "error"){
 			   let hh = `nothing happened`;
