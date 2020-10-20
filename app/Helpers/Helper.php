@@ -64,8 +64,8 @@ class Helper implements HelperContract
 					 "duplicate-review-status-error" => "You have added a review already.",
 					 "oauth-status-error" => "Social login failed, please try again.",
 					 "checkout-auth-status-error" => "Please sign in to book an apartment.",
-					 "add-to-cart-auth-status-error" => "Please sign in to add to your cart.",
-					 "add-to-cart-validation-status-error" => "Please fill all required fields.",
+					 "cart-auth-status-error" => "Please sign in to view your cart.",
+					 "validation-status-error" => "Please fill all required fields.",
                      ],
                      'errors'=> ["login-status-error" => "Wrong username or password, please try again.",
 					 "signup-status-error" => "There was a problem creating your account, please try again.",
@@ -2023,35 +2023,24 @@ function createSocial($data)
 		   
 		   function addToCart($data)
            {
-			  
-			 $userId = $data['user_id'];
+			  dd($data);
+			 $xf = $data['user_id'];
+			 $axf = $data['axf'];
 			 $ret = "error";
 			 
-			 $c = Carts::where('user_id',$userId)
-			           ->where('sku',$data['sku'])->first();
+			 $c = Carts::where(['user_id' => $xf,'apartment_id' => $axf])->first();
 
-			 $p = Products::where('sku',$data['sku'])->first();
-
-			 if(!is_null($p))
+			 if(!is_null($c))
 			 {
-				if($data['qty'] <= $p->qty)
-				{
-					
-			      if(is_null($c))
-			      {
-				     $c = Carts::create(['user_id' => $userId, 
-                                                      'sku' => $data['sku'], 
-                                                      'qty' => $data['qty']
+				 $c = Carts::create(['user_id' => $xf, 
+                                                      'apartment_id' => $axf, 
+                                                      'checkin' => $data['checkin'],
+                                                      'checkout' => $data['checkout'],
+                                                      'guests' => $data['guests'],
+                                                      'kids' => $data['kids']
                                                       ]); 
-													  
-			      }
-			      else
-			      {
-				     $c->update(['qty' => $data['qty']]);
-			      }
-				  #dd($c);
+				
 				  $ret = "ok";
-			    }
 			 }
 			 
                 return $ret;
@@ -2059,7 +2048,7 @@ function createSocial($data)
 		   
 		    function updateCart($dt)
            {
-			  # dd($dt);
+			  dd($dt);
            	   $userId = $dt['user_id'];
 			 $ret = "error";
 			 
@@ -2077,20 +2066,16 @@ function createSocial($data)
            }	
            function removeFromCart($data)
            {
-           	#$ret = ["subtotal" => 0, "delivery" => 0, "total" => 0];
-               $userId = $data['user_id'];
-			   $cc = Carts::where('user_id', $userId)->get();
+           	   $xf = $data['user_id'];
+			   $axf = $data['axf'];
+			   $c = Carts::where(['user_id' => $xf,'apartment_id' => $axf])->first();
 			
-			if(!is_null($cc))
+			if(!is_null($c))
 			{
-			  foreach($cc as $c)
-                            {
-                            	if($c->sku == $data['sku'] || $c->id == $data['sku']){$c->delete(); break; }
-                            }
+			  $c->delete(); 
             }
-			                         
-                                                      
-                return "ok";
+			                                          
+            return "ok";
            }
 		   
 		   
