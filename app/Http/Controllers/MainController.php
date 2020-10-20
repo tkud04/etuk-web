@@ -785,9 +785,18 @@ class MainController extends Controller {
 		 {  
 	        $req['user_id'] = $user->id;	 
 			$r = $this->helpers->addToCart($req);
-			$ret = ['status' => "ok",'data' => $r];
-			session()->flash("add-to-cart-status","ok");
-			return redirect()->intended('cart');
+			
+			if($r == "host")
+			{
+				session()->flash("add-to-cart-host-status-error","ok");
+				return redirect()->back()->withInput();
+			}
+			else
+			{
+				session()->flash("add-to-cart-status","ok");
+			    return redirect()->intended('cart');
+			}
+			
 		 }
 		}
 		else

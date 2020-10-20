@@ -105,11 +105,16 @@
 								</li>
                               @endif							  
 							
+							<?php
+							 $cartt = $cart['data'];
+							 $subtotal = $cart['subtotal'];
+													
+							?>
 								<li class="login-attri">
 									<div class="btn-group account-drop">
 										<button type="button" class="btn btn-order-by-filt theme-cl" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 											<i class="ti-shopping-cart-full"></i>
-											<span class="cart-count">{{count($cart)}}</span>
+											<span class="cart-count">{{count($cartt)}}</span>
 										</button>
 										<div class="dropdown-menu p-0 dm-lg pull-right animated flipInX">
 											<div class="cart-card">
@@ -119,10 +124,10 @@
 												
 												<div class="cart-card-body">
 												  <?php
-												  
-												   if(count($cart) > 0)
+												  	 
+												   if(count($cartt) > 0)
 												   {
-													 foreach($cart as $c)
+													 foreach($cartt as $c)
 													 {
 														 $xf = $user->id;
 														 $axf = $c['apartment_id'];
@@ -131,7 +136,6 @@
 														 $imgs = $cmedia['images'];
 														 $adata = $apartment['data'];
 														 $amount = $adata['amount'];
-														 $totals = $c['totals'];
 														 $address = $apartment['address'];
 														 $location = $address['city'].", ".$address['state'];
 														 
@@ -159,7 +163,7 @@
 												
 												<div class="cart-card-footer">
 													<a href="{{url('checkout')}}" class="btn btn-theme">Checkout</a>
-													<h4 class="totla-prc">&#8358;{{number_format($totals['subtotal'],2)}}</h4>
+													<h4 class="totla-prc">&#8358;{{number_format($subtotal,2)}}</h4>
 												</div>
 												
 											</div>

@@ -67,6 +67,7 @@ class Helper implements HelperContract
 					 "checkout-auth-status-error" => "Please sign in to book an apartment.",
 					 "cart-auth-status-error" => "Please sign in to view your cart.",
 					 "validation-status-error" => "Please fill all required fields.",
+					 "add-to-cart-host-status-error" => "You cannot book your own apartment.",
                      ],
                      'errors'=> ["login-status-error" => "Wrong username or password, please try again.",
 					 "signup-status-error" => "There was a problem creating your account, please try again.",
@@ -1961,22 +1962,32 @@ function createSocial($data)
 			 $axf = $data['axf'];
 			 $ret = "error";
 			 
-			 $c = Carts::where(['user_id' => $xf,'apartment_id' => $axf])->first();
-
-			 if(is_null($c))
+			 $a = Apartments::where(['user_id' => $xf,'id' => $axf])->first();
+			 #dd($a);
+			 if($a == null)
 			 {
-				 $c = Carts::create(['user_id' => $xf, 
-                                                      'apartment_id' => $axf, 
+				 $aa = Apartments::where(['id' => $axf])->first();
+			    $c = Carts::where(['user_id' => $xf,'apartment_id' => $aa->apartment_id])->first();
+
+			    if(is_null($c))
+			    {
+				    $c = Carts::create(['user_id' => $xf, 
+                                                      'apartment_id' => $aa->apartment_id, 
                                                       'checkin' => $data['checkin'],
                                                       'checkout' => $data['checkout'],
                                                       'guests' => $data['guests'],
                                                       'kids' => $data['kids']
                                                       ]); 
 				
-				  $ret = "ok";
+				     $ret = "ok";
+			    }	 
+			 }
+			 else
+			 {
+				$ret = "host"; 
 			 }
 			 
-                return $ret;
+             return $ret;
            }
 		   
 		    function updateCart($dt)
@@ -2013,8 +2024,8 @@ function createSocial($data)
 		   
 		    function getCart($user,$r="")
            {
-           	$ret = [];
-			$uu = "";		
+           	$ret = ['data' => [],'subtotal' => 0];
+			$uu = ""; $rett = [];		
 			
 			  if(is_null($user))
 			  {
@@ -2048,15 +2059,14 @@ function createSocial($data)
 				   
                	foreach($carts as $c) 
                     {
-                    	$temp = [];
-               	     $totals = ['subtotal' => 0]; 
+                    	$temp = []; 
                	     $temp['id'] = $c->id; 
                	     $temp['user_id'] = $c->user_id; 
                	     $temp['apartment_id'] = $c->apartment_id; 
                         $apt = $this->getApartment($c->apartment_id); 
                         $temp['apartment'] = $apt;
                         $adata = $apt['data'];						
-						$totals['subtotal'] += $adata['amount'];
+						$ret['subtotal'] += $adata['amount'];
 						$checkin = Carbon::parse($c->checkin);
 						$checkout = Carbon::parse($c->checkout);
                         $temp['checkin'] = $checkin->format("jS F, Y");
@@ -2064,11 +2074,12 @@ function createSocial($data)
                         $temp['guests'] = $c->guests; 
                         $temp['kids'] = $c->kids; 
                         $temp['totals'] = $totals; 
-                        array_push($ret, $temp); 
+                        array_push($rett, $temp); 
                    }
                }                                 
               			  
-                return $ret;
+                $ret['data'] = $rett;
+				return $ret;
            }
            function clearCart($user)
            {
