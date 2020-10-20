@@ -42,7 +42,9 @@ use Codedge\Fpdf\Fpdf\Fpdf;
 class Helper implements HelperContract
 {
 
- public $signals = ['okays'=> ["login-status" => "Welcome back!",            
+ public $signals = ['okays'=> [
+                     //SUCCESS NOTIFICATIONS
+					 "login-status" => "Welcome back!",            
                      "update-profile-status" => "Profile updated.",
                      "switch-mode-status" => "You have now switched your account mode.",
 					 "valid-mode-status-error" => "Access denied. Try switching your account mode to access the resource.",
@@ -54,11 +56,16 @@ class Helper implements HelperContract
 					 "update-apartment-status" => "Apartment information updated.",
 					 "oauth-sp-status" => "Welcome to Etuk NG! You can now use your new account.",
 					 "add-review-status" => "Thanks for your review! It will be displayed after review by our admins.",
+					 "add-to-cart-status" => "Added to your cart.",
+					 
+					 //ERROR NOTIFICATIONS
 					 "invalid-apartment-id-status-error" => "Apartment not found.",
 					 "add-review-status-error" => "Please sign in to add a review.",
 					 "duplicate-review-status-error" => "You have added a review already.",
 					 "oauth-status-error" => "Social login failed, please try again.",
 					 "checkout-auth-status-error" => "Please sign in to book an apartment.",
+					 "add-to-cart-auth-status-error" => "Please sign in to add to your cart.",
+					 "add-to-cart-validation-status-error" => "Please fill all required fields.",
                      ],
                      'errors'=> ["login-status-error" => "Wrong username or password, please try again.",
 					 "signup-status-error" => "There was a problem creating your account, please try again.",
@@ -2014,7 +2021,77 @@ function createSocial($data)
 		   }
 		 
 		   
+		   function addToCart($data)
+           {
+			  
+			 $userId = $data['user_id'];
+			 $ret = "error";
+			 
+			 $c = Carts::where('user_id',$userId)
+			           ->where('sku',$data['sku'])->first();
+
+			 $p = Products::where('sku',$data['sku'])->first();
+
+			 if(!is_null($p))
+			 {
+				if($data['qty'] <= $p->qty)
+				{
+					
+			      if(is_null($c))
+			      {
+				     $c = Carts::create(['user_id' => $userId, 
+                                                      'sku' => $data['sku'], 
+                                                      'qty' => $data['qty']
+                                                      ]); 
+													  
+			      }
+			      else
+			      {
+				     $c->update(['qty' => $data['qty']]);
+			      }
+				  #dd($c);
+				  $ret = "ok";
+			    }
+			 }
+			 
+                return $ret;
+           }
 		   
+		    function updateCart($dt)
+           {
+			  # dd($dt);
+           	   $userId = $dt['user_id'];
+			 $ret = "error";
+			 
+			 $c = Carts::where('user_id',$userId)
+			           ->where('sku',$dt['sku'])->first();
+             $p = Products::where('sku',$dt['sku'])->first();
+			 
+			if($c != null && $p != null && $p->qty >= $dt['qty'])
+			{
+                $c->update(['qty' => $dt['qty']]);				
+				$ret = "ok";
+			}        
+                                                      
+                return $ret;
+           }	
+           function removeFromCart($data)
+           {
+           	#$ret = ["subtotal" => 0, "delivery" => 0, "total" => 0];
+               $userId = $data['user_id'];
+			   $cc = Carts::where('user_id', $userId)->get();
+			
+			if(!is_null($cc))
+			{
+			  foreach($cc as $c)
+                            {
+                            	if($c->sku == $data['sku'] || $c->id == $data['sku']){$c->delete(); break; }
+                            }
+            }
+			                         
+                                                      
+                return "ok";
+           }
 		   
 		   
 		   
@@ -2241,77 +2318,7 @@ function createSocial($data)
 			   return $ret;
 		   }
 		   
-		   function addToCart($data)
-           {
-			  
-			 $userId = $data['user_id'];
-			 $ret = "error";
-			 
-			 $c = Carts::where('user_id',$userId)
-			           ->where('sku',$data['sku'])->first();
-
-			 $p = Products::where('sku',$data['sku'])->first();
-
-			 if(!is_null($p))
-			 {
-				if($data['qty'] <= $p->qty)
-				{
-					
-			      if(is_null($c))
-			      {
-				     $c = Carts::create(['user_id' => $userId, 
-                                                      'sku' => $data['sku'], 
-                                                      'qty' => $data['qty']
-                                                      ]); 
-													  
-			      }
-			      else
-			      {
-				     $c->update(['qty' => $data['qty']]);
-			      }
-				  #dd($c);
-				  $ret = "ok";
-			    }
-			 }
-			 
-                return $ret;
-           }
 		   
-		    function updateCart($dt)
-           {
-			  # dd($dt);
-           	   $userId = $dt['user_id'];
-			 $ret = "error";
-			 
-			 $c = Carts::where('user_id',$userId)
-			           ->where('sku',$dt['sku'])->first();
-             $p = Products::where('sku',$dt['sku'])->first();
-			 
-			if($c != null && $p != null && $p->qty >= $dt['qty'])
-			{
-                $c->update(['qty' => $dt['qty']]);				
-				$ret = "ok";
-			}        
-                                                      
-                return $ret;
-           }	
-           function removeFromCart($data)
-           {
-           	#$ret = ["subtotal" => 0, "delivery" => 0, "total" => 0];
-               $userId = $data['user_id'];
-			   $cc = Carts::where('user_id', $userId)->get();
-			
-			if(!is_null($cc))
-			{
-			  foreach($cc as $c)
-                            {
-                            	if($c->sku == $data['sku'] || $c->id == $data['sku']){$c->delete(); break; }
-                            }
-            }
-			                         
-                                                      
-                return "ok";
-           }
 		   
 		   function getDeliveryFee($u=null,$type="user")
 		   {

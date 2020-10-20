@@ -755,6 +755,52 @@ class MainController extends Controller {
     }
 	
 	/**
+	 * Handle add to cart.
+	 *
+	 * @return Response
+	 */
+	public function getAddToCart(Request $request)
+    {
+		$user = null;
+		 
+		if(Auth::check())
+		{
+			$user = Auth::user();
+			
+			$req = $request->all();
+       dd($req);
+	    
+		$validator = Validator::make($req,[
+		                    'axf' => 'required|numeric',
+		                    'guests' => 'required|numeric',
+		                    'kids' => 'required|numeric',
+		                    'checkin' => 'required',
+		                    'checkout' => 'required'
+		]);
+		
+		if($validator->fails())
+         {
+			 session()->flash("add-to-cart-validation-status-error","ok");
+			 return redirect()->back()->withInput();
+         }
+		 else
+		 {  
+	        $req['user_id'] = $user->id;	 
+			$r = $this->helpers->addToCart($req);
+			$ret = ['status' => "ok",'data' => $r];
+			session()->flash("add-to-cart-status","ok");
+			return redirect()->intended('cart');
+		 }
+		}
+		else
+		{
+			session()->flash("add-to-cart-auth-status-error","ok");
+			return redirect()->back();
+		}
+		 
+    }
+	
+	/**
 	 * Show the checkout page.
 	 *
 	 * @return Response

@@ -21,6 +21,15 @@ EOD;
 			  $isSecure = (isset($secure) && $secure);
 			  $pay = $isSecure ? $securePay : $unsecurePay;
 			  $checkout = $isSecure ? $secureCheckout : $unsecureCheckout;
+			  
+$name = $apartment['name'];
+$terms = $apartment['terms'];
+$adata = $apartment['data'];
+$address = $apartment['address'];
+$location = $address['city'].", ".$address['state'];
+$facilities = $apartment['facilities'];
+$cmedia = $apartment['cmedia'];
+$imgs = $cmedia['images'];
 ?>
 
 
@@ -61,7 +70,17 @@ checkoutPreview();
 										<div class="col-md-12 col-lg-12">
 										
 											<ul class="booking-detail-list" id="checkout-preview">
-												
+												<li>Apartment name<span><?php echo e($name); ?></span></li>
+												<li>Adults<span><?php echo e($a); ?></span></li>
+												<li>Children<span>${aptMaxChildren}</span></li>
+												<li>Check in<span>${aptCheckin}</span></li>
+												<li>Check out<span>${aptCheckout}</span></li>
+												<li>Price per day<span>&#8358;${aptAmount}</span></li>
+												<li>Total<span>&#8358;${dt.total}</span></li>
+												<li>Payment type<span>Card</span></li>
+												<li>ID required on check-in<span>${dt.aptIdRequired}</span></li>
+												<li>Children<span>${aptChildren}</span></li>
+												<li>Facilities & services<span>${ff}</span></li>
 											</ul>
 											<hr>
 											

@@ -13,7 +13,7 @@ class Carts extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'sku', 'qty'
+        'user_id', 'apartment_id', 'checkin', 'checkout', 'guests', 'kids'
     ];
     
 }

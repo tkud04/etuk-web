@@ -326,7 +326,7 @@ let sec = 0, svc = 0, loc = 0, cln = 0, cmf = 0;
 										 $stats = $r['stats'];
 										$u = $r['user'];
 										$rxf = $r['id'];
-										$ru = $u['id'] == $uid ? "You" : $u['fname']." ".substr($u['lname'],0,1);
+										$ru = $u['id'] == $uid ? "You" : $u['fname']." ".substr($u['lname'],0,1).". ";
 										$av = $u['avatar'] == ""  ? asset("img/avatar.png") : $u['avatar'][0];
 								   ?>
 									<!-- reviews-comments-item -->  
@@ -465,10 +465,9 @@ let sec = 0, svc = 0, loc = 0, cln = 0, cmf = 0;
 							
 							<div class="side-booking-wraps ">
 								<div class="side-booking-wrap hotel-booking">
-						         <form method="post" id="checkout-form" action="<?php echo e(url('checkout')); ?>">
-									 <?php echo csrf_field(); ?>
-
-									<div class="side-booking-header light">
+						         <form method="get" id="add-to-cart-form" action="<?php echo e(url('add-to-cart')); ?>">
+								    <input type="hidden" name="axf" value="<?php echo e($apartment['id']); ?>"/>
+									 <div class="side-booking-header light">
 										<div class="author-with-rate">
 											<div class="head-author">
 												<div class="hau-thumb">
@@ -510,7 +509,7 @@ let sec = 0, svc = 0, loc = 0, cln = 0, cmf = 0;
 													<label>Check Out</label>
 													<div class="cld-box">
 														<i class="ti-calendar"></i>
-														<input type="text" name="checkout" id="apartment-checkout" class="form-control" value="10/24/2020" />
+														<input type="text" name="checkout" id="apartment-checkout" class="form-control" value="<?php echo e($checkin); ?>" />
 													</div>
 												</div>
 											</div>
@@ -575,14 +574,14 @@ let sec = 0, svc = 0, loc = 0, cln = 0, cmf = 0;
 									<div class="side-booking-footer light">
 										<div class="stbooking-footer-top">
 											<div class="stbooking-left">
-												<h5 class="st-subtitle">Total:</h5>
+												<h5 class="st-subtitle">Subtotal:</h5>
 												<span>Expected Tax</span>
 											</div>
 											<h4 class="stbooking-title" id="checkout-total">&#8358;<?php echo e(number_format($adata['amount'],2)); ?></h4>
 										</div>
 										<div class="stbooking-footer-bottom">
 											<a href="javascript:void(0)" id="apartment-hostchat-btn" class="books-btn btn-theme">Chat with host</a>
-											<a href="javascript:void(0)" id="apartment-book-now-btn" class="books-btn black">Checkout</a>
+											<a href="javascript:void(0)" id="apartment-book-now-btn" class="books-btn black">Add to cart</a>
 										</div>
 									</div>
 								  </form>

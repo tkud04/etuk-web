@@ -572,7 +572,7 @@ $(document).ready(function() {
            });
 		}
         else{
-			$('#checkout-form').submit();
+			$('#add-to-cart-form').submit();
 		}		
 	});
 	
