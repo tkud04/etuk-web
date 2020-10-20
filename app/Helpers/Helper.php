@@ -373,74 +373,7 @@ $subject = $data['subject'];
        return $temp;            	   
    }
 		   
-		   
-		   function getCart($user,$r="")
-           {
-           	$ret = [];
-			$uu = "";		
-			
-			  if(is_null($user))
-			  {
-				$uu = $r;
-			  }
-              else
-			  {
-				$uu = $user->id;
-
-                //check if guest mode has any cart items
-                $guestCart = Carts::where('user_id',$r)->get();
-                //dd($guestCart);
-                if(count($guestCart) > 0)
-				{
-					foreach($guestCart as $gc)
-					{
-						$temp = ['user_id' => $uu,'sku' => $gc->sku,'qty' => $gc->qty];
-						$this->addToCart($temp);
-						$gc->delete();
-					}
-				}				
-			  }
-
-			  $cart = Carts::where('user_id',$uu)->get();
-			  #dd($uu);
-              if($cart != null)
-               {
-               	foreach($cart as $c) 
-                    {
-                    	$temp = [];
-               	     $temp['id'] = $c->id; 
-               	     $temp['user_id'] = $c->user_id; 
-                        $temp['product'] = $this->getProduct($c->sku); 
-                        $temp['qty'] = $c->qty; 
-                        array_push($ret, $temp); 
-                   }
-               }                                 
-              			  
-                return $ret;
-           }
-           function clearCart($user)
-           {
-			  if(is_null($user))
-			  {
-				  $uu = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";;
-			  }
-              else
-			  {
-				$uu = $user->id;  
-			  }
-			   
-           	$ret = [];
-               $cart = Carts::where('user_id',$uu)->get();
- 
-              if($cart != null)
-               {
-               	foreach($cart as $c) 
-                    {
-                    	$c->delete(); 
-                   }
-               }                                 
-           }
-		   
+   
 		   
 		   function getUser($id)
            {
@@ -2023,14 +1956,13 @@ function createSocial($data)
 		   
 		   function addToCart($data)
            {
-			  dd($data);
-			 $xf = $data['user_id'];
+			  $xf = $data['user_id'];
 			 $axf = $data['axf'];
 			 $ret = "error";
 			 
 			 $c = Carts::where(['user_id' => $xf,'apartment_id' => $axf])->first();
 
-			 if(!is_null($c))
+			 if(is_null($c))
 			 {
 				 $c = Carts::create(['user_id' => $xf, 
                                                       'apartment_id' => $axf, 
@@ -2076,6 +2008,82 @@ function createSocial($data)
             }
 			                                          
             return "ok";
+           }
+		   
+		    function getCart($user,$r="")
+           {
+           	$ret = [];
+			$uu = "";		
+			
+			  if(is_null($user))
+			  {
+				$uu = $r;
+			  }
+              else
+			  {
+				$uu = $user->id;
+
+                //check if guest mode has any cart items
+                $guestCart = Carts::where('user_id',$r)->get();
+                //dd($guestCart);
+                if(count($guestCart) > 0)
+				{
+					foreach($guestCart as $gc)
+					{
+						/**
+						$temp = ['user_id' => $uu,'sku' => $gc->sku,'qty' => $gc->qty];
+						$this->addToCart($temp);
+						$gc->delete();
+						**/
+					}
+				}				
+			  }
+
+			  $carts = Carts::where('user_id',$uu)->get();
+			  #dd($uu);
+              if($carts != null)
+               {
+				   $carts = $carts->sortByDesc('created_at');
+				   
+               	foreach($carts as $c) 
+                    {
+                    	$temp = [];
+               	     $temp['id'] = $c->id; 
+               	     $temp['user_id'] = $c->user_id; 
+                        $temp['apartment'] = $this->getApartment($c->apartment_id); 
+						$checkin = Carbon::parse($c->checkin);
+						$checkout = Carbon::parse($c->checkout);
+                        $temp['checkin'] = $checkin->format("jS F, Y");
+                        $temp['checkout'] = $checkout->format("jS F, Y"); 
+                        $temp['guests'] = $c->guests; 
+                        $temp['kids'] = $c->kids; 
+                        array_push($ret, $temp); 
+                   }
+               }                                 
+              			  
+                return $ret;
+           }
+           function clearCart($user)
+           {
+			  if(is_null($user))
+			  {
+				  $uu = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";;
+			  }
+              else
+			  {
+				$uu = $user->id;  
+			  }
+			   
+           	$ret = [];
+               $cart = Carts::where('user_id',$uu)->get();
+ 
+              if($cart != null)
+               {
+               	foreach($cart as $c) 
+                    {
+                    	$c->delete(); 
+                   }
+               }                                 
            }
 		   
 		   

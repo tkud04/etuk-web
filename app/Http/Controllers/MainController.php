@@ -42,7 +42,6 @@ class MainController extends Controller {
 		$cart = $this->helpers->getCart($user,$gid);
 		
 		$c = $this->helpers->getCategories();
-		//dd($bs);
 		$signals = $this->helpers->signals;
 		
 		$ads = $this->helpers->getAds("wide-ad");
