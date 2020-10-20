@@ -814,6 +814,7 @@ class MainController extends Controller {
 			$req = $request->all();
         
 		    $validator = Validator::make($req,[
+		                    'xf' => 'required|numeric',
 		                    'axf' => 'required|numeric',
 		    ]);
 		
@@ -825,10 +826,10 @@ class MainController extends Controller {
 		 else
 		 {  
 	        $req['user_id'] = $user->id;	 
-			$r = $this->helpers->addToCart($req);
+			$r = $this->helpers->removeFromCart($req);
 			$ret = ['status' => "ok",'data' => $r];
-			session()->flash("add-to-cart-status","ok");
-			return redirect()->intended('cart');
+			session()->flash("remove-from-cart-status","ok");
+			return redirect()->back();
 		 }
 		}
 		else

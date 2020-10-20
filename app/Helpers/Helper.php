@@ -57,6 +57,7 @@ class Helper implements HelperContract
 					 "oauth-sp-status" => "Welcome to Etuk NG! You can now use your new account.",
 					 "add-review-status" => "Thanks for your review! It will be displayed after review by our admins.",
 					 "add-to-cart-status" => "Added to your cart.",
+					 "remove-from-cart-status" => "Removed from your cart.",
 					 
 					 //ERROR NOTIFICATIONS
 					 "invalid-apartment-id-status-error" => "Apartment not found.",
@@ -2050,6 +2051,7 @@ function createSocial($data)
                     	$temp = [];
                	     $temp['id'] = $c->id; 
                	     $temp['user_id'] = $c->user_id; 
+               	     $temp['apartment_id'] = $c->apartment_id; 
                         $temp['apartment'] = $this->getApartment($c->apartment_id); 
 						$checkin = Carbon::parse($c->checkin);
 						$checkout = Carbon::parse($c->checkout);

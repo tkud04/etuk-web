@@ -118,45 +118,41 @@
 												</div>
 												
 												<div class="cart-card-body">
-												
+												  <?php
+												  
+												   if(count($cart) > 0)
+												   {
+													 foreach($cart as $c)
+													 {
+														 $xf = $user->id;
+														 $axf = $c['apartment_id'];
+														 $apartment = $c['apartment'];
+														 $cmedia = $apartment['cmedia'];
+														 $imgs = $cmedia['images'];
+														 $adata = $apartment['data'];
+														 $amount = $adata['amount'];
+														 $address = $apartment['address'];
+														 $location = $address['city'].", ".$address['state'];
+														 
+														 $ru = "remove-from-cart?xf=".$xf."&id=".rand(99,99999)."&axf=".$axf;
+												  ?>
 													<!-- Single Cart Wrap -->
 													<div class="single-cart-wrap">
-														<a href="#" class="cart-close"><i class="ti-close"></i></a>
+														<a href="<?php echo e($ru); ?>" class="cart-close"><i class="ti-close"></i></a>
 														<div class="single-cart-thumb">
-															<img src="<?php echo e(asset('img/hotel-1.jpg')); ?>" alt=""/>
+															<img src="<?php echo e($imgs[0]); ?>" alt="<?php echo e(ucwords($apartment['name'])); ?>"/>
 														</div>
 														<div class="single-cart-detail">
-															<h3 class="sc-title">Goa To Mumbai</h3>
-															<span><i class="ti-location-pin mr-1"></i>Canada</span>
-															<h4 class="sc-price theme-cl">$120</h4>
+															<h3 class="sc-title"><?php echo e(ucwords($apartment['name'])); ?></h3>
+															<span><i class="ti-location-pin mr-1"></i><?php echo e(ucwords($location)); ?></span>
+															<h4 class="sc-price theme-cl"><?php echo e(number_format($amount,2)); ?></h4>
 														</div>
 													</div>
+													<?php
+													 }
+												   }
+													?>
 													
-													<!-- Single Cart Wrap -->
-													<div class="single-cart-wrap">
-														<a href="#" class="cart-close"><i class="ti-close"></i></a>
-														<div class="single-cart-thumb">
-															<img src="<?php echo e(asset('img/hotel-1.jpg')); ?>" alt=""/>
-														</div>
-														<div class="single-cart-detail">
-															<h3 class="sc-title">Goa To Mumbai</h3>
-															<span><i class="ti-location-pin mr-1"></i>Canada</span>
-															<h4 class="sc-price theme-cl">$120</h4>
-														</div>
-													</div>
-													
-													<!-- Single Cart Wrap -->
-													<div class="single-cart-wrap">
-														<a href="#" class="cart-close"><i class="ti-close"></i></a>
-														<div class="single-cart-thumb">
-															<img src="<?php echo e(asset('img/hotel-1.jpg')); ?>" alt=""/>
-														</div>
-														<div class="single-cart-detail">
-															<h3 class="sc-title">Goa To Mumbai</h3>
-															<span><i class="ti-location-pin mr-1"></i>Canada</span>
-															<h4 class="sc-price theme-cl">$120</h4>
-														</div>
-													</div>
 													
 												</div>
 												
