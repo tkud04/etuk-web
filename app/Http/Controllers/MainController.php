@@ -386,7 +386,7 @@ class MainController extends Controller {
 		$plugins = $this->helpers->getPlugins();
 		
 		$u = $this->helpers->getUser($user->id);
-		#dd($u);
+		#dd($messages);
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
         

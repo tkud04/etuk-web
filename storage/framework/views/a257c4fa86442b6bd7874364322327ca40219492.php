@@ -63,7 +63,9 @@ foreach($messages as $m)
 let msgs = [
 <?php
 $firstContact = ""; $ctr = 0;
-
+$himg = asset("img/avatar.png");
+if(count($messages) > 0)
+{
 foreach($messages as $m)
 {
 	$guest = $m['guest'];
@@ -74,6 +76,7 @@ foreach($messages as $m)
 ?>
 {gxf:"<?php echo e($guest['id']); ?>",gsb:"<?php echo e($m['sent_by']); ?>",apt_id:"<?php echo e($m['apartment_id']); ?>",d:"<?php echo e($m['date']); ?>",m:"<?php echo e($m['msg']); ?>",a:"<?php echo e($img); ?>"},
 <?php
+}
 }
 ?>
 ], hhxf = <?php echo e($user->id); ?>, aapt = "", ggxf = "", ha = "<?php echo e($himg); ?>";
