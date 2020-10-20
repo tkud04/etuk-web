@@ -131,6 +131,7 @@
 														 $imgs = $cmedia['images'];
 														 $adata = $apartment['data'];
 														 $amount = $adata['amount'];
+														 $totals = $c['totals'];
 														 $address = $apartment['address'];
 														 $location = $address['city'].", ".$address['state'];
 														 
@@ -145,7 +146,7 @@
 														<div class="single-cart-detail">
 															<h3 class="sc-title"><?php echo e(ucwords($apartment['name'])); ?></h3>
 															<span><i class="ti-location-pin mr-1"></i><?php echo e(ucwords($location)); ?></span>
-															<h4 class="sc-price theme-cl"><?php echo e(number_format($amount,2)); ?></h4>
+															<h4 class="sc-price theme-cl">&#8358;<?php echo e(number_format($amount,2)); ?></h4>
 														</div>
 													</div>
 													<?php
@@ -157,8 +158,8 @@
 												</div>
 												
 												<div class="cart-card-footer">
-													<a href="#" class="btn btn-theme">Go To Checkout</a>
-													<h4 class="totla-prc">$516</h4>
+													<a href="<?php echo e(url('checkout')); ?>" class="btn btn-theme">Checkout</a>
+													<h4 class="totla-prc">&#8358;<?php echo e(number_format($totals['subtotal'],2)); ?></h4>
 												</div>
 												
 											</div>

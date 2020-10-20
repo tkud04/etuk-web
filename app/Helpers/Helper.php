@@ -2049,16 +2049,21 @@ function createSocial($data)
                	foreach($carts as $c) 
                     {
                     	$temp = [];
+               	     $totals = ['subtotal' => 0]; 
                	     $temp['id'] = $c->id; 
                	     $temp['user_id'] = $c->user_id; 
                	     $temp['apartment_id'] = $c->apartment_id; 
-                        $temp['apartment'] = $this->getApartment($c->apartment_id); 
+                        $apt = $this->getApartment($c->apartment_id); 
+                        $temp['apartment'] = $apt;
+                        $adata = $apt['data'];						
+						$totals['subtotal'] += $adata['amount'];
 						$checkin = Carbon::parse($c->checkin);
 						$checkout = Carbon::parse($c->checkout);
                         $temp['checkin'] = $checkin->format("jS F, Y");
                         $temp['checkout'] = $checkout->format("jS F, Y"); 
                         $temp['guests'] = $c->guests; 
                         $temp['kids'] = $c->kids; 
+                        $temp['totals'] = $totals; 
                         array_push($ret, $temp); 
                    }
                }                                 
