@@ -2073,7 +2073,6 @@ function createSocial($data)
                         $temp['checkout'] = $checkout->format("jS F, Y"); 
                         $temp['guests'] = $c->guests; 
                         $temp['kids'] = $c->kids; 
-                        $temp['totals'] = $totals; 
                         array_push($rett, $temp); 
                    }
                }                                 
