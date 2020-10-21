@@ -53,6 +53,8 @@ Route::post('chat', 'MainController@postChat');
 Route::post('add-review', 'MainController@postAddReview');
 Route::get('vote-review', 'MainController@getVoteReview');
 
+Route::get('cart', 'MainController@getCart');
+Route::get('update-cart', 'MainController@getUpdateCart');
 Route::get('add-to-cart', 'MainController@getAddToCart');
 Route::get('remove-from-cart', 'MainController@getRemoveFromCart');
 Route::get('checkout', 'MainController@getCheckout');

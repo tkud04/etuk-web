@@ -17,6 +17,12 @@
 		<!-- Custom Color Option -->
 		<link href="<?php echo e(asset('css/colors.css')); ?>" rel="stylesheet">
 		
+		<style type="text/css">
+		  .layout-cart-link{
+			  cursor: pointer;
+		  }
+		</style>
+		
 		<?php echo $__env->yieldContent('styles'); ?>
 		
 		<link rel="icon" type="image/png" href="<?php echo e(asset('img/favicon.png')); ?>" sizes="16x16">
@@ -146,11 +152,11 @@
 													<div class="single-cart-wrap">
 														<a href="<?php echo e($ru); ?>" class="cart-close"><i class="ti-close"></i></a>
 														<div class="single-cart-thumb">
-															<img src="<?php echo e($imgs[0]); ?>" alt="<?php echo e(ucwords($apartment['name'])); ?>" onclick="goToApartment('<?php echo e($au); ?>')"/>
+															<img src="<?php echo e($imgs[0]); ?>" class="layout-cart-link" alt="<?php echo e(ucwords($apartment['name'])); ?>" onclick="goToApartment('<?php echo e($au); ?>')"/>
 														</div>
 														<div class="single-cart-detail">
-															<h3 class="sc-title" onclick="goToApartment('<?php echo e($au); ?>')"><?php echo e(ucwords($apartment['name'])); ?></h3>
-															<span onclick="goToApartment('<?php echo e($au); ?>')"><i class="ti-location-pin mr-1"></i><?php echo e(ucwords($location)); ?></span>
+															<h3 class="sc-title layout-cart-link" onclick="goToApartment('<?php echo e($au); ?>')"><?php echo e(ucwords($apartment['name'])); ?></h3>
+															<span class="layout-cart-link" onclick="goToApartment('<?php echo e($au); ?>')"><i class="ti-location-pin mr-1"></i><?php echo e(ucwords($location)); ?></span>
 															<h4 class="sc-price theme-cl">&#8358;<?php echo e(number_format($amount,2)); ?></h4>
 														</div>
 													</div>

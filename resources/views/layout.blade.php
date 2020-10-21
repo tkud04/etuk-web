@@ -17,6 +17,12 @@
 		<!-- Custom Color Option -->
 		<link href="{{asset('css/colors.css')}}" rel="stylesheet">
 		
+		<style type="text/css">
+		  .layout-cart-link{
+			  cursor: pointer;
+		  }
+		</style>
+		
 		@yield('styles')
 		
 		<link rel="icon" type="image/png" href="{{asset('img/favicon.png')}}" sizes="16x16">
@@ -146,11 +152,11 @@
 													<div class="single-cart-wrap">
 														<a href="{{$ru}}" class="cart-close"><i class="ti-close"></i></a>
 														<div class="single-cart-thumb">
-															<img src="{{$imgs[0]}}" alt="{{ucwords($apartment['name'])}}" onclick="goToApartment('{{$au}}')"/>
+															<img src="{{$imgs[0]}}" class="layout-cart-link" alt="{{ucwords($apartment['name'])}}" onclick="goToApartment('{{$au}}')"/>
 														</div>
 														<div class="single-cart-detail">
-															<h3 class="sc-title" onclick="goToApartment('{{$au}}')">{{ucwords($apartment['name'])}}</h3>
-															<span onclick="goToApartment('{{$au}}')"><i class="ti-location-pin mr-1"></i>{{ucwords($location)}}</span>
+															<h3 class="sc-title layout-cart-link" onclick="goToApartment('{{$au}}')">{{ucwords($apartment['name'])}}</h3>
+															<span class="layout-cart-link" onclick="goToApartment('{{$au}}')"><i class="ti-location-pin mr-1"></i>{{ucwords($location)}}</span>
 															<h4 class="sc-price theme-cl">&#8358;{{number_format($amount,2)}}</h4>
 														</div>
 													</div>
