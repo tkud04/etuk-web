@@ -50,10 +50,7 @@ $asText = $as == "available" ? "Available for booking" : "Apartment is currently
 <script>
 let sec = 0, svc = 0, loc = 0, cln = 0, cmf = 0;
 
-$(document).ready(() => {
-	let aci = addTime({date: $('#apartment-checkin').val(),period: "days",value: 1});
-	console.log(aci.toDateString());
-});
+
 </script>
 
 <!-- ============================ Hero Banner  Start================================== -->
@@ -498,6 +495,9 @@ $(document).ready(() => {
 									<div class="side-booking-body">
 									<?php
 									$checkin = date("m/d/Y");
+									$cd = new DateTime($checkin);
+                                    $cd->add(new DateInterval('P1D'));
+                                    $checkout = $cd->format("m/d/Y");
 									?>
 										<div class="row mb-4">
 											<div class="col-lg-6 col-md-6 col-sm-6">
@@ -514,7 +514,7 @@ $(document).ready(() => {
 													<label>Check Out</label>
 													<div class="cld-box">
 														<i class="ti-calendar"></i>
-														<input type="text" name="checkout" id="apartment-checkout" class="form-control" value="<?php echo e($checkin); ?>" />
+														<input type="text" name="checkout" id="apartment-checkout" class="form-control" value="<?php echo e($checkout); ?>" />
 													</div>
 												</div>
 											</div>
