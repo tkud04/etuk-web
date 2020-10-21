@@ -1,16 +1,9 @@
 <?php
 $title = "Checkout";
 $subtitle = "Make payment or book for later";
-
-$checkoutHead = <<<EOD
-                                <div class="checkout-head">
-									<ul>
-									    <li></li>
-										<li class="active"><span class="add-apartment-ticker-1">1</span>CHECKOUT</li>
-										<li></li>
-									</ul>
-								</div>
-EOD;
+$cartt = $cart['data'];
+$ii = count($cartt) == 1 ? "item" : "items";
+$subtotal = $cart['subtotal'];
 
  //for tests
 			  $secureCheckout = "http://etukng.tobi-demos.tk/checkout";
@@ -21,15 +14,7 @@ EOD;
 			  $isSecure = (isset($secure) && $secure);
 			  $pay = $isSecure ? $securePay : $unsecurePay;
 			  $checkout = $isSecure ? $secureCheckout : $unsecureCheckout;
-			  
-$name = $apartment['name'];
-$terms = $apartment['terms'];
-$adata = $apartment['data'];
-$address = $apartment['address'];
-$location = $address['city'].", ".$address['state'];
-$facilities = $apartment['facilities'];
-$cmedia = $apartment['cmedia'];
-$imgs = $cmedia['images'];
+
 ?>
 @extends('layout')
 
@@ -41,79 +26,101 @@ $imgs = $cmedia['images'];
 
 @section('content')
 @include('banner-2',['title' => $title,'subtitle' => $subtitle])
-<script>
-let selectedSide = "1", facilities = [], aptImages = [], aptImgCount = 1, aptCover = "none";
 
-$(document).ready(() => {
-checkoutPreview();	
-});
-
-</script>
-<!-- =================== Add Apartment Search ==================== -->
-			<section class="gray">
+<!-- ============================ Checkout Start ================================== -->
+			<section>
 				<div class="container">
-					<div class="row">
-						<div class="col-lg-9 col-md-8">
-							<input type="hidden" id="tk-apt" value="{{csrf_token()}}">
-							<input type="hidden" id="tk-axf" value="{{url('apartments')}}">
-							
-							<!-- Add Apartment Step 3 -->
-							<div class="checkout-wrap">
-								
-								{!! $checkoutHead !!}
-								
-								<div class="checkout-body" id="checkout-div">
-									
-									
+				
+					<div class="row mb-4">
+						
+						<div class="col-lg-4 col-md-4">
+							<div class="contact-box">
+								<i class="ti-map-alt"></i>
+								<h4>Head Offices</h4>
+								810 Clis Road,<br>
+								Indraprash NW11 0PU, India
+							</div>
+						</div>
+						
+						<div class="col-lg-4 col-md-4">
+							<div class="contact-box">
+								<i class="ti-email"></i>
+								<h4>Drop a Mail</h4>
+								virasat@gmail.com<br>
+								my.virasat@gmail.com
+							</div>
+						</div>
+						
+						<div class="col-lg-4 col-md-4">
+							<div class="contact-box">
+								<i class="ti-headphone"></i>
+								<h4>Call Us</h4>
+								91+ 123 456 9857<br>
+								91+ 258 548 5426
+							</div>
+						</div>
+						
+					</div>
+					
+					<div class="row mt-5 row align-items-center">
+						
+						<div class="col-lg-7 col-md-7">
+							<div class="contact-form">
+								<form>
 									<div class="row">
-										<div class="col-md-12 col-lg-12">
-										
-											<ul class="booking-detail-list" id="checkout-preview">
-												<li>Apartment name<span>{{$name}}</span></li>
-												<li>Adults<span>{{$a}}</span></li>
-												<li>Children<span>${aptMaxChildren}</span></li>
-												<li>Check in<span>${aptCheckin}</span></li>
-												<li>Check out<span>${aptCheckout}</span></li>
-												<li>Price per day<span>&#8358;${aptAmount}</span></li>
-												<li>Total<span>&#8358;${dt.total}</span></li>
-												<li>Payment type<span>Card</span></li>
-												<li>ID required on check-in<span>${dt.aptIdRequired}</span></li>
-												<li>Children<span>${aptChildren}</span></li>
-												<li>Facilities & services<span>${ff}</span></li>
-											</ul>
-											<hr>
-											
-											<h4>Final Notes</h4>
-											<p>Take a moment to preview the information about your apartment to ensure there are no errors or mistypes as your request will be reviewed by an admin. If you are sure all your information is correct click on <b>Submit</b> below. To make changes click on <b>Back</b>.</p>
-											
+										<div class="col-lg-6 col-md-6">
+											<div class="form-group">
+											  <label>Name</label>
+											  <input type="email" class="form-control" placeholder="Name">
+											</div>
 										</div>
-										
-										<div class="col-lg-12 col-md-12 col-sm-12">
-											<div class="form-group text-center" id="add-apartment-submit">
-												<a href="javascript:void(0)" id="add-apartment-side-3-prev" class="btn btn-theme">Back</a>
-												<a href="javascript:void(0)" id="add-apartment-side-3-next" class="btn btn-theme">Submit</a>
+										<div class="col-lg-6 col-md-6">
+											<div class="form-group">
+											  <label>Email</label>
+											  <input type="email" class="form-control" placeholder="Email">
 											</div>
-											<!--
-											<div class="form-group text-center" id="add-apartment-loading">
-												 <h4>Adding apartment.. <img src="{{asset('img/loading.gif')}}" class="img img-fluid" alt="Adding apartment.."></h4><br>
-											</div>
-											-->
 										</div>
 									</div>
-								</div>
-								
+									
+									<div class="row">
+										<div class="col-lg-12 col-md-12">
+											<div class="form-group">
+												<label>Subject</label>
+												<input type="text" class="form-control" placeholder="Subject">
+											</div>
+										</div>
+									</div>
+									
+									<div class="row">
+										<div class="col-lg-12 col-md-12">
+											<div class="form-group">
+												<label>Message</label>
+												<textarea class="form-control" placeholder="Type Here..."></textarea>
+											</div>
+										</div>
+									</div>
+									
+									<div class="row">
+										<div class="col-lg-12 col-md-12">
+											<button type="submit" class="btn btn-primary">Send Request</button>
+										</div>
+									</div>
+								</form>
 							</div>
-							<!-- End of Add Apartment Step 3 -->
-							
-							
 						</div>
-						<!-- Sidebar End -->
-							
-						<div class="col-lg-3 col-md-4">
-							@include('apt-sidebar',['cmedia' => [],'media' => []])
+						
+						<div class="col-lg-5 col-md-5">
+							<div class="row">
+							  <div class="col-lg-12 col-md-12">
+							   <h3>{{count($cartt)}} {{$ii}}</h3>
+							   <p>Subtotal: &#8358;<span></span></p>
+							  </div>
+							</div>
 						</div>
 					</div>
+					
 				</div>
 			</section>
-			<!-- =================== Add Apartment Search ==================== -->
+			<div class="clearfix"></div>
+			<!-- ============================ Checkout End ================================== -->
 @stop
