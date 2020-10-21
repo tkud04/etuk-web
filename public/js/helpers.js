@@ -976,6 +976,9 @@ $(`#review-${dt.rxf}-loading`).fadeIn();
 	   });	
 }
 
+const goToApartment = u => {
+	window.location = `apartment?xf=${u}`;
+}
 
 /**********************************************************************************************************************
                                                      OLD METHODS

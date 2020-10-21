@@ -132,6 +132,7 @@
 														 $xf = $user->id;
 														 $axf = $c['apartment_id'];
 														 $apartment = $c['apartment'];
+														 $au = $apartment['url'];
 														 $cmedia = $apartment['cmedia'];
 														 $imgs = $cmedia['images'];
 														 $adata = $apartment['data'];
@@ -145,11 +146,11 @@
 													<div class="single-cart-wrap">
 														<a href="<?php echo e($ru); ?>" class="cart-close"><i class="ti-close"></i></a>
 														<div class="single-cart-thumb">
-															<img src="<?php echo e($imgs[0]); ?>" alt="<?php echo e(ucwords($apartment['name'])); ?>"/>
+															<img src="<?php echo e($imgs[0]); ?>" alt="<?php echo e(ucwords($apartment['name'])); ?>" onclick="goToApartment('<?php echo e($au); ?>')"/>
 														</div>
 														<div class="single-cart-detail">
-															<h3 class="sc-title"><?php echo e(ucwords($apartment['name'])); ?></h3>
-															<span><i class="ti-location-pin mr-1"></i><?php echo e(ucwords($location)); ?></span>
+															<h3 class="sc-title" onclick="goToApartment('<?php echo e($au); ?>')"><?php echo e(ucwords($apartment['name'])); ?></h3>
+															<span onclick="goToApartment('<?php echo e($au); ?>')"><i class="ti-location-pin mr-1"></i><?php echo e(ucwords($location)); ?></span>
 															<h4 class="sc-price theme-cl">&#8358;<?php echo e(number_format($amount,2)); ?></h4>
 														</div>
 													</div>

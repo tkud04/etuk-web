@@ -824,7 +824,7 @@ class MainController extends Controller {
         
 		    $validator = Validator::make($req,[
 		                    'xf' => 'required|numeric',
-		                    'axf' => 'required|numeric',
+		                    'axf' => 'required',
 		    ]);
 		
 		if($validator->fails())

@@ -132,6 +132,7 @@
 														 $xf = $user->id;
 														 $axf = $c['apartment_id'];
 														 $apartment = $c['apartment'];
+														 $au = $apartment['url'];
 														 $cmedia = $apartment['cmedia'];
 														 $imgs = $cmedia['images'];
 														 $adata = $apartment['data'];
@@ -145,11 +146,11 @@
 													<div class="single-cart-wrap">
 														<a href="{{$ru}}" class="cart-close"><i class="ti-close"></i></a>
 														<div class="single-cart-thumb">
-															<img src="{{$imgs[0]}}" alt="{{ucwords($apartment['name'])}}"/>
+															<img src="{{$imgs[0]}}" alt="{{ucwords($apartment['name'])}}" onclick="goToApartment('{{$au}}')"/>
 														</div>
 														<div class="single-cart-detail">
-															<h3 class="sc-title">{{ucwords($apartment['name'])}}</h3>
-															<span><i class="ti-location-pin mr-1"></i>{{ucwords($location)}}</span>
+															<h3 class="sc-title" onclick="goToApartment('{{$au}}')">{{ucwords($apartment['name'])}}</h3>
+															<span onclick="goToApartment('{{$au}}')"><i class="ti-location-pin mr-1"></i>{{ucwords($location)}}</span>
 															<h4 class="sc-price theme-cl">&#8358;{{number_format($amount,2)}}</h4>
 														</div>
 													</div>
