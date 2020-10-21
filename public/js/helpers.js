@@ -980,6 +980,17 @@ const goToApartment = u => {
 	window.location = `apartment?xf=${u}`;
 }
 
+const addTime = dt => {
+    let date = new Date(dt.date), ret = "";
+	
+	switch(dt.period){
+		case "days":
+		  ret = date.setDate(date.getDate() + dt.value);  
+		break;
+	}
+    
+	return ret;
+}
 /**********************************************************************************************************************
                                                      OLD METHODS
 /**********************************************************************************************************************/

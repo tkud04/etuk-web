@@ -49,6 +49,11 @@ $asText = $as == "available" ? "Available for booking" : "Apartment is currently
 @section('content')
 <script>
 let sec = 0, svc = 0, loc = 0, cln = 0, cmf = 0;
+
+$(document).ready(() => {
+	let aci = addTime({date: $('#apartment-checkin').val(),period: "days",value: 1});
+	console.log(aci.toDateString());
+});
 </script>
 
 <!-- ============================ Hero Banner  Start================================== -->
