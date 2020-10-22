@@ -102,7 +102,7 @@ const signup = dt => {
 	   .then(response => {
 		   
 		   if(response.status === 200){   
-			   return response.json();
+			   return response.text();
 		   }
 		   else{
 			   return {status: "error", message: "Technical error"};
