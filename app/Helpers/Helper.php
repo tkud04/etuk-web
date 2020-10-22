@@ -29,6 +29,8 @@ use App\Comparisons;
 use App\Socials;
 use App\Messages;
 use App\SavedPayments;
+use App\Orders;
+use App\OrderItems;
 use App\Guests;
 use \Swift_Mailer;
 use \Swift_SmtpTransport;
