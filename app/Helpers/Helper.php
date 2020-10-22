@@ -2234,9 +2234,8 @@ function createSocial($data)
 			   $gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";  
            	   $order = $this->createOrder($user, $data);
 			   
-                if($user == null && $gid != null) $cart = $this->getCart($user,$gid);
-			 else $cart = $this->getCart($user);
-			 #dd($cart);
+                $cart = $this->getCart($user,$gid);
+			 dd($cart);
 			 
                #create order details
                foreach($cart as $c)
