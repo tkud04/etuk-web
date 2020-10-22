@@ -2235,10 +2235,11 @@ function createSocial($data)
            	   $order = $this->createOrder($user, $data);
 			   
                 $cart = $this->getCart($user,$gid);
-			dd($cart);
+			#dd($cart);
+			 $cartt = $cart['data'];
 			 
                #create order details
-               foreach($cart as $c)
+               foreach($cartt as $c)
                {
 				   $temp = []; 
                	     $temp['apartment_id'] = $c->apartment_id; 
