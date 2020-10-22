@@ -2259,7 +2259,7 @@ function createSocial($data)
 			   $this->clearCart($user);
 			   
 			   //if new user, clear discount
-			   $this->clearNewUserDiscount($user);
+			   //$this->clearNewUserDiscount($user);
 			   return $order;
            }
 
