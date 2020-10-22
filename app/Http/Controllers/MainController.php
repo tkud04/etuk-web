@@ -996,7 +996,7 @@ class MainController extends Controller {
 		
 		$sps = $this->helpers->getSavedPayments(['user_id' => $user->id]);
 		
-		dd($sps);
+		#dd($sps);
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
 

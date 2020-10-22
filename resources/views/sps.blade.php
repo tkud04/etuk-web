@@ -30,23 +30,22 @@ $subtitle = "List of previously used payment details";
 									   {
 										 foreach($sps as $s)
 										 {
+											 $dt = json_decode($s['data']);
+											 $du = url('remove-saved-payment')."?xf=".$s['id'];
 									  ?>
 										<li>
 											<div class="list-box-listing">
-												<div class="list-box-listing-img"><a href="#"><img src="assets/img/destination/des-2.jpg" alt=""></a></div>
+												<div class="list-box-listing-img"><a href="javascript:void(0)"><img src="{{asset('img/card.jpg')}}" alt=""></a></div>
 												<div class="list-box-listing-content">
 													<div class="inner">
-														<h3><a href="#">Castle Palace</a></h3>
-														<span>964 Seek Velly, Canada</span>
-														<div class="star-rating">
-															<div class="rating-counter">(10 reviews)</div>
-														<span class="ti-star"></span><span class="ti-star"></span><span class="ti-star"></span><span class="ti-star"></span><span class="ti-star empty"></span></div>
+														<h3><a href="javascript:void(0)">{{$dt->bank}} - {{$dt->card_type}}</a></h3>
+														<span>Expires: {{$dt->exp_month}}/{{$dt->exp_year}}</span>
+														<span>**** **** **** {{$dt->last4}}</span>												
 													</div>
 												</div>
 											</div>
 											<div class="buttons-to-right">
-												<a href="#" class="button gray"><i class="ti-pencil"></i> Edit</a>
-												<a href="#" class="button gray"><i class="ti-trash"></i> Delete</a>
+												<a href="{{$du}}" class="button gray"><i class="ti-trash"></i> Remove</a>
 											</div>
 										</li>
 										
