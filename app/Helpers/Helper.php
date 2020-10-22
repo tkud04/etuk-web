@@ -2367,7 +2367,7 @@ function createSocial($data)
                         $temp['checkout'] = $checkout->format("jS F, Y"); 
                         $temp['guests'] = $i->guests; 
                         $temp['kids'] = $i->kids; 
-                        array_push($rett, $temp); 
+                        array_push($ret['data'], $temp); 
                    }
                }			   
               			  
