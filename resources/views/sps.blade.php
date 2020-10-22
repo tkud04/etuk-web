@@ -38,8 +38,8 @@ $subtitle = "List of previously used payment details";
 												<div class="list-box-listing-img"><a href="javascript:void(0)"><img src="{{asset('img/card.jpg')}}" alt=""></a></div>
 												<div class="list-box-listing-content">
 													<div class="inner">
-														<h3><a href="javascript:void(0)">{{$dt->bank}} - {{$dt->card_type}}</a></h3>
-														<span>Expires: {{$dt->exp_month}}/{{$dt->exp_year}}</span>
+														<h3><a href="javascript:void(0)">{{$dt->bank}} - <b>{{strtoupper($dt->card_type)}}</b></a></h3>
+														<span>Expires: {{$dt->exp_month}}/{{$dt->exp_year}}</span><br>
 														<span>**** **** **** {{$dt->last4}}</span>												
 													</div>
 												</div>
