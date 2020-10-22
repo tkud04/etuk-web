@@ -16,7 +16,7 @@ $subtitle = "Your payment was sucessful!";
 <script>
 $(document).ready(() => {
 	setTimeout(() => {
-		window.location = "orders";
+		window.location = "{{url('orders')}}";
 	},4000);
 });
 </script>

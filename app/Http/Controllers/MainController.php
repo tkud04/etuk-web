@@ -957,7 +957,7 @@ class MainController extends Controller {
 		$ads = $this->helpers->getAds("wide-ad");
 		$plugins = $this->helpers->getPlugins();
 		
-		$orders = $this->helpers->getOrders();
+		$orders = $this->helpers->getOrders($user);
 		
 		dd($orders);
 		$secure = (isset($req['ss']) && $req['ss'] == "1") ? false : true;
