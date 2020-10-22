@@ -59,6 +59,8 @@ Route::get('add-to-cart', 'MainController@getAddToCart');
 Route::get('remove-from-cart', 'MainController@getRemoveFromCart');
 Route::get('checkout', 'MainController@getCheckout');
 Route::post('checkout', 'MainController@postCheckout');
+Route::get('orders', 'MainController@getOrders');
+
 Route::get('search', 'MainController@getSearch');
 
 

@@ -928,55 +928,44 @@ class MainController extends Controller {
     	return view("checkout",compact(['user','cart','messages','secure','ref','c','ad','signals','plugins']));
     }
 	
+	
 	/**
-	 * Handle vote review.
+	 * Show the orders page.
 	 *
 	 * @return Response
 	 */
-	public function postCheckout(Request $request)
+	public function getOrders(Request $request)
     {
 		$user = null;
-		 
+		$messages = [];
 		if(Auth::check())
 		{
 			$user = Auth::user();
-			
-			$req = $request->all();
-       dd($req);
-	    
-		$validator = Validator::make($req,[
-		                    'rxf' => 'required|numeric',
-		                    'type' => 'required',
-		                    'xf' => 'required|numeric|min:1'
-		]);
-		
-		if($validator->fails())
-         {
-			 $ret['message'] = "validation";
-         }
-		 else
-		 {  
-	        if($this->helpers->hasVotedReview(['user_id' => $user->id,'review_id' => $req['rxf']]))
-			{
-				$ret['message'] = "duplicate";
-			}
-			else
-			{
-			   $req['user_id'] = $user->id;	 
-			   $r = $this->helpers->voteReview($req);
-			   $ret = ['status' => "ok",'data' => $r];
-			}
-            
-		 }
+			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
 		}
 		else
 		{
-			session()->flash("checkout-auth-status-error","ok");
-			return redirect()->back();
+			return redirect()->intended('/');
 		}
-		 
+		$req = $request->all();
+		$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
+		$cart = $this->helpers->getCart($user,$gid);
+		$c = $this->helpers->getCategories();
+		//dd($bs);
+		$signals = $this->helpers->signals;
+		
+		$ads = $this->helpers->getAds("wide-ad");
+		$plugins = $this->helpers->getPlugins();
+		
+		$orders = $this->helpers->getOrders();
+		
+		dd($orders);
+		$secure = (isset($req['ss']) && $req['ss'] == "1") ? false : true;
+		shuffle($ads);
+		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
+
+    	return view("checkout",compact(['user','cart','messages','secure','ref','c','ad','signals','plugins']));
     }
-	
 	
 	
 	/**
