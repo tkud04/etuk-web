@@ -2242,11 +2242,11 @@ function createSocial($data)
                foreach($cartt as $c)
                {
 				   $temp = []; 
-               	     $temp['apartment_id'] = $c->apartment_id; 
-                        $temp['checkin'] = $c->checkin;
-                        $temp['checkout'] = $c->checkout; 
-                        $temp['guests'] = $c->guests; 
-                        $temp['kids'] = $c->kids; 
+               	     $temp['apartment_id'] = $c['apartment_id']; 
+                        $temp['checkin'] = $c['checkin'];
+                        $temp['checkout'] = $c['checkout']; 
+                        $temp['guests'] = $c['guests']; 
+                        $temp['kids'] = $c['kids']; 
                        $temp['order_id'] = $order->id;
 				    $oi = $this->createOrderItems($temp);                    
                }
