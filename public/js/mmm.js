@@ -606,4 +606,53 @@ $(document).ready(function() {
 			
 	});
 	
+	//CHECKOUT
+	$('#checkout-pay-btn').click(e => {
+		e.preventDefault();
+		
+		console.log("pay btn");
+		
+		let pt = $('#checkout-payment-type').val(), ref = $('#checkout-ref').val();
+		
+		if(pt == "none"){
+			Swal.fire({
+			 icon: 'error',
+             title: "Select a payment type."
+           });
+		}
+		else{
+			 payCard({ref: ref});
+		}
+		
+	});
+	
+	$('#checkout-book-btn').click(e => {
+		e.preventDefault();
+		console.log("book btn");
+		/**
+		let msg = $('#message-reply-msg').val();
+		
+		if(msg == ""){
+			Swal.fire({
+			 icon: 'error',
+             title: "Your reply cannot be empty."
+           });
+		}
+		else{
+			 $('#message-reply-btn').hide();
+		    $('#message-reply-loading').fadeIn();
+
+		   let fd =  new FormData();
+		   fd.append("_token",$('#tk-message').val());
+           fd.append("apartment_id",aapt);
+		   fd.append("gsb",hhxf);
+		   fd.append("gxf",ggxf);
+		   fd.append("msg",msg);
+			sendMessage(fd,"message-reply");
+	
+		}
+		
+	**/
+	});
+	
 });

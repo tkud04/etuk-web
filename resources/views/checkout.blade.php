@@ -27,57 +27,40 @@ $subtotal = $cart['subtotal'];
 @section('content')
 @include('banner-2',['title' => $title,'subtitle' => $subtitle])
 
+ <script>
+		    
+								 mc = {"ref":"{{$ref}}",
+								       "type":"checkout",
+								       "email":"{{$user->email}}",
+									   "notes":""
+									  };
+                             
+           </script>
+
+                            	<input type="hidden" id="card-action" value="{{$pay}}">
+                            	<input type="hidden" id="checkout-ref" value="{{$ref}}">
 <!-- ============================ Checkout Start ================================== -->
 			<section>
 				<div class="container">
 				
-					<div class="row mb-4">
-						
-						<div class="col-lg-4 col-md-4">
-							<div class="contact-box">
-								<i class="ti-map-alt"></i>
-								<h4>Head Offices</h4>
-								810 Clis Road,<br>
-								Indraprash NW11 0PU, India
-							</div>
-						</div>
-						
-						<div class="col-lg-4 col-md-4">
-							<div class="contact-box">
-								<i class="ti-email"></i>
-								<h4>Drop a Mail</h4>
-								virasat@gmail.com<br>
-								my.virasat@gmail.com
-							</div>
-						</div>
-						
-						<div class="col-lg-4 col-md-4">
-							<div class="contact-box">
-								<i class="ti-headphone"></i>
-								<h4>Call Us</h4>
-								91+ 123 456 9857<br>
-								91+ 258 548 5426
-							</div>
-						</div>
-						
-					</div>
 					
-					<div class="row mt-5 row align-items-center">
+					<div class="row align-items-center">
 						
 						<div class="col-lg-7 col-md-7">
 							<div class="contact-form">
-								<form>
+								<form id="checkout-form" method="post">
+								{!! csrf_field() !!}
 									<div class="row">
 										<div class="col-lg-6 col-md-6">
 											<div class="form-group">
 											  <label>Name</label>
-											  <input type="email" class="form-control" placeholder="Name">
+											  <input type="text" class="form-control" value="{{$user->fname.' '.$user->lname}}" placeholder="Name" readonly>
 											</div>
 										</div>
 										<div class="col-lg-6 col-md-6">
 											<div class="form-group">
 											  <label>Email</label>
-											  <input type="email" class="form-control" placeholder="Email">
+											  <input type="email" class="form-control" value="{{$user->email}}" placeholder="Email" readonly>
 											</div>
 										</div>
 									</div>
@@ -85,8 +68,11 @@ $subtotal = $cart['subtotal'];
 									<div class="row">
 										<div class="col-lg-12 col-md-12">
 											<div class="form-group">
-												<label>Subject</label>
-												<input type="text" class="form-control" placeholder="Subject">
+												<label>Payment type</label>
+												<select class="form-control" id="checkout-payment-type">
+												  <option value="none">Select payment type</option>
+												  <option value="card" selected="selected">Card</option>
+												</select>
 											</div>
 										</div>
 									</div>
@@ -94,30 +80,72 @@ $subtotal = $cart['subtotal'];
 									<div class="row">
 										<div class="col-lg-12 col-md-12">
 											<div class="form-group">
-												<label>Message</label>
-												<textarea class="form-control" placeholder="Type Here..."></textarea>
+												<label>Notes (optional)</label>
+												<textarea class="form-control" id="notes" placeholder="Type Here..."></textarea>
 											</div>
 										</div>
 									</div>
 									
-									<div class="row">
-										<div class="col-lg-12 col-md-12">
-											<button type="submit" class="btn btn-primary">Send Request</button>
-										</div>
-									</div>
+									 <!-- payment form -->
+                            	<input type="hidden" name="email" value="{{$user->email}}"> {{-- required --}}
+                            	<input type="hidden" name="quantity" value="1"> {{-- required --}}
+                            	<input type="hidden" name="amount" value="{{$subtotal * 100}}"> {{-- required in kobo --}}
+                            	<input type="hidden" name="metadata" id="nd" value="" > {{-- For other necessary things you want to add to your payload. it is optional though --}}
+                            
+                                <input type="hidden" id="meta-comment" value="">  
+                            <!-- End payment form -->
+									
 								</form>
 							</div>
 						</div>
 						
-						<div class="col-lg-5 col-md-5">
+						<div class="col-lg-5 col-md-5 mt-5" style="overflow-y: scroll;">
 							<div class="row">
 							  <div class="col-lg-12 col-md-12">
-							   <h3>{{count($cartt)}} {{$ii}}</h3>
-							   <p>Subtotal: &#8358;<span></span></p>
+							   <h3>{{count($cartt)}} {{$ii}}</h3><br>
+							   <h4>Subtotal: &#8358;<span>{{number_format($subtotal,2)}}</span></h4><br>
+							  </div><br>
+							  <div class="col-lg-12 col-md-12">
+							  <?php
+							    foreach($cartt as $c)
+													 {
+														 $xf = $user->id;
+														 $axf = $c['apartment_id'];
+														 $apartment = $c['apartment'];
+														 $au = $apartment['url'];
+														 $cmedia = $apartment['cmedia'];
+														 $imgs = $cmedia['images'];
+														 $adata = $apartment['data'];
+														 $amount = $adata['amount'];
+														 $address = $apartment['address'];
+														 $location = $address['city'].", ".$address['state'];
+														 $checkin = new DateTime($c['checkin']);
+														 $checkout = new DateTime($c['checkout']);
+							 if($c != $cartt[0])
+							 {
+							 ?>
+							 <hr style="margin-top: 10px;">
+							 <?php
+							 }
+							 ?>
+							   <h3><span class="label label-primary">{{$apartment['name']}}</span> <b>&#8358;{{number_format($amount,2)}}</b> <small>per night</small></h3>
+							   <p>Check-in: <b>{{$checkin->format("jS F, Y")}}</b></p>
+							   <p>Check-out: <b>{{$checkout->format("jS F, Y")}}</b></p>
+							   <p>Guests: <b>{{$c['guests']}}</b> | Kids: <b>{{$c['kids']}}</b></p>
+							   <p></p>
+							 <?php
+													 }
+							 ?>
 							  </div>
 							</div>
 						</div>
 					</div>
+					<div class="row mt-5">
+										<div class="col-lg-12 col-md-12">										
+											<button id="checkout-book-btn" class="btn btn-primary">Book for later</button>
+											<button id="checkout-pay-btn" class="btn btn-success">Pay now</button>
+										</div>
+									</div>
 					
 				</div>
 			</section>

@@ -21,6 +21,18 @@ class PaymentController extends Controller {
     	$this->helpers = $h;                     
     }
     
+	
+	 /**
+	 * Redirect GET requests to /pay.
+	 * This could happen due to an expired page or network issues
+	 *
+	 * @return Response
+	 */
+	public function getPay()
+    {
+       return redirect()->intended('checkout');
+    }
+    
     
     /**
 	 * Show the application welcome screen to the user.
@@ -38,7 +50,7 @@ class PaymentController extends Controller {
 		
 		
 		$req = $request->all();
-      # dd($req);
+       #dd($req);
         $type = json_decode($req['metadata']);
         //dd($type);
         
@@ -47,12 +59,7 @@ class PaymentController extends Controller {
 		
         $validator = Validator::make($req, [
 							 'amount' => 'required',
-                             'email' => 'required|email|filled',
-                             'address' => 'required|filled',
-                             'city' => 'required|filled',
-                             'state' => 'required|not_in:none',
-                             'phone' => 'required|filled',
-                             'terms' => 'required|accepted',
+                             'email' => 'required|email|filled'
          ]);
          
          if($validator->fails())
@@ -67,7 +74,7 @@ class PaymentController extends Controller {
 			 if($req['amount'] < 1)
 			 {
 				 $err = "error";
-				 session()->flash("no-cart-status",$err);
+				 session()->flash("no-cart-status-error","ok");
 				 return redirect()->back();
 			 }
 			 else
@@ -82,7 +89,7 @@ class PaymentController extends Controller {
 			   }
 			   catch(Exception $e)
 			   {
-				 $request->session()->flash("pay-card-status","error");
+				 $request->session()->flash("pay-card-status-error","ok");
 			     return redirect()->intended("checkout");
 			   } 
 			 }        
@@ -108,7 +115,7 @@ class PaymentController extends Controller {
 		
         $paymentDetails = Paystack::getPaymentData();
 
-        #dd($paymentDetails);       
+        dd($paymentDetails);       
         
         $paymentData = $paymentDetails['data'];
         $md = $paymentData['metadata'];

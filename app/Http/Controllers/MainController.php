@@ -905,24 +905,27 @@ class MainController extends Controller {
 			$user = Auth::user();
 			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
 		}
+		else
+		{
+			return redirect()->intended('/');
+		}
 		$req = $request->all();
 		$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
 		$cart = $this->helpers->getCart($user,$gid);
 		$c = $this->helpers->getCategories();
 		//dd($bs);
 		$signals = $this->helpers->signals;
-		$states = $this->helpers->states;
 		
 		$ads = $this->helpers->getAds("wide-ad");
 		$plugins = $this->helpers->getPlugins();
-		$services = $this->helpers->getServices();
 		
 		#dd($hasUnpaidOrders);
 		$secure = (isset($req['ss']) && $req['ss'] == "1") ? false : true;
 		shuffle($ads);
+		$ref = "ETUK_".$this->helpers->getRandomString(6);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
 
-    	return view("checkout",compact(['user','cart','messages','secure','services','states','c','ad','signals','plugins']));
+    	return view("checkout",compact(['user','cart','messages','secure','ref','c','ad','signals','plugins']));
     }
 	
 	/**

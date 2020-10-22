@@ -991,6 +991,33 @@ const addTime = dt => {
     
 	return ret;
 }
+
+const payCard = dt =>{
+	
+	Swal.fire({
+    title: `Order reference: ${dt.ref}`,
+  imageUrl: "img/paystack.png",
+  imageWidth: 400,
+  imageHeight: 200,
+  imageAlt: `Pay for order ${dt.ref} with card`,
+  showCloseButton: true,
+  html:
+     "<h4 class='text-danger'><b>NOTE: </b>Make sure you note down your reference number above, as it will be required in the case of any issues regarding this order.</h4><p class='text-primary'>Click OK below to redirect to our secure payment gateway to complete this payment.</p>"
+}).then((result) => {
+  if (result.value) {
+	  let a = false;
+	  mc['notes'] = $('#notes').val();
+	 
+	 $('#nd').val(JSON.stringify(mc)); 
+	console.log(mc);
+	
+	let paymentURL = $("#card-action").val(); 
+	$('#checkout-form').attr('action',paymentURL);
+   $('#checkout-form').submit();
+  }
+});
+
+}
 /**********************************************************************************************************************
                                                      OLD METHODS
 /**********************************************************************************************************************/

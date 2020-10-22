@@ -78,7 +78,7 @@ Route::get('tcdi', 'MainController@getTCDI');
 
 //Payments
 Route::get('payment/callback', 'PaymentController@getPaymentCallback');
-Route::get('pay', 'MainController@getPay');
+Route::get('pay', 'PaymentController@getPay');
 Route::post('pay', 'PaymentController@postRedirectToGateway');
 
 Route::post('subscribe', 'MainController@postSubscribe');

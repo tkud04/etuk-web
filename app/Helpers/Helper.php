@@ -68,6 +68,8 @@ class Helper implements HelperContract
 					 "cart-auth-status-error" => "Please sign in to view your cart.",
 					 "validation-status-error" => "Please fill all required fields.",
 					 "add-to-cart-host-status-error" => "You cannot book your own apartment.",
+					 "no-cart-status-error" => "Your cart is empty.",
+					 "pay-card-status-error" => "Your payment could not be processed, please try again.",
                      ],
                      'errors'=> ["login-status-error" => "Wrong username or password, please try again.",
 					 "signup-status-error" => "There was a problem creating your account, please try again.",
