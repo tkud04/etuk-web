@@ -2199,6 +2199,7 @@ function createSocial($data)
               $psref = $payStackResponse['reference'];
               $ref = $md['ref'];
               $type = $md['type'];
+              $sps = $md['sps'];
               $dt = [];
               
               if($type == "checkout"){
@@ -2215,14 +2216,18 @@ function createSocial($data)
               $this->addOrder($user,$dt);
 			  
 			  //add to saved payments
-		      $authorization = $payStackResponse['authorization'];
-		      $this->createSavedPayment([
-		       'user_id' => $user->id,
-		       'type' => "checkout",
-		       'gateway' => "paystack",
-		       'data' => json_encode($authorization),
-		       'status' => "enabled",
-	    	 ]);
+			  if($sps == "yes")
+			  {
+				  $authorization = $payStackResponse['authorization'];
+		          $this->createSavedPayment([
+		           'user_id' => $user->id,
+		           'type' => "checkout",
+		           'gateway' => "paystack",
+		           'data' => json_encode($authorization),
+		           'status' => "enabled"
+	    	 ]);  
+			  }
+		      
                 return ['status' => "ok",'dt' => $dt];
            }
 		   

@@ -1007,6 +1007,7 @@ const payCard = dt =>{
   if (result.value) {
 	  let a = false;
 	  mc['notes'] = $('#notes').val();
+	  mc['sps'] = $('#checkout-sps').val();
 	 
 	 $('#nd').val(JSON.stringify(mc)); 
 	console.log(mc);

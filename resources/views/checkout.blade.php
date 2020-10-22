@@ -80,6 +80,18 @@ $subtotal = $cart['subtotal'];
 									<div class="row">
 										<div class="col-lg-12 col-md-12">
 											<div class="form-group">
+												<label>Save payment info?</label>
+												<select class="form-control" name="sps" id="checkout-sps">
+												  <option value="yes" selected="selected">Yes</option>
+												  <option value="no">Card</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									
+									<div class="row">
+										<div class="col-lg-12 col-md-12">
+											<div class="form-group">
 												<label>Notes (optional)</label>
 												<textarea class="form-control" id="notes" placeholder="Type Here..."></textarea>
 											</div>
