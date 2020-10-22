@@ -54,7 +54,7 @@ class PaymentController extends Controller {
         $type = json_decode($req['metadata']);
         //dd($type);
         
-		$name = isset($req['name']) ? $req['name'] : $req['fname']." ".$req['lname'];
+		#$name = isset($req['name']) ? $req['name'] : $req['fname']." ".$req['lname'];
         #dd($name);
 		
         $validator = Validator::make($req, [
