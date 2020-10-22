@@ -28,6 +28,7 @@ use App\Services;
 use App\Comparisons;
 use App\Socials;
 use App\Messages;
+use App\SavedPayments;
 use App\Guests;
 use \Swift_Mailer;
 use \Swift_SmtpTransport;
@@ -2104,6 +2105,69 @@ function createSocial($data)
                    }
                }                                 
            }
+           
+           
+           function getRandomString($length_of_string) 
+           { 
+  
+              // String of all alphanumeric character 
+              $str_result = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'; 
+  
+              // Shufle the $str_result and returns substring of specified length 
+              return substr(str_shuffle($str_result),0, $length_of_string); 
+            }
+            
+            
+            function createSavedPayment($dt)
+		   {
+			   $ret = SavedPayments::create(['user_id' => $dt['user_id'], 
+                                                      'type' => $dt['type'],
+                                    
+                  'gateway' => $dt['gateway'],
+                  
+                  'data' => $dt['data']
+                                                      ]);
+                                                      
+                return $ret;
+		   }
+		   
+		   function getSavedPayment($id)
+		   {
+			   $ret = [];
+			   $t = SavedPayments::where('id',$id)->first();
+			   
+			   if($t != null)
+               {
+				  $temp = [];
+				  $temp['id'] = $t->id;
+				  $temp['title'] = $t->title;
+				  $temp['msg'] = $t->msg;
+     			  $temp['date'] = $t->created_at->format("m/d/Y h:i A");
+				  $ret = $temp;
+               }
+
+               return $ret;			   
+		   }
+		   
+		   function getSavedPayments($dt)
+           {
+           	$ret = [];
+			 
+			$tips = ApartmentTips::where('id','>','0')->get();
+			  
+              if($tips != null)
+               {
+				   $tips = $tips->sortByDesc('created_at');	
+			  
+				  foreach($tips as $t)
+				  {
+					  $temp = $this->getApartmentTip($t->id);
+					  array_push($ret,$temp);
+				  }
+               }                         
+                                  
+                return $ret;
+           }
 		   
 		   
 		   
@@ -2595,15 +2659,7 @@ function createSocial($data)
 			   return $ret;
 		   }
 		   
-		   function getRandomString($length_of_string) 
-           { 
-  
-              // String of all alphanumeric character 
-              $str_result = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'; 
-  
-              // Shufle the $str_result and returns substring of specified length 
-              return substr(str_shuffle($str_result),0, $length_of_string); 
-            } 
+		   
 		   
 		   function getPaymentCode($r=null)
 		   {
