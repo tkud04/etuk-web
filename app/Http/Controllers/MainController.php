@@ -836,7 +836,7 @@ class MainController extends Controller {
 			else
 			{
 				session()->flash("add-to-cart-status","ok");
-			    return redirect()->intended('cart');
+			    return redirect()->intended('/');
 			}
 			
 		 }
