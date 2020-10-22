@@ -2235,7 +2235,7 @@ function createSocial($data)
            	   $order = $this->createOrder($user, $data);
 			   
                 $cart = $this->getCart($user,$gid);
-			# dd($cart);
+			dd($cart);
 			 
                #create order details
                foreach($cart as $c)
