@@ -2239,29 +2239,14 @@ function createSocial($data)
                #create order details
                foreach($cart as $c)
                {
-				   /**
 				   $temp = []; 
-               	     $temp['id'] = $c->id; 
-               	     $temp['user_id'] = $c->user_id; 
                	     $temp['apartment_id'] = $c->apartment_id; 
-                        $apt = $this->getApartment($c->apartment_id); 
-                        $temp['apartment'] = $apt;
-                        $adata = $apt['data'];						
-						$ret['subtotal'] += $adata['amount'];
-						$checkin = Carbon::parse($c->checkin);
-						$checkout = Carbon::parse($c->checkout);
-                        $temp['checkin'] = $checkin->format("jS F, Y");
-                        $temp['checkout'] = $checkout->format("jS F, Y"); 
+                        $temp['checkin'] = $c->checkin;
+                        $temp['checkout'] = $c->checkout; 
                         $temp['guests'] = $c->guests; 
                         $temp['kids'] = $c->kids; 
-                        array_push($rett, $temp); 
-				   **/
-				   $dt = [];
-                   $dt['sku'] = $c['product']['sku'];
-				   $dt['qty'] = $c['qty'];
-				   $dt['order_id'] = $order->id;
-				   if($data["status"] == "paid") $this->updateStock($dt['sku'],$dt['qty']);
-                   $oi = $this->createOrderItems($dt);                    
+                       $temp['order_id'] = $order->id;
+				    $oi = $this->createOrderItems($temp);                    
                }
 
                #send transaction email to admin
@@ -2281,41 +2266,15 @@ function createSocial($data)
 			   #dd($dt);
 			   $psref = isset($dt['ps_ref']) ? $dt['ps_ref'] : "";
 			   
-			   if(is_null($user))
-			   {
-				   $gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
-				   $anon = AnonOrders::create(['email' => $dt['email'],
-				                     'reference' => $dt['ref'],
-				                     'name' => $dt['name'],
-				                     'phone' => $dt['phone'],
-				                     'address' => $dt['address'],
-				                     'city' => $dt['city'],
-				                     'state' => $dt['state'],
-				             ]);
-				   
-				   $ret = Orders::create(['user_id' => "anon",
-			                          'reference' => $dt['ref'],
-			                          'ps_ref' => $psref,
-			                          'amount' => $dt['amount'],
-			                          'type' => $dt['type'],
-			                          'payment_code' => $dt['payment_code'],
-			                          'notes' => $dt['notes'],
-			                          'status' => $dt['status'],
-			                 ]); 
-			   }
-			   
-			   else
-			   {
+		
 				 $ret = Orders::create(['user_id' => $user->id,
 			                          'reference' => $dt['ref'],
 			                          'ps_ref' => $psref,
 			                          'amount' => $dt['amount'],
 			                          'type' => $dt['type'],
-			                          'payment_code' => $dt['payment_code'],
 			                          'notes' => $dt['notes'],
 			                          'status' => $dt['status'],
 			                 ]);   
-			   }
 			   
 			  return $ret;
 		   }
@@ -2323,8 +2282,11 @@ function createSocial($data)
 		   function createOrderItems($dt)
 		   {
 			   $ret = OrderItems::create(['order_id' => $dt['order_id'],
-			                          'sku' => $dt['sku'],
-			                          'qty' => $dt['qty']
+			                          'apartment_id' => $dt['apartment_id'],
+			                          'checkin' => $dt['checkin'],
+			                          'checkout' => $dt['checkout'],
+			                          'guests' => $dt['guests'],
+			                          'kids' => $dt['kids'],
 			                 ]);
 			  return $ret;
 		   }
@@ -2364,20 +2326,43 @@ function createSocial($data)
                   $temp['reference'] = $o->reference;
                   $temp['amount'] = $o->amount;
                   $temp['type'] = $o->type;
-                  $temp['payment_code'] = $o->payment_code;
                   $temp['notes'] = $o->notes;
                   $temp['status'] = $o->status;
                   $temp['items'] = $this->getOrderItems($o->id);
-                  $temp['totals'] = $this->getOrderTotals($temp['items'],$o->user_id);
-				  if($o->user_id == "anon")
-				  {
-						$anon = $this->getAnonOrder($o->reference,false);
-						$temp['totals']['delivery'] = $this->getDeliveryFee($anon['state'],"state");  
-				  }
-				  
                   $temp['date'] = $o->created_at->format("jS F, Y");
                   $ret = $temp; 
                }                                 
+              			  
+                return $ret;
+           }
+		   
+		   function getOrderItems($id)
+           {
+           	$ret = ['data' => [],'subtotal' => 0];
+
+			  $items = OrderItems::where('order_id',$id)->get();
+			  #dd($uu);
+              if($items != null)
+               {
+               	  	foreach($items as $i) 
+                    {
+                    	$temp = []; 
+               	     $temp['id'] = $i->id; 
+               	     $temp['order_id'] = $i->order_id; 
+               	     $temp['apartment_id'] = $i->apartment_id; 
+                        $apt = $this->getApartment($i->apartment_id); 
+                        $temp['apartment'] = $apt;
+                        $adata = $apt['data'];						
+						$ret['subtotal'] += $adata['amount'];
+						$checkin = Carbon::parse($i->checkin);
+						$checkout = Carbon::parse($i->checkout);
+                        $temp['checkin'] = $checkin->format("jS F, Y");
+                        $temp['checkout'] = $checkout->format("jS F, Y"); 
+                        $temp['guests'] = $i->guests; 
+                        $temp['kids'] = $i->kids; 
+                        array_push($rett, $temp); 
+                   }
+               }			   
               			  
                 return $ret;
            }
@@ -2676,30 +2661,6 @@ function createSocial($data)
 			  }
 		   }
 
-           
-
-          
-           function getOrderItems($id)
-           {
-           	$ret = [];
-
-			  $items = OrderItems::where('order_id',$id)->get();
-			  #dd($uu);
-              if($items != null)
-               {
-               	  foreach($items as $i) 
-                    {
-						$temp = [];
-                    	$temp['id'] = $i->id; 
-                    	$temp['order_id'] = $i->order_id; 
-                        $temp['product'] = $this->getProduct($i->sku); 
-                        $temp['qty'] = $i->qty; 
-                        array_push($ret, $temp); 
-                    }
-               }			   
-              			  
-                return $ret;
-           }
 
           function getTrackings($reference="")
 		   {
@@ -2922,150 +2883,6 @@ function createSocial($data)
 		return json_encode(['status' => "ok"]);
 	}
 	
-	function pdfHeader($ph)
-	{
-		$img = public_path()."/images/logoo.png";
-		$ph->Cell(80);
-		$ph->Image($img,80,10,50);
-		$ph->Ln(55);
-		$ph->SetFont('Arial', 'BU', 18);
-		$ph->SetX(-60);
-        $ph->Cell(0, 10, 'Ace Luxury Store',0,1);
-		$ph->SetFont('Arial', '', 15);
-		$ph->SetX(-125);
-        $ph->Cell(0, 10, '3 Oshikomaiya Close, Demurin Road, Ketu, Lagos',0,1);
-		$ph->SetX(-55);
-        $ph->Cell(0, 10, '(+234) 809 703 9692',0,1);
-		$ph->SetFont('Arial', 'IU', 15);
-		$ph->SetTextColor(0,0,120);
-		$ph->SetX($ph->GetPageWidth() - ($ph->GetStringWidth('support@aceluxurystore.com') + 5));
-        $ph->Cell(0, 10, 'support@aceluxurystore.com',0,1);
-		$ph->Ln(20);
-		$ph->Line(0,$ph->GetY() - 10,$ph->GetPageWidth(),$ph->GetY() - 10);
-	}
-	
-	function pdfFooter($ph)
-	{
-		$ph->SetY(-30);
-		$ph->SetFont('Arial','I',8);
-		$ph->SetTextColor(128);
-		$ph->Cell(0,5,'Page '.$ph->PageNo().'/{nb}',0,0,'C');
-	}
-	
-	function pdfTable($ph, $header, $data)
-   {
-    // Colors, line width and bold font
-    $ph->SetFillColor(141,154,165);
-    $ph->SetTextColor(255);
-    $ph->SetDrawColor(255);
-    $ph->SetLineWidth(.3);
-    $ph->SetFont('','B');
-    // Header
-    $w = array(10, 95, 20, 45);
-    for($i=0;$i<count($header);$i++)
-        $ph->Cell($w[$i],7,$header[$i],1,0,'C',true);
-    $ph->Ln();
-    // Color and font restoration
-    $ph->SetFillColor(224,235,255);
-    $ph->SetTextColor(0);
-    $ph->SetFont('');
-    // Data
-    $fill = false;
-	$x = 0;
-    foreach($data as $i)
-    {
-		++$x;
-		$product = $i['product'];
-		$sku = $product['sku'];
-		$qty = $i['qty'];
-		$pd = $product['pd'];
-		$pu = url('product')."?sku=".$product['sku'];
-		$img = $product['imggs'][0];
-		#dd($img);
-		
-        $ph->Cell($w[0],6,$x,'LR',0,'L',$fill);
-        //$ph->Image($img,$w[1],10,50,50,'png');
-        $ph->Cell($w[1],6,$sku,'LR',0,'L',$fill);
-        $ph->Cell($w[2],6,$qty,'LR',0,'R',$fill);
-        $ph->Cell($w[3],6,"N".number_format($pd['amount'] * $qty,2),'LR',0,'R',$fill);
-        $ph->Ln();
-        $fill = !$fill;
-    }
-    // Closing line
-    $ph->Cell(array_sum($w),0,'','T');
-   }
-
-    function outputPDF($data,$fpdf)
-	{	
-	   $dt = $data['data'];
-		switch($data['type'])
-		{
-			case 'test':
-			 $fpdf->AddPage();
-             $fpdf->SetFont('Arial', 'BU', 18);
-			 $fpdf->Cell(80);
-             $fpdf->Cell(20, 10, 'Creating PDF documents from helpers up',0,1,'C');
-			 $fpdf->SetFont('Arial', '', 15);
-             $fpdf->Cell(20, 10, 'Creating PDF documents from helpers');
-			break;
-			
-			case 'test-2':
-			$fpdf->AliasNbPages();
-			 $fpdf->AddPage();
-			 $this->pdfHeader($fpdf);
-			 $fpdf->SetFont('Arial', '', 15);
-			 $fpdf->SetTextColor(0);
-             $fpdf->Cell(20, 10, 'RECEIPT',0,1);
-			 $fpdf->SetFont('Arial', 'B', 18);
-             $fpdf->Cell(20, 10, 'John SNow',0,1);
-			 $fpdf->SetFont('Arial', '', 15);
-             $fpdf->Cell(20, 10, '07054329101',0,1);
-			  $fpdf->SetFont('Arial', 'IU', 15);
-			 $fpdf->SetTextColor(0,0,120);
-             $fpdf->Cell(20, 10, 'myemail@yahoo.com',0,1);
-			 $this->pdfFooter($fpdf);
-			break;
-			
-			case 'receipt':
-			$rows = [
-			 ['1',"item 1 with image","qty 1","amount 1"],
-			 ['2',"item 2 with image","qty 2","amount 2"],
-			 ['3',"item 3 with image","qty 3","amount 3"],
-			 ['4',"item 4 with image","qty 4","amount 4"],
-			];
-			$fpdf->AliasNbPages();
-			 $fpdf->AddPage();
-			 $this->pdfHeader($fpdf);
-			 $fpdf->SetFont('Arial', '', 15);
-			 $fpdf->SetTextColor(0);
-             $fpdf->Cell(20, 10, 'RECEIPT',0,1);
-			 $fpdf->SetFont('Arial', 'B', 18);
-             $fpdf->Cell(20, 10, $dt['name'],0,1);
-			 $fpdf->SetFont('Arial', '', 15);
-             $fpdf->Cell(20, 10,  $dt['phone'],0,1);
-			  $fpdf->SetFont('Arial', 'IU', 15);
-			 $fpdf->SetTextColor(0,0,120);
-             $fpdf->Cell(20, 10,  $dt['email'],0,1);
-			 $fpdf->SetX(-40);
-			 $fpdf->SetFont('Arial', '', 15);
-			 $fpdf->SetTextColor(0);
-             $fpdf->Cell(0, 10, 'STATUS: '.strtoupper($dt['status']),0,1);
-			 $fpdf->SetX(-83);
-			 $fpdf->SetFont('Arial', '', 13);
-			 $fpdf->SetTextColor(150,150,150);
-			 $fpdf->Cell(0, 10, "Receipt generated on: ".$dt['date'],0,1);
-			 $fpdf->SetX(-50);
-			 $fpdf->Cell(0, 10, "Reference #: ".$dt['reference'],0,1);
-			 $fpdf->Ln();
-			 $fpdf->SetX(0);
-			 $this->pdfTable($fpdf,['#','Items','Qty','Total'],$dt['items']);
-			 $this->pdfFooter($fpdf);
-			 
-			break;
-		}
-		
-		$fpdf->Output('D');
-	}
 
     function checkForUnpaidOrders($u)
 	{
@@ -3074,85 +2891,6 @@ function createSocial($data)
 		#dd($ret);
 		return $ret > 0;
 	}	
-	
-	 function getAnonOrder($id,$all=true)
-           {
-           	$ret = [];
-			if($all)
-			{
-				$o = AnonOrders::where('reference',$id)
-			            ->orWhere('id',$id)->first();
-						
-               $o2 = Orders::where('reference',$id)
-			            ->orWhere('id',$id)->first();
-						#dd([$o,$o2]);
-              if($o != null || $o2 != null)
-               {
-				   if($o != null)
-				   {
-					 $temp['name'] = $o->name; 
-                       $temp['reference'] = $o->reference; 
-                       //$temp['wallet'] = $this->getWallet($u);
-                       $temp['phone'] = $o->phone; 
-                       $temp['email'] = $o->email; 
-                       $temp['address'] = $o->address; 
-                       $temp['city'] = $o->city; 
-                       $temp['state'] = $o->state; 
-                       $temp['id'] = $o->id; 
-                       #dd($o2);
-                       if($o2 != null) $temp['order'] = $this->getOrder($id);
-                       $temp['date'] = $o->created_at->format("jS F, Y"); 
-                       $ret = $temp;  
-				   }
-				   else if($o2 != null)
-				   {
-					   $u = $this->getUser($o2->user_id);
-					   $sd = $this->getShippingDetails($u['id']);
-					   $shipping = $sd[0];
-					   
-					  if(count($u) > 0)
-					   {
-						 $temp['name'] = $u['fname']." ".$u['lname']; 
-                         $temp['reference'] = $o2->reference;                 
-                         $temp['phone'] = $u['phone']; 
-                         $temp['email'] = $u['email']; 
-                         $temp['address'] = $shipping['address']; 
-                         $temp['city'] = $shipping['city']; 
-                         $temp['state'] = $shipping['state']; 
-                         $temp['id'] = $o2->id; 
-                         $temp['order'] = $this->getOrder($id);
-                         $temp['date'] = $o2->created_at->format("jS F, Y"); 
-                         $ret = $temp;  
-					   }  
-				   }
-                   	 
-               }
-			}
-			
-			else
-			{
-				$o = AnonOrders::where('reference',$id)
-			            ->orWhere('id',$id)->first();
-						
-				if($o != null)
-				   {
-					 $temp['name'] = $o->name; 
-                       $temp['reference'] = $o->reference; 
-                       //$temp['wallet'] = $this->getWallet($u);
-                       $temp['phone'] = $o->phone; 
-                       $temp['email'] = $o->email; 
-                       $temp['address'] = $o->address; 
-                       $temp['city'] = $o->city; 
-                       $temp['state'] = $o->state; 
-                       $temp['id'] = $o->id; 
-                       $temp['date'] = $o->created_at->format("jS F, Y"); 
-                       $ret = $temp;  
-				   }
-			}
-                                         
-                                                      
-                return $ret;
-           }
 		   
 
 	function giveDiscount($user,$dt)
