@@ -59,6 +59,7 @@ class Helper implements HelperContract
 					 "add-review-status" => "Thanks for your review! It will be displayed after review by our admins.",
 					 "add-to-cart-status" => "Added to your cart.",
 					 "remove-from-cart-status" => "Removed from your cart.",
+					 "pay-card-status" => "Payment successful. Have a lovely stay!",
 					 
 					 //ERROR NOTIFICATIONS
 					 "invalid-apartment-id-status-error" => "Apartment not found.",
@@ -2121,12 +2122,11 @@ function createSocial($data)
             function createSavedPayment($dt)
 		   {
 			   $ret = SavedPayments::create(['user_id' => $dt['user_id'], 
-                                                      'type' => $dt['type'],
-                                    
-                  'gateway' => $dt['gateway'],
-                  
-                  'data' => $dt['data']
-                                                      ]);
+                                             'type' => $dt['type'],
+                                             'gateway' => $dt['gateway'],
+                                             'data' => $dt['data'],
+                                             'status' => $dt['status'],
+                                            ]);
                                                       
                 return $ret;
 		   }
@@ -2140,9 +2140,13 @@ function createSocial($data)
                {
 				  $temp = [];
 				  $temp['id'] = $t->id;
-				  $temp['title'] = $t->title;
-				  $temp['msg'] = $t->msg;
+				  $temp['user_id'] = $t->user_id;
+				  $temp['type'] = $t->type;
+				  $temp['gateway'] = $t->gateway;
+				  $temp['data'] = $t->data;
+				  $temp['status'] = $t->status;
      			  $temp['date'] = $t->created_at->format("m/d/Y h:i A");
+     			  $temp['updated'] = $t->updated_at->format("m/d/Y h:i A");
 				  $ret = $temp;
                }
 
@@ -2152,20 +2156,229 @@ function createSocial($data)
 		   function getSavedPayments($dt)
            {
            	$ret = [];
-			 
-			$tips = ApartmentTips::where('id','>','0')->get();
+			$uid = isset($dt['user_id']) ? $dt['user_id'] : "";
+			$sps = SavedPayments::where('user_id',$uid)->get();
 			  
-              if($tips != null)
+              if($sps != null)
                {
-				   $tips = $tips->sortByDesc('created_at');	
+				   $sps = $sps->sortByDesc('created_at');	
 			  
-				  foreach($tips as $t)
+				  foreach($sps as $sp)
 				  {
-					  $temp = $this->getApartmentTip($t->id);
+					  $temp = $this->getSavedPayment($sp->id);
 					  array_push($ret,$temp);
 				  }
                }                         
                                   
+                return $ret;
+           }
+		   
+		   function checkout($u,$data,$type="paystack")
+		   {
+			  //dd($data);
+			   $ret = [];
+			   
+			   switch($type)
+			   {
+				  case "paystack":
+                 	$ret = $this->payWithPayStack($u, $data);
+                  break;
+			   }
+			   
+			   return $ret;
+		   }
+		   
+		   
+		   function payWithPayStack($user, $payStackResponse)
+           { 
+              $md = $payStackResponse['metadata'];
+			  #dd($md);
+              $amount = $payStackResponse['amount'] / 100;
+              $psref = $payStackResponse['reference'];
+              $ref = $md['ref'];
+              $type = $md['type'];
+              $dt = [];
+              
+              if($type == "checkout"){
+               	$dt['amount'] = $amount;
+				$dt['ref'] = $ref;
+				$dt['notes'] = isset($md['notes']) ? $md['notes'] : "";
+				$dt['ps_ref'] = $psref;
+				$dt['type'] = "card";
+				$dt['status'] = "paid";
+				
+              }
+              
+              //create order
+              $this->addOrder($user,$dt);
+			  
+			  //add to saved payments
+		      $authorization = $payStackResponse['authorization'];
+		      $this->createSavedPayment([
+		       'user_id' => $user->id,
+		       'type' => "checkout",
+		       'gateway' => "paystack",
+		       'data' => json_encode($authorization),
+		       'status' => "enabled",
+	    	 ]);
+                return ['status' => "ok",'dt' => $dt];
+           }
+		   
+		   
+		   function addOrder($user,$data,$gid=null)
+           {
+           	#dd($data);
+			   $cart = [];
+			   $gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";  
+           	   $order = $this->createOrder($user, $data);
+			   
+                if($user == null && $gid != null) $cart = $this->getCart($user,$gid);
+			 else $cart = $this->getCart($user);
+			 #dd($cart);
+			 
+               #create order details
+               foreach($cart as $c)
+               {
+				   /**
+				   $temp = []; 
+               	     $temp['id'] = $c->id; 
+               	     $temp['user_id'] = $c->user_id; 
+               	     $temp['apartment_id'] = $c->apartment_id; 
+                        $apt = $this->getApartment($c->apartment_id); 
+                        $temp['apartment'] = $apt;
+                        $adata = $apt['data'];						
+						$ret['subtotal'] += $adata['amount'];
+						$checkin = Carbon::parse($c->checkin);
+						$checkout = Carbon::parse($c->checkout);
+                        $temp['checkin'] = $checkin->format("jS F, Y");
+                        $temp['checkout'] = $checkout->format("jS F, Y"); 
+                        $temp['guests'] = $c->guests; 
+                        $temp['kids'] = $c->kids; 
+                        array_push($rett, $temp); 
+				   **/
+				   $dt = [];
+                   $dt['sku'] = $c['product']['sku'];
+				   $dt['qty'] = $c['qty'];
+				   $dt['order_id'] = $order->id;
+				   if($data["status"] == "paid") $this->updateStock($dt['sku'],$dt['qty']);
+                   $oi = $this->createOrderItems($dt);                    
+               }
+
+               #send transaction email to admin
+               //$this->sendEmail("order",$order);  
+               
+			   
+			   //clear cart
+			   $this->clearCart($user);
+			   
+			   //if new user, clear discount
+			   $this->clearNewUserDiscount($user);
+			   return $order;
+           }
+
+           function createOrder($user, $dt)
+		   {
+			   #dd($dt);
+			   $psref = isset($dt['ps_ref']) ? $dt['ps_ref'] : "";
+			   
+			   if(is_null($user))
+			   {
+				   $gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
+				   $anon = AnonOrders::create(['email' => $dt['email'],
+				                     'reference' => $dt['ref'],
+				                     'name' => $dt['name'],
+				                     'phone' => $dt['phone'],
+				                     'address' => $dt['address'],
+				                     'city' => $dt['city'],
+				                     'state' => $dt['state'],
+				             ]);
+				   
+				   $ret = Orders::create(['user_id' => "anon",
+			                          'reference' => $dt['ref'],
+			                          'ps_ref' => $psref,
+			                          'amount' => $dt['amount'],
+			                          'type' => $dt['type'],
+			                          'payment_code' => $dt['payment_code'],
+			                          'notes' => $dt['notes'],
+			                          'status' => $dt['status'],
+			                 ]); 
+			   }
+			   
+			   else
+			   {
+				 $ret = Orders::create(['user_id' => $user->id,
+			                          'reference' => $dt['ref'],
+			                          'ps_ref' => $psref,
+			                          'amount' => $dt['amount'],
+			                          'type' => $dt['type'],
+			                          'payment_code' => $dt['payment_code'],
+			                          'notes' => $dt['notes'],
+			                          'status' => $dt['status'],
+			                 ]);   
+			   }
+			   
+			  return $ret;
+		   }
+
+		   function createOrderItems($dt)
+		   {
+			   $ret = OrderItems::create(['order_id' => $dt['order_id'],
+			                          'sku' => $dt['sku'],
+			                          'qty' => $dt['qty']
+			                 ]);
+			  return $ret;
+		   }
+		   
+		    function getOrders($user)
+           {
+           	$ret = [];
+
+			  $orders = Orders::where('user_id',$user->id)->get();
+			  $orders = $orders->sortByDesc('created_at');
+			  
+			  #dd($uu);
+              if($orders != null)
+               {
+               	  foreach($orders as $o) 
+                    {
+                    	$temp = $this->getOrder($o->reference);
+                        array_push($ret, $temp); 
+                    }
+               }                                 
+              			  
+                return $ret;
+           }
+		   
+		   function getOrder($ref)
+           {
+           	$ret = [];
+
+			  $o = Orders::where('id',$ref)
+			                  ->orWhere('reference',$ref)->first();
+			  #dd($o);
+              if($o != null)
+               {
+				  $temp = [];
+                  $temp['id'] = $o->id;
+                  $temp['user_id'] = $o->user_id;
+                  $temp['reference'] = $o->reference;
+                  $temp['amount'] = $o->amount;
+                  $temp['type'] = $o->type;
+                  $temp['payment_code'] = $o->payment_code;
+                  $temp['notes'] = $o->notes;
+                  $temp['status'] = $o->status;
+                  $temp['items'] = $this->getOrderItems($o->id);
+                  $temp['totals'] = $this->getOrderTotals($temp['items'],$o->user_id);
+				  if($o->user_id == "anon")
+				  {
+						$anon = $this->getAnonOrder($o->reference,false);
+						$temp['totals']['delivery'] = $this->getDeliveryFee($anon['state'],"state");  
+				  }
+				  
+                  $temp['date'] = $o->created_at->format("jS F, Y");
+                  $ret = $temp; 
+               }                                 
+              			  
                 return $ret;
            }
 		   
@@ -2174,52 +2387,6 @@ function createSocial($data)
 /***************************************************************************************************** 
                                              OLD FUNCTIONS BELOW
 ******************************************************************************************************/
-
-
-
-
-
-
-
-
-	   
-		   
-		   function getProductsByCategory($cat)
-           {
-           	$ret = [];
-                 $pds = ProductData::where('category',$cat)->get();
-                 $pds = $pds->sortByDesc('created_at');	
-				 
-              if($pds != null)
-               {
-				  foreach($pds as $p)
-				  {
-					  $pp = $this->getProduct($p->sku);
-					  if($pp['status'] == "enabled" && $pp['qty'] > 0) array_push($ret,$pp);
-				  }
-               }                         
-                                  
-                return $ret;
-           }
-		   
-		   function getProductsByType($t)
-           {
-			   //WORK NEEDS TO BE DONE HERE
-           	$ret = [];
-                 $pds = ProductData::where('id','>','0')->get();
-                 $pds = $pds->sortByDesc('created_at');	
-				 
-              if($pds != null)
-               {
-				  foreach($pds as $p)
-				  {
-					  $pp = $this->getProduct($p->sku);
-					  if($pp['status'] == "enabled" && $pp['qty'] > 0) array_push($ret,$pp);
-				  }
-               }                         
-                                  
-                return $ret;
-           }
 		   
 		 
 
@@ -2299,101 +2466,6 @@ function createSocial($data)
 				   return $dsc;
 		   }
 		   
-		   function getProductData($sku)
-           {
-           	$ret = [];
-              $pd = ProductData::where('sku',$sku)->first();
- 
-              if($pd != null)
-               {
-				  $temp = [];
-				  $temp['id'] = $pd->id;
-				  $temp['sku'] = $pd->sku;
-				  $temp['amount'] = $pd->amount;
-				  $temp['description'] = $pd->description;
-				  $temp['in_stock'] = $pd->in_stock;
-				  $temp['category'] = $pd->category;
-				  $ret = $temp;
-               }                         
-                                                      
-                return $ret;
-           }
-
-		   
-		   
-		   
-		   function getNewArrivals()
-           {
-           	$ret = [];
-              $pds = ProductData::where('in_stock',"new")->get();
-               $pds = $pds->sortByDesc('created_at');	
-			   
-              if($pds != null)
-               {
-				  foreach($pds as $p)
-				  {
-					  $pp = $this->getProduct($p->sku);
-					  if($pp['status'] == "enabled" && $pp['qty'] > 0) array_push($ret,$pp);
-				  }
-               }                         
-                                  
-                return $ret;
-           }
-
-		   function getBestSellers()
-           {
-           	$ret = [];
-              $pds = ProductData::where('in_stock',"new")->get();
-              $pds = $pds->sortByDesc('created_at');	
-			  
-              if($pds != null)
-               {
-				  foreach($pds as $p)
-				  {
-					  $pp = $this->getProduct($p->sku);
-					  if($pp['status'] == "enabled" && $pp['qty'] > 0) array_push($ret,$pp);
-				  }
-               }                         
-                                  
-                return $ret;
-           }
-		   
-		   
-		   function generateTempUserID()
-           {
-           	$ret = "user_".getenv("REMOTE_ADDR");
-                                                      
-                return $ret;
-           }
-		   
-		   function setIP($ip)
-		   {
-			  $this->ip = $ip;
-		   }
-		   
-		   function getIP()
-		   {
-			   $r = new Request();
-			   $i = $r->ip();
-			   dd("i: ".$i);
-			  return $this->ip;
-		   }
-
-		   function getGuest($ip)
-		   {
-			   $ret = Guests::where('ip',$ip)->first();
-			   
-			   if(is_null($ret))
-			   {
-				   $ret = Guests::create([
-				     'ip' => $ip,
-					 'status' => "ok"
-				   ]);
-			   }
-			   
-			   return $ret;
-		   }
-		   
 		   
 		   
 		   function getDeliveryFee($u=null,$type="user")
@@ -2425,62 +2497,7 @@ function createSocial($data)
 			    
 			   return $ret;
 		   }
-				
-          function getCartTotals($cart)
-           {
-           	$ret = ["subtotal" => 0, "delivery" => 0, "items" => 0];
-			  $userId = null;
-			  
-              if($cart != null && count($cart) > 0)
-               {           	
-               	foreach($cart as $c) 
-                    {
-						if(is_null($userId)) $userId = $c['user_id'];
-						$amount = $c['product']['pd']['amount'];
-						$discounts = $c['product']['discounts'];
-						#dd($discounts);
-						$dsc = $this->getDiscountPrices($amount,$discounts);
-						
-						$newAmount = 0;
-						if(count($dsc) > 0)
-			            {
-				          foreach($dsc as $d)
-				          {
-					        if($newAmount < 1)
-					        {
-						      $newAmount = $amount - $d;
-					        }
-					        else
-					        {
-						      $newAmount -= $d;
-					        }
-				          }
-					      $amount = $newAmount;
-			            }
-						$qty = $c['qty'];
-                    	$ret['items'] += $qty;
-						$ret['subtotal'] += ($amount * $qty);
-                        $ret['discounts'] = $dsc;					
-                    }
-					
-					$userDiscounts = $this->getDiscounts($userId,"user");
-					#dd($userDiscounts);
-					$ua = 0; $una = 0;
-
-					$dsc = $this->getDiscountPrices($ret['subtotal'],$userDiscounts);
-					#dd($dsc);
-					if(count($dsc) > 0)
-				          {
-					        $ret['subtotal'] -= $dsc[0];
-				          }
-					
-                   $u = User::where('id',$userId)->first();
-                   $ret['delivery'] = $this->getDeliveryFee($u);
-                  
-               }                                 
-                   #dd($ret);                                  
-                return $ret;
-           }
+			
 		   
 		   function addCategory($data)
            {
@@ -2641,126 +2658,7 @@ function createSocial($data)
 			   return $ret;
 		   }
 
-           function checkout($u,$data,$type="paystack")
-		   {
-			  //dd($data);
-			   $ret = [];
-			   
-			   switch($type)
-			   {
-			      case "bank":
-                 	$ret = $this->payWithBank($u, $data);
-                  break;
-				  case "paystack":
-                 	$ret = $this->payWithPayStack($u, $data);
-                  break;
-			   }
-			   
-			   return $ret;
-		   }
-		   
-		   
-		   
-		   function getPaymentCode($r=null)
-		   {
-			   $ret = "";
-			   
-			   if(is_null($r))
-			   {
-				   $ret = "ACE_".rand(1,99)."LX".rand(1,99);
-			   }
-			   else
-			   {
-				   $ret = "ACE_".$r;
-			   }
-			   return $ret;
-		   }
-
-           function payWithBank($user, $md)
-           {	
-             # dd([$user,$md]);		   
-                $dt = [];
-				$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
-				
-				if(is_null($user))
-				{
-		            $cart = $this->getCart($user,$gid);
-		            $totals = $this->getCartTotals($cart);
-					$delivery = $this->getDeliveryFee($md['state'],"state");
-					$dt['amount'] = $totals['subtotal'] + $delivery;
-					
-					$dt['name'] = $md['name'];
-					$dt['email'] = $md['email'];
-					$dt['phone'] = $md['phone'];
-					$dt['address'] = $md['address'];
-					$dt['city'] = $md['city'];
-					$dt['state'] = $md['state'];
-				}
-				else
-				{
-					$dt['amount'] = $md['amount'] / 100;
-				}
-				
-               	$dt['ref'] = $this->getRandomString(5);
-				$dt['notes'] = isset($md['notes']) ? $md['notes'] : "";
-				$dt['payment_code'] = $this->getPaymentCode($dt['ref']);
-				$dt['type'] = "bank";
-				$dt['status'] = "unpaid";
-              
-              #create order
-              #dd($dt);
-              $o = $this->addOrder($user,$dt,$gid);
-                return $o;
-           }
-		   
-		   function payWithPayStack($user, $payStackResponse)
-           { 
-              $md = $payStackResponse['metadata'];
-			  #dd($md);
-              $amount = $payStackResponse['amount'] / 100;
-              $psref = $payStackResponse['reference'];
-              $ref = $md['ref'];
-              $type = $md['type'];
-              $dt = [];
-              
-              if($type == "checkout"){
-               	$dt['amount'] = $amount;
-				$dt['ref'] = $ref;
-				$dt['notes'] = isset($md['notes']) ? $md['notes'] : "";
-				$dt['payment_code'] = $this->getPaymentCode($ref);
-				$dt['ps_ref'] = $psref;
-				$dt['type'] = "card";
-				$dt['status'] = "paid";
-				
-				if(is_null($user))
-				{
-					$dt['name'] = $md['name'];
-					$dt['email'] = $md['email'];
-					$dt['phone'] = $md['phone'];
-					$dt['address'] = $md['address'];
-					$dt['city'] = $md['city'];
-					$dt['state'] = $md['state'];
-				}
-              }
-              
-              #create order
-
-              $this->addOrder($user,$dt);
-                return ['status' => "ok",'dt' => $dt];
-           }
-		   
-		   function updateStock($s,$q)
-		   {
-			   $p = Products::where('sku',$s)->first();
-			   
-			   if($p != null)
-			   {
-				   $oldQty = ($p->qty == "" || $p->qty < 0) ? 0: $p->qty;
-				   $qty = $p->qty - $q;
-				   if($qty < 0) $qty = 0;
-				   $p->update(['qty' => $qty]);
-			   }
-		   }
+           
 		   
 		   function clearNewUserDiscount($u)
 		   {
@@ -2778,217 +2676,9 @@ function createSocial($data)
 			  }
 		   }
 
-           function addOrder($user,$data,$gid=null)
-           {
-           	#dd($data);
-			   $cart = [];
-			   $gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";  
-           	   $order = $this->createOrder($user, $data);
-			   
-                if($user == null && $gid != null) $cart = $this->getCart($user,$gid);
-			 else $cart = $this->getCart($user);
-			 #dd($cart);
-			 
-               #create order details
-               foreach($cart as $c)
-               {
-				   $dt = [];
-                   $dt['sku'] = $c['product']['sku'];
-				   $dt['qty'] = $c['qty'];
-				   $dt['order_id'] = $order->id;
-				   if($data["status"] == "paid") $this->updateStock($dt['sku'],$dt['qty']);
-                   $oi = $this->createOrderItems($dt);                    
-               }
+           
 
-               #send transaction email to admin
-               //$this->sendEmail("order",$order);  
-               
-			   
-			   //clear cart
-			   $this->clearCart($user);
-			   
-			   //if new user, clear discount
-			   $this->clearNewUserDiscount($user);
-			   return $order;
-           }
-
-           function createOrder($user, $dt)
-		   {
-			   #dd($dt);
-			   $psref = isset($dt['ps_ref']) ? $dt['ps_ref'] : "";
-			   
-			   if(is_null($user))
-			   {
-				   $gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
-				   $anon = AnonOrders::create(['email' => $dt['email'],
-				                     'reference' => $dt['ref'],
-				                     'name' => $dt['name'],
-				                     'phone' => $dt['phone'],
-				                     'address' => $dt['address'],
-				                     'city' => $dt['city'],
-				                     'state' => $dt['state'],
-				             ]);
-				   
-				   $ret = Orders::create(['user_id' => "anon",
-			                          'reference' => $dt['ref'],
-			                          'ps_ref' => $psref,
-			                          'amount' => $dt['amount'],
-			                          'type' => $dt['type'],
-			                          'payment_code' => $dt['payment_code'],
-			                          'notes' => $dt['notes'],
-			                          'status' => $dt['status'],
-			                 ]); 
-			   }
-			   
-			   else
-			   {
-				 $ret = Orders::create(['user_id' => $user->id,
-			                          'reference' => $dt['ref'],
-			                          'ps_ref' => $psref,
-			                          'amount' => $dt['amount'],
-			                          'type' => $dt['type'],
-			                          'payment_code' => $dt['payment_code'],
-			                          'notes' => $dt['notes'],
-			                          'status' => $dt['status'],
-			                 ]);   
-			   }
-			   
-			  return $ret;
-		   }
-
-		   function createOrderItems($dt)
-		   {
-			   $ret = OrderItems::create(['order_id' => $dt['order_id'],
-			                          'sku' => $dt['sku'],
-			                          'qty' => $dt['qty']
-			                 ]);
-			  return $ret;
-		   }
-
-           function getOrderTotals($items,$uid=null)
-           {
-           	$ret = ["subtotal" => 0, "delivery" => 0, "items" => 0,"discount" => 0];
-             # dd($items);
-			  $oid = "";
-			  
-              if($items != null && count($items) > 0)
-               {      
-                 $oid = $items[0]['order_id'];		   
-               	foreach($items as $i) 
-                    {
-						if(count($i['product']) > 0)
-                        {
-						$amount = $i['product']['pd']['amount'];
-						$dsc = $this->getDiscountPrices($amount,$i['product']['discounts']);
-						$newAmount = 0;
-						if(count($dsc) > 0)
-			            {
-				          foreach($dsc as $d)
-				          {
-					        if($newAmount < 1)
-					        {
-						      $newAmount = $amount - $d;
-					        }
-					        else
-					        {
-						      $newAmount -= $d;
-					        }
-							$ret['discount'] += $d;
-				          }
-					      $amount = $newAmount;
-			            }
-						$qty = $i['qty'];
-                    	$ret['items'] += $qty;
-						$ret['subtotal'] += ($amount * $qty);	
-                       }
-				  }
-					
-					if($uid == "anon")
-					{
-						
-					}
-					else
-					{
-						$u = User::where('id',$uid)->first();
-						  $ret['delivery'] = $this->getDeliveryFee($u);
-					}
-                   
-                 
-                  
-               }                                 
-                                                      
-                return $ret;
-           }
-
-           function getOrders($user)
-           {
-           	$ret = [];
-
-			  $orders = Orders::where('user_id',$user->id)->get();
-			  $orders = $orders->sortByDesc('created_at');
-			  
-			  #dd($uu);
-              if($orders != null)
-               {
-               	  foreach($orders as $o) 
-                    {
-                    	$temp = $this->getOrder($o->reference);
-                        array_push($ret, $temp); 
-                    }
-               }                                 
-              			  
-                return $ret;
-           }
-		   
-		   function getOrder($ref)
-           {
-           	$ret = [];
-
-			  $o = Orders::where('id',$ref)
-			                  ->orWhere('reference',$ref)->first();
-			  #dd($o);
-              if($o != null)
-               {
-				  $temp = [];
-                  $temp['id'] = $o->id;
-                  $temp['user_id'] = $o->user_id;
-                  $temp['reference'] = $o->reference;
-                  $temp['amount'] = $o->amount;
-                  $temp['type'] = $o->type;
-                  $temp['payment_code'] = $o->payment_code;
-                  $temp['notes'] = $o->notes;
-                  $temp['status'] = $o->status;
-                  $temp['items'] = $this->getOrderItems($o->id);
-                  $temp['totals'] = $this->getOrderTotals($temp['items'],$o->user_id);
-				  if($o->user_id == "anon")
-				  {
-						$anon = $this->getAnonOrder($o->reference,false);
-						$temp['totals']['delivery'] = $this->getDeliveryFee($anon['state'],"state");  
-				  }
-				  
-                  $temp['date'] = $o->created_at->format("jS F, Y");
-                  $ret = $temp; 
-               }                                 
-              			  
-                return $ret;
-           }
-
-		   function getBuyer($ref)
-           {
-           	$ret = [];
-
-			  $o = Orders::where('id',$ref)
-			                  ->orWhere('reference',$ref)->first();
-			  #dd($uu);
-              if($o != null)
-               { 
-                  $ret = $this->getUser($o['user_id']); 
-               }                                 
-              			  
-                return $ret;
-           }
-
-
+          
            function getOrderItems($id)
            {
            	$ret = [];

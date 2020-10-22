@@ -106,19 +106,26 @@ class PaymentController extends Controller {
 	public function getPaymentCallback(Request $request)
     {
 		$user = null;
+		$messages = [];
 		
 		if(Auth::check())
 		{
 			$user = Auth::user();
+			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
 		}
-		
+		else
+		{
+			return redirect()->intended('/');
+		}
 		
         $paymentDetails = Paystack::getPaymentData();
 
-        dd($paymentDetails);       
+        #dd($paymentDetails);       
         
         $paymentData = $paymentDetails['data'];
         $md = $paymentData['metadata'];
+		
+		
 		#dd($md);       
 		$successLocation = "";
         $failureLocation = "";
@@ -130,41 +137,18 @@ class PaymentController extends Controller {
              $failureLocation = "checkout";           
             break; 
             
-            case 'kloudpay':
-              $successLocation = "transactions";
-             $failureLocation = "deposit";
-            break; 
        }
         //status, reference, metadata(order-id,items,amount,ssa), type
         if($paymentData['status'] == 'success')
         {
 			#dd($md);
 			$id = $md['ref'];
-			 //get the user 
-				   if($user == null)
-				   {
-					   
-					   $name = $md['name'];
-					   $email = $md['email'];
-					   $phone = $md['phone'];
-					   $shipping = [
-					     'address' => $md['address'],
-					     'city' => $md['city'],
-					     'state' => $md['state'],
-					   ];
-				   }
-				   else
-				   {
-					   $name = $user->fname." ".$user->lname;
-					   $email = $user->email;
-					   $phone = $user->phone;
-					   $sd = $this->helpers->getShippingDetails($user->id);
-					   $shipping = $sd[0];
-				   }
-				   
+			 
 			#dd($paymentData);
-        	$stt = $this->helpers->checkout($user,$paymentData);
+        	$this->helpers->checkout($user,$paymentData);
 			
+			
+			/**
 			//send email to user
 			
 			$o = $this->helpers->getOrder($id);
@@ -193,6 +177,7 @@ class PaymentController extends Controller {
 				$ret['em'] = $this->helpers->suEmail;
 		        $this->helpers->sendEmailSMTP($ret,"emails.admin-payment-alert");
                }
+			   **/
 			   
             $request->session()->flash("pay-card-status",$stt['status']);
 			//return redirect()->intended($successLocation);
@@ -206,7 +191,7 @@ class PaymentController extends Controller {
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
 		$signals = $this->helpers->signals;
 			
-			return view("cps",compact(['user','cart','c','o','ad','signals','plugins']));
+			return view("cps",compact(['user','cart','c','o','messages','ad','signals','plugins']));
         }
         else
         {
