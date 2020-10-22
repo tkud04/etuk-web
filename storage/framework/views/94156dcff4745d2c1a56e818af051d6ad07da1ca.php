@@ -2,22 +2,22 @@
 $title = "My Bookings";
 $subtitle = "List of bookings made by you";
 ?>
-@extends('layout')
 
-@section('title',$title)
 
-@section('top-header')
-@include('top-header')
-@stop
+<?php $__env->startSection('title',$title); ?>
 
-@section('content')
-@include('banner-2',['title' => $title,'subtitle' => $subtitle])
+<?php $__env->startSection('top-header'); ?>
+<?php echo $__env->make('top-header', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+<?php echo $__env->make('banner-2',['title' => $title,'subtitle' => $subtitle], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <!-- ============================ Dashboard Start ================================== -->
 			<section class="gray">
 				<div class="container-fluid">
 					<div class="row">
 						
-						@include('guest-dashboard-sidebar',['user' => $user])
+						<?php echo $__env->make('guest-dashboard-sidebar',['user' => $user], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 						
 						<div class="col-lg-9 col-md-8 col-sm-12">
 							<div class="dashboard-wrapers">
@@ -160,4 +160,5 @@ $subtitle = "List of bookings made by you";
 				</div>
 			</section>
 			<!-- ============================ Dashboard End ================================== -->
-@stop
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\bkupp\lokl\repo\etuk-web\resources\views/orders.blade.php ENDPATH**/ ?>

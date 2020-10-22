@@ -959,12 +959,11 @@ class MainController extends Controller {
 		
 		$orders = $this->helpers->getOrders($user);
 		
-		dd($orders);
-		$secure = (isset($req['ss']) && $req['ss'] == "1") ? false : true;
+		#dd($orders);
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
 
-    	return view("checkout",compact(['user','cart','messages','secure','ref','c','ad','signals','plugins']));
+    	return view("orders",compact(['user','cart','messages','orders','c','ad','signals','plugins']));
     }
 	
 	
