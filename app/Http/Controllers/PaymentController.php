@@ -179,7 +179,7 @@ class PaymentController extends Controller {
                }
 			   **/
 			   
-            $request->session()->flash("pay-card-status",$stt['status']);
+            $request->session()->flash("pay-card-status","ok");
 			//return redirect()->intended($successLocation);
 			
 			$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
