@@ -31,6 +31,8 @@ use App\Messages;
 use App\SavedPayments;
 use App\Orders;
 use App\OrderItems;
+use App\SavedApartments;
+use App\ApartmentPreferences;
 use App\Guests;
 use \Swift_Mailer;
 use \Swift_SmtpTransport;
@@ -2121,7 +2123,7 @@ function createSocial($data)
             }
             
             
-            function createSavedPayment($dt)
+           function createSavedPayment($dt)
 		   {
 			   $ret = SavedPayments::create(['user_id' => $dt['user_id'], 
                                              'type' => $dt['type'],
@@ -2174,6 +2176,18 @@ function createSocial($data)
                                   
                 return $ret;
            }
+		   
+		   function removeSavedPayment($id)
+		   {
+			   $ret = [];
+			   $t = SavedPayments::where('id',$id)->first();
+			   
+			   if($t != null)
+               {
+				  $t->delete();
+               }	   
+		   }
+		   
 		   
 		   function checkout($u,$data,$type="paystack")
 		   {
@@ -2373,6 +2387,64 @@ function createSocial($data)
               			  
                 return $ret;
            }
+		   
+		   function createSavedApartment($dt)
+		   {
+			   $ret = SavedPayments::create(['user_id' => $dt['user_id'], 
+                                             'apartment_id' => $dt['apartment_id']
+                                            ]);
+                                                      
+                return $ret;
+		   }
+		   
+		   function getSavedApartment($id)
+		   {
+			   $ret = [];
+			   $a = SavedApartments::where('id',$id)->first();
+			   
+			   if($a != null)
+               {
+				  $temp = [];
+				  $temp['id'] = $a->id;
+				  $temp['user_id'] = $a->user_id;
+				  $temp['apartment_id'] = $a->apartment_id;
+				  $temp['apartment'] = $this->getApartment($a->apartment_id);
+				  $temp['date'] = $a->created_at->format("m/d/Y h:i A");
+     			  $ret = $temp;
+               }
+
+               return $ret;			   
+		   }
+		   
+		   function getSavedApartments($user)
+           {
+           	$ret = [];
+			$sapts = SavedApartments::where('user_id',$user->id)->get();
+			  
+              if($sapts != null)
+               {
+				   $sps = $sapts->sortByDesc('created_at');	
+			  
+				  foreach($sapts as $sa)
+				  {
+					  $temp = $this->getSavedApartment($sa->id);
+					  array_push($ret,$temp);
+				  }
+               }                         
+                                  
+                return $ret;
+           }
+		   
+		   function removeSavedApartment($id)
+		   {
+			   $ret = [];
+			   $a = SavedApartments::where('id',$id)->first();
+			   
+			   if($a != null)
+               {
+				  $a->delete();
+               }	   
+		   }
 		   
 		   
 		   

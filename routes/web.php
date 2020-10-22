@@ -52,6 +52,13 @@ Route::get('test-chat', 'MainController@getTestChat');
 Route::post('chat', 'MainController@postChat');
 Route::post('add-review', 'MainController@postAddReview');
 Route::get('vote-review', 'MainController@getVoteReview');
+Route::get('saved-payments', 'MainController@getSavedPayments');
+Route::get('remove-saved-payment', 'MainController@getRemoveSavedPayment');
+Route::get('saved-apartments', 'MainController@getSavedApartments');
+Route::get('save-apartment', 'MainController@getSaveApartment');
+Route::get('remove-saved-apartment', 'MainController@getRemoveSavedApartment');
+Route::get('apartment-preferences', 'MainController@getApartmentPreferences');
+Route::post('apartment-preference', 'MainController@postApartmentPreference');
 
 Route::get('cart', 'MainController@getCart');
 Route::get('update-cart', 'MainController@getUpdateCart');

@@ -966,6 +966,43 @@ class MainController extends Controller {
     	return view("orders",compact(['user','cart','messages','orders','c','ad','signals','plugins']));
     }
 	
+	/**
+	 * Show the saved payments page.
+	 *
+	 * @return Response
+	 */
+	public function getSavedPayments(Request $request)
+    {
+		$user = null;
+		$messages = [];
+		if(Auth::check())
+		{
+			$user = Auth::user();
+			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
+		}
+		else
+		{
+			return redirect()->intended('/');
+		}
+		$req = $request->all();
+		$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
+		$cart = $this->helpers->getCart($user,$gid);
+		$c = $this->helpers->getCategories();
+		//dd($bs);
+		$signals = $this->helpers->signals;
+		
+		$ads = $this->helpers->getAds("wide-ad");
+		$plugins = $this->helpers->getPlugins();
+		
+		$sps = $this->helpers->getSavedPayments(['user_id' => $user->id]);
+		
+		dd($sps);
+		shuffle($ads);
+		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
+
+    	return view("sps",compact(['user','cart','messages','sps','c','ad','signals','plugins']));
+    }
+	
 	
 	/**
 	 * Switch user mode (host/guest).
