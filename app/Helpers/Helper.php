@@ -2371,7 +2371,7 @@ function createSocial($data)
                	     $temp['id'] = $i->id; 
                	     $temp['order_id'] = $i->order_id; 
                	     $temp['apartment_id'] = $i->apartment_id; 
-                        $apt = $this->getApartment($i->apartment_id); 
+                        $apt = $this->getApartment($i->apartment_id,['host' => true]); 
                         $temp['apartment'] = $apt;
                         $adata = $apt['data'];						
 						$ret['subtotal'] += $adata['amount'];
