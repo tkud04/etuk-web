@@ -432,7 +432,7 @@ class MainController extends Controller {
 			
 			if(count($apartment) > 0)
 			{
-				$isSaved = $this->helpers->isApartmentSaved($user->id,$apartment['id']);
+				$isSaved = $user == null ? false : $this->helpers->isApartmentSaved($user->id,$apartment['id']);
 			   shuffle($ads);
 		       $ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
     	       return view("apartment",compact(['user','cart','messages','c','isSaved','ad','apartment','services','tips','states','signals','plugins']));
