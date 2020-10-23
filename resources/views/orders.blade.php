@@ -64,6 +64,7 @@ $subtitle = "List of bookings made by you";
 														 $adata = $apartment['data'];
 														 $terms = $apartment['terms'];
 														 $host = $apartment['host'];
+														 $hostName = $host['fname']." ".substr($host['lname'],0,1).".";
 														 $amount = $adata['amount'];
 														 $address = $apartment['address'];
 														 $location = $address['city'].", ".$address['state'];
@@ -102,7 +103,7 @@ $subtitle = "List of bookings made by you";
 														<div class="inner-booking-list">
 															<h5>Host:</h5>
 															<ul class="booking-list">
-																<li>{{$host['name']}}</li>
+																<li>{{$hostName}}</li>
 															</ul>
 														</div>
 
