@@ -1033,7 +1033,7 @@ class MainController extends Controller {
          }
 		 else
 		 {
-			if()
+			if($user != null)
 			{
               if($this->isApartmentSaved($user->id,$req['xf']))
 			  {
