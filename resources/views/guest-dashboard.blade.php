@@ -52,42 +52,35 @@ $subtitle = "Manage your guest account here";
 									<div class="col-lg-6 col-md-12">
 										<div class="dashboard-gravity-list with-icons">
 											<h4>Saved Payments</h4>
-											<ul>
+											<?php
+											 if(count($sps) > 0)
+											 {
+											?>
+											 <ul>
+											<?php
+											   foreach($sps as $s)
+											   { 
+											?>
 												<li>
 													<i class="dash-icon-box ti-layers"></i> Your booking <strong><a href="#">Shimla to Goa</a></strong> has been done!
 													<a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
 												</li>
 
-												<li>
-													<i class="dash-icon-box ti-star"></i> Jodie Farrell left a review <div class="numerical-rating high" data-rating="5.0"></div> on <strong><a href="#">Burger Villa</a></strong>
-													<a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
-												</li>
-
-												<li>
-													<i class="dash-icon-box ti-heart"></i> your payment is pending for <strong><a href="#">Manali Trip</a></strong> tour!
-													<a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
-												</li>
-
-												<li>
-													<i class="dash-icon-box ti-star"></i> You have calceled <a href="#">Mumbai Trip</a> approved</strong>
-													<a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
-												</li>
-
-												<li>
-													<i class="dash-icon-box ti-heart"></i> Someone reply on your comment on <strong><a href="#">London Trip</a></strong> Tour!
-													<a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
-												</li>
-
-												<li>
-													<i class="dash-icon-box ti-star"></i> You have give a review <div class="numerical-rating high" data-rating="4.7"></div> on <strong><a href="#">Preet House</a></strong>
-													<a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
-												</li>
-
-												<li>
-													<i class="dash-icon-box ti-star"></i>You have give a review <div class="numerical-rating low" data-rating="2.8"></div> on <strong><a href="#">Shimla Trou Trip</a></strong>
-													<a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
-												</li>
+											<?php
+											 }
+                                            ?>											 
 											</ul>
+											<?php
+											 }
+											 else
+											 {
+											?>
+											<ul>
+											<li>No payment methods added yet. Book an apartment to add one now.</li>
+											</ul>
+											<?php
+											 }
+											?>
 										</div>
 									</div>
 									

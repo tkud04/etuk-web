@@ -234,7 +234,7 @@ class MainController extends Controller {
 		else if($user->mode == "guest")
 		{
 			$sps = $this->helpers->getSavedPayments($user);
-			dd($sps);
+			#dd($sps);
 			$cpt = ['user','cart','messages','sps','c','ad','signals','plugins'];
 			$v = "guest-dashboard";
 		}
