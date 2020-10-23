@@ -67,8 +67,8 @@ $subtitle = "List of bookings made by you";
 														 $amount = $adata['amount'];
 														 $address = $apartment['address'];
 														 $location = $address['city'].", ".$address['state'];
-														 $checkin = $c['checkin'];
-														 $checkout = $c['checkout'];
+														 $checkin = $i['checkin'];
+														 $checkout = $i['checkout'];
 											  
 									   ?>
 										<li class="{{$liClass}}">
