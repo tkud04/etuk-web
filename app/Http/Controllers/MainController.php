@@ -233,7 +233,9 @@ class MainController extends Controller {
 		}
 		else if($user->mode == "guest")
 		{
-			$cpt = ['user','cart','messages','c','ad','signals','plugins'];
+			$sps = $this->helpers->getSavedPayments($user);
+			dd($sps);
+			$cpt = ['user','cart','messages','sps','c','ad','signals','plugins'];
 			$v = "guest-dashboard";
 		}
 		
@@ -1505,6 +1507,8 @@ class MainController extends Controller {
     {
 		$user = null;
 		$messages = [];
+		$ret = ['status' => "error", 'message' => "nothing happened"];
+		
 		if(Auth::check())
 		{
 			$user = Auth::user();
@@ -1512,26 +1516,28 @@ class MainController extends Controller {
 		}
 		else
 		{
-			return redirect()->intended('/');
+			$ret['message'] = "auth";
 		}
 		
 		$req = $request->all();
 		
 		$validator = Validator::make($req, [
                              'type' => 'required',
+                             'method' => 'required',
                              'url' => 'required'
          ]);
          
          if($validator->fails())
          {
-             return redirect()->back();
+             $ret['message'] = "validation";
          }
 		 else
 		 {
        $rr = [
           'data' => [],
           'headers' => [],
-          'url' => $req['url']
+          'url' => $req['url'],
+          'method' => $req['method']
          ];
       
       $dt = [];
@@ -1539,21 +1545,25 @@ class MainController extends Controller {
 		   switch($req['type'])
 		   {
 		     case "bvn":
-		       $rr['data'] = [
+		       /**
+			   $rr['data'] = [
 		         'bvn' => $req['bvn'],
 		         'account_number' => $req['account_number'],
 		        'bank_code' => $req['bank_code'],
 		         ];
-		         
+		       **/  
+			   //localhost:8000/tb?url=https://api.paystack.co/bank/resolve_bvn/:22181211888&method=get&type=bvn
 		         $rr['headers'] = [
-		           'Authorization' => "Bearer ".env()
+		           'Authorization' => "Bearer ".env("PAYSTACK_SECRET_KEY")
 		           ];
 		     break;
 		   }
 		   
-			$results = $this->helpers->bomb($rr);
-			 dd($results);
+			$ret = $this->helpers->bomb($rr);
+			 
 		 }
+		 
+		 dd($ret);
     }
 	
 	

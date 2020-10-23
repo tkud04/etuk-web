@@ -229,19 +229,22 @@ $subject = $data['subject'];
 				    'multipart' => []
 				 ];
 				 
-				 foreach($data['data'] as $k => $v)
+				 if(isset($data['data']))
 				 {
+				   foreach($data['data'] as $k => $v)
+				   {
 					  $temp = [
 					      'name' => $k,
 						  'contents' => $v
 					   ];
 					   array_push($dt['multipart'],$temp);
+				   }
 				 }
-				 
 				 
 				 try
 				 {
-			       $res = $client->request('POST', $url,$dt);
+					if($data['method'] == "get") $res = $client->request('GET', $url);
+					else if($data['method'] == "post") $res = $client->request('POST', $url,$dt);
 			  
                    $ret = $res->getBody()->getContents(); 
 			       //dd($ret);

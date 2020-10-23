@@ -69,6 +69,7 @@ Route::post('checkout', 'MainController@postCheckout');
 Route::get('bookings', 'MainController@getOrders');
 
 Route::get('search', 'MainController@getSearch');
+Route::get('tb', 'MainController@getTestBomb');
 
 
 //Hosts
