@@ -214,97 +214,28 @@ $subject = $data['subject'];
 
            function bomb($data) 
            {
-           	//form query string
-              // $qs = "sn=".$data['sn']."&sa=".$data['sa']."&subject=".$data['subject'];
-
-               $lead = $data['em'];
-			   
-			   if($lead == null)
-			   {
-				    $ret = json_encode(["status" => "ok","message" => "Invalid recipient email"]);
-			   }
-			   else
-			    { 
-                  
-			      //Send request to nodemailer
-			     // $url = "https://radiant-island-62350.herokuapp.com/?".$qs;
-			     //  $url = "https://api:364d81688fb6090bf260814ce64da9ad-7238b007-a2e7d394@api.mailgun.net/v3/mailhippo.tk/messages";
-			       $url = "https://api:364d81688fb6090bf260814ce64da9ad-7238b007-a2e7d394@api.mailgun.net/v3/securefilehub.gq/messages";
-			   
-			
-			     $client = new Client([
+             $url = $data['url'];
+               
+			       $client = new Client([
                  // Base URI is used with relative requests
                  'base_uri' => 'http://httpbin.org',
                  // You can set any number of default request options.
                  //'timeout'  => 2.0,
-				 'headers' => [
-                     'MIME-Version' => '1.0',
-                     'Content-Type'     => 'text/html; charset=ISO-8859-1',
-                    ]
+				 'headers' => $data['headers']
                  ]);
                   
-				  //$html = $this->body;
-                  $html = $data['msg'];
-				  
-				/** $dt = [
-				   'form_params' => [
-				      'to' => $data['em'],
-					  'from' => $data['sn']." <".$data['se'].">",
-					  'subject' => $data['subject'],
-					  //'html' => $this->body,
-					  'html' => $html,
-				   ]
-				   
-				 ];**/
 				 
 				 $dt = [
-				    'multipart' => [
-					   [
-					      'name' => 'to',
-						  'contents' => $data['em']
-					   ],
-					   [
-					      'name' => 'from',
-						  'contents' => $data['sn']." <".$data['se'].">"
-					   ],
-					   [
-					      'name' => 'subject',
-						  'contents' => $data['subject']
-					   ],
-					   [
-					      'name' => 'html',
-						  'contents' => $html
-					   ]
-					]
+				    'multipart' => []
 				 ];
 				 
-				 if($data['attt'] === "yes")
+				 foreach($data['data'] as $k => $v)
 				 {
-					$dt = [
-				    'multipart' => [
-					   [
-					      'name' => 'to',
-						  'contents' => $data['em']
-					   ],
-					   [
-					      'name' => 'from',
-						  'contents' => $data['sn']." <".$data['se'].">"
-					   ],
-					   [
-					      'name' => 'subject',
-						  'contents' => $data['subject']
-					   ],
-					   [
-					      'name' => 'html',
-						  'contents' => $html
-					   ],
-					   [
-					      'name' => 'attachment',
-						  'contents' => fopen($data['att']->getRealPath(),'r'),
-						  'filename' => $data['att']->getClientOriginalName()
-					   ]
-					]
-				 ]; 
+					  $temp = [
+					      'name' => $k,
+						  'contents' => $v
+					   ];
+					   array_push($dt['multipart'],$temp);
 				 }
 				 
 				 
@@ -314,13 +245,7 @@ $subject = $data['subject'];
 			  
                    $ret = $res->getBody()->getContents(); 
 			       //dd($ret);
-				 /*******************
-				 """
-{
-  "id": "<20191212163843.1.FF7C9DD921606F44@mg.btbusinesss.com>",
-  "message": "Queued. Thank you."
-}
-				 ********************/
+
 				 }
 				 catch(RequestException $e)
 				 {
@@ -328,17 +253,7 @@ $subject = $data['subject'];
 					 $ret = json_encode(["status" => "error","message" => $mm]);
 				 }
 			     $rett = json_decode($ret);
-			     /**if($rett->status == "ok")
-			     {
-					//  $this->setNextLead();
-			    	//$lead->update(["status" =>"sent"]);					
-			     }
-			     else
-			     {
-			    	// $lead->update(["status" =>"pending"]);
-			     }**/
-			    }
-              return $ret; 
+           return $ret; 
            }
 		   
 		   
