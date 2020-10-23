@@ -52,8 +52,9 @@ $subtitle = "List of bookings made by you";
 										  }
 										  
 										  $items = $o['items'];
+										  $ii = $items['data'];
 										  
-										  foreach($items as $i)
+										  foreach($ii as $i)
 										  {
 											 
 														 $apartment = $i['apartment'];
