@@ -1494,6 +1494,67 @@ class MainController extends Controller {
 		
 		
     }
+    
+    
+/**
+	 * Switch user mode (host/guest).
+	 *
+	 * @return Response
+	 */
+	public function getTestBomb(Request $request)
+    {
+		$user = null;
+		$messages = [];
+		if(Auth::check())
+		{
+			$user = Auth::user();
+			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
+		}
+		else
+		{
+			return redirect()->intended('/');
+		}
+		
+		$req = $request->all();
+		
+		$validator = Validator::make($req, [
+                             'type' => 'required',
+                             'url' => 'required'
+         ]);
+         
+         if($validator->fails())
+         {
+             return redirect()->back();
+         }
+		 else
+		 {
+       $rr = [
+          'data' => [],
+          'headers' => [],
+          'url' => $req['url']
+         ];
+      
+      $dt = [];
+      
+		   switch($req['type'])
+		   {
+		     case "bvn":
+		       $rr['data'] = [
+		         'bvn' => $req['bvn'],
+		         'account_number' => $req['account_number'],
+		        'bank_code' => $req['bank_code'],
+		         ];
+		         
+		         $rr['headers'] = [
+		           'Authorization' => "Bearer ".env()
+		           ];
+		     break;
+		   }
+		   
+			$results = $this->helpers->bomb($rr);
+			 dd($results);
+		 }
+    }
 	
 	
 	
