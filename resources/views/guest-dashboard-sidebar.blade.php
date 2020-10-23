@@ -9,7 +9,7 @@
 								
 								<div class="d-navigation">
 									<ul>
-										<li class="active"><a href="dashboard.html"><i class="ti-dashboard"></i>Dashboard</a></li>
+										<li class="active"><a href="{{url('dashboard')}}"><i class="ti-dashboard"></i>Dashboard</a></li>
 										<li><a href="{{url('profile')}}"><i class="ti-user"></i>My Profile</a></li>
 										<li><a href="{{url('bookings')}}"><i class="ti-credit-card"></i>My Bookings</a></li>
 										<li><a href="{{url('saved-apartments')}}"><i class="ti-heart"></i>Saved Apartments</a></li>
