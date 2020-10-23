@@ -959,7 +959,7 @@ class MainController extends Controller {
 		
 		$orders = $this->helpers->getOrders($user);
 		
-		#dd($orders);
+		dd($orders);
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
 
