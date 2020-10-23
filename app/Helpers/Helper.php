@@ -65,6 +65,7 @@ class Helper implements HelperContract
 					 "remove-from-cart-status" => "Removed from your cart.",
 					 "pay-card-status" => "Payment successful. Have a lovely stay!",
 					 "save-apartment-status" => "Apartment saved.",
+					 "save-duplicate-apartment-status" => "You have saved this apartment already.",
 					 
 					 //ERROR NOTIFICATIONS
 					 "invalid-apartment-id-status-error" => "Apartment not found.",
@@ -73,6 +74,7 @@ class Helper implements HelperContract
 					 "oauth-status-error" => "Social login failed, please try again.",
 					 "checkout-auth-status-error" => "Please sign in to book an apartment.",
 					 "cart-auth-status-error" => "Please sign in to view your cart.",
+					 "save-apartment-auth-status-error" => "Please sign in to save an apartment.",
 					 "validation-status-error" => "Please fill all required fields.",
 					 "add-to-cart-host-status-error" => "You cannot book your own apartment.",
 					 "no-cart-status-error" => "Your cart is empty.",
