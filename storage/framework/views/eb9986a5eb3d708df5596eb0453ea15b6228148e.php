@@ -85,83 +85,37 @@ $subtitle = "Manage your guest account here";
 									</div>
 									
 									<div class="col-lg-6 col-md-12">
-										<div class="dashboard-gravity-list invoices with-icons">
-											<h4>Apartment Preferences</h4>
-											<ul>
-												
-												<li><i class="dash-icon-box ti-files"></i>
-													<strong>Starter Plan</strong>
-													<ul>
-														<li class="unpaid">Unpaid</li>
-														<li>Order: #20551</li>
-														<li>Date: 01/08/2019</li>
-													</ul>
-													<div class="buttons-to-right">
-														<a href="dashboard-invoice.html" class="button gray">View Invoice</a>
-													</div>
-												</li>
-												
-												<li><i class="dash-icon-box ti-files"></i>
-													<strong>Basic Plan</strong>
-													<ul>
-														<li class="paid">Paid</li>
-														<li>Order: #20550</li>
-														<li>Date: 01/07/2019</li>
-													</ul>
-													<div class="buttons-to-right">
-														<a href="dashboard-invoice.html" class="button gray">View Invoice</a>
-													</div>
+										<div class="dashboard-gravity-list with-icons">
+											<h4>Saved Apartments</h4>
+											<?php
+											 if(count($sapts) > 0)
+											 {
+											?>
+											 <ul>
+											<?php
+											   foreach($sapts as $sa)
+											   { 
+											?>
+												<li>
+													<i class="dash-icon-box ti-layers"></i> Your booking <strong><a href="#">Shimla to Goa</a></strong> has been done!
+													<a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
 												</li>
 
-												<li><i class="dash-icon-box ti-files"></i>
-													<strong>Extended Plan</strong>
-													<ul>
-														<li class="paid">Paid</li>
-														<li>Order: #20549</li>
-														<li>Date: 01/06/2019</li>
-													</ul>
-													<div class="buttons-to-right">
-														<a href="dashboard-invoice.html" class="button gray">View Invoice</a>
-													</div>
-												</li>
-												
-												<li><i class="dash-icon-box ti-files"></i>
-													<strong>Platinum Plan</strong>
-													<ul>
-														<li class="paid">Paid</li>
-														<li>Order: #20548</li>
-														<li>Date: 01/05/2019</li>
-													</ul>
-													<div class="buttons-to-right">
-														<a href="dashboard-invoice.html" class="button gray">View Invoice</a>
-													</div>
-												</li>
-												
-												<li><i class="dash-icon-box ti-files"></i>
-													<strong>Extended Plan</strong>
-													<ul>
-														<li class="paid">Paid</li>
-														<li>Order: #20547</li>
-														<li>Date: 01/04/2019</li>
-													</ul>
-													<div class="buttons-to-right">
-														<a href="dashboard-invoice.html" class="button gray">View Invoice</a>
-													</div>
-												</li>
-												
-												<li><i class="dash-icon-box ti-files"></i>
-													<strong>Platinum Plan</strong>
-													<ul>
-														<li class="paid">Paid</li>
-														<li>Order: #20546</li>
-														<li>Date: 01/03/2019</li>
-													</ul>
-													<div class="buttons-to-right">
-														<a href="dashboard-invoice.html" class="button gray">View Invoice</a>
-													</div>
-												</li>
-
+											<?php
+											 }
+                                            ?>											 
 											</ul>
+											<?php
+											 }
+											 else
+											 {
+											?>
+											<ul>
+											<li>No apartments have been saved yet.</li>
+											</ul>
+											<?php
+											 }
+											?>
 										</div>
 									</div>	
 								</div>

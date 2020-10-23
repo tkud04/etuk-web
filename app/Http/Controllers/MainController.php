@@ -234,8 +234,9 @@ class MainController extends Controller {
 		else if($user->mode == "guest")
 		{
 			$sps = $this->helpers->getSavedPayments($user);
+			$sapts = $this->helpers->getSavedApartments($user);
 			#dd($sps);
-			$cpt = ['user','cart','messages','sps','c','ad','signals','plugins'];
+			$cpt = ['user','cart','messages','sps','sapts','c','ad','signals','plugins'];
 			$v = "guest-dashboard";
 		}
 		
@@ -431,9 +432,10 @@ class MainController extends Controller {
 			
 			if(count($apartment) > 0)
 			{
+				$isSaved = $this->helpers->isApartmentSaved($user->id,$apartment['id']);
 			   shuffle($ads);
 		       $ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
-    	       return view("apartment",compact(['user','cart','messages','c','ad','apartment','services','tips','states','signals','plugins']));
+    	       return view("apartment",compact(['user','cart','messages','c','isSaved','ad','apartment','services','tips','states','signals','plugins']));
 			}
 			else
 			{
@@ -1003,6 +1005,45 @@ class MainController extends Controller {
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
 
     	return view("sps",compact(['user','cart','messages','sps','c','ad','signals','plugins']));
+    }
+	
+	/**
+	 * Handle save apartment.
+	 *
+	 * @return Response
+	 */
+	public function getSaveApartment(Request $request)
+    {
+		$user = null;
+		 
+		if(Auth::check())
+		{
+			$user = Auth::user();
+			
+			$req = $request->all();
+        
+		    $validator = Validator::make($req,[
+		                    'xf' => 'required'
+		    ]);
+		
+		if($validator->fails())
+         {
+			 session()->flash("validation-status-error","ok");
+			 return redirect()->back()->withInput();
+         }
+		 else
+		 {  	 
+			$r = $this->helpers->createSavedApartment(['user_id' => $user->id, 'apartment_id' => $req['xf']]);
+			session()->flash("save-apartment-status","ok");
+			return redirect()->back();
+		 }
+		}
+		else
+		{
+			session()->flash("save-apartment-status-error","ok");
+			return redirect()->back();
+		}
+		 
     }
 	
 	

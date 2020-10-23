@@ -174,6 +174,25 @@ let sec = 0, svc = 0, loc = 0, cln = 0, cmf = 0;
 							
 							<!-- Single Block Wrap -->
 							<div class="block-wrap">
+								<?php
+								 $svu = url('save-apartment')."?xf=".$apartment['id'];
+								?>
+								<div class="block-header">
+									<h4 class="block-title">Quick links</h4>
+								</div>
+								
+								<div class="block-body">
+								<?php if($isSaved): ?>
+								 <h4>You've already saved this apartment.</h4>
+							    <?php else: ?>
+								<a href="<?php echo e($svu); ?>" class="btn btn-theme">Save this apartment</a>
+							    <?php endif; ?>
+								</div>
+								
+							</div>
+							
+							<!-- Single Block Wrap -->
+							<div class="block-wrap">
 								
 								<div class="block-header">
 									<h4 class="block-title">Facilities</h4>

@@ -64,6 +64,7 @@ class Helper implements HelperContract
 					 "add-to-cart-status" => "Added to your cart.",
 					 "remove-from-cart-status" => "Removed from your cart.",
 					 "pay-card-status" => "Payment successful. Have a lovely stay!",
+					 "save-apartment-status" => "Apartment saved.",
 					 
 					 //ERROR NOTIFICATIONS
 					 "invalid-apartment-id-status-error" => "Apartment not found.",
@@ -76,6 +77,7 @@ class Helper implements HelperContract
 					 "add-to-cart-host-status-error" => "You cannot book your own apartment.",
 					 "no-cart-status-error" => "Your cart is empty.",
 					 "pay-card-status-error" => "Your payment could not be processed, please try again.",
+					 "save-apartment-status-error" => "Apartment could not be saved, please try again.",
                      ],
                      'errors'=> ["login-status-error" => "Wrong username or password, please try again.",
 					 "signup-status-error" => "There was a problem creating your account, please try again.",
@@ -2308,7 +2310,7 @@ function createSocial($data)
 		   
 		   function createSavedApartment($dt)
 		   {
-			   $ret = SavedPayments::create(['user_id' => $dt['user_id'], 
+			   $ret = SavedApartments::create(['user_id' => $dt['user_id'], 
                                              'apartment_id' => $dt['apartment_id']
                                             ]);
                                                       
@@ -2363,6 +2365,16 @@ function createSocial($data)
 				  $a->delete();
                }	   
 		   }
+		   
+		   function isApartmentSaved($xf,$axf)
+		   {
+			   $ret = false;
+			   $sapt = SavedApartments::where(['user_id' => $xf,'apartment_id' => $axf])->first();
+			   if($sapt != null) $ret = true;
+			   
+			   return $ret;
+		   }
+		   
 		   
 		   
 		   
