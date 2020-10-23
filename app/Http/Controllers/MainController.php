@@ -1033,14 +1033,21 @@ class MainController extends Controller {
          }
 		 else
 		 {
-            if($this->isApartmentSaved($user->id,$req['xf']))
+			if()
 			{
-				session()->flash("save-duplicate-apartment-status","ok");
+              if($this->isApartmentSaved($user->id,$req['xf']))
+			  {
+				  session()->flash("save-duplicate-apartment-status","ok");
+			  }
+              else
+			  {
+				  $r = $this->helpers->createSavedApartment(['user_id' => $user->id, 'apartment_id' => $req['xf']]);
+			      session()->flash("save-apartment-status","ok");
+			  }
 			}
             else
 			{
-				$r = $this->helpers->createSavedApartment(['user_id' => $user->id, 'apartment_id' => $req['xf']]);
-			    session()->flash("save-apartment-status","ok");
+				session()->flash("save-apartment-auth-status-error","ok");
 			}			
 			
 			return redirect()->back();
