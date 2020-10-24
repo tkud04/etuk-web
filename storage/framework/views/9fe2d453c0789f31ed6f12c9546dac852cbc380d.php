@@ -9,7 +9,7 @@
 								
 								<div class="d-navigation">
 									<ul>
-										<li class="active"><a href="dashboard.html"><i class="ti-dashboard"></i>Dashboard</a></li>
+										<li class="active"><a href="<?php echo e(url('dashboard')); ?>"><i class="ti-dashboard"></i>Dashboard</a></li>
 										<li><a href="<?php echo e(url('profile')); ?>"><i class="ti-user"></i>My Profile</a></li>
 										<li><a href="<?php echo e(url('transactions')); ?>"><i class="ti-credit-card"></i>Transactions</a></li>
 										<li><a href="<?php echo e(url('my-apartments')); ?>"><i class="ti-home"></i>My Apartments</a></li>

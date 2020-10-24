@@ -33,6 +33,7 @@ use App\Orders;
 use App\OrderItems;
 use App\SavedApartments;
 use App\ApartmentPreferences;
+use App\Transactions;
 use App\Guests;
 use \Swift_Mailer;
 use \Swift_SmtpTransport;
@@ -1993,7 +1994,7 @@ function createSocial($data)
                	     $temp['id'] = $c->id; 
                	     $temp['user_id'] = $c->user_id; 
                	     $temp['apartment_id'] = $c->apartment_id; 
-                        $apt = $this->getApartment($c->apartment_id); 
+                        $apt = $this->getApartment($c->apartment_id,['host' => true]); 
                         $temp['apartment'] = $apt;
                         $adata = $apt['data'];						
 						$ret['subtotal'] += $adata['amount'];
@@ -2189,7 +2190,14 @@ function createSocial($data)
                         $temp['guests'] = $c['guests']; 
                         $temp['kids'] = $c['kids']; 
                        $temp['order_id'] = $order->id;
-				    $oi = $this->createOrderItems($temp);                    
+				    $oi = $this->createOrderItems($temp);
+                    $host = $c['apartment']['host']; 
+                    $this->createTransaction([
+					  'user_id' => $host['id'],
+					  'item_id' => $oi->id,
+					  'apartment_id' => $c['apartment_id']
+					]);
+                    					
                }
 
                #send transaction email to admin
@@ -2254,6 +2262,8 @@ function createSocial($data)
                 return $ret;
            }
 		   
+		   
+		   
 		   function getOrder($ref)
            {
            	$ret = [];
@@ -2289,8 +2299,22 @@ function createSocial($data)
                {
                	  	foreach($items as $i) 
                     {
-                    	$temp = []; 
-               	     $temp['id'] = $i->id; 
+                    	$temp = $this->getOrderItem($i->id);
+                        array_push($ret['data'], $temp); 
+                   }
+               }			   
+              			  
+                return $ret;
+           }
+		   
+		   function getOrderItem($id)
+		   {
+			   $temp = [];
+			    $items = OrderItems::where('order_id',$id)->get();
+				
+				if($i != null)
+				{
+					$temp['id'] = $i->id; 
                	     $temp['order_id'] = $i->order_id; 
                	     $temp['apartment_id'] = $i->apartment_id; 
                         $apt = $this->getApartment($i->apartment_id,['host' => true]); 
@@ -2302,13 +2326,11 @@ function createSocial($data)
                         $temp['checkin'] = $checkin->format("jS F, Y");
                         $temp['checkout'] = $checkout->format("jS F, Y"); 
                         $temp['guests'] = $i->guests; 
-                        $temp['kids'] = $i->kids; 
-                        array_push($ret['data'], $temp); 
-                   }
-               }			   
-              			  
-                return $ret;
-           }
+                        $temp['kids'] = $i->kids;
+				}
+			    
+				return $temp;
+		   }
 		   
 		   function createSavedApartment($dt)
 		   {
@@ -2376,6 +2398,53 @@ function createSocial($data)
 			   
 			   return $ret;
 		   }
+		   
+		   function createTransaction($dt)
+		   {
+			   $ret = Transactions::create(['user_id' => $dt['user_id'], 
+                                             'apartment_id' => $dt['apartment_id'],
+                                             'item' => $dt['item_id'],
+                                            ]);
+                                                      
+                return $ret;
+		   }
+		   
+		   function getTransaction($id)
+		   {
+			   $ret = [];
+			   $t = Transactions::where('id',$id)->first();
+			   
+			   if($t != null)
+               {
+				  $temp = [];
+				  $temp['id'] = $t->id;
+				  $temp['user_id'] = $t->user_id;
+				  $temp['apartment_id'] = $t->apartment_id;
+				  $temp['date'] = $t->created_at->format("m/d/Y h:i A");
+     			  $ret = $temp;
+               }
+
+               return $ret;			   
+		   }
+		   
+		   function getTransactions($user)
+           {
+           	$ret = [];
+			$transactions = Transactions::where('user_id',$user->id)->get();
+			  
+              if($transactions != null)
+               {
+				   $transactions = $transactions->sortByDesc('created_at');	
+			  
+				  foreach($transactions as $t)
+				  {
+					  $temp = $this->getTransaction($t->id);
+					  array_push($ret,$temp);
+				  }
+               }                         
+                                  
+                return $ret;
+           }
 		   
 		   
 		   
