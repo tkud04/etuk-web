@@ -95,10 +95,14 @@ $subtitle = "Manage your guest account here";
 											<?php
 											   foreach($sapts as $sa)
 											   { 
+											   $a = $sa['apartment'];
+											   $title = $a['name'];
+											   $cmedia = $a['cmedia'];
+											   $imgs = $cmedia['images'];
 											?>
 												<li>
-													<i class="dash-icon-box ti-layers"></i> Your booking <strong><a href="#">Shimla to Goa</a></strong> has been done!
-													<a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
+											   <i class="dash-icon-box ti-layers"></i> Your booking <strong><a href="javascript:void(0)"><?php echo e($title); ?></a></strong> 
+													<a href="javascript:void(0)" class="close-list-item"><i class="fa fa-close"></i></a>
 												</li>
 
 											<?php

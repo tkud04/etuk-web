@@ -236,7 +236,7 @@ class MainController extends Controller {
 		{
 			$sps = $this->helpers->getSavedPayments($user);
 			$sapts = $this->helpers->getSavedApartments($user);
-			#dd($sps);
+			#dd($sapts);
 			$cpt = ['user','cart','messages','sps','sapts','c','ad','signals','plugins'];
 			$v = "guest-dashboard";
 		}
