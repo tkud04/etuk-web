@@ -53,12 +53,12 @@ $subtitle = "Manage your apartments and host account here";
 										<div class="dashboard-gravity-list with-icons">
 											<h4>Transaction History</h4>
 											<?php
-											 if(count($orders) > 0)
+											 if(count($transactions) > 0)
 											 {
 											?>
 											 <ul>
 											<?php
-											   foreach($orders as $o)
+											   foreach($transactions as $t)
 											   { 
 											?>
 												<li><i class="dash-icon-box ti-files"></i>
@@ -83,7 +83,7 @@ $subtitle = "Manage your apartments and host account here";
 											 {
 											?>
 											<ul>
-											<li>No payment methods added yet. Book an apartment to add one now.</li>
+											<li>No transactions yet.</li>
 											</ul>
 											<?php
 											 }
@@ -118,7 +118,7 @@ $subtitle = "Manage your apartments and host account here";
 											 {
 											?>
 											<ul>
-											<li>No apartments have been saved yet.</li>
+											<li>No new messages yet.</li>
 											</ul>
 											<?php
 											 }

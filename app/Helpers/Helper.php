@@ -2191,6 +2191,8 @@ function createSocial($data)
                         $temp['kids'] = $c['kids']; 
                        $temp['order_id'] = $order->id;
 				    $oi = $this->createOrderItems($temp);
+					
+					//create host transaction
                     $host = $c['apartment']['host']; 
                     $this->createTransaction([
 					  'user_id' => $host['id'],
@@ -2403,7 +2405,7 @@ function createSocial($data)
 		   {
 			   $ret = Transactions::create(['user_id' => $dt['user_id'], 
                                              'apartment_id' => $dt['apartment_id'],
-                                             'item' => $dt['item_id'],
+                                             'item_id' => $dt['item_id'],
                                             ]);
                                                       
                 return $ret;
@@ -2420,6 +2422,7 @@ function createSocial($data)
 				  $temp['id'] = $t->id;
 				  $temp['user_id'] = $t->user_id;
 				  $temp['apartment_id'] = $t->apartment_id;
+				  $temp['item'] = $this->getOrderItem($t->item_id);
 				  $temp['date'] = $t->created_at->format("m/d/Y h:i A");
      			  $ret = $temp;
                }
