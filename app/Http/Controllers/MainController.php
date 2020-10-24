@@ -1036,7 +1036,7 @@ class MainController extends Controller {
 		 {
 			if($user != null)
 			{
-              if($this->isApartmentSaved($user->id,$req['xf']))
+              if($this->helpers->isApartmentSaved($user->id,$req['xf']))
 			  {
 				  session()->flash("save-duplicate-apartment-status","ok");
 			  }
