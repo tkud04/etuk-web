@@ -2474,11 +2474,21 @@ function createSocial($data)
                                              'payment_type' => $dt['payment_type'],
                                              'rating' => $dt['rating']
                                             ]);
+											
+				$facilities = json_decode($dt['facilities']);
+				
+				foreach($facilities as $f)
+				{
+					$af = $this->createPreferenceFacilities([
+					    'user_id' => $dt['user_id'],
+					    'facility' => $f->id
+					]);
+				}
                                                
                 return $ret;
 		   }
 		   
-		   function createPreferenceFacility($dt)
+		   function createPreferenceFacilities($dt)
 		   {
 			   $ret = PreferenceFacilities::create(['user_id' => $dt['user_id'], 
                                                       'facility' => $dt['facility'],                                                       
@@ -2519,7 +2529,7 @@ function createSocial($data)
                 return $ret;
            }
 		   
-		   function getPreferenceFacilities($id)
+		   function getPreferenceFacilities($user)
            {
            	$ret = [];
               $pfs = PreferenceFacilities::where('user_id',$user->id)->get();
@@ -2539,7 +2549,7 @@ function createSocial($data)
 	       function getPreferenceFacility($id)
            {
            	$ret = [];
-              $pf = PreferenceFacilities::where('user_id',$id)->first();
+              $pf = PreferenceFacilities::where('id',$id)->first();
               #dd($af);
               if($pf != null)
                {

@@ -375,11 +375,11 @@ $(document).ready(function() {
 		 fd.append("facilities",JSON.stringify(ff));
 		 
 
-		  fd.append("_token",$('#tk-apt').val());
+		  fd.append("_token",$('#tk-apf').val());
 		  
 		  $('#apartment-preference-submit').hide();
 		  $('#apartment-preference-loading').fadeIn();
-		  //updateApartmentPreference(fd);
+		  updateApartmentPreference(fd);
 	   }
     });
 	

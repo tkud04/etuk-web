@@ -467,7 +467,6 @@ const aptPreferencePreview = (id) => {
 												<li>Min. price per day<span>&#8358;${aptAmount}.00</span></li>
 												<li>Max. adults<span>${aptMaxAdults}</span></li>
 												<li>Max. children<span>${aptMaxChildren}</span></li>
-												<li>Price per day<span>&#8358;${aptAmount}</span></li>
 												<li>Payment type<span>Card</span></li>
 												<li>ID required on check-in<span>${aptIdRequired}</span></li>
 												<li>Children<span>${aptChildren}</span></li>
@@ -480,7 +479,7 @@ const aptPreferencePreview = (id) => {
 
 const updateApartmentPreference = (dt) => {
 	//create request
-	const req = new Request("add-apartment",{method: 'POST', body: dt});
+	const req = new Request("apartment-preferences",{method: 'POST', body: dt});
 	//console.log(req);
 	
 	
@@ -497,9 +496,9 @@ const updateApartmentPreference = (dt) => {
 		   }
 	   })
 	   .catch(error => {
-		    alert("Failed to add apartment: " + error);			
-			$('#add-apartment-loading').hide();
-		     $('#add-apartment-submit').fadeIn();
+		    alert("Failed to update apartment preferences: " + error);			
+			$('#apartment-preference-loading').hide();
+		     $('#apartment-preference-submit').fadeIn();
 	   })
 	   .then(res => {
 		   console.log(res);
@@ -507,10 +506,10 @@ const updateApartmentPreference = (dt) => {
 		   if(res.status == "ok"){
               Swal.fire({
 			     icon: 'success',
-                 title: "Apartment added!"
+                 title: "Apartment preferences updated!"
                }).then((result) => {
                if (result.value) {                 
-			     window.location = `my-apartments`;
+			     window.location = `apartment-preferences`;
                 }
               });
 		   }
@@ -527,8 +526,8 @@ const updateApartmentPreference = (dt) => {
                  title: hh
                }).then((result) => {
                if (result.value) {
-                  $('#add-apartment-loading').hide();
-		          $('#add-apartment-submit').fadeIn();	
+                 $('#apartment-preference-loading').hide();
+		     $('#apartment-preference-submit').fadeIn();	
                 }
               });					 
 		   }
@@ -536,9 +535,9 @@ const updateApartmentPreference = (dt) => {
 		   
 		  
 	   }).catch(error => {
-		     alert("Failed to add apartment: " + error);			
-			$('#add-apartment-loading').hide();
-		     $('#add-apartment-submit').fadeIn();			
+		     alert("Failed to update apartment preferences: " + error);			
+			$('#apartment-preference-loading').hide();
+		     $('#apartment-preference-submit').fadeIn();			
 	   });
 }
 

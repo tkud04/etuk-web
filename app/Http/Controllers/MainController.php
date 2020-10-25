@@ -362,11 +362,61 @@ class MainController extends Controller {
 		$plugins = $this->helpers->getPlugins();
 		
 		$apf = $this->helpers->getPreference($user);
-		#dd($apf);
+		dd($apf);
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
         
     	return view("apartment-preferences",compact(['user','cart','messages','c','states','services','ad','apf','signals','plugins']));
+    }
+	
+	/**
+	 * Handle add new apartment.
+	 *
+	 * @return Response
+	 */
+	public function postApartmentPreferences(Request $request)
+    {
+		$user = null;
+		if(Auth::check())
+		{
+			$user = Auth::user();
+		}
+		else
+		{
+			return redirect()->intended('/');
+		}
+
+		$req = $request->all();
+        #dd($req);
+		$ret = ['status' => "error",'message' => "nothing happened"];
+	    
+		$validator = Validator::make($req,[
+		                    'rating' => 'required',
+		                    'max_adults' => 'required|numeric',
+		                    'max_children' => 'required|numeric',
+		                    'id_required' => 'required',
+		                    'amount' => 'required|numeric',
+		                    'children' => 'required',
+		                    'pets' => 'required',
+		                    'city' => 'required',
+		                    'state' => 'required',
+		                    'facilities' => 'required'
+		]);
+		
+		if($validator->fails())
+         {
+             $ret = ['message' => "validation"];
+         }
+		 else
+		 {					
+					$req['payment_type'] = "card";
+					$req['user_id'] = $user->id;
+				 
+			$this->helpers->createPreference($req);
+			$ret = ['status' => "ok"];
+		 }
+		 
+		 return json_encode($ret);
     }
 	
 	/**
