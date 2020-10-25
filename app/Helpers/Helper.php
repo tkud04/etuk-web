@@ -2308,6 +2308,7 @@ function createSocial($data)
                     {
                     	$temp = $this->getOrderItem($i->id);
                         array_push($ret['data'], $temp); 
+						$ret['subtotal'] += $temp['subtotal'];
                    }
                }			   
               			  
@@ -2327,7 +2328,7 @@ function createSocial($data)
                         $apt = $this->getApartment($i->apartment_id,['host' => true]); 
                         $temp['apartment'] = $apt;
                         $adata = $apt['data'];						
-						$temp['subtotal'] += $adata['amount'];
+						$temp['subtotal'] = $adata['amount'];
 						$checkin = Carbon::parse($i->checkin);
 						$checkout = Carbon::parse($i->checkout);
                         $temp['checkin'] = $checkin->format("jS F, Y");
