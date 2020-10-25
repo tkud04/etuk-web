@@ -362,7 +362,7 @@ class MainController extends Controller {
 		$plugins = $this->helpers->getPlugins();
 		
 		$apf = $this->helpers->getPreference($user);
-		dd($apf);
+		#dd($apf);
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
         
