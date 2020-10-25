@@ -197,7 +197,7 @@ $subtitle = "Manage your guest account here";
 														<li>Date: {{$o['date']}}</li>
 													</ul>
 													<div class="buttons-to-right">
-														<a href="{{ru}}" class="button gray">View Receipt</a>
+														<a href="{{$ru}}" class="button gray">View Receipt</a>
 													</div>
 												</li>
 												<?php
