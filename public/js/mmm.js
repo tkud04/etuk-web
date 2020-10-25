@@ -309,7 +309,7 @@ $(document).ready(function() {
 	   }
     });
 	
-	//APARTMENT PREDFERENCES
+	//APARTMENT PREFERENCES
 	$("#apartment-preference-side-1-next").click(e => {
        e.preventDefault();
 	   
@@ -333,6 +333,55 @@ $(document).ready(function() {
 	  selectCheckoutSide({side: 1,type: ".apartment-preference",content: "ti-check"});
 	  showElem(['#apartment-preference-side-1']);
     });	
+	
+	$("#apartment-preference-side-2-next").click(e => {
+       e.preventDefault();
+	   console.log("update apartment preference submit");
+	   
+	   //validation
+	  let aptMaxAdults = $(`#apartment-preference-max-adults`).val(), aptMaxChildren = $(`#apartment-preference-max-children`).val(), aptAmount = $(`#apartment-preference-amount`).val(),
+       aptRating = $(`#apartment-preference-rating`).val(),aptIdRequired = $(`#apartment-preference-id-required`).val(),
+	   aptChildren = $(`#apartment-preference-children`).val(), aptPets = $(`#apartment-preference-pets`).val(),
+       aptCity = $(`#apartment-preference-city`).val(),aptState = $(`#apartment-preference-state`).val(),
+ 	  side1_validation = (aptMaxAdults == "" || aptMaxChildren == "" || aptPets == "" || aptChildren == "" || aptAmount < 0 || aptRating < 0 || aptCity == "" || aptState == "" || aptIdRequired == "none" || facilities.length < 1);	  
+
+	   
+	   if(side1_validation){
+		   Swal.fire({
+			 icon: 'error',
+             title: "Please fill all the required fields"
+           })
+	   }
+
+	   else{
+		 //let aptName = $('#add-apartment-name').val(),   
+		 console.log("final");
+		 
+		 let ff = [];
+		 for(let y = 0; y < facilities.length; y++){
+			 if(facilities[y].selected) ff.push(facilities[y]);
+		 }
+		 
+		 let fd =  new FormData();
+		 fd.append("max_adults",aptMaxAdults);
+		 fd.append("max_children",aptMaxChildren);
+		 fd.append("rating",aptRating);
+		 fd.append("id_required",aptIdRequired);
+		 fd.append("amount",aptAmount);
+		 fd.append("children",aptChildren);
+		 fd.append("pets",aptPets);
+		 fd.append("city",aptCity);
+		 fd.append("state",aptState);
+		 fd.append("facilities",JSON.stringify(ff));
+		 
+
+		  fd.append("_token",$('#tk-apt').val());
+		  
+		  $('#apartment-preference-submit').hide();
+		  $('#apartment-preference-loading').fadeIn();
+		  //updateApartmentPreference(fd);
+	   }
+    });
 	
 	
 	
