@@ -356,7 +356,7 @@ let sec = 0, svc = 0, loc = 0, cln = 0, cmf = 0;
 											<img src="<?php echo e($av); ?>" class="img-fluid" alt=""> 
 										</div>
 										<div class="reviews-comments-item-text">
-											<h4><a href="javascript:void(0)"><?php echo e($ru); ?></a><span class="reviews-comments-item-date"><i class="ti-calendar theme-cl"></i><?php echo e($r['date']); ?></span></h4>
+											<h4><a href="javascript:void(0)"><?php echo e($ru); ?></a> <span class="reviews-comments-item-date"><i class="ti-calendar theme-cl"></i><?php echo e($r['date']); ?></span></h4>
 											
 											<div class="listing-rating high" data-starrating2="5">
 											  <?php

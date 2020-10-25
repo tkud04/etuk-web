@@ -52,8 +52,9 @@ $subtitle = "List of bookings made by you";
 										  }
 										  
 										  $items = $o['items'];
+										  $ii = $items['data'];
 										  
-										  foreach($items as $i)
+										  foreach($ii as $i)
 										  {
 											 
 														 $apartment = $i['apartment'];
@@ -63,11 +64,12 @@ $subtitle = "List of bookings made by you";
 														 $adata = $apartment['data'];
 														 $terms = $apartment['terms'];
 														 $host = $apartment['host'];
+														 $hostName = $host['fname']." ".substr($host['lname'],0,1).".";
 														 $amount = $adata['amount'];
 														 $address = $apartment['address'];
 														 $location = $address['city'].", ".$address['state'];
-														 $checkin = $c['checkin'];
-														 $checkout = $c['checkout'];
+														 $checkin = $i['checkin'];
+														 $checkout = $i['checkout'];
 											  
 									   ?>
 										<li class="<?php echo e($liClass); ?>">
@@ -101,7 +103,7 @@ $subtitle = "List of bookings made by you";
 														<div class="inner-booking-list">
 															<h5>Host:</h5>
 															<ul class="booking-list">
-																<li><?php echo e($host['name']); ?></li>
+																<li><?php echo e($hostName); ?></li>
 															</ul>
 														</div>
 
@@ -120,80 +122,7 @@ $subtitle = "List of bookings made by you";
 										}
 										}
 										?>
-										<li class="approved-booking">
-											<div class="list-box-listing bookings">
-												<div class="list-box-listing-img"><img src="https://image.flaticon.com/icons/png/512/145/145849.png" alt=""></div>
-												<div class="list-box-listing-content">
-													<div class="inner">
-														<h3>Burger Houses <span class="booking-status">Approved</span></h3>
-
-														<div class="inner-booking-list">
-															<h5>Booking Date:</h5>
-															<ul class="booking-list">
-																<li class="highlighted">12.12.2019 at 10:20 pm - 12:20 pm</li>
-															</ul>
-														</div>
-																	
-														<div class="inner-booking-list">
-															<h5>Booking Details:</h5>
-															<ul class="booking-list">
-																<li class="highlighted">3 Adults, 3 Children</li>
-															</ul>
-														</div>		
-
-														<div class="inner-booking-list">
-															<h5>Client:</h5>
-															<ul class="booking-list">
-																<li>Lita Andrew</li>
-																<li>litha@support.com</li>
-																<li>123-456-789</li>
-															</ul>
-														</div>
-
-														<a href="#small-dialog" class="rate-review"><i class="ti-email"></i> Send Message</a>
-
-													</div>
-												</div>
-											</div>
-											<div class="buttons-to-right">
-												<a href="#" class="button gray reject"><i class="ti-trash"></i> Cancel</a>
-											</div>
-										</li>
-
-										<li class="canceled-booking">
-											<div class="list-box-listing bookings">
-												<div class="list-box-listing-img"><img src="https://image.flaticon.com/icons/png/512/145/145849.png" alt=""></div>
-												<div class="list-box-listing-content">
-													<div class="inner">
-														<h3>Shiwani Restaurant <span class="booking-status">Canceled</span></h3>
-
-														<div class="inner-booking-list">
-															<h5>Booking Date:</h5>
-															<ul class="booking-list">
-																<li class="highlighted">21.10.2019 at 9:30 am - 10:30 am</li>
-															</ul>
-														</div>
-																	
-														<div class="inner-booking-list">
-															<h5>Booking Details:</h5>
-															<ul class="booking-list">
-																<li class="highlighted">3 Adults</li>
-															</ul>
-														</div>		
-
-														<div class="inner-booking-list">
-															<h5>Client:</h5>
-															<ul class="booking-list">
-																<li>Shivani Singh</li>
-																<li>shivani@example.com</li>
-																<li>123-456-789</li>
-															</ul>
-														</div>
-
-													</div>
-												</div>
-											</div>
-										</li>
+									
 										
 									</ul>
 								</div>

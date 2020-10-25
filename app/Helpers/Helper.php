@@ -1313,8 +1313,9 @@ function updateApartment($data)
                                                       'comment' => $data['comment'],
                                                       'status' => "pending",
                                                       ]);
-               
-			   
+                
+				$data['review_id'] = $ret->id;
+			    $rstats = $this->createReviewStats($data);
                 return $ret;
            }
 		   

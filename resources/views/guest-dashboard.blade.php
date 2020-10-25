@@ -23,29 +23,6 @@ $subtitle = "Manage your guest account here";
 						<div class="col-lg-9 col-md-8 col-sm-12">
 							<div class="dashboard-wrapers">
 							
-								<!-- Row -->
-								<div class="row">
-									<div class="col-lg-4 col-md-4 col-sm-12">
-										<div class="dashboard-stat widget-1">
-											<div class="dashboard-stat-content"><h4>6</h4> <span>Total Booking</span></div>
-											<div class="dashboard-stat-icon"><i class="ti-location-pin"></i></div>
-										</div>	
-									</div>
-									
-									<div class="col-lg-4 col-md-4 col-sm-12">
-										<div class="dashboard-stat widget-2">
-											<div class="dashboard-stat-content"><h4>7201</h4> <span>Upcoming Booking</span></div>
-											<div class="dashboard-stat-icon"><i class="ti-pie-chart"></i></div>
-										</div>	
-									</div>
-									
-									<div class="col-lg-4 col-md-4 col-sm-12">
-										<div class="dashboard-stat widget-4">
-											<div class="dashboard-stat-content"><h4>514</h4> <span>Main Balance</span></div>
-											<div class="dashboard-stat-icon"><i class="ti-bookmark"></i></div>
-										</div>	
-									</div>
-								</div>
 								
 								<!-- Row -->
 								<div class="row">
@@ -90,18 +67,26 @@ $subtitle = "Manage your guest account here";
 											<?php
 											 if(count($sapts) > 0)
 											 {
+												 $saptsLength = count($sapts) > 5 ? 5 : count($sapts);
 											?>
 											 <ul>
 											<?php
-											   foreach($sapts as $sa)
+											   for($i = 0; $i < $saptsLength; $i++)
 											   { 
+											   $sa = $sapts[$i];
 											   $a = $sa['apartment'];
+											   $au = url('apartment')."?xf=".$a['url'];
 											   $title = $a['name'];
 											   $cmedia = $a['cmedia'];
 											   $imgs = $cmedia['images'];
+											   $adata = $a['data'];
+											   $address = $a['address'];
+											   $location = $address['city'].", ".$address['state'];
+											   $stars = $a['rating'];
+											   $ratingClass = $stars > 3.5 ? "high" : "low";
 											?>
 												<li>
-											   <i class="dash-icon-box ti-layers"></i> Your booking <strong><a href="javascript:void(0)">{{$title}}</a></strong> 
+											   <i class="dash-icon-box ti-star"></i> <div class="numerical-rating {{$ratingClass}}" data-rating="{{$stars}}"></div> <strong><a href="{{$au}}" target="_blank">{{$title}}</a></strong> {{ucwords($location)}}
 													<a href="javascript:void(0)" class="close-list-item"><i class="fa fa-close"></i></a>
 												</li>
 
@@ -109,6 +94,7 @@ $subtitle = "Manage your guest account here";
 											 }
                                             ?>											 
 											</ul>
+											<h4><center><a href="{{url('saved-apartments')}}" class="btn btn-theme">View more</a></center></h4>
 											<?php
 											 }
 											 else
@@ -170,81 +156,67 @@ $subtitle = "Manage your guest account here";
 									
 									<div class="col-lg-6 col-md-12">
 										<div class="dashboard-gravity-list invoices with-icons">
-											<h4>Invoices</h4>
+											<h4>Recent Bookings</h4>
 											<ul>
-												
+												<?php
+												if(count($orders) > 0)
+												{
+												  $ordersLength = count($orders) > 5 ? 5 : count($orders);
+												 for($i = 0; $i < $ordersLength; $i++)
+												 {
+													 $o = $ordersLength[$i];
+													 $ref = $o['reference'];
+													 
+													 $s = ""; $liClass = ""; $ps = "";
+										  
+										  if($o['status'] == "paid")
+										  {
+											  $liClass = "paid";
+											  $s = "Active";									
+										  }
+										  else if($o['status'] == "expired")
+										  {
+											  $liClass = "paid";
+											  $s = "Expired";
+										  }
+										  else if($o['status'] == "cancelled")
+										  {
+											  $liClass = "unpaid";
+											  $s = "Cancelled";
+										  }
+										  
+										  $items = $o['items'];
+										  $ii = $items['data'];
+										  $ru = url('receipt')."?xf=".$ref;
+												?>
 												<li><i class="dash-icon-box ti-files"></i>
-													<strong>Starter Plan</strong>
+													<strong>Order #</strong>
 													<ul>
-														<li class="unpaid">Unpaid</li>
-														<li>Order: #20551</li>
-														<li>Date: 01/08/2019</li>
+														<li class="{{$liClass}}">{{$s}}</li>
+														<li>Reference #: {{$ref}}</li>
+														<li>Date: {{$o['date']}}</li>
 													</ul>
 													<div class="buttons-to-right">
-														<a href="dashboard-invoice.html" class="button gray">View Invoice</a>
+														<a href="{{ru}}" class="button gray">View Receipt</a>
 													</div>
 												</li>
-												
+												<?php
+												 }
+												 ?>
+												 <h4><center><a href="{{url('bookings')}}" class="btn btn-theme">View more</a></center></h4>
+												 <?php
+												}
+												 else
+												 {
+												?>
+										
 												<li><i class="dash-icon-box ti-files"></i>
-													<strong>Basic Plan</strong>
-													<ul>
-														<li class="paid">Paid</li>
-														<li>Order: #20550</li>
-														<li>Date: 01/07/2019</li>
-													</ul>
-													<div class="buttons-to-right">
-														<a href="dashboard-invoice.html" class="button gray">View Invoice</a>
-													</div>
+													<strong>No orders yet</strong>
+													
 												</li>
-
-												<li><i class="dash-icon-box ti-files"></i>
-													<strong>Extended Plan</strong>
-													<ul>
-														<li class="paid">Paid</li>
-														<li>Order: #20549</li>
-														<li>Date: 01/06/2019</li>
-													</ul>
-													<div class="buttons-to-right">
-														<a href="dashboard-invoice.html" class="button gray">View Invoice</a>
-													</div>
-												</li>
-												
-												<li><i class="dash-icon-box ti-files"></i>
-													<strong>Platinum Plan</strong>
-													<ul>
-														<li class="paid">Paid</li>
-														<li>Order: #20548</li>
-														<li>Date: 01/05/2019</li>
-													</ul>
-													<div class="buttons-to-right">
-														<a href="dashboard-invoice.html" class="button gray">View Invoice</a>
-													</div>
-												</li>
-												
-												<li><i class="dash-icon-box ti-files"></i>
-													<strong>Extended Plan</strong>
-													<ul>
-														<li class="paid">Paid</li>
-														<li>Order: #20547</li>
-														<li>Date: 01/04/2019</li>
-													</ul>
-													<div class="buttons-to-right">
-														<a href="dashboard-invoice.html" class="button gray">View Invoice</a>
-													</div>
-												</li>
-												
-												<li><i class="dash-icon-box ti-files"></i>
-													<strong>Platinum Plan</strong>
-													<ul>
-														<li class="paid">Paid</li>
-														<li>Order: #20546</li>
-														<li>Date: 01/03/2019</li>
-													</ul>
-													<div class="buttons-to-right">
-														<a href="dashboard-invoice.html" class="button gray">View Invoice</a>
-													</div>
-												</li>
-
+                                                <?php
+												 }
+												?>
 											</ul>
 										</div>
 									</div>	
