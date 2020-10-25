@@ -67,6 +67,7 @@ class Helper implements HelperContract
 					 "pay-card-status" => "Payment successful. Have a lovely stay!",
 					 "save-apartment-status" => "Apartment saved.",
 					 "save-duplicate-apartment-status" => "You have saved this apartment already.",
+					 "remove-saved-apartment-status" => "Apartment removed from your list.",
 					 
 					 //ERROR NOTIFICATIONS
 					 "invalid-apartment-id-status-error" => "Apartment not found.",
@@ -81,6 +82,7 @@ class Helper implements HelperContract
 					 "no-cart-status-error" => "Your cart is empty.",
 					 "pay-card-status-error" => "Your payment could not be processed, please try again.",
 					 "save-apartment-status-error" => "Apartment could not be saved, please try again.",
+					 "remove-saved-apartment-status-error" => "Apartment could not be removed, please try again.",
                      ],
                      'errors'=> ["login-status-error" => "Wrong username or password, please try again.",
 					 "signup-status-error" => "There was a problem creating your account, please try again.",
@@ -2382,15 +2384,21 @@ function createSocial($data)
                 return $ret;
            }
 		   
-		   function removeSavedApartment($id)
+		   function removeSavedApartment($dt)
 		   {
-			   $ret = [];
-			   $a = SavedApartments::where('id',$id)->first();
+			   $ret = "error";
+			   $a = SavedApartments::where([
+			                          'user_id' => $dt['user_id'],
+									  'apartment_id' => $dt['xf']
+									 ])->first();
 			   
 			   if($a != null)
                {
 				  $a->delete();
-               }	   
+				  $ret = "ok";
+               }
+
+               return $ret;			   
 		   }
 		   
 		   function isApartmentSaved($xf,$axf)

@@ -246,6 +246,88 @@ class MainController extends Controller {
     }
 	
 	/**
+	 * Show saved apartments.
+	 *
+	 * @return Response
+	 */
+	public function getSavedApartments(Request $request)
+    {
+		$user = null;
+		$messages = [];
+		if(Auth::check())
+		{
+			$user = Auth::user();
+			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
+		}
+		else
+		{
+			session()->flash("save-apartment-auth-status-error","ok");
+			return redirect()->intended('/');
+		}
+		
+		$req = $request->all();
+		
+		$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
+		$cart = $this->helpers->getCart($user,$gid);
+		#dd($user);
+		$c = $this->helpers->getCategories();
+		//dd($bs);
+		$signals = $this->helpers->signals;
+		
+		$ads = $this->helpers->getAds("wide-ad");
+		$plugins = $this->helpers->getPlugins();
+		
+		$sapts = $this->helpers->getSavedApartments($user);
+		#dd($sapts);
+		shuffle($ads);
+		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
+        
+    	return view("saved-apartments",compact(['user','cart','messages','c','ad','sapts','signals','plugins']));
+    }
+	
+	/**
+	 * Handle remove from cart.
+	 *
+	 * @return Response
+	 */
+	public function getRemoveSavedApartment(Request $request)
+    {
+		$user = null;
+		 
+		if(Auth::check())
+		{
+			$user = Auth::user();
+			
+			$req = $request->all();
+        
+		    $validator = Validator::make($req,[
+		                    'xf' => 'required'
+		    ]);
+		
+		if($validator->fails())
+         {
+			 session()->flash("validation-status-error","ok");
+			 return redirect()->back()->withInput();
+         }
+		 else
+		 {  
+	        $req['user_id'] = $user->id;	 
+			$r = $this->helpers->removeSavedApartment($req);
+			$flashMessage = "remove-saved-apartment-status";
+			if($r != "ok") $flashMessage .= "-error";
+			session()->flash($flashMessage,"ok");
+			return redirect()->back();
+		 }
+		}
+		else
+		{
+			session()->flash("cart-auth-status-error","ok");
+			return redirect()->back();
+		}
+		 
+    }
+	
+	/**
 	 * Show the profile.
 	 *
 	 * @return Response
