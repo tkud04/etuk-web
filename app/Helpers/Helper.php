@@ -2327,7 +2327,7 @@ function createSocial($data)
                         $apt = $this->getApartment($i->apartment_id,['host' => true]); 
                         $temp['apartment'] = $apt;
                         $adata = $apt['data'];						
-						$ret['subtotal'] += $adata['amount'];
+						$temp['subtotal'] += $adata['amount'];
 						$checkin = Carbon::parse($i->checkin);
 						$checkout = Carbon::parse($i->checkout);
                         $temp['checkin'] = $checkin->format("jS F, Y");
