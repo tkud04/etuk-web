@@ -15,11 +15,8 @@ Apartment mode changed when booked (available/occupied)
 Guest
 Search apartments
 View apartment(video tour,map)
-Add to cart
-checkout
 Dashboard
 Booking History
-Payment Methods
 Apartment providers contact form
 
 Blog

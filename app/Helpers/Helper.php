@@ -34,6 +34,8 @@ use App\OrderItems;
 use App\SavedApartments;
 use App\ApartmentPreferences;
 use App\Transactions;
+use App\Preferences;
+use App\PreferenceFacilities;
 use App\Guests;
 use \Swift_Mailer;
 use \Swift_SmtpTransport;
@@ -2455,6 +2457,100 @@ function createSocial($data)
 				  }
                }                         
                                   
+                return $ret;
+           }
+		   
+		    function createPreference($dt)
+		   {
+			   $ret = Preferences::create(['user_id' => $dt['user_id'], 
+                                             'city' => $dt['city'],
+                                             'state' => $dt['state'],
+                                             'amount' => $dt['amount'],
+                                             'id_required' => $dt['id_required'],
+                                             'children' => $dt['children'],
+                                             'max_adults' => $dt['max_adults'],
+                                             'max_children' => $dt['max_children'],
+                                             'pets' => $dt['pets'],
+                                             'payment_type' => $dt['payment_type'],
+                                             'rating' => $dt['rating']
+                                            ]);
+                                               
+                return $ret;
+		   }
+		   
+		   function createPreferenceFacility($dt)
+		   {
+			   $ret = PreferenceFacilities::create(['user_id' => $dt['user_id'], 
+                                                      'facility' => $dt['facility'],                                                       
+                                                      'selected' => "true"                                                       
+                                                      ]);
+                              
+                return $ret;
+		   }
+		   
+		    function getPreference($user)
+           {
+			   $imgId = true;
+			   $host = true;
+           	  
+			  $ret = [];
+              $p = Preferences::where('user_id',$user->id)->first();
+ 
+              if($p != null)
+               {
+				  $temp = [];
+				  $temp['id'] = $p->id;
+				  $temp['user_id'] = $p->user_id;
+				  $temp['city'] = $p->city;
+				  $temp['state'] = $p->state;
+				  $temp['amount'] = $p->amount;
+				  $temp['id_required'] = $p->id_required;
+				  $temp['children'] = $p->children;
+				  $temp['max_adults'] = $p->max_adults;
+				  $temp['max_children'] = $p->max_children;
+				  $temp['pets'] = $p->pets;
+				  $temp['payment_type'] = $p->payment_type;
+				  $temp['facilities'] = $this->getPreferenceFacilities($user);	  
+				  $temp['rating'] = $p->rating;
+				   $temp['date'] = $p->created_at->format("jS F, Y h:i A");
+				  $ret = $temp;
+               }                         
+                                                      
+                return $ret;
+           }
+		   
+		   function getPreferenceFacilities($id)
+           {
+           	$ret = [];
+              $pfs = PreferenceFacilities::where('user_id',$user->id)->get();
+ 
+              if($pfs != null)
+               {
+				   foreach($pfs as $pf)
+				   {
+					   $temp = $this->getPreferenceFacility($pf->id);
+					   array_push($ret,$temp);
+				   }
+               }                         
+                                                      
+                return $ret;
+           }
+
+	       function getPreferenceFacility($id)
+           {
+           	$ret = [];
+              $pf = PreferenceFacilities::where('user_id',$id)->first();
+              #dd($af);
+              if($pf != null)
+               {
+				  $temp = [];
+				  $temp['id'] = $pf->id;
+				  $temp['user_id'] = $pf->user_id;
+     			  $temp['facility'] = $pf->facility;
+				  $temp['selected'] = $pf->selected;
+				  $ret = $temp;
+               }                         
+                                                      
                 return $ret;
            }
 		   

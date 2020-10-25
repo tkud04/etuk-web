@@ -58,7 +58,7 @@ Route::get('saved-apartments', 'MainController@getSavedApartments');
 Route::get('save-apartment', 'MainController@getSaveApartment');
 Route::get('remove-saved-apartment', 'MainController@getRemoveSavedApartment');
 Route::get('apartment-preferences', 'MainController@getApartmentPreferences');
-Route::post('apartment-preference', 'MainController@postApartmentPreference');
+Route::post('apartment-preferences', 'MainController@postApartmentPreferences');
 
 Route::get('cart', 'MainController@getCart');
 Route::get('update-cart', 'MainController@getUpdateCart');

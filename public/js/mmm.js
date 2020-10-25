@@ -12,6 +12,7 @@ $(document).ready(function() {
 			  "#apt-chat-loading","#apt-chat-finish","#message-reply-loading"
 			  ]);
 	hideElem(["#add-apartment-side-2","#add-apartment-side-3"]);
+	hideElem(["#apartment-preference-side-2"]);
 	hideElem(["#my-apartment-side-2","#my-apartment-side-3"]);
 	hideElem([".review-loading"]);
 	
@@ -307,6 +308,33 @@ $(document).ready(function() {
 		  addApartment(fd);
 	   }
     });
+	
+	//APARTMENT PREDFERENCES
+	$("#apartment-preference-side-1-next").click(e => {
+       e.preventDefault();
+	   
+	   if(facilities.length > 0){
+		   let aptSidebarFacilitiesHTML = ``;
+		   for(let adf = 0; adf < facilities.length; adf++){
+			   aptSidebarFacilitiesHTML += `<li>${facilities[adf].id}</li>`;
+		   }
+		   $('#apt-sidebar-facilities').html(aptSidebarFacilitiesHTML);
+	   }
+	   
+	  hideElem(['#apartment-preference-side-1']);
+	  selectCheckoutSide({side: 2,type: ".apartment-preferencet",content: "ti-check"});
+	  aptPreferencePreview("apartment-preference"); 
+	  showElem(['#apartment-preference-side-2']);
+    });
+	
+	$("#apartment-preference-side-2-prev").click(e => {
+       e.preventDefault();
+	  hideElem(['#apartment-preference-side-2']);
+	  selectCheckoutSide({side: 1,type: ".apartment-preference",content: "ti-check"});
+	  showElem(['#apartment-preference-side-1']);
+    });	
+	
+	
 	
 	//MY APARTMENT
 	$("#my-apartment-side-1-next").click(e => {

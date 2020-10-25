@@ -328,6 +328,48 @@ class MainController extends Controller {
     }
 	
 	/**
+	 * Show saved apartments.
+	 *
+	 * @return Response
+	 */
+	public function getApartmentPreferences(Request $request)
+    {
+		$user = null;
+		$messages = [];
+		if(Auth::check())
+		{
+			$user = Auth::user();
+			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
+		}
+		else
+		{
+			session()->flash("save-apartment-auth-status-error","ok");
+			return redirect()->intended('/');
+		}
+		
+		$req = $request->all();
+		
+		$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
+		$cart = $this->helpers->getCart($user,$gid);
+		#dd($user);
+		$c = $this->helpers->getCategories();
+		//dd($bs);
+		$signals = $this->helpers->signals;
+		$states = $this->helpers->states;
+		$services = $this->helpers->getServices();
+		
+		$ads = $this->helpers->getAds("wide-ad");
+		$plugins = $this->helpers->getPlugins();
+		
+		$apf = $this->helpers->getPreference($user);
+		#dd($apf);
+		shuffle($ads);
+		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
+        
+    	return view("apartment-preferences",compact(['user','cart','messages','c','states','services','ad','apf','signals','plugins']));
+    }
+	
+	/**
 	 * Show the profile.
 	 *
 	 * @return Response
