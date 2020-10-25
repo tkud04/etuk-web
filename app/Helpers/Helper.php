@@ -2317,7 +2317,7 @@ function createSocial($data)
 		   function getOrderItem($id)
 		   {
 			   $temp = [];
-			    $i = OrderItems::where('order_id',$id)->get();
+			    $i = OrderItems::where('order_id',$id)->first();
 				
 				if($i != null)
 				{
