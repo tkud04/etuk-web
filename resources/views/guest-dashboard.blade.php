@@ -164,7 +164,7 @@ $subtitle = "Manage your guest account here";
 												  $ordersLength = count($orders) > 5 ? 5 : count($orders);
 												 for($i = 0; $i < $ordersLength; $i++)
 												 {
-													 $o = $ordersLength[$i];
+													 $o = $orders[$i];
 													 $ref = $o['reference'];
 													 
 													 $s = ""; $liClass = ""; $ps = "";
