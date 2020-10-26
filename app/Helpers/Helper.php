@@ -1535,7 +1535,8 @@ function updateApartment($data)
 		   function search($data)
 		   {
 			   $dt = json_decode($data);
-			 dd($dt);
+			 #dd($dt);
+			 $avb = $dt->avb;
 			 $city = $dt->city;
 			 $state = $dt->state;
 			 $max_adults = $dt->max_adults;
@@ -1551,8 +1552,8 @@ function updateApartment($data)
 			 $byAddress = ApartmentAddresses::where('city',"LIKE","%$city%")
 			                  ->orWhere('state',"LIKE","%$state%")->get();
 			 
-             //Rating			 
-			 $byRating = Apartments::where('rating',"LIKE","%$rating%")->get();
+             //Apartment			 
+			 $byApartment = Apartments::where('avb',"LIKE","%$avb%")->get();
 			 
 			 //Facilities
 			 $byFacilities = ApartmentFacilities::whereIn('facility',$facilities)->get();
@@ -1566,9 +1567,9 @@ function updateApartment($data)
 			 
 			 //Data
 			 $byData = ApartmentData::where([
-			                           'id_required' => $id_required,
-			                           'children' => $children,
-			                           'pets' => $pets,
+			                           'max_adults' => $max_adults,
+			                           'max_children' => $max_children,
+			                           'amount' => $amount,
 									   ])->get();
 									   
 			 //collect all
@@ -1581,6 +1582,14 @@ function updateApartment($data)
 				 }
 			 }
 			 
+			 if($byApartment != null)
+			 {
+				 foreach($byApartment as $bapt)
+				 {
+					 array_push($ret,$bapt->apartment_id);
+				 }
+			 }
+			 
 			 if($byFacilities != null)
 			 {
 				 foreach($byFacilities as $bf)
@@ -1589,15 +1598,14 @@ function updateApartment($data)
 				 }
 			 }
 			 
-			 /**
-			 if($byRating != null)
+			 if($byTerms != null)
 			 {
-				 foreach($byRating as $br)
+				 foreach($byTerms as $bt)
 				 {
-					 array_push($ret,$br->apartment_id);
+					 array_push($ret,$bt->apartment_id);
 				 }
 			 }
-			 **/
+			 
 			 $ret = array_unique($ret);
 			 $ratings = [];
 			 
@@ -1606,11 +1614,28 @@ function updateApartment($data)
 			 foreach($ret as $r)
 			 {
 				 $reviews = $this->getReviews($r);
-				 $rating = $this->getRating($reviews);
-				 $ratings[$r] = $rating;
+				 $rr = $this->getRating($reviews);
+				 $ratings[$r] = $rr;
 			 }
-			 dd($ratings);
 			 
+			 $finalIDs = [];
+			 $finalResults = [];
+			 
+			 foreach($ratings as $k => $v)
+			 {
+				 if($v >= $rating)
+				 {
+					 array_push($finalIDs,$k);
+				 }
+			 }
+			 
+			 foreach($finalIDs as $fid)
+			 {
+				 $temp = $this->getApartment($fid,['imgId' => true]);
+				 array_push($finalResults,$temp);
+			 }
+			 
+			 return $finalResults;
 		   }
 
 

@@ -23,7 +23,7 @@ if(count($apf) > 0) $def = $apf;
 								<!-- Find New Property -->
 								<div class="sidebar-widgets">
 									
-									<div style="overflow-y: scroll; height: 400px; margin-bottom: 5px;">
+									<div style=" margin-bottom: 5px;">
 									<div class="form-group">
 									   <label>Availability:</label>
 										<div class="input-with-icon">

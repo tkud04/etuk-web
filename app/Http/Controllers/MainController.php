@@ -676,14 +676,16 @@ class MainController extends Controller {
     {
 		$user = null;
 		$messages = [];
+		$apf = [];
+		$cart = [];
+		
 		if(Auth::check())
 		{
 			$user = Auth::user();
 			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
-		}
-		else
-		{
-			return redirect()->intended('/');
+			$apf = $this->helpers->getPreference($user);
+			$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
+			$cart = $this->helpers->getCart($user,$gid);
 		}
 		
 		$req = $request->all();
@@ -694,13 +696,24 @@ class MainController extends Controller {
          
          if($validator->fails())
          {
+			 session()->flash("validation-status-error","ok");
              return redirect()->back();
          }
 		 else
 		 {
+		    $c = $this->helpers->getCategories();	    
+		    $signals = $this->helpers->signals;	
+	    	$ads = $this->helpers->getAds("wide-ad");
+			shuffle($ads);
+		    $ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
+		    $plugins = $this->helpers->getPlugins();
+
+			$services = $this->helpers->getServices();
+			$states = $this->helpers->states;
+   
 			$results = $this->helpers->search($req['dt']);
-			 session()->flash("switch-mode-status","ok");
-			 return redirect()->intended('/');
+			#dd($results);
+			 return view("search-results",compact(['user','cart','messages','apf','c','ad','results','services','states','signals','plugins']));		
 		 }
     }
 	
