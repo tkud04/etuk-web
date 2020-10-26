@@ -100,15 +100,15 @@ class PaymentController extends Controller {
 			 {
 				 #dd($metadata);
 				 $sp = $this->helpers->getSavedPayment($metadata->pt);
-				 dd($sp);
 				 
 				 if(count($sp) > 0)
 				 {
 					 $spdt = $sp['data'];
-					$rr = [
+					 
+					 $rr = [
                   'data' => [
-				    'authorization_code' => $spdt->authorization_code,
-					'email' => $spdt->auth_email,
+				    'authorization_code' => trim($spdt->authorization_code),
+					'email' => trim($spdt->auth_email),
 					'amount' => $req['amount']
 				  ],
                   'headers' => [
@@ -119,12 +119,14 @@ class PaymentController extends Controller {
                  ];
       
                   $dt = [];
-		   
-			       $ret = $this->helpers->bomb($rr); 
+		           #dd($rr);
+			       $ret = $this->helpers->bomb($rr);
+                   dd($ret);				   
 				 }
 				 else
 				 {
-					 
+					 session()->flash("pay-card-status-error","ok");
+					 return redirect()->back();
 				 }
 				  
 			 }
