@@ -23,6 +23,7 @@ if(count($apf) > 0) $def = $apf;
 								<!-- Find New Property -->
 								<div class="sidebar-widgets">
 									
+									<div style="overflow-y: scroll; height: 400px; margin-bottom: 5px;">
 									<div class="form-group">
 									   <label>Availability:</label>
 										<div class="input-with-icon">
@@ -193,6 +194,7 @@ if(count($apf) > 0) $def = $apf;
 									<form method="get" id="guest-apt-sidebar-form" action="search">
 									  <input type="hidden" name="dt" id="guest-apt-sidebar-dt">
 									</form>
+									</div>
 									<center>
 									<a class="btn btn-theme" href="javascript:void(0)" id="guest-apt-sidebar-submit">SUBMIT</a>
 							        </center>

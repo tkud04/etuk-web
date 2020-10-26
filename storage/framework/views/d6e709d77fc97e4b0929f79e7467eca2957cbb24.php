@@ -1,5 +1,6 @@
 <?php
 $def = [
+  'avb' => "available",
   'city' => "",
   'state' => "none",
   'amount' => "0",
@@ -21,6 +22,27 @@ if(count($apf) > 0) $def = $apf;
 								
 								<!-- Find New Property -->
 								<div class="sidebar-widgets">
+									
+									<div style="overflow-y: scroll; height: 400px; margin-bottom: 5px;">
+									<div class="form-group">
+									   <label>Availability:</label>
+										<div class="input-with-icon">
+											<select id="guest-apt-sidebar-avb" class="form-control">
+												<option value="">Select availability</option>
+												<?php
+												$avbs = ['available' => "Available",'occupied' => "Occupied",'booked' => "Booked"];
+												foreach($avbs as $k => $v)
+												{
+												  $ss = $def['avb'] == $k ? " selected='selected'" : "";
+												?>
+												<option value="<?php echo e($k); ?>"<?php echo e($ss); ?>><?php echo e(ucwords($v)); ?></option>
+												<?php
+												}
+												?>
+											</select>
+											<i class="ti-briefcase"></i>
+										</div>
+									</div>
 									
 									<div class="form-group">
 									   <label>City:</label>
@@ -172,6 +194,7 @@ if(count($apf) > 0) $def = $apf;
 									<form method="get" id="guest-apt-sidebar-form" action="search">
 									  <input type="hidden" name="dt" id="guest-apt-sidebar-dt">
 									</form>
+									</div>
 									<center>
 									<a class="btn btn-theme" href="javascript:void(0)" id="guest-apt-sidebar-submit">SUBMIT</a>
 							        </center>
