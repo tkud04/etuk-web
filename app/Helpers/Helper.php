@@ -1605,6 +1605,15 @@ function updateApartment($data)
 					 array_push($ret,$bt->apartment_id);
 				 }
 			 }
+			 if($byData != null)
+			 {
+				 $byData = $byData->where('amount',"<=",$amount);
+				 
+				 foreach($byData as $bd)
+				 {
+					 array_push($ret,$bd->apartment_id);
+				 }
+			 }
 			 
 			 $ret = array_unique($ret);
 			 $ratings = [];
