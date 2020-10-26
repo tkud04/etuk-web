@@ -2146,7 +2146,12 @@ function createSocial($data)
 		   function getSavedPayments($dt)
            {
            	$ret = [];
-			$uid = isset($dt['user_id']) ? $dt['user_id'] : "";
+			$uid = "";
+			
+			if(isset($dt['user_id'])) $uid = $dt['user_id'];
+			else if(isset($dt->id)) $uid = $dt->id;
+			else $uid = $dt;
+			
 			$sps = SavedPayments::where('user_id',$uid)->get();
 			  
               if($sps != null)
@@ -2219,13 +2224,22 @@ function createSocial($data)
 			  if($sps == "yes")
 			  {
 				  $authorization = $payStackResponse['authorization'];
-		          $this->createSavedPayment([
-		           'user_id' => $user->id,
-		           'type' => "checkout",
-		           'gateway' => "paystack",
-		           'data' => json_encode($authorization),
-		           'status' => "enabled"
-	    	 ]);  
+				  $sp = SavedPayments::where([
+				    'user_id' => $user->id,
+					'data' => json_encode($authorization)
+				  ])->first();
+				  
+				  if($sp == null)
+				  {
+					 $this->createSavedPayment([
+		               'user_id' => $user->id,
+		               'type' => "checkout",
+		               'gateway' => "paystack",
+		               'data' => json_encode($authorization),
+		               'status' => "enabled"
+	    	         ]);  
+				  }
+		            
 			  }
 		      
                 return ['status' => "ok",'dt' => $dt];

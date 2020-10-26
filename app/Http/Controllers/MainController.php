@@ -237,7 +237,7 @@ class MainController extends Controller {
 			$sps = $this->helpers->getSavedPayments($user);
 			$sapts = $this->helpers->getSavedApartments($user);
 			$orders = $this->helpers->getOrders($user);
-			#dd($sapts);
+			dd($sps);
 			$cpt = ['user','cart','messages','sps','sapts','orders','c','ad','signals','plugins'];
 			$v = "guest-dashboard";
 		}
@@ -1199,7 +1199,7 @@ class MainController extends Controller {
 		$ads = $this->helpers->getAds("wide-ad");
 		$plugins = $this->helpers->getPlugins();
 		
-		$sps = $this->helpers->getSavedPayments(['user_id' => $user->id]);
+		$sps = $this->helpers->getSavedPayments($user);
 		
 		#dd($sps);
 		shuffle($ads);
