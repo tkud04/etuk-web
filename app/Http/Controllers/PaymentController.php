@@ -122,7 +122,77 @@ class PaymentController extends Controller {
 		           #dd($rr);
 			       $rett = $this->helpers->bomb($rr);
                    $ret = json_decode($rett);
-				   dd($ret);				   
+				   dd($ret);
+
+                    $paymentData = $ret->data;	
+                    if($paymentData->status == 'success')
+                     {
+			           $id = $metadata->ref;
+			 
+			           #dd($paymentData);
+					   $rep = [
+					     'metadata' => [
+						   'type' => "",
+						   'ref' => $metadata->ref,
+						   'sps' => $metadata->sps,
+						 ],
+					     'amount' => $paymentData->amount,
+					     'reference' => $paymentData->reference,
+						 'authorization' => $paymentData->authorization
+					   ];
+        	           $this->helpers->checkout($user,$rep);
+			
+			
+			/**
+			//send email to user
+			
+			$o = $this->helpers->getOrder($id);
+               #dd($o);
+			   
+               if($o != null || count($o) > 0)
+               {		  
+				  
+               	//We have the user, notify the customer and admin
+				//$ret = $this->helpers->smtp;
+				$ret = $this->helpers->getCurrentSender();
+				$ret['order'] = $o;
+				$ret['name'] = $name;
+				$ret['subject'] = "Your payment for order ".$o['payment_code']." has been confirmed!";
+		        $ret['em'] = $email;
+		        $this->helpers->sendEmailSMTP($ret,"emails.confirm-payment");
+				
+				#$ret = $this->helpers->smtp;
+				$ret['order'] = $o;
+				$ret['user'] =$email;
+				$ret['phone'] =$phone;
+		        $ret['subject'] = "URGENT: Received payment for order ".$o['payment_code'];
+		        $ret['shipping'] = $shipping;
+		        $ret['em'] = $this->helpers->adminEmail;
+		        $this->helpers->sendEmailSMTP($ret,"emails.admin-payment-alert");
+				$ret['em'] = $this->helpers->suEmail;
+		        $this->helpers->sendEmailSMTP($ret,"emails.admin-payment-alert");
+               }
+			   **/
+			   
+                    $request->session()->flash("pay-card-status","ok");
+			
+			         $gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
+		            $cart = $this->helpers->getCart($user,$gid);
+		            $c = $this->helpers->getCategories();
+	             	$ads = $this->helpers->getAds();
+		            $plugins = $this->helpers->getPlugins();
+		            shuffle($ads);
+		            $ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
+	        	    $signals = $this->helpers->signals;
+			
+			        return view("cps",compact(['user','cart','c','messages','ad','signals','plugins']));
+               }
+               else
+               {
+        	      //Payment failed, redirect to orders
+                  $request->session()->flash("pay-card-status","error");
+			      return redirect()->back();
+                }					
 				 }
 				 else
 				 {
@@ -239,110 +309,5 @@ class PaymentController extends Controller {
 			return redirect()->intended($failureLocation);
         }
     }
-
-	/**
-	 * Show the application welcome screen to the user.
-	 *
-	 * @return Response
-	 */
-	public function getPayWithSavedPayment(Request $request)
-    {
-		$user = null;
-		$messages = [];
-		
-		if(Auth::check())
-		{
-			$user = Auth::user();
-			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
-		}
-		else
-		{
-			return redirect()->intended('/');
-		}
-		
-		dd($req);
-        $paymentDetails = Paystack::getPaymentData();
-
-        #dd($paymentDetails);       
-        
-        $paymentData = $paymentDetails['data'];
-        $md = $paymentData['metadata'];
-		
-		
-		#dd($md);       
-		$successLocation = "";
-        $failureLocation = "";
-        
-        switch($md['type'])
-        {
-        	case 'checkout':
-              $successLocation = "orders";
-             $failureLocation = "checkout";           
-            break; 
-            
-       }
-        //status, reference, metadata(order-id,items,amount,ssa), type
-        if($paymentData['status'] == 'success')
-        {
-			#dd($md);
-			$id = $md['ref'];
-			 
-			#dd($paymentData);
-        	$this->helpers->checkout($user,$paymentData);
-			
-			
-			/**
-			//send email to user
-			
-			$o = $this->helpers->getOrder($id);
-               #dd($o);
-			   
-               if($o != null || count($o) > 0)
-               {		  
-				  
-               	//We have the user, notify the customer and admin
-				//$ret = $this->helpers->smtp;
-				$ret = $this->helpers->getCurrentSender();
-				$ret['order'] = $o;
-				$ret['name'] = $name;
-				$ret['subject'] = "Your payment for order ".$o['payment_code']." has been confirmed!";
-		        $ret['em'] = $email;
-		        $this->helpers->sendEmailSMTP($ret,"emails.confirm-payment");
-				
-				#$ret = $this->helpers->smtp;
-				$ret['order'] = $o;
-				$ret['user'] =$email;
-				$ret['phone'] =$phone;
-		        $ret['subject'] = "URGENT: Received payment for order ".$o['payment_code'];
-		        $ret['shipping'] = $shipping;
-		        $ret['em'] = $this->helpers->adminEmail;
-		        $this->helpers->sendEmailSMTP($ret,"emails.admin-payment-alert");
-				$ret['em'] = $this->helpers->suEmail;
-		        $this->helpers->sendEmailSMTP($ret,"emails.admin-payment-alert");
-               }
-			   **/
-			   
-            $request->session()->flash("pay-card-status","ok");
-			//return redirect()->intended($successLocation);
-			
-			$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
-		$cart = $this->helpers->getCart($user,$gid);
-		$c = $this->helpers->getCategories();
-		$ads = $this->helpers->getAds();
-		$plugins = $this->helpers->getPlugins();
-		shuffle($ads);
-		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
-		$signals = $this->helpers->signals;
-			
-			return view("cps",compact(['user','cart','c','messages','ad','signals','plugins']));
-        }
-        else
-        {
-        	//Payment failed, redirect to orders
-            $request->session()->flash("pay-card-status","error");
-			return redirect()->intended($failureLocation);
-        }
-    }
-    
     
 }
