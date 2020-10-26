@@ -70,7 +70,7 @@ $rr = count($apartments) == 1 ? "Result" : "Results";
 			<section class="gray">
 				<div class="container">
 					<div class="row">
-						@include('guest-apt-sidebar')
+						@include('guest-apt-sidebar',['apf' => $apf])
 							
 						<div class="order-1 content-area col-lg-8 col-md-12 order-md-1 order-lg-2">
 							<div class="row">

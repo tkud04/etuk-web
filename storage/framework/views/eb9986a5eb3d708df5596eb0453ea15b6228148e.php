@@ -165,7 +165,7 @@ $subtitle = "Manage your guest account here";
 												  $ordersLength = count($orders) > 5 ? 5 : count($orders);
 												 for($i = 0; $i < $ordersLength; $i++)
 												 {
-													 $o = $ordersLength[$i];
+													 $o = $orders[$i];
 													 $ref = $o['reference'];
 													 
 													 $s = ""; $liClass = ""; $ps = "";
@@ -198,7 +198,7 @@ $subtitle = "Manage your guest account here";
 														<li>Date: <?php echo e($o['date']); ?></li>
 													</ul>
 													<div class="buttons-to-right">
-														<a href="<?php echo e(ru); ?>" class="button gray">View Receipt</a>
+														<a href="<?php echo e($ru); ?>" class="button gray">View Receipt</a>
 													</div>
 												</li>
 												<?php
@@ -232,4 +232,5 @@ $subtitle = "Manage your guest account here";
 			<!-- ============================ Dashboard End ================================== -->
 
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\bkupp\lokl\repo\etuk-web\resources\views/guest-dashboard.blade.php ENDPATH**/ ?>

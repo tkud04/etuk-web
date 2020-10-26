@@ -637,10 +637,13 @@ class MainController extends Controller {
     {
 		$user = null;
 		$messages = [];
+		$apf = [];
+		
 		if(Auth::check())
 		{
 			$user = Auth::user();
 			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
+			$apf = $this->helpers->getPreference($user);
 		}
 		$req = $request->all();
 		
@@ -661,7 +664,7 @@ class MainController extends Controller {
 		       shuffle($ads);
 		       $ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
         
-    	       return view("apartments",compact(['user','cart','messages','c','ad','apartments','services','states','signals','plugins']));		
+    	       return view("apartments",compact(['user','cart','messages','c','ad','apf','apartments','services','states','signals','plugins']));		
     }
 
 	/**

@@ -343,7 +343,7 @@ $(document).ready(function() {
        aptRating = $(`#apartment-preference-rating`).val(),aptIdRequired = $(`#apartment-preference-id-required`).val(),
 	   aptChildren = $(`#apartment-preference-children`).val(), aptPets = $(`#apartment-preference-pets`).val(),
        aptCity = $(`#apartment-preference-city`).val(),aptState = $(`#apartment-preference-state`).val(),
- 	  side1_validation = (aptMaxAdults == "" || aptMaxChildren == "" || aptPets == "" || aptChildren == "" || aptAmount < 0 || aptRating < 0 || aptCity == "" || aptState == "" || aptIdRequired == "none" || facilities.length < 1);	  
+ 	  side1_validation = (aptMaxAdults == "" || aptMaxChildren == "" || aptPets == "" || aptChildren == "" || aptAmount < 0 || aptRating < 0 || aptState == "" || aptIdRequired == "none" || facilities.length < 1);	  
 
 	   
 	   if(side1_validation){
@@ -534,7 +534,7 @@ $(document).ready(function() {
  		 facilities = $('input.guest-apt-sidebar-facility:checked'),  rating = $('#guest-apt-sidebar-rating').val();
 		
 		console.log(facilities);
-		validation = (facilities.length < 1 || city == "" || state == "" || dates == "" || rating == "");
+		validation = (facilities.length < 1 || state == "" || dates == "" || rating == "");
 		if(validation){
 			  Swal.fire({
 			 icon: 'error',
