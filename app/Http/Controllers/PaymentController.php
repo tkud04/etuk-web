@@ -104,11 +104,12 @@ class PaymentController extends Controller {
 				 
 				 if(count($sp) > 0)
 				 {
+					 $spdt = $sp['data'];
 					$rr = [
                   'data' => [
-				    'authorization_code' => "",
-					'email' => $sp->auth_email,
-					'amount' => ""
+				    'authorization_code' => $spdt->authorization_code,
+					'email' => $spdt->auth_email,
+					'amount' => $req['amount']
 				  ],
                   'headers' => [
 		           'Authorization' => "Bearer ".env("PAYSTACK_SECRET_KEY")

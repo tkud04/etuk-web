@@ -2115,7 +2115,6 @@ function createSocial($data)
            function createSavedPayment($dt)
 		   {
 			   $ret = SavedPayments::create(['user_id' => $dt['user_id'], 
-                                             'auth_email' => $dt['auth_email'],
                                              'type' => $dt['type'],
                                              'gateway' => $dt['gateway'],
                                              'data' => $dt['data'],
@@ -2135,7 +2134,6 @@ function createSocial($data)
 				  $temp = [];
 				  $temp['id'] = $t->id;
 				  $temp['user_id'] = $t->user_id;
-				  $temp['auth_email'] = $t->auth_email;
 				  $temp['type'] = $t->type;
 				  $temp['gateway'] = $t->gateway;
 				  $temp['data'] = json_decode($t->data);
@@ -2233,6 +2231,8 @@ function createSocial($data)
 			  if($sps == "yes")
 			  {
 				  $authorization = $payStackResponse['authorization'];
+				  $authorization['auth_email'] = $user->email;
+				  
 				  $sp = SavedPayments::where([
 				    'user_id' => $user->id,
 					'data' => json_encode($authorization)
@@ -2242,7 +2242,6 @@ function createSocial($data)
 				  {
 					 $this->createSavedPayment([
 		               'user_id' => $user->id,
-		               'auth_email' => $user->auth_email,
 		               'type' => "checkout",
 		               'gateway' => "paystack",
 		               'data' => json_encode($authorization),
