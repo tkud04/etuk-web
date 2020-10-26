@@ -1535,7 +1535,7 @@ function updateApartment($data)
 		   function search($data)
 		   {
 			   $dt = json_decode($data);
-			 #dd($dt);
+			 dd($dt);
 			 $city = $dt->city;
 			 $state = $dt->state;
 			 $rating = $dt->rating;

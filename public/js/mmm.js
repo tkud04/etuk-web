@@ -529,12 +529,20 @@ $(document).ready(function() {
 	//APARTMENTS
 	$('#guest-apt-sidebar-submit').click(e => {
 		e.preventDefault();
-		let dt = {}, city = $('#guest-apt-sidebar-city').val(), state = $('#guest-apt-sidebar-state').val(),
- 		 validation = true,  dates = $('#guest-apt-sidebar-dates').val(),
- 		 facilities = $('input.guest-apt-sidebar-facility:checked'),  rating = $('#guest-apt-sidebar-rating').val();
-		
+		/**
+		let aptMaxAdults = $(`#apartment-preference-max-adults`).val(), aptMaxChildren = $(`#apartment-preference-max-children`).val(), aptAmount = $(`#apartment-preference-amount`).val(),
+       aptRating = $(`#apartment-preference-rating`).val(),aptIdRequired = $(`#apartment-preference-id-required`).val(),
+	   aptChildren = $(`#apartment-preference-children`).val(), aptPets = $(`#apartment-preference-pets`).val(),
+       aptCity = $(`#apartment-preference-city`).val(),aptState = $(`#apartment-preference-state`).val(),
+		**/
+		let aptMaxAdults = $(`#guest-apt-sidebar-max-adults`).val(), aptMaxChildren = $(`#guest-apt-sidebar-max-children`).val(), aptAmount = $(`#guest-apt-sidebar-amount`).val(),
+       aptRating = $(`#guest-apt-sidebar-rating`).val(),aptIdRequired = $(`#guest-apt-sidebar-id-required`).val(),
+	   aptChildren = $(`#guest-apt-sidebar-children`).val(), aptPets = $(`#guest-apt-sidebar-pets`).val(),
+       aptCity = $(`#guest-apt-sidebar-city`).val(),aptState = $(`#guest-apt-sidebar-state`).val(),  facilities = $('input.guest-apt-sidebar-facility:checked'),
+	   validation = (facilities.length < 1 || aptState == "");
+	   
 		console.log(facilities);
-		validation = (facilities.length < 1 || state == "" || dates == "" || rating == "");
+		
 		if(validation){
 			  Swal.fire({
 			 icon: 'error',
@@ -548,12 +556,17 @@ $(document).ready(function() {
 				console.log(f);
 				ff.push($(f).attr('data-tag'));
 			}
-			dt = {
-				city: city,
-				state: state,
-				dates: dates,
+			let dt = {
+				city: aptCity,
+				state: aptState,
+				max_adults: aptMaxAdults,
+				max_children: aptMaxChildren,
+				amount: aptAmount,
+				id_required: aptIdRequired,
+				children: aptChildren,
+				pets: aptPets,
 				facilities: ff,
-				rating: rating
+				rating: aptRating
 			};
 			search(dt);
 		}
