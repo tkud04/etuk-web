@@ -13,6 +13,7 @@ $checkoutHead = <<<EOD
 EOD;
 
 $def = [
+  'avb' => "available",
   'city' => "",
   'state' => "none",
   'amount' => "0",
@@ -74,6 +75,25 @@ $('#apartment-preference-loading').hide();
 											<h4 class="mb-3">Basic Information</h4>
 										</div>
 
+										<div class="col-lg-12 col-md-12 col-sm-12">
+											<div class="form-group">
+												<label>Availability<i class="req">*</i></label>
+												<select class="form-control" id="apartment-preference-avb">
+												<option value="none">Select availability</option>
+												<?php
+												$avbs = ['available' => "Available",'occupied' => "Occupied",'booked' => "Booked"];
+												foreach($avbs as $k => $v)
+												{
+												  $ss = $def['avb'] == $k ? " selected='selected'" : "";
+												?>
+												<option value="<?php echo e($k); ?>"<?php echo e($ss); ?>><?php echo e(ucwords($v)); ?></option>
+												<?php
+												}
+												?>
+												</select>
+											</div>
+										</div>
+										
 										<div class="col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group">
 												<label>City<i class="req">*</i></label>

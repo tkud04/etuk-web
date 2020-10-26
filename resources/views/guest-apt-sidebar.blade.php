@@ -1,5 +1,6 @@
 <?php
 $def = [
+  'avb' => "available",
   'city' => "",
   'state' => "none",
   'amount' => "0",
@@ -21,6 +22,26 @@ if(count($apf) > 0) $def = $apf;
 								
 								<!-- Find New Property -->
 								<div class="sidebar-widgets">
+									
+									<div class="form-group">
+									   <label>Availability:</label>
+										<div class="input-with-icon">
+											<select id="guest-apt-sidebar-avb" class="form-control">
+												<option value="">Select availability</option>
+												<?php
+												$avbs = ['available' => "Available",'occupied' => "Occupied",'booked' => "Booked"];
+												foreach($avbs as $k => $v)
+												{
+												  $ss = $def['avb'] == $k ? " selected='selected'" : "";
+												?>
+												<option value="{{$k}}"{{$ss}}>{{ucwords($v)}}</option>
+												<?php
+												}
+												?>
+											</select>
+											<i class="ti-briefcase"></i>
+										</div>
+									</div>
 									
 									<div class="form-group">
 									   <label>City:</label>
@@ -106,7 +127,7 @@ if(count($apf) > 0) $def = $apf;
 									<div class="form-group">
 									   <label>Pets allowed:</label>
 										<div class="input-with-icon">
-											<select id="guest-apt-sidebar-children" class="form-control">
+											<select id="guest-apt-sidebar-pets" class="form-control">
 												<option value="none"></option>
 												<?php
 												   $ipt = ['yes' => "Pets allowed",

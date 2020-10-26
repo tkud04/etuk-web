@@ -442,7 +442,8 @@ const aptFinalPreview = (id) => {
 
 const aptPreferencePreview = (id) => {
 	 //side 1 
-	   let aptMaxAdults = $(`#${id}-max-adults`).val(), aptMaxChildren = $(`#${id}-max-children`).val(), aptAmount = $(`#${id}-amount`).val(),
+	   let aptMaxAdults = $(`#${id}-max-adults`).val(), aptMaxChildren = $(`#${id}-max-children`).val(),
+	   aptAvb = $(`#${id}-avb`).val(), aptAmount = $(`#${id}-amount`).val(),
        aptRating = $(`#${id}-rating`).val(),aptIdRequired = $(`#${id}-id-required`).val(),
 	   aptChildren = $(`#${id}-children`).val(), aptIdPets = $(`#${id}-pets`).val(),
        aptCity = $(`#${id}-city`).val(),aptState = $(`#${id}-state`).val();
@@ -462,6 +463,7 @@ const aptPreferencePreview = (id) => {
 		   }
 
 	let i = `
+												<li>Availability<span>${aptAvb}</span></li>
 												<li>Location<span>${aptCity}, ${aptState}</span></li>
 												<li>Min. rating<span>${aptRating}</span></li>
 												<li>Min. price per day<span>&#8358;${aptAmount}.00</span></li>
@@ -524,14 +526,10 @@ const updateApartmentPreference = (dt) => {
 			   Swal.fire({
 			     icon: 'error',
                  title: hh
-               }).then((result) => {
-               if (result.value) {
-                 $('#apartment-preference-loading').hide();
-		     $('#apartment-preference-submit').fadeIn();	
-                }
-              });					 
+               });					 
 		   }
-		  
+		    $('#apartment-preference-loading').hide();
+		     $('#apartment-preference-submit').fadeIn();
 		   
 		  
 	   }).catch(error => {

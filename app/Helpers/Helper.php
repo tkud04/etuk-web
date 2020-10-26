@@ -1538,16 +1538,39 @@ function updateApartment($data)
 			 dd($dt);
 			 $city = $dt->city;
 			 $state = $dt->state;
+			 $max_adults = $dt->max_adults;
+			 $max_children = $dt->max_children;
+			 $amount = $dt->amount;
+			 $id_required = $dt->id_required;
+			 $children = $dt->children;
+			 $pets = $dt->pets;
 			 $rating = $dt->rating;
-			 $dates = $dt->dates;
 			 $facilities = $dt->facilities;
 			 
+			 //Location
 			 $byAddress = ApartmentAddresses::where('city',"LIKE","%$city%")
 			                  ->orWhere('state',"LIKE","%$state%")->get();
-							  
-			 //$byRating = Apartments::where('rating',"LIKE","%$rating%")->get();
+			 
+             //Rating			 
+			 $byRating = Apartments::where('rating',"LIKE","%$rating%")->get();
+			 
+			 //Facilities
 			 $byFacilities = ApartmentFacilities::whereIn('facility',$facilities)->get();
 			 
+			 //Terms
+			 $byTerms = ApartmentTerms::where([
+			                           'id_required' => $id_required,
+			                           'children' => $children,
+			                           'pets' => $pets,
+									   ])->get();
+			 
+			 //Data
+			 $byData = ApartmentData::where([
+			                           'id_required' => $id_required,
+			                           'children' => $children,
+			                           'pets' => $pets,
+									   ])->get();
+									   
 			 //collect all
 			 $ret = [];
 			 if($byAddress != null)
@@ -2463,7 +2486,29 @@ function createSocial($data)
 		   
 		    function createPreference($dt)
 		   {
-			   $ret = Preferences::create(['user_id' => $dt['user_id'], 
+			   $p = Preferences::where('user_id',$dt['user_id'])->first();
+			   $facilities = json_decode($dt['facilities']);
+			   
+			   if($p == null)
+			   {
+				   $p = Preferences::create(['user_id' => $dt['user_id'], 
+                                             'avb' => $dt['avb'],
+                                             'city' => $dt['city'],
+                                             'state' => $dt['state'],
+                                             'amount' => $dt['amount'],
+                                             'id_required' => $dt['id_required'],
+                                             'children' => $dt['children'],
+                                             'max_adults' => $dt['max_adults'],
+                                             'max_children' => $dt['max_children'],
+                                             'pets' => $dt['pets'],
+                                             'payment_type' => $dt['payment_type'],
+                                             'rating' => $dt['rating']
+                                            ]);
+			   }
+			   else
+			   {
+				   $p->update(['user_id' => $dt['user_id'], 
+                                             'avb' => $dt['avb'],
                                              'city' => $dt['city'],
                                              'state' => $dt['state'],
                                              'amount' => $dt['amount'],
@@ -2476,9 +2521,10 @@ function createSocial($data)
                                              'rating' => $dt['rating']
                                             ]);
 											
-				$facilities = json_decode($dt['facilities']);
-				
-				foreach($facilities as $f)
+				   PreferenceFacilities::where('user_id',$dt['user_id'])->delete();
+			   }
+			   
+			   foreach($facilities as $f)
 				{
 					$af = $this->createPreferenceFacilities([
 					    'user_id' => $dt['user_id'],
@@ -2486,7 +2532,7 @@ function createSocial($data)
 					]);
 				}
                                                
-                return $ret;
+                return $p;
 		   }
 		   
 		   function createPreferenceFacilities($dt)
@@ -2512,6 +2558,7 @@ function createSocial($data)
 				  $temp = [];
 				  $temp['id'] = $p->id;
 				  $temp['user_id'] = $p->user_id;
+				  $temp['avb'] = $p->avb;
 				  $temp['city'] = $p->city;
 				  $temp['state'] = $p->state;
 				  $temp['amount'] = $p->amount;

@@ -106,7 +106,7 @@ if(count($apf) > 0) $def = $apf;
 									<div class="form-group">
 									   <label>Pets allowed:</label>
 										<div class="input-with-icon">
-											<select id="guest-apt-sidebar-children" class="form-control">
+											<select id="guest-apt-sidebar-pets" class="form-control">
 												<option value="none"></option>
 												<?php
 												   $ipt = ['yes' => "Pets allowed",

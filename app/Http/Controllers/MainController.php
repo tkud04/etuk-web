@@ -391,12 +391,12 @@ class MainController extends Controller {
 		$ret = ['status' => "error",'message' => "nothing happened"];
 	    
 		$validator = Validator::make($req,[
+		                    'avb' => 'required',
 		                    'rating' => 'required',
 		                    'max_adults' => 'required|numeric',
 		                    'max_children' => 'required|numeric',
 		                    'id_required' => 'required',
 		                    'amount' => 'required|numeric',
-		                    'children' => 'required',
 		                    'pets' => 'required',
 		                    'city' => 'required',
 		                    'state' => 'required',
@@ -405,7 +405,7 @@ class MainController extends Controller {
 		
 		if($validator->fails())
          {
-             $ret = ['message' => "validation"];
+             $ret['message'] = "validation";
          }
 		 else
 		 {					
