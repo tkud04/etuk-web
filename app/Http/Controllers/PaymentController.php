@@ -122,7 +122,7 @@ class PaymentController extends Controller {
 		           #dd($rr);
 			       $rett = $this->helpers->bomb($rr);
                    $ret = json_decode($rett);
-				   dd($ret);
+				   #dd($ret);
 
                     $paymentData = $ret->data;	
                     if($paymentData->status == 'success')
