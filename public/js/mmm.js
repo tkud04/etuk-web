@@ -710,7 +710,7 @@ $(document).ready(function() {
            });
 		}
 		else{
-			 payCard({ref: ref});
+			 payCard({ref: ref,pt: pt});
 		}
 		
 	});

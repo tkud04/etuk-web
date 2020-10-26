@@ -1105,10 +1105,13 @@ class MainController extends Controller {
     {
 		$user = null;
 		$messages = [];
+		$sps = [];
+		
 		if(Auth::check())
 		{
 			$user = Auth::user();
 			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
+			$sps = $this->helpers->getSavedPayments($user);
 		}
 		else
 		{
@@ -1130,7 +1133,7 @@ class MainController extends Controller {
 		$ref = "ETUK_".$this->helpers->getRandomString(6);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
 
-    	return view("checkout",compact(['user','cart','messages','secure','ref','c','ad','signals','plugins']));
+    	return view("checkout",compact(['user','cart','sps','messages','secure','ref','c','ad','signals','plugins']));
     }
 	
 	

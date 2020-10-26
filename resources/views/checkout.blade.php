@@ -67,17 +67,44 @@ $subtotal = $cart['subtotal'];
 									
 									<div class="row">
 										<div class="col-lg-6 col-md-6">
+										<?php
+										 if(count($sps) > 0)
+										 {
+										?>
 											<div class="form-group">
+												<label>Select saved payment</label>
+												<select class="form-control" id="checkout-payment-type">
+												  <option value="none">Select a card to pay with</option>
+												  <?php
+												   foreach($sps as $s)
+												   {
+													   $dt = $s['data'];
+													   $n = $dt->bank." | **** ".$dt->last4." | Expires: ".$dt->exp_month."/".$dt->exp_year;
+												  ?>
+												    <option value="{{$s['id']}}">{{$n}}</option>
+												  <?php
+												   }
+												  ?>
+												  <option value="card">Use a different card</option>
+												</select>
+											</div>
+											
+										<?php
+										 }
+										 else
+										 {
+										?>
+										<div class="form-group">
 												<label>Payment type</label>
 												<select class="form-control" id="checkout-payment-type">
 												  <option value="none">Select payment type</option>
 												  <option value="card" selected="selected">Card</option>
 												</select>
 											</div>
-										</div>
-									</div>
-									
-									<div class="row">
+										<?php
+										 }
+										?>
+                                        </div>
 										<div class="col-lg-6 col-md-6">
 											<div class="form-group">
 												<label>Save payment info?</label>

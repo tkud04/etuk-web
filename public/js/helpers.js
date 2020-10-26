@@ -1107,13 +1107,16 @@ const payCard = dt =>{
 	  let a = false;
 	  mc['notes'] = $('#notes').val();
 	  mc['sps'] = $('#checkout-sps').val();
+	  mc['pt'] = dt.pt;
 	 
 	 $('#nd').val(JSON.stringify(mc)); 
 	console.log(mc);
 	
+
 	let paymentURL = $("#card-action").val(); 
 	$('#checkout-form').attr('action',paymentURL);
    $('#checkout-form').submit();
+
   }
 });
 

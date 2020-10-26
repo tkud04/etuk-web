@@ -13,6 +13,6 @@ class SavedPayments extends Model
      * @var array
      */
     protected $fillable = [
-        'id', 'user_id', 'type', 'gateway', 'data', 'status'
+        'id', 'user_id', 'auth_email', 'type', 'gateway', 'data', 'status'
 	];
 }
