@@ -70,6 +70,7 @@ class Helper implements HelperContract
 					 "save-apartment-status" => "Apartment saved.",
 					 "save-duplicate-apartment-status" => "You have saved this apartment already.",
 					 "remove-saved-apartment-status" => "Apartment removed from your list.",
+					 "remove-saved-payment-status" => "Payment details removed from your account.",
 					 
 					 //ERROR NOTIFICATIONS
 					 "invalid-apartment-id-status-error" => "Apartment not found.",
@@ -79,12 +80,14 @@ class Helper implements HelperContract
 					 "checkout-auth-status-error" => "Please sign in to book an apartment.",
 					 "cart-auth-status-error" => "Please sign in to view your cart.",
 					 "save-apartment-auth-status-error" => "Please sign in to save an apartment.",
+					 "save-payment-auth-status-error" => "Please sign in to save payment details.",
 					 "validation-status-error" => "Please fill all required fields.",
 					 "add-to-cart-host-status-error" => "You cannot book your own apartment.",
 					 "no-cart-status-error" => "Your cart is empty.",
 					 "pay-card-status-error" => "Your payment could not be processed, please try again.",
 					 "save-apartment-status-error" => "Apartment could not be saved, please try again.",
 					 "remove-saved-apartment-status-error" => "Apartment could not be removed, please try again.",
+					 "remove-saved-payment-status-error" => "Payment details could not be removed, please try again.",
 					 "no-results-status-error" => "No results found!",
                      ],
                      'errors'=> ["login-status-error" => "Wrong username or password, please try again.",
@@ -2133,7 +2136,7 @@ function createSocial($data)
 				  $temp['user_id'] = $t->user_id;
 				  $temp['type'] = $t->type;
 				  $temp['gateway'] = $t->gateway;
-				  $temp['data'] = $t->data;
+				  $temp['data'] = json_decode($t->data);
 				  $temp['status'] = $t->status;
      			  $temp['date'] = $t->created_at->format("m/d/Y h:i A");
      			  $temp['updated'] = $t->updated_at->format("m/d/Y h:i A");
@@ -2170,13 +2173,17 @@ function createSocial($data)
 		   
 		   function removeSavedPayment($id)
 		   {
+			   $ret = "error";
 			   $ret = [];
 			   $t = SavedPayments::where('id',$id)->first();
 			   
 			   if($t != null)
                {
 				  $t->delete();
-               }	   
+				  $ret = "ok";
+               }
+
+               return $ret;			   
 		   }
 		   
 		   

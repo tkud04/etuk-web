@@ -30,7 +30,7 @@ $subtitle = "List of previously used payment details";
 									   {
 										 foreach($sps as $s)
 										 {
-											 $dt = json_decode($s['data']);
+											 $dt = $s['data'];
 											 $du = url('remove-saved-payment')."?xf=".$s['id'];
 									  ?>
 										<li>

@@ -237,7 +237,7 @@ class MainController extends Controller {
 			$sps = $this->helpers->getSavedPayments($user);
 			$sapts = $this->helpers->getSavedApartments($user);
 			$orders = $this->helpers->getOrders($user);
-			dd($sps);
+			#dd($sps);
 			$cpt = ['user','cart','messages','sps','sapts','orders','c','ad','signals','plugins'];
 			$v = "guest-dashboard";
 		}
@@ -286,7 +286,7 @@ class MainController extends Controller {
     }
 	
 	/**
-	 * Handle remove from cart.
+	 * Handle remove saved payment.
 	 *
 	 * @return Response
 	 */
@@ -328,7 +328,7 @@ class MainController extends Controller {
     }
 	
 	/**
-	 * Show saved apartments.
+	 * Show user's apartment preferences.
 	 *
 	 * @return Response
 	 */
@@ -1257,6 +1257,48 @@ class MainController extends Controller {
 		else
 		{
 			session()->flash("save-apartment-status-error","ok");
+			return redirect()->back();
+		}
+		 
+    }
+	
+	/**
+	 * Handle remove saved payment.
+	 *
+	 * @return Response
+	 */
+	public function getRemoveSavedPayment(Request $request)
+    {
+		$user = null;
+		 
+		if(Auth::check())
+		{
+			$user = Auth::user();
+			
+			$req = $request->all();
+        
+		    $validator = Validator::make($req,[
+		                    'xf' => 'required'
+		    ]);
+		
+		if($validator->fails())
+         {
+			 session()->flash("validation-status-error","ok");
+			 return redirect()->back()->withInput();
+         }
+		 else
+		 {  
+	        $req['user_id'] = $user->id;	 
+			$r = $this->helpers->removeSavedPayment($req);
+			$flashMessage = "remove-saved-payment-status";
+			if($r != "ok") $flashMessage .= "-error";
+			session()->flash($flashMessage,"ok");
+			return redirect()->back();
+		 }
+		}
+		else
+		{
+			session()->flash("saved-payment-auth-status-error","ok");
 			return redirect()->back();
 		}
 		 

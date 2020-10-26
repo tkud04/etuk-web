@@ -32,21 +32,31 @@ $subtitle = "Manage your guest account here";
 											<?php
 											 if(count($sps) > 0)
 											 {
+												  $spsLength = count($sps) > 5 ? 5 : count($sps);
 											?>
 											 <ul>
 											<?php
-											   foreach($sps as $s)
-											   { 
+											   for($i = 0; $i < $spsLength; $i++)
+											   {
+												   $s = $sps[$i];
+                                                  $dt = $s['data'];	
+                                                  $bname = $dt->bank;
+                                                  $ctype = $dt->brand;
+												  $last4 = $dt->last4;
+												  $exp = new DateTime("01/".$dt->exp_month."/".$dt->exp_year); 
+												  
 											?>
 												<li>
-													<i class="dash-icon-box ti-layers"></i> Your booking <strong><a href="#">Shimla to Goa</a></strong> has been done!
-													<a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
+													<i class="dash-icon-box ti-credit-card"></i>{{strtoupper($ctype)}} | <strong><a href="javascript:void(0)">{{$bname}}</a></strong> | **** {{$last4}}<br>
+													{{$exp->format("F, Y")}}
+													<a href="javascript:void(0)" class="close-list-item"><i class="fa fa-close"></i></a>
 												</li>
 
 											<?php
 											 }
                                             ?>											 
 											</ul>
+											<h4><center><a href="{{url('saved-payments')}}" class="btn btn-theme">View more</a></center></h4>
 											<?php
 											 }
 											 else
@@ -55,6 +65,7 @@ $subtitle = "Manage your guest account here";
 											<ul>
 											<li>No payment methods added yet. Book an apartment to add one now.</li>
 											</ul>
+											
 											<?php
 											 }
 											?>
@@ -117,38 +128,38 @@ $subtitle = "Manage your guest account here";
 											<h4>Recent Activities</h4>
 											<ul>
 												<li>
-													<i class="dash-icon-box ti-layers"></i> Your booking <strong><a href="#">Shimla to Goa</a></strong> has been done!
-													<a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
+													<i class="dash-icon-box ti-layers"></i> Your booking <strong><a href="javascript:void(0)">Shimla to Goa</a></strong> has been done!
+													<a href="javascript:void(0)" class="close-list-item"><i class="fa fa-close"></i></a>
 												</li>
 
 												<li>
-													<i class="dash-icon-box ti-star"></i> Jodie Farrell left a review <div class="numerical-rating high" data-rating="5.0"></div> on <strong><a href="#">Burger Villa</a></strong>
-													<a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
+													<i class="dash-icon-box ti-star"></i> Jodie Farrell left a review <div class="numerical-rating high" data-rating="5.0"></div> on <strong><a href="javascript:void(0)">Burger Villa</a></strong>
+													<a href="javascript:void(0)" class="close-list-item"><i class="fa fa-close"></i></a>
 												</li>
 
 												<li>
-													<i class="dash-icon-box ti-heart"></i> your payment is pending for <strong><a href="#">Manali Trip</a></strong> tour!
-													<a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
+													<i class="dash-icon-box ti-heart"></i> your payment is pending for <strong><a href="javascript:void(0)">Manali Trip</a></strong> tour!
+													<a href="javascript:void(0)" class="close-list-item"><i class="fa fa-close"></i></a>
 												</li>
 
 												<li>
-													<i class="dash-icon-box ti-star"></i> You have calceled <a href="#">Mumbai Trip</a> approved</strong>
-													<a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
+													<i class="dash-icon-box ti-star"></i> You have calceled <a href="javascript:void(0)">Mumbai Trip</a> approved</strong>
+													<a href="javascript:void(0)" class="close-list-item"><i class="fa fa-close"></i></a>
 												</li>
 
 												<li>
-													<i class="dash-icon-box ti-heart"></i> Someone reply on your comment on <strong><a href="#">London Trip</a></strong> Tour!
-													<a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
+													<i class="dash-icon-box ti-heart"></i> Someone reply on your comment on <strong><a href="javascript:void(0)">London Trip</a></strong> Tour!
+													<a href="javascript:void(0)" class="close-list-item"><i class="fa fa-close"></i></a>
 												</li>
 
 												<li>
-													<i class="dash-icon-box ti-star"></i> You have give a review <div class="numerical-rating high" data-rating="4.7"></div> on <strong><a href="#">Preet House</a></strong>
-													<a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
+													<i class="dash-icon-box ti-star"></i> You have give a review <div class="numerical-rating high" data-rating="4.7"></div> on <strong><a href="javascript:void(0)">Preet House</a></strong>
+													<a href="javascript:void(0)" class="close-list-item"><i class="fa fa-close"></i></a>
 												</li>
 
 												<li>
-													<i class="dash-icon-box ti-star"></i>You have give a review <div class="numerical-rating low" data-rating="2.8"></div> on <strong><a href="#">Shimla Trou Trip</a></strong>
-													<a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
+													<i class="dash-icon-box ti-star"></i>You have give a review <div class="numerical-rating low" data-rating="2.8"></div> on <strong><a href="javascript:void(0)">Shimla Trou Trip</a></strong>
+													<a href="javascript:void(0)" class="close-list-item"><i class="fa fa-close"></i></a>
 												</li>
 											</ul>
 										</div>
