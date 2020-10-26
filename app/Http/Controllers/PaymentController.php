@@ -121,7 +121,7 @@ class PaymentController extends Controller {
                   $dt = [];
 		           #dd($rr);
 			       $rett = $this->helpers->bomb($rr);
-                   $ret = json_decode($ret);
+                   $ret = json_decode($rett);
 				   dd($ret);				   
 				 }
 				 else
