@@ -85,6 +85,7 @@ class Helper implements HelperContract
 					 "pay-card-status-error" => "Your payment could not be processed, please try again.",
 					 "save-apartment-status-error" => "Apartment could not be saved, please try again.",
 					 "remove-saved-apartment-status-error" => "Apartment could not be removed, please try again.",
+					 "no-results-status-error" => "No results found!",
                      ],
                      'errors'=> ["login-status-error" => "Wrong username or password, please try again.",
 					 "signup-status-error" => "There was a problem creating your account, please try again.",

@@ -713,7 +713,16 @@ class MainController extends Controller {
    
 			$results = $this->helpers->search($req['dt']);
 			#dd($results);
-			 return view("search-results",compact(['user','cart','messages','apf','c','ad','results','services','states','signals','plugins']));		
+			if(count($results) > 0)
+			{
+				return view("search-results",compact(['user','cart','messages','apf','c','ad','results','services','states','signals','plugins']));
+			}
+			else
+			{
+			  session()->flash("no-results-status-error","ok");
+              return redirect()->back();
+			}
+			 		
 		 }
     }
 	
