@@ -88,46 +88,74 @@ $noFooter = true;
 														<table class="table table-striped table-bordered">
 															<thead>
 																<tr>
-																	<th>S. No.</th>
-																	<th>Name</th>
+																	<th>Apartment</th>
 																	<th>Duration</th>
-																	<th>Charges</th>
-																	<th>Sub Total</th>
+																	<th>Price per day</th>
+																	<th>Total charge</th>
 																</tr>
 															</thead>
 															<tbody>
+															<?php
+															$items = $order['items'];
+										  $ii = $items['data'];
+										  $subtotal = $items['subtotal'];
+										  
+										  foreach($ii as $i)
+										  {
+											 
+														 $apartment = $i['apartment'];
+														 $au = $apartment['url'];
+														 $cmedia = $apartment['cmedia'];
+														 $imgs = $cmedia['images'];
+														 $adata = $apartment['data'];
+														 $terms = $apartment['terms'];
+														 $host = $apartment['host'];
+														 $hostName = $host['fname']." ".substr($host['lname'],0,1).".";
+														 $amount = $adata['amount'];
+														 $address = $apartment['address'];
+														 $location = $address['city'].", ".$address['state'];
+														 $checkin = $i['checkin'];
+														 $checkout = $i['checkout'];
+														 
+														 $c1 = new DateTime($checkin);
+														 $c2 = new DateTime($checkout);
+														 $cdiff = $c1->diff($c2);
+														 $duration = $cdiff->format("%r%a");
+														 $dtt = $duration == 1 ? "day" : "days";
+															?>
 																<tr>
-																	<td>1</td>
-																	<td>Manali to Goa</td>
-																	<td>5 days</td>
-																	<td>622 USD</td>
-																	<td>547 USD</td>
+																	<td>
+																	  <div class="row">
+																	    <div class="col-md-5">
+																		  <img src="{{$imgs[0]}}" alt="{{$apartment['name']}}" style="width: 100px; height: 100px;"/>
+																		</div>
+																	    <div class="col-md-7">
+																		  <h4>{{$apartment['name']}}</h4>
+																		  <h6>{{$location}}</h6>
+																		</div>
+																	  </div>
+																	</td>
+																	<td>{{$duration." ".$dtt}}</td>
+																	<td>&#8358;{{number_format($amount,2)}}</td>
+																	<td>&#8358;{{number_format($amount * $duration,2)}}</td>
 																</tr>
-																<tr>
-																	<td>2</td>
-																	<td>Paris to London</td>
-																	<td>4 Days</td>
-																	<td>658 USD</td>
-																	<td>325 USD</td>
-																</tr>
+															<?php
+										  }
+															?>
 															</tbody>
 														</table>
 													</div>
 													<hr>
 													<div>
-														<p>Total : 700 USD </p>
+														<p>Subtotal : &#8358;{{number_format($subtotal,2)}} </p>
 													</div>
 													<hr>
 													<div>
-														<p>Taxes : 220 USD ( 20 % on Total Bill ) </p>
+														<p>Taxes : &#8358;1,000.00 ( 20 % on Total Bill ) </p>
 													</div>
 													<hr>
 													<div>
-														<p>GST : 220 USD ( 20 % on Total Bill ) </p>
-													</div>
-													<hr>
-													<div>
-														<h4>Bill Amount : 920 USD </h4>
+														<h4>Total : &#8358;{{number_format($order['amount'],2)}} </h4>
 													</div>
 												</div>
 											</div>

@@ -2063,11 +2063,16 @@ function createSocial($data)
                         $apt = $this->getApartment($c->apartment_id,['host' => true]); 
                         $temp['apartment'] = $apt;
                         $adata = $apt['data'];						
-						$ret['subtotal'] += $adata['amount'];
+						
 						$checkin = Carbon::parse($c->checkin);
 						$checkout = Carbon::parse($c->checkout);
                         $temp['checkin'] = $checkin->format("jS F, Y");
-                        $temp['checkout'] = $checkout->format("jS F, Y"); 
+                        $temp['checkout'] = $checkout->format("jS F, Y");
+                        $c1 = new \DateTime($temp['checkin']);
+						$c2 = new \DateTime($temp['checkout']);
+						$cdiff = $c1->diff($c2);
+						$duration = $cdiff->format("%r%a");		
+                        $ret['subtotal'] += ($adata['amount'] * $duration);						
                         $temp['guests'] = $c->guests; 
                         $temp['kids'] = $c->kids; 
                         array_push($rett, $temp); 
