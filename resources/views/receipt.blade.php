@@ -1,6 +1,6 @@
 <?php
-$title = "My Bookings";
-$subtitle = "List of bookings made by you";
+$title = "Receipt";
+$subtitle = "Receipt for order #".$order['reference'];
 $noFooter = true;
 ?>
 @extends('layout')
@@ -24,7 +24,7 @@ $noFooter = true;
 							
 										<div class="row text-center mb-4">
 											<div class="col-md-12">
-												<a href="javascript:window.print()" class="btn btn-theme">Print this invoice</a>
+												<a href="javascript:window.print()" class="btn btn-theme">Print this receipt</a>
 											</div>
 										</div>
 										
@@ -35,9 +35,9 @@ $noFooter = true;
 
 											<div class="col-md-6">	
 												<p id="invoice-info">
-													<strong>Order:</strong> #7075872 <br>
-													<strong>Issued:</strong> 17/10/2017 <br>
-													Due 7 days from date of issue
+													<strong>Order:</strong> #{{$order['reference']}} <br>
+													<strong>Issued:</strong> {{$order['date']}} <br>
+													
 												</p>
 											</div>
 											
@@ -46,35 +46,31 @@ $noFooter = true;
 										<div class="row  mrg-0 detail-invoice">
 										
 											<div class="col-md-12">
-												<h2>INVOICE</h2>
+												<h2>RECEIPT</h2>
 											</div>
 											
 											<div class="col-md-12">
 												<div class="row">
 												  <div class="col-lg-7 col-md-7 col-sm-7">
 												  
-													<h4>Supplier: </h4>
-													<h6>Glovia Ltd</h6>
+													<h4>Etuk NG: </h4>
 													<p>
-														info@glovia.com<br>
+														billing@etuk.ng<br>
 														
-														+91-587-936-5876<br>
+														+234 801 234 5678<br>
 														
-														780/77 , Lane Here, Chandigarh,
-														<br> India
+														Victoria Island, Lagos
 													</p>
 													
 												  </div>
 												  <div class="col-lg-5 col-md-5 col-sm-5">
-													<h4>Client Contact :</h4>
-													<h6>Saurav Singh</h6>
+													<h4>Guest:</h4>
+													<h6>{{$user->fname." ".$user->lname}}</h6>
 													<p>
-														sauravmail87@gmail.com<br>
+													   {{$user->email}}<br>
 														
-														+91-587-936-5876<br>
+														{{$user->phone}}<br>
 														
-														780/77 , Gurudwara Chauk, Allahabad,
-														<br> India
 													</p>
 												  </div>
 												</div>

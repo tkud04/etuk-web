@@ -1780,11 +1780,6 @@ class MainController extends Controller {
 		{
 			$user = Auth::user();
 			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
-			if($user->mode != "host")
-			{
-				session()->flash("valid-mode-status-error","ok");
-			    return redirect()->intended('/');
-			}
 		}
 
 		
@@ -1805,7 +1800,7 @@ class MainController extends Controller {
 		    $plugins = $this->helpers->getPlugins();
 		
 		    $order = $this->helpers->getOrder($req['xf']);
-			dd($order);
+			#dd($order);
 		    shuffle($ads);
 		    $ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
         
