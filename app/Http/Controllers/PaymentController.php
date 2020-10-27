@@ -42,10 +42,12 @@ class PaymentController extends Controller {
     public function postRedirectToGateway(Request $request)
     {
 		$user = null;
+		$messages = [];
 		
     	if(Auth::check())
 		{
 			$user = Auth::user();
+			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
 		}
 		
 		
