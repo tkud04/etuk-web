@@ -132,7 +132,7 @@ let transactionsData1 = [
 											?>
 											 <ul>
 											<?php
-											   foreach($m as $m)
+											   foreach($messages as $m)
 											   { 
 											?>
 												<li>
