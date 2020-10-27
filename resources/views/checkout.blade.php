@@ -160,6 +160,11 @@ $subtotal = $cart['subtotal'];
 														 $location = $address['city'].", ".$address['state'];
 														 $checkin = new DateTime($c['checkin']);
 														 $checkout = new DateTime($c['checkout']);
+														 $c1 = new DateTime($checkin->format("jS F, Y"));
+														 $c2 = new DateTime($checkout->format("jS F, Y"));
+														 $cdiff = $c1->diff($c2);
+														 $duration = $cdiff->format("%r%a");
+														 $dtt = $duration == 1 ? "night" : "nights";
 							 if($c != $cartt[0])
 							 {
 							 ?>
@@ -169,7 +174,7 @@ $subtotal = $cart['subtotal'];
 							 ?>
 							   <h3><span class="label label-primary">{{$apartment['name']}}</span> <b>&#8358;{{number_format($amount,2)}}</b> <small>per night</small></h3>
 							   <p>Check-in: <b>{{$checkin->format("jS F, Y")}}</b></p>
-							   <p>Check-out: <b>{{$checkout->format("jS F, Y")}}</b></p>
+							   <p>Duration: <b>{{$duration." ".$dtt}}</b></p>
 							   <p>Guests: <b>{{$c['guests']}}</b> | Kids: <b>{{$c['kids']}}</b></p>
 							   <p></p>
 							 <?php

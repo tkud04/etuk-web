@@ -32,6 +32,8 @@ $subtitle = "List of bookings made by you";
 									    foreach($orders as $o)
 										{
 										  $ref = $o['reference'];
+										  $ru = url('receipt')."?xf=".$ref;
+										  $cu = "javascript:void(0)";
 										  $s = ""; $liClass = ""; $ps = "";
 										  
 										  if($o['status'] == "paid")
@@ -70,6 +72,7 @@ $subtitle = "List of bookings made by you";
 														 $location = $address['city'].", ".$address['state'];
 														 $checkin = $i['checkin'];
 														 $checkout = $i['checkout'];
+														 
 											  
 									   ?>
 										<li class="<?php echo e($liClass); ?>">
@@ -94,7 +97,7 @@ $subtitle = "List of bookings made by you";
 														</div>		
 																	
 														<div class="inner-booking-list">
-															<h5>Price:</h5>
+															<h5>Price per night:</h5>
 															<ul class="booking-list">
 																<li class="highlighted">&#8358;<?php echo e(number_format($amount,2)); ?></li>
 															</ul>
@@ -113,8 +116,10 @@ $subtitle = "List of bookings made by you";
 												</div>
 											</div>
 											<div class="buttons-to-right">
-												<a href="#" class="button gray reject"><i class="ti-printer"></i> Receipt</a>
-												<a href="#" class="button gray approve"><i class="ti-trash"></i> Cancel</a>
+												<a href="<?php echo e($ru); ?>" class="button gray approve"><i class="ti-printer"></i> Receipt</a>
+												<?php if($o['status'] == "paid"): ?>
+												<a href="<?php echo e($cu); ?>" class="button gray reject"><i class="ti-trash"></i> Cancel</a>
+											    <?php endif; ?>
 											</div>
 										</li>
                                         <?php

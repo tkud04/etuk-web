@@ -33,6 +33,7 @@ $subtitle = "List of bookings made by you";
 										{
 										  $ref = $o['reference'];
 										  $ru = url('receipt')."?xf=".$ref;
+										  $cu = "javascript:void(0)";
 										  $s = ""; $liClass = ""; $ps = "";
 										  
 										  if($o['status'] == "paid")
@@ -96,7 +97,7 @@ $subtitle = "List of bookings made by you";
 														</div>		
 																	
 														<div class="inner-booking-list">
-															<h5>Price:</h5>
+															<h5>Price per night:</h5>
 															<ul class="booking-list">
 																<li class="highlighted">&#8358;{{number_format($amount,2)}}</li>
 															</ul>

@@ -121,7 +121,7 @@ $noFooter = true;
 														 $c2 = new DateTime($checkout);
 														 $cdiff = $c1->diff($c2);
 														 $duration = $cdiff->format("%r%a");
-														 $dtt = $duration == 1 ? "day" : "days";
+														 $dtt = $duration == 1 ? "night" : "nights";
 															?>
 																<tr>
 																	<td>
@@ -168,26 +168,45 @@ $noFooter = true;
 						
 						<div class="col-lg-3 col-md-4">
 							<div class="invoice-vew-detail">
-								<h4>Booking Detail</h4>
-								<div class="booking-bio">
-									<ul>
-										<li><strong>Booking Number:</strong>BK12354685</li>
-										<li><strong>Booking Date</strong>20 May 2020</li>
-										<li><strong>Reference ID:</strong>Re4584756</li>
-										<li><strong>Check In</strong>22 May 2020</li>
-										<li><strong>Check Out</strong>27 May 2020</li>
-									</ul>
-								</div>
 								
-								<h4>Member Detail</h4>
+								<?php
+								 foreach($ii as $i)
+								 {
+									  $apartment = $i['apartment'];
+														 $au = $apartment['url'];
+														 $cmedia = $apartment['cmedia'];
+														 $imgs = $cmedia['images'];
+														 $adata = $apartment['data'];
+														 $terms = $apartment['terms'];
+														 $host = $apartment['host'];
+														 $hostName = $host['fname']." ".substr($host['lname'],0,1).".";
+														 $amount = $adata['amount'];
+														 $address = $apartment['address'];
+														 $location = $address['city'].", ".$address['state'];
+														 $checkin = $i['checkin'];
+														 $checkout = $i['checkout'];
+														 
+														 $c1 = new DateTime($checkin);
+														 $c2 = new DateTime($checkout);
+														 $cdiff = $c1->diff($c2);
+														 $duration = $cdiff->format("%r%a");
+														 $dtt = $duration == 1 ? "night" : "nights";
+								?>
+								<h4><?php echo e($apartment['name']); ?></h4>
 								<div class="booking-bio">
 									<ul>
-										<li><strong>Days:</strong>5 Days</li>
-										<li><strong>Adults</strong>4 mem</li>
-										<li><strong>Child:</strong>2 mem</li>
-										<li><strong>Contact:</strong>91 123 458 4758</li>
+										<li><strong>Booking Date</strong><?php echo e($order['date']); ?></li>
+										<li><strong>Check In</strong><?php echo e($checkin); ?></li>
+										<li><strong>Check Out</strong><?php echo e($checkout); ?></li>
+										<li><strong>Guests</strong><?php echo e($i['guests']); ?></li>
+										<li><strong>Kids</strong><?php echo e($i['kids']); ?></li>
+										<li><strong>Host</strong><?php echo e($hostName); ?></li>
 									</ul>
 								</div>
+								<hr>
+								<?php
+								 }
+								?>
 							</div>							
 						</div>
 					</div>

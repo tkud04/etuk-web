@@ -2394,7 +2394,11 @@ function createSocial($data)
                     {
                     	$temp = $this->getOrderItem($i->id);
                         array_push($ret['data'], $temp); 
-						$ret['subtotal'] += $temp['subtotal'];
+						$c1 = new \DateTime($temp['checkin']);
+						$c2 = new \DateTime($temp['checkout']);
+						$cdiff = $c1->diff($c2);
+						$duration = $cdiff->format("%r%a");		
+                        $ret['subtotal'] += ($temp['amount'] * $duration);						
                    }
                }			   
               			  
@@ -2413,8 +2417,8 @@ function createSocial($data)
                	     $temp['apartment_id'] = $i->apartment_id; 
                         $apt = $this->getApartment($i->apartment_id,['host' => true]); 
                         $temp['apartment'] = $apt;
-                        $adata = $apt['data'];						
-						$temp['subtotal'] = $adata['amount'];
+                        $adata = $apt['data'];	
+                        $temp['amount'] = $adata['amount'];						
 						$checkin = Carbon::parse($i->checkin);
 						$checkout = Carbon::parse($i->checkout);
                         $temp['checkin'] = $checkin->format("jS F, Y");
