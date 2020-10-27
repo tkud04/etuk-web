@@ -290,6 +290,10 @@
 			
 						<!-- ============================ Newsletter Start ================================== -->			
 			
+			<?php
+			 if(!isset($noFooter))
+			 {
+			?>
 			<!-- ============================ Footer Start ================================== -->
 			<footer class="dark-footer skin-dark-footer">
 				<div>
@@ -382,7 +386,9 @@
 				</div>
 			</footer>
 			<!-- ============================ Footer End ================================== -->
-			
+			<?php
+			 }
+			?>
 			<!-- Log In Modal -->
 			<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="registermodal">
 				<div class="modal-dialog modal-dialog-centered login-pop-form" role="document">

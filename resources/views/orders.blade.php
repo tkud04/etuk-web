@@ -32,6 +32,7 @@ $subtitle = "List of bookings made by you";
 									    foreach($orders as $o)
 										{
 										  $ref = $o['reference'];
+										  $ru = url('receipt')."?xf=".$ref;
 										  $s = ""; $liClass = ""; $ps = "";
 										  
 										  if($o['status'] == "paid")
@@ -70,6 +71,7 @@ $subtitle = "List of bookings made by you";
 														 $location = $address['city'].", ".$address['state'];
 														 $checkin = $i['checkin'];
 														 $checkout = $i['checkout'];
+														 
 											  
 									   ?>
 										<li class="{{$liClass}}">
@@ -113,8 +115,10 @@ $subtitle = "List of bookings made by you";
 												</div>
 											</div>
 											<div class="buttons-to-right">
-												<a href="#" class="button gray reject"><i class="ti-printer"></i> Receipt</a>
-												<a href="#" class="button gray approve"><i class="ti-trash"></i> Cancel</a>
+												<a href="{{$ru}}" class="button gray approve"><i class="ti-printer"></i> Receipt</a>
+												@if($o['status'] == "paid")
+												<a href="{{$cu}}" class="button gray reject"><i class="ti-trash"></i> Cancel</a>
+											    @endif
 											</div>
 										</li>
                                         <?php

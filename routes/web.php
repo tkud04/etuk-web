@@ -67,6 +67,7 @@ Route::get('remove-from-cart', 'MainController@getRemoveFromCart');
 Route::get('checkout', 'MainController@getCheckout');
 Route::post('checkout', 'MainController@postCheckout');
 Route::get('bookings', 'MainController@getOrders');
+Route::get('receipt', 'MainController@getReceipt');
 
 Route::get('search', 'MainController@getSearch');
 Route::get('tb', 'MainController@getTestBomb');

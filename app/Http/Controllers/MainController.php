@@ -1768,6 +1768,57 @@ class MainController extends Controller {
     }
 	
 	/**
+	 * Show the receipt for a booking.
+	 *
+	 * @return Response
+	 */
+	public function getReceipt(Request $request)
+    {
+		$user = null;
+		$messages = [];
+		if(Auth::check())
+		{
+			$user = Auth::user();
+			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
+			if($user->mode != "host")
+			{
+				session()->flash("valid-mode-status-error","ok");
+			    return redirect()->intended('/');
+			}
+		}
+
+		
+		$req = $request->all();
+		
+		if(isset($req['xf']))
+		{
+			$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
+		    $cart = $this->helpers->getCart($user,$gid);
+		    #dd($user);
+		    $c = $this->helpers->getCategories();
+		    //dd($bs);
+		    $signals = $this->helpers->signals;
+		    $states = $this->helpers->states;
+		
+	    	$ads = $this->helpers->getAds("wide-ad");
+			$services = $this->helpers->getServices();
+		    $plugins = $this->helpers->getPlugins();
+		
+		    $order = $this->helpers->getOrder($req['xf']);
+			dd($order);
+		    shuffle($ads);
+		    $ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
+        
+    	    return view("receipt",compact(['user','cart','messages','c','ad','services','order','states','signals','plugins']));
+		}
+		else
+		{
+			return redirect()->intended('my-apartments');
+		}
+		
+    }
+	
+	/**
 	 * Delete an apartment image.
 	 *
 	 * @return Response

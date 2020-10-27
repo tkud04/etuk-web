@@ -3,12 +3,12 @@ $title = "My Bookings";
 $subtitle = "List of bookings made by you";
 $noFooter = true;
 ?>
-@extends('layout')
-
-@section('title',$title)
 
 
-@section('content')
+<?php $__env->startSection('title',$title); ?>
+
+
+<?php $__env->startSection('content'); ?>
 <!-- =================== Sidebar Search ==================== -->
 			<section class="gray">
 				<div class="container">
@@ -170,4 +170,5 @@ $noFooter = true;
 				</div>
 			</section>
 			<!-- =================== Sidebar Search ==================== -->
-@stop
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\bkupp\lokl\repo\etuk-web\resources\views/receipt.blade.php ENDPATH**/ ?>
