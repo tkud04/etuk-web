@@ -229,6 +229,8 @@ class MainController extends Controller {
 		if($user->mode == "host")
 		{
 			$transactions = $this->helpers->getTransactions($user);
+			$monthTransactions = $this->helpers->getTransactionData($user);
+			#dd($monthTransactions);
 			$cpt = ['user','cart','messages','transactions','c','ad','signals','plugins'];
 			$v = "host-dashboard";
 		}

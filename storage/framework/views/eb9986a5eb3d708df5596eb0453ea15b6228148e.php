@@ -201,6 +201,7 @@ $subtitle = "Manage your guest account here";
 										  $items = $o['items'];
 										  $ii = $items['data'];
 										  $ru = url('receipt')."?xf=".$ref;
+										  $cu = "javascript:void(0)";
 												?>
 												<li><i class="dash-icon-box ti-files"></i>
 													<strong>Order #</strong>

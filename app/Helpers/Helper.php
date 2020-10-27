@@ -2394,11 +2394,7 @@ function createSocial($data)
                     {
                     	$temp = $this->getOrderItem($i->id);
                         array_push($ret['data'], $temp); 
-						$c1 = new \DateTime($temp['checkin']);
-						$c2 = new \DateTime($temp['checkout']);
-						$cdiff = $c1->diff($c2);
-						$duration = $cdiff->format("%r%a");		
-                        $ret['subtotal'] += ($temp['amount'] * $duration);						
+						$ret['subtotal'] += $temp['amount'];						
                    }
                }			   
               			  
@@ -2413,17 +2409,22 @@ function createSocial($data)
 				if($i != null)
 				{
 					$temp['id'] = $i->id; 
-               	     $temp['order_id'] = $i->order_id; 
+                    $o = Orders::where('id',$i->order_id)->first();					 
+                     $temp['order_id'] = $o->reference;
                	     $temp['apartment_id'] = $i->apartment_id; 
                         $apt = $this->getApartment($i->apartment_id,['host' => true]); 
                         $temp['apartment'] = $apt;
                         $adata = $apt['data'];	
-                        $temp['amount'] = $adata['amount'];						
-						$checkin = Carbon::parse($i->checkin);
+                        $checkin = Carbon::parse($i->checkin);
 						$checkout = Carbon::parse($i->checkout);
                         $temp['checkin'] = $checkin->format("jS F, Y");
-                        $temp['checkout'] = $checkout->format("jS F, Y"); 
-                        $temp['guests'] = $i->guests; 
+                        $temp['checkout'] = $checkout->format("jS F, Y");
+                        $c1 = new \DateTime($temp['checkin']);
+						$c2 = new \DateTime($temp['checkout']);
+						$cdiff = $c1->diff($c2);
+						$duration = $cdiff->format("%r%a");						
+                        $temp['amount'] = $adata['amount'] * $duration;
+						$temp['guests'] = $i->guests; 
                         $temp['kids'] = $i->kids;
 				}
 			    
@@ -2539,6 +2540,29 @@ function createSocial($data)
 			  
               if($transactions != null)
                {
+				   $transactions = $transactions->sortByDesc('created_at');	
+			  
+				  foreach($transactions as $t)
+				  {
+					  $temp = $this->getTransaction($t->id);
+					  array_push($ret,$temp);
+				  }
+               }                         
+                                  
+                return $ret;
+           }
+		   
+		   function getTransactionData($user,$dt=[])
+           {
+			 $month = isset($dt['month']) ? $dt['month'] : date("m");
+			 $year = isset($dt['year']) ? $dt['year'] : date("Y");
+			 $ret = [];
+			
+			 $transactions = Transactions::whereMonth('created_at',$month)
+			                             ->whereYear('created_at',$year)->get();
+										 
+              if($transactions != null)
+               {   
 				   $transactions = $transactions->sortByDesc('created_at');	
 			  
 				  foreach($transactions as $t)

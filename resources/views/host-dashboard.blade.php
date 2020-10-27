@@ -1,10 +1,25 @@
 <?php
 $title = "Host Dashboard";
 $subtitle = "Manage your apartments and host account here";
+
+$months = [
+  'january','february','march','april','may','june','july','august','september','october','november','december'
+];
+$month = date("F");
+$year = date("Y");
+
 ?>
 @extends('layout')
 
 @section('title',$title)
+
+@section('scripts')
+<!-- Morris Charts -->
+<link href="{{asset('lib/morris-bundle/morris.css')}}" rel="stylesheet">
+<script src="{{asset('lib/morris-bundle/raphael.min.js')}}"></script>
+<script src="{{asset('lib/morris-bundle/morris.js')}}"></script>
+<script src="{{asset('lib/morris-bundle/morris-init.js')}}"></script>
+@stop
 
 @section('top-header')
 @include('top-header')
@@ -12,7 +27,24 @@ $subtitle = "Manage your apartments and host account here";
 
 @section('content')
 @include('banner-2',['title' => $title,'subtitle' => $subtitle])
-
+<script>
+let transactionsData1 = [
+<?php
+											 if(count($transactions) > 0)
+											 {
+											   for($i = 0; $i < count($transactions); $i++)
+											   { 
+										       $t = $transactions[$i];
+											   $item = $t['item'];
+											   $date = new DateTime($t['date']);
+											?>
+{x: '{{$date->format("d M")}}',y: {{$item['amount']}}}@if($i != count($transactions) - 1),@endif
+											<?php
+											   }
+											 }
+											?>
+];
+</script>
 	<!-- ============================ Dashboard Start ================================== -->
 			<section class="gray">
 				<div class="container-fluid">
@@ -123,6 +155,56 @@ $subtitle = "Manage your apartments and host account here";
 											<?php
 											 }
 											?>
+										</div>
+									</div>	
+								</div>
+								
+								<!-- Row -->
+								<div class="row">
+									<div class="col-lg-6 col-md-12">
+										<div class="dashboard-gravity-list with-icons">
+											<h4 style="">Total Revenue</h4>
+											<div class="form-group">
+											  <select class="form-control form-control-sm" id="host-total-revenue-month">
+											    <option value="none">Select month</option>
+												<?php
+												 foreach($months as $m)
+												 {
+													$mm = ucwords($m);
+													$ss = $month == $mm ? " selected='selected'" : "";
+												?>
+												 <option value="{{$m}}"{{$ss}}>{{$mm}}</option>
+												<?php
+												 }
+												?>
+											  </select>
+											  <input class="form-control" type="number" value="{{$year}}" id="host-total-revenue-year"/>
+											  <center><a class="btn btn-theme btn-sm mt-2">Submit</a></center>
+											</div>
+											  
+											<?php
+											 if(count($transactions) > 0)
+											 {
+											?>
+											 <div id="host-transactions-bar"></div>
+											<?php
+											 }
+											 else
+											 {
+											?>
+											<ul>
+											<li>No transactions yet.</li>
+											</ul>
+											<?php
+											 }
+											?>
+										</div>
+									</div>
+									
+									<div class="col-lg-6 col-md-12">
+										<div class="dashboard-gravity-list with-icons">
+											<h4>Something Else</h4>
+											
 										</div>
 									</div>	
 								</div>
