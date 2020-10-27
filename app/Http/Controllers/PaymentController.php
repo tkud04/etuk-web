@@ -134,7 +134,7 @@ class PaymentController extends Controller {
 			           #dd($paymentData);
 					   $rep = [
 					     'metadata' => [
-						   'type' => "",
+						   'type' => "checkout",
 						   'ref' => $metadata->ref,
 						   'sps' => $metadata->sps,
 						   'notes' => $metadata->notes,
