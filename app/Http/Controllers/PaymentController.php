@@ -132,7 +132,8 @@ class PaymentController extends Controller {
 			           $id = $metadata->ref;
 			 
 			           #dd($paymentData);
-					 
+					   $au = [];
+					   
 					   $rep = [
 					     'metadata' => [
 						   'type' => "checkout",
