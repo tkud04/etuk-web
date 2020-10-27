@@ -230,7 +230,7 @@ class MainController extends Controller {
 		{
 			$transactions = $this->helpers->getTransactions($user);
 			$monthTransactions = $this->helpers->getTransactionData($user);
-			#dd($monthTransactions);
+			dd($transactions);
 			$cpt = ['user','cart','messages','transactions','c','ad','signals','plugins'];
 			$v = "host-dashboard";
 		}
