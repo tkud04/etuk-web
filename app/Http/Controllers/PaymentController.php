@@ -128,9 +128,10 @@ class PaymentController extends Controller {
 				   
 				   #dd($ret);
 
-                    $paymentData = $ret->data;	
-                    if($paymentData->status == 'success')
+                    
+                    if($ret->status == 'success')
                      {
+						 $paymentData = $ret->data;	
 			           $id = $metadata->ref;
 			 
 			           #dd($paymentData);
@@ -197,7 +198,7 @@ class PaymentController extends Controller {
                else
                {
         	      //Payment failed, redirect to orders
-                  $request->session()->flash("pay-card-status","error");
+                  $request->session()->flash("pay-card-status-error","ok");
 			      return redirect()->back();
                 }					
 				 }
