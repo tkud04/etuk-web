@@ -122,6 +122,8 @@ class PaymentController extends Controller {
 		           #dd($rr);
 			       $rett = $this->helpers->bomb($rr);
                    $ret = json_decode($rett);
+				   
+				   
 				   #dd($ret);
 
                     $paymentData = $ret->data;	
@@ -135,6 +137,7 @@ class PaymentController extends Controller {
 						   'type' => "",
 						   'ref' => $metadata->ref,
 						   'sps' => $metadata->sps,
+						   'notes' => $metadata->notes,
 						 ],
 					     'amount' => $paymentData->amount,
 					     'reference' => $paymentData->reference,
