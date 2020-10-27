@@ -131,20 +131,18 @@ class PaymentController extends Controller {
                      {
 			           $id = $metadata->ref;
 			 
-			           dd($paymentData);
-					   $au = [
-					     
-					   ];
+			           #dd($paymentData);
+					 
 					   $rep = [
 					     'metadata' => [
 						   'type' => "checkout",
 						   'ref' => $metadata->ref,
-						   'sps' => $metadata->sps,
+						   'sps' => "no",
 						   'notes' => $metadata->notes,
 						 ],
 					     'amount' => $paymentData->amount,
 					     'reference' => $paymentData->reference,
-						 'authorization' => $paymentData->authorization
+						 'authorization' => $au
 					   ];
         	           $this->helpers->checkout($user,$rep);
 			
