@@ -30,15 +30,15 @@ $year = date("Y");
 <script>
 let transactionsData1 = [
 <?php
-											 if(count($transactions) > 0)
+											 if(count($revenueData) > 0)
 											 {
-											   for($i = 0; $i < count($transactions); $i++)
+											   for($i = 0; $i < count($revenueData); $i++)
 											   { 
-										       $t = $transactions[$i];
+										       $t = $revenueData[$i];
 											   $item = $t['item'];
 											   $date = new DateTime($t['date']);
 											?>
-{x: '{{$date->format("d M")}}',y: {{$item['amount']}}}@if($i != count($transactions) - 1),@endif
+{x: '{{$date->format("d M")}}',y: {{$item['amount']}}}@if($i != count($revenueData) - 1),@endif
 											<?php
 											   }
 											 }
