@@ -1177,8 +1177,35 @@ const getAnalytics = dt => {
 				   
 				   $('#host-transactions-bar').fadeIn();
 			   }
-			   $(`#review-${dt.rxf}-upvotes`).val(d.u);
-			   $(`#review-${dt.rxf}-downvotes`).val(d.d);
+			   else if(dt.type == "best-selling-apartments"){
+				   $('#host-best-selling-apartments-donut').hide();
+				      $('#host-best-selling-apartments-donut').html("");
+					  
+				   if(d.length){
+				     Morris.Donut({
+                element: 'host-best-selling-apartments-donut',
+                data: d,
+             
+                labelColor: '#2e2f39',
+                   gridTextSize: '14px',
+                colors: [
+                     "#5969ff",
+                                "#ff407b",
+                                "#25d5f2",
+                                "#ffc750"
+                               
+                ],
+
+                formatter: function(x) { return "N" + x },
+                  resize: true
+            });   
+				   }
+				   else{
+					   $('#host-best-selling-apartments-donut').html("<h3>No data could be found.</h3>");
+				   }
+				   
+				   $('#host-best-selling-apartments-donut').fadeIn();
+			   }
 		   }
 		   else if(res.status == "error"){
 			   let hh = `nothing happened`;

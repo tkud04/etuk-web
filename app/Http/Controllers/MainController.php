@@ -455,12 +455,12 @@ class MainController extends Controller {
 		 else
 		 {					
 			$req['user_id'] = $user->id;
+			$rett = [];
 			
 			switch($req['type'])
 			{
 				case "total-revenue":
 				  $revenueData = $this->helpers->getTransactionData($user,['month' => $req['month'], 'year' => $req['year']]);
-				  $rett = [];
 				  for($i = 0; $i < count($revenueData); $i++)
 					{ 
 						$t = $revenueData[$i];
@@ -469,9 +469,19 @@ class MainController extends Controller {
 						$temp = ['x' => $date->format("d M"),'y' => $item['amount']];
 						array_push($rett,$temp);
 				    }
-				  $ret = ['status' => "ok",'data' => $rett];
+				
+				break;
+				
+				case "best-selling-apartments":
+				$bsaData = $this->helpers->getBestSellingApartments($user,['month' => $req['month'], 'year' => $req['year']]);
+				  for($i = 0; $i < count($bsaData); $i++)
+					{  
+						$temp = $bsaData[$i];
+						array_push($rett,$temp);
+				    }
 				break;
 			}
+			$ret = ['status' => "ok",'data' => $rett];
 		 }
 		 
 		 return json_encode($ret);

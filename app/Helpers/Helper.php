@@ -2576,6 +2576,47 @@ function createSocial($data)
                 return $ret;
            }
 		   
+		   function getBestSellingApartments($user,$dt=[])
+           {
+			 $month = isset($dt['month']) ? $dt['month'] : date("m");
+			 $year = isset($dt['year']) ? $dt['year'] : date("Y");
+			 $ret = [];
+			 #dd([$month,$year]);
+			 
+			 /**
+				[
+                    { value: 70, label: 'foo' },
+                    { value: 15, label: 'bar' },
+                    { value: 10, label: 'baz' },
+                    { value: 5, label: 'A really really long label' }
+                ]
+				**/
+			 $apartments = Apartments::where('user_id',$user->id)->get();
+			 							 
+              if($apartments != null)
+               {   
+		          foreach($apartments as $a)
+				  {
+				     $transactions = Transactions::where('apartment_id',$a->apartment_id)
+				                         ->whereMonth('created_at',$month)
+			                             ->whereYear('created_at',$year)->get();
+				
+			        $sum = 0;
+				    foreach($transactions as $t)
+				    {
+					   $tt = $this->getTransaction($t->id);
+					   $temp = [];
+					   $item = $tt['item'];
+					   $sum += $item['amount'];
+				    }
+					$temp = ['label' => $a->name,'value' => number_format($sum)];
+					array_push($ret,$temp);
+				  }
+               }                         
+                                  
+                return $ret;
+           }
+		   
 		    function createPreference($dt)
 		   {
 			   $p = Preferences::where('user_id',$dt['user_id'])->first();

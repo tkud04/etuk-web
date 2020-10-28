@@ -207,8 +207,45 @@ let transactionsData1 = [
 									
 									<div class="col-lg-6 col-md-12">
 										<div class="dashboard-gravity-list with-icons">
-											<h4>Something Else</h4>
-											
+											<h4>Best selling Apartments</h4>
+											<div class="form-group">
+											  <select class="form-control form-control-sm" id="host-best-selling-apartments-month">
+											    <option value="none">Select month</option>
+												<?php
+												 foreach($months as $m)
+												 {
+													 $mdd = new DateTime($m);
+													$mm = ucwords($m);
+													$ss = $month == $mm ? " selected='selected'" : "";
+												?>
+												 <option value="{{$mdd->format('m')}}"{{$ss}}>{{$mm}}</option>
+												<?php
+												 }
+												?>
+											  </select>
+											  <input class="form-control" type="number" value="{{$year}}" id="host-best-selling-apartments-year"/>
+											  <center>
+											    <a class="btn btn-theme btn-sm mt-2" id="host-best-selling-apartments-btn">Submit</a>
+												<img id="host-best-selling-apartments-loading" alt="Loading.." src="{{asset('img/loading.gif')}}">
+											  </center>
+											</div>
+											  
+											<?php
+											 if(count($transactions) > 0)
+											 {
+											?>
+											 <div id="host-best-selling-apartments-donut"></div>
+											<?php
+											 }
+											 else
+											 {
+											?>
+											<ul>
+											<li>No transactions yet.</li>
+											</ul>
+											<?php
+											 }
+											?>
 										</div>
 									</div>	
 								</div>
