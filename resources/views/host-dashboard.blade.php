@@ -170,16 +170,20 @@ let transactionsData1 = [
 												<?php
 												 foreach($months as $m)
 												 {
+													 $mdd = new DateTime($m);
 													$mm = ucwords($m);
 													$ss = $month == $mm ? " selected='selected'" : "";
 												?>
-												 <option value="{{$m}}"{{$ss}}>{{$mm}}</option>
+												 <option value="{{$mdd->format('m')}}"{{$ss}}>{{$mm}}</option>
 												<?php
 												 }
 												?>
 											  </select>
 											  <input class="form-control" type="number" value="{{$year}}" id="host-total-revenue-year"/>
-											  <center><a class="btn btn-theme btn-sm mt-2">Submit</a></center>
+											  <center>
+											    <a class="btn btn-theme btn-sm mt-2" id="host-total-revenue-btn">Submit</a>
+												<img id="host-total-revenue-loading" alt="Loading.." src="{{asset('img/loading.gif')}}">
+											  </center>
 											</div>
 											  
 											<?php

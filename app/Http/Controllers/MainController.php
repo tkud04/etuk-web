@@ -422,6 +422,62 @@ class MainController extends Controller {
     }
 	
 	/**
+	 * Handle transaction analytics for host.
+	 *
+	 * @return Response
+	 */
+	public function getAnalytics(Request $request)
+    {
+		$user = null;
+		if(Auth::check())
+		{
+			$user = Auth::user();
+		}
+		else
+		{
+			return redirect()->intended('/');
+		}
+
+		$req = $request->all();
+        #dd($req);
+		$ret = ['status' => "error",'message' => "nothing happened"];
+	    
+		$validator = Validator::make($req,[
+		                    'type' => 'required',
+		                    'month' => 'required',
+		                    'year' => 'required|numeric'
+		]);
+		
+		if($validator->fails())
+         {
+             $ret['message'] = "validation";
+         }
+		 else
+		 {					
+			$req['user_id'] = $user->id;
+			
+			switch($req['type'])
+			{
+				case "total-revenue":
+				  $revenueData = $this->helpers->getTransactionData($user,['month' => $req['month'], 'year' => $req['year']]);
+				  $rett = [];
+				  for($i = 0; $i < count($revenueData); $i++)
+					{ 
+						$t = $revenueData[$i];
+						$item = $t['item'];
+						$date = new \DateTime($t['date']);
+						$temp = ['x' => $date->format("d M"),'y' => $item['amount']];
+						array_push($rett,$temp);
+				    }
+				  $ret = ['status' => "ok",'data' => $rett];
+				break;
+			}
+		 }
+		 
+		 return json_encode($ret);
+    }
+	
+	/**
 	 * Show the profile.
 	 *
 	 * @return Response

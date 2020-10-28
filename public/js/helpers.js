@@ -1121,6 +1121,90 @@ const payCard = dt =>{
 });
 
 }
+
+const getAnalytics = dt => {
+//create request
+   let url = `analytics?type=${dt.type}&month=${dt.month}&year=${dt.year}`;
+	const req = new Request(url,{method: 'GET'});
+	console.log(req);
+	
+	
+	//fetch request
+	fetch(req)
+	   .then(response => {
+		   if(response.status === 200){
+			   //console.log(response);
+			   
+			   return response.json();
+		   }
+		   else{
+			   return {status: "error", message: "Technical error"};
+		   }
+	   })
+	   .catch(error => {
+		   Swal.fire({
+			     icon: 'error',
+                 title: `Failed to get analytics: ${error}`
+               });		  
+			$(`#host-${dt.type}-loading`).hide();
+	   })
+	   .then(res => {
+		   console.log(res);
+          $(`#host-${dt.type}-loading`).hide();
+		  
+		   if(res.status == "ok"){
+			   let d = res.data;
+			   
+			   if(dt.type == "total-revenue"){
+				   $('#host-transactions-bar').hide();
+				      $('#host-transactions-bar').html("");
+					  
+				   if(d.length){
+				     Morris.Bar({
+                      element: 'host-transactions-bar',
+                      data: d,
+                      xkey: 'x',
+                      ykeys: ['y'],
+                      labels: ['Revenue(N)'],
+                      barColors: ['#5969ff'],
+                       resize: true,
+                          gridTextSize: '14px'
+                     });   
+				   }
+				   else{
+					   $('#host-transactions-bar').html("<h3>No data could be found.</h3>");
+				   }
+				   
+				   $('#host-transactions-bar').fadeIn();
+			   }
+			   $(`#review-${dt.rxf}-upvotes`).val(d.u);
+			   $(`#review-${dt.rxf}-downvotes`).val(d.d);
+		   }
+		   else if(res.status == "error"){
+			   let hh = `nothing happened`;
+			   if(res.message == "auth"){
+				 hh = `Please sign in to view analytics.`;  
+			   }
+			   else if(res.message == "validation"){
+				 hh = `Please fill all required fields and try again.`;  
+			   }
+			   else if(res.message == "Technical error"){
+				 hh = `A technical error has occured, please try again.`;  
+			   }
+			   Swal.fire({
+			     icon: 'error',
+                 title: hh
+               });		  
+		   }
+		  
+	   }).catch(error => {
+		     Swal.fire({
+			     icon: 'error',
+                 title: `Failed to get analytics: ${error}`
+               });		  
+			$(`#host-${dt.type}-loading`).hide();			
+	   });	
+}
 /**********************************************************************************************************************
                                                      OLD METHODS
 /**********************************************************************************************************************/
@@ -1273,44 +1357,6 @@ const generateRandomString = (length) => {
 		ret += chars[Math.floor(Math.random() * chars.length)];
 	}
 	return ret;
-}
-
-
-function addToCart(dt)
-{
-	if(!dt.fromWishlist) dt.fromWishlist = "no";
-    
-	if(!dt.qty){
-		dt.qty = $('#qty').val();
-	}
-  let cu = `add-to-cart?sku=${dt.sku}&from_wishlist=${dt.fromWishlist}&qty=${dt.qty}&gid=${gid}`;
-  console.log("cu: ",cu);
-  
-  fbq('track', 'AddToCart', {
-	currency: "NGN",
-	contents: [{
-      id: dt.sku,
-      quantity: dt.qty
-    }],
-    content_type: 'product'
-	});
-  
-  window.location = cu;
-}
-
-function updateCart(dt)
-{    
-  let qty = $(`#qty-${dt.sku}`).val();
-  let upu = `update-cart?sku=${dt.sku}&qty=${qty}&gid=${gid}`;
-  console.log("upu: ",upu);
-  window.location = upu;
-}
-
-function removeFromCart(dt)
-{
-  let ru = `remove-from-cart?sku=${dt.sku}&gid=${gid}`;
-  console.log("ru: ",ru);
-  window.location = ru;
 }
 
 function addToWishlist(dt)

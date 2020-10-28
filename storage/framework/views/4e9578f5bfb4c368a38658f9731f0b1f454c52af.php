@@ -30,15 +30,15 @@ $year = date("Y");
 <script>
 let transactionsData1 = [
 <?php
-											 if(count($transactions) > 0)
+											 if(count($revenueData) > 0)
 											 {
-											   for($i = 0; $i < count($transactions); $i++)
+											   for($i = 0; $i < count($revenueData); $i++)
 											   { 
-										       $t = $transactions[$i];
+										       $t = $revenueData[$i];
 											   $item = $t['item'];
 											   $date = new DateTime($t['date']);
 											?>
-{x: '<?php echo e($date->format("d M")); ?>',y: <?php echo e($item['amount']); ?>}<?php if($i != count($transactions) - 1): ?>,<?php endif; ?>
+{x: '<?php echo e($date->format("d M")); ?>',y: <?php echo e($item['amount']); ?>}<?php if($i != count($revenueData) - 1): ?>,<?php endif; ?>
 											<?php
 											   }
 											 }
@@ -132,7 +132,7 @@ let transactionsData1 = [
 											?>
 											 <ul>
 											<?php
-											   foreach($m as $m)
+											   foreach($messages as $m)
 											   { 
 											?>
 												<li>
@@ -170,16 +170,20 @@ let transactionsData1 = [
 												<?php
 												 foreach($months as $m)
 												 {
+													 $mdd = new DateTime($m);
 													$mm = ucwords($m);
 													$ss = $month == $mm ? " selected='selected'" : "";
 												?>
-												 <option value="<?php echo e($m); ?>"<?php echo e($ss); ?>><?php echo e($mm); ?></option>
+												 <option value="<?php echo e($mdd->format('m')); ?>"<?php echo e($ss); ?>><?php echo e($mm); ?></option>
 												<?php
 												 }
 												?>
 											  </select>
 											  <input class="form-control" type="number" value="<?php echo e($year); ?>" id="host-total-revenue-year"/>
-											  <center><a class="btn btn-theme btn-sm mt-2">Submit</a></center>
+											  <center>
+											    <a class="btn btn-theme btn-sm mt-2" id="host-total-revenue-btn">Submit</a>
+												<img id="host-total-revenue-loading" alt="Loading.." src="<?php echo e(asset('img/loading.gif')); ?>">
+											  </center>
 											</div>
 											  
 											<?php

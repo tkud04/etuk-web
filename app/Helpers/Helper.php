@@ -2557,6 +2557,7 @@ function createSocial($data)
 			 $month = isset($dt['month']) ? $dt['month'] : date("m");
 			 $year = isset($dt['year']) ? $dt['year'] : date("Y");
 			 $ret = [];
+			 #dd([$month,$year]);
 			
 			 $transactions = Transactions::whereMonth('created_at',$month)
 			                             ->whereYear('created_at',$year)->get();

@@ -169,7 +169,7 @@
                 data: transactionsData1,
                 xkey: 'x',
                 ykeys: ['y'],
-                labels: ['Y'],
+                labels: ['Revenue(N)'],
                    barColors: ['#5969ff'],
                      resize: true,
                         gridTextSize: '14px'

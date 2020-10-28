@@ -14,7 +14,7 @@ $(document).ready(function() {
 	hideElem(["#add-apartment-side-2","#add-apartment-side-3"]);
 	hideElem(["#apartment-preference-side-2"]);
 	hideElem(["#my-apartment-side-2","#my-apartment-side-3"]);
-	hideElem([".review-loading"]);
+	hideElem([".review-loading","#host-total-revenue-loading"]);
 	
 	
 	//Init wysiwyg editors
@@ -711,6 +711,26 @@ $(document).ready(function() {
 		}
 		else{
 			 payCard({ref: ref,pt: pt});
+		}
+		
+	});
+
+
+	//ANALYTICS
+	$('#host-total-revenue-btn').click(e => {
+		e.preventDefault();
+		
+		let m = $('#host-total-revenue-month').val(), y = $('#host-total-revenue-year').val();
+		
+		if(m == "none" || y == ""){
+			Swal.fire({
+			 icon: 'error',
+             title: "Select a period."
+           });
+		}
+		else{
+			 $(`#host-total-revenue-loading`).fadeIn();
+			 getAnalytics({type: "total-revenue",month: m,year: y});
 		}
 		
 	});
