@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'MainController@getIndex');
+Route::post('/', 'MainController@getIndex');
 Route::get('temp', 'MainController@getTemp');
 Route::get('about', 'MainController@getAbout');
 Route::get('terms', 'MainController@getTerms');
@@ -69,6 +70,8 @@ Route::post('checkout', 'MainController@postCheckout');
 Route::get('bookings', 'MainController@getOrders');
 Route::get('receipt', 'MainController@getReceipt');
 
+Route::get('landing-search', 'MainController@getLandingSearch');
+Route::post('landing-search', 'MainController@postLandingSearch');
 Route::get('search', 'MainController@getSearch');
 Route::get('tb', 'MainController@getTestBomb');
 

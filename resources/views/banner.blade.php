@@ -16,7 +16,7 @@ $tomorrow = $ddd->format($fmt);
 							<h1>Explore Choice Apartments</h1>
 						</div>
 						
-						<form class="st-search-form-tour icon-frm withlbl" id="landing-search-form" method="post">
+						<form class="st-search-form-tour icon-frm withlbl" action="{{url('landing-search')}}" id="landing-search-form" method="post">
 						{!! csrf_field() !!}
 							<div class="g-field-search">
 								<div class="row">

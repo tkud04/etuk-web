@@ -575,20 +575,23 @@ $(document).ready(function() {
 	$('#landing-search-btn').click(e => {
 		e.preventDefault();
 		console.log("landing search");
-		/**
-		let m = $('#host-total-revenue-month').val(), y = $('#host-total-revenue-year').val();
 		
-		if(m == "none" || y == ""){
+		let loc = $('#landing-search-location').val(), dts = $('#landing-search-dates').val(),
+		    kids = $('#landing-search-kids').val(), adults = $('#landing-search-adults').val();
+		
+		if(loc == "" || parseInt(adults) < 1){
+			let hh = "";
+			
+			if(loc == "") hh = "Enter your location.";
+			if(parseInt(adults) < 1) hh = "Enter the number of adults.";
 			Swal.fire({
 			 icon: 'error',
-             title: "Select a period."
+             title: `${hh}`
            });
 		}
 		else{
-			 $(`#host-total-revenue-loading`).fadeIn();
-			 getAnalytics({type: "total-revenue",month: m,year: y});
+			 $(`#landing-search-form`).submit();
 		}
-		**/
 		
 	});
 	
