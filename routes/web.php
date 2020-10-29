@@ -82,6 +82,7 @@ Route::post('my-apartment', 'MainController@postMyApartment');
 Route::get('delete-apartment', 'MainController@getDeleteApartment');
 
 Route::get('analytics', 'MainController@getAnalytics');
+Route::get('host-analytics', 'MainController@getHostAnalytics');
 
 Route::get('sci', 'MainController@getSetCoverImage');
 Route::get('ri', 'MainController@getRemoveImage');
