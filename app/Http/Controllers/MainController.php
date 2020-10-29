@@ -230,8 +230,9 @@ class MainController extends Controller {
 		{
 			$transactions = $this->helpers->getTransactions($user);
 			$revenueData = $this->helpers->getTransactionData($user);
+			$bsa = $this->helpers->getBestSellingApartments($user);
 			#dd($transactions);
-			$cpt = ['user','cart','messages','transactions','revenueData','c','ad','signals','plugins'];
+			$cpt = ['user','cart','messages','transactions','revenueData','bsa','c','ad','signals','plugins'];
 			$v = "host-dashboard";
 		}
 		else if($user->mode == "guest")

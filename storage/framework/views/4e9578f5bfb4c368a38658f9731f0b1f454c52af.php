@@ -43,6 +43,19 @@ let transactionsData1 = [
 											   }
 											 }
 											?>
+],bsaData1 = [
+<?php
+											 if(count($bsa) > 0)
+											 {
+											   for($i = 0; $i < count($bsa); $i++)
+											   { 
+										       $t = $bsa[$i];
+											?>
+{value: "<?php echo e($t['value']); ?>",label: "<?php echo e($t['label']); ?>"}<?php if($i != count($bsa) - 1): ?>,<?php endif; ?>
+											<?php
+											   }
+											 }
+											?>
 ];
 </script>
 	<!-- ============================ Dashboard Start ================================== -->
@@ -205,7 +218,7 @@ let transactionsData1 = [
 										</div>
 									</div>
 									
-									<div class="col-lg-6 col-md-12">
+									<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
 										<div class="dashboard-gravity-list with-icons">
 											<h4>Best selling Apartments</h4>
 											<div class="form-group">

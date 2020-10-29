@@ -180,12 +180,7 @@
 		if ($('#host-best-selling-apartments-donut').length) {
             Morris.Donut({
                 element: 'host-best-selling-apartments-donut',
-                data: [
-                    { value: 70, label: 'foo' },
-                    { value: 15, label: 'bar' },
-                    { value: 10, label: 'baz' },
-                    { value: 5, label: 'A really really long label' }
-                ],
+                data: bsaData1,
              
                 labelColor: '#2e2f39',
                    gridTextSize: '14px',
