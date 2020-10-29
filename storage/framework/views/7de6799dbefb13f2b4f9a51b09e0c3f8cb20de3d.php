@@ -1,8 +1,57 @@
+
+
 <?php $__env->startSection('title',"Welcome"); ?>
+
+<?php $__env->startSection('scripts'); ?>
+<?php
+$def = [
+  'avb' => "available",
+  'city' => "",
+  'state' => "none",
+  'amount' => "0",
+  'rating' => "4",
+  'id_required' => "yes",
+  'children' => "none",
+  'pets' => "no",
+  'max_adults' => "4",
+  'max_children' => "0",
+  'facilities' => []
+];
+
+if(count($apf) > 0) $def = $apf;
+?>
+<script>
+let landingSearchDT = {
+				avb: "<?php echo e($def['avb']); ?>",
+				city: "<?php echo e($def['city']); ?>",
+				state: "<?php echo e($def['state']); ?>",
+				max_adults: "<?php echo e($def['max_adults']); ?>",
+				max_children: "<?php echo e($def['max_children']); ?>",
+				amount: "<?php echo e($def['amount']); ?>",
+				id_required: "<?php echo e($def['id_required']); ?>",
+				children: "<?php echo e($def['children']); ?>",
+				pets: "<?php echo e($def['pets']); ?>",
+				facilities: [
+				<?php
+				  if(count($def['facilities']) > 0)
+				  {
+					 foreach($def['facilities'] as $f)
+					 {
+				?>
+				   "<?php echo e($f); ?>"
+				<?php
+					 }
+				  }
+				?>
+				],
+				rating: "<?php echo e($def['rating']); ?>"
+			};
+</script>
+<?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
 
-<?php echo $__env->make('banner', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php echo $__env->make('banner',['def' => $def], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
 <!-- ================= true Facts start ========================= -->
 			<section class="facts">

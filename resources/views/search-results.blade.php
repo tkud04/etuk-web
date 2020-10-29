@@ -1,6 +1,22 @@
 <?php
 $title = "Search Results";
 $subtitle = count($results)." results found";
+
+$def = [
+  'avb' => "available",
+  'city' => "",
+  'state' => "none",
+  'amount' => "0",
+  'rating' => "4",
+  'id_required' => "yes",
+  'children' => "none",
+  'pets' => "no",
+  'max_adults' => "4",
+  'max_children' => "0",
+  'facilities' => []
+];
+
+if(count($apf) > 0) $def = $apf;
 ?>
 @extends('layout')
 
@@ -70,7 +86,7 @@ $rr = count($results) == 1 ? "Result" : "Results";
 			<section class="gray">
 				<div class="container">
 					<div class="row">
-						@include('guest-apt-sidebar',['apf' => $apf])
+						@include('guest-apt-sidebar',['apf' => $def])
 							
 						<div class="order-1 content-area col-lg-8 col-md-12 order-md-1 order-lg-2">
 							<div class="row">

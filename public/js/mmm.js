@@ -590,7 +590,13 @@ $(document).ready(function() {
            });
 		}
 		else{
-			 $(`#landing-search-form`).submit();
+			 landingSearchDT.city = loc;
+			 landingSearchDT.state = loc;
+			 landingSearchDT.kids = kids;
+			 landingSearchDT.adults = adults;
+			
+			$('#landing-search-dt').val(JSON.stringify(landingSearchDT));
+	        $('#landing-search-form').submit();
 		}
 		
 	});

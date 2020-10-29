@@ -1545,6 +1545,15 @@ function updateApartment($data)
 			 $state = $dt->state;
 			 $max_adults = $dt->max_adults;
 			 $max_children = $dt->max_children;
+			 
+			 if($dt->kids > 0)
+			 {
+				 if($dt->kids > $dt->max_children) $max_children = $dt->kids;
+			 }
+			 if($dt->adults > 0)
+			 {
+				 if($dt->adults > $dt->max_adults) $max_adults = $dt->adults;
+			 }
 			 $amount = $dt->amount;
 			 $id_required = $dt->id_required;
 			 $children = $dt->children;
@@ -1570,11 +1579,9 @@ function updateApartment($data)
 									   ])->get();
 			 
 			 //Data
-			 $byData = ApartmentData::where([
-			                           'max_adults' => $max_adults,
-			                           'max_children' => $max_children,
-			                           'amount' => $amount,
-									   ])->get();
+			 $byData = ApartmentData::where('max_adults',"<=",$max_adults)
+			                        ->where('max_children',"<=",$max_children)
+			                         ->where('amount',"<=",$amount)->get();
 									   
 			 //collect all
 			 $ret = [];

@@ -5,7 +5,9 @@ $fmt = "m/d/Y";
 $today = $ddd->format($fmt);
 $ddd->add(new DateInterval('P1D'));
 $tomorrow = $ddd->format($fmt);
+
 ?>
+
 <!-- ======================= Start Banner ===================== -->
 			<div class="main-banner full" style="background-image:url({{asset('img/banner.jpg')}});" data-overlay="7">
 				<div class="container">
@@ -16,15 +18,16 @@ $tomorrow = $ddd->format($fmt);
 							<h1>Explore Choice Apartments</h1>
 						</div>
 						
-						<form class="st-search-form-tour icon-frm withlbl" action="{{url('landing-search')}}" id="landing-search-form" method="post">
+						<form class="st-search-form-tour icon-frm withlbl" action="{{url('search')}}" id="landing-search-form" method="post">
 						{!! csrf_field() !!}
+						<input type="hidden" name="dt" id="landing-search-dt"/>
 							<div class="g-field-search">
 								<div class="row">
 									<div class="col-lg-4 col-md-4 border-right mxnbr">
 										<div class="form-group">
 											<i class="ti-location-pin field-icon"></i>
 											<label>Location</label>
-											<input type="text" class="form-control" id="landing-search-location" name="location" placeholder="Where are you going?">
+											<input type="text" class="form-control" id="landing-search-location" value="{{$def['city']}}" placeholder="Where are you going?">
 										</div>
 									</div>
 									
@@ -32,7 +35,7 @@ $tomorrow = $ddd->format($fmt);
 										<div class="form-group">
 											<i class="ti-calendar field-icon"></i>
 											<label>From - To</label>
-											<input type="text" class="form-control check-in-out"id="landing-search-dates" name="dates" value="{{$today}} - {{$tomorrow}}" />
+											<input type="text" class="form-control check-in-out"id="landing-search-dates" value="{{$today}} - {{$tomorrow}}" />
 										</div>
 									</div>
 									
@@ -52,8 +55,8 @@ $tomorrow = $ddd->format($fmt);
 												</div>
 											</div>
 											<div class="dropdown-menu select-guests-dropdown">
-												<input type="hidden" name="adults" id="landing-search-adults" value="1" min="1" max="20">
-												<input type="hidden" name="children" id="landing-search-kids" value="0" min="0" max="20">
+												<input type="hidden" id="landing-search-adults" value="1" min="1" max="20">
+												<input type="hidden" id="landing-search-kids" value="0" min="0" max="20">
 												<div class="dropdown-item-row">
 													<div class="label">Adults</div>
 													<div class="val">

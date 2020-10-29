@@ -32,9 +32,11 @@ class MainController extends Controller {
 		$hasUnpaidOrders = null;
 		$user = null;
 		$messages = [];
+		$apf = [];
 		if(Auth::check())
 		{
 			$user = Auth::user();
+			$apf = $this->helpers->getPreference($user);
 			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
 		}
 		$req = $request->all();
@@ -57,7 +59,7 @@ class MainController extends Controller {
 		shuffle($banners);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
 
-    	return view("index",compact(['user','cart','messages','c','banners','hasUnpaidOrders','popularApartments','ad','signals','plugins']));
+    	return view("index",compact(['user','cart','messages','c','apf','banners','hasUnpaidOrders','popularApartments','ad','signals','plugins']));
     }
 	
 	/**
@@ -809,7 +811,7 @@ class MainController extends Controller {
 			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
 			$apf = $this->helpers->getPreference($user);
 			$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
-			$cart = $this->helpers->getCart($user,$gid);
+			
 		}
 		
 		$req = $request->all();
@@ -825,6 +827,7 @@ class MainController extends Controller {
          }
 		 else
 		 {
+			 $cart = $this->helpers->getCart($user,$gid);
 		    $c = $this->helpers->getCategories();	    
 		    $signals = $this->helpers->signals;	
 	    	$ads = $this->helpers->getAds("wide-ad");
@@ -849,54 +852,28 @@ class MainController extends Controller {
 			 		
 		 }
     }
-	
-	/**
-	 * Handle apartment search from landing page
-	 *
-	 * @return Response
-	 */
-	public function getLandingSearch(Request $request)
-    {
-		return redirect()->intended('/');
-	}
+
 		
 	/**
 	 * Handle apartment search from landing page
 	 *
 	 * @return Response
 	 */
-	public function postLandingSearch(Request $request)
+	public function postSearch(Request $request)
     {
 		$user = null;
 		$messages = [];
 		$apf = [];
-		$cart = [];
-		$def = [
-  'avb' => "available",
-  'city' => "",
-  'state' => "none",
-  'amount' => "0",
-  'rating' => "4",
-  'id_required' => "yes",
-  'children' => "none",
-  'pets' => "no",
-  'max_adults' => "4",
-  'max_children' => "0",
-  'facilities' => []
-];
-		
 		
 		if(Auth::check())
 		{
 			$user = Auth::user();
 			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
 			$apf = $this->helpers->getPreference($user);
-			$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
-			$cart = $this->helpers->getCart($user,$gid);
 		}
 		
 		$req = $request->all();
-		dd($req);
+		
 		$validator = Validator::make($req, [
                              'dt' => 'required'
          ]);
@@ -908,6 +885,9 @@ class MainController extends Controller {
          }
 		 else
 		 {
+			 $gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
+			$cart = $this->helpers->getCart($user,$gid);
+			 #dd($cart);
 		    $c = $this->helpers->getCategories();	    
 		    $signals = $this->helpers->signals;	
 	    	$ads = $this->helpers->getAds("wide-ad");

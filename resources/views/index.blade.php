@@ -1,11 +1,57 @@
-
 @extends('layout')
 
 @section('title',"Welcome")
 
+@section('scripts')
+<?php
+$def = [
+  'avb' => "available",
+  'city' => "",
+  'state' => "none",
+  'amount' => "0",
+  'rating' => "4",
+  'id_required' => "yes",
+  'children' => "none",
+  'pets' => "no",
+  'max_adults' => "4",
+  'max_children' => "0",
+  'facilities' => []
+];
+
+if(count($apf) > 0) $def = $apf;
+?>
+<script>
+let landingSearchDT = {
+				avb: "{{$def['avb']}}",
+				city: "{{$def['city']}}",
+				state: "{{$def['state']}}",
+				max_adults: "{{$def['max_adults']}}",
+				max_children: "{{$def['max_children']}}",
+				amount: "{{$def['amount']}}",
+				id_required: "{{$def['id_required']}}",
+				children: "{{$def['children']}}",
+				pets: "{{$def['pets']}}",
+				facilities: [
+				<?php
+				  if(count($def['facilities']) > 0)
+				  {
+					 foreach($def['facilities'] as $f)
+					 {
+				?>
+				   "{{$f}}"
+				<?php
+					 }
+				  }
+				?>
+				],
+				rating: "{{$def['rating']}}"
+			};
+</script>
+@stop
+
 @section('content')
 
-@include('banner')
+@include('banner',['def' => $def])
 
 <!-- ================= true Facts start ========================= -->
 			<section class="facts">
