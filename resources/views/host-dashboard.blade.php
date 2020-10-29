@@ -105,13 +105,16 @@ let transactionsData1 = [
 											<?php
 											   foreach($transactions as $t)
 											   { 
+											      $item = $t['item'];
+												  $a = $item['apartment'];
+												  $cmedia = $a['cmedia'];
+												  $imgs = $cmedia['images'];
 											?>
-												<li><i class="dash-icon-box ti-files"></i>
-													<strong>Starter Plan</strong>
+												<li><img src="{{$imgs[0]}}" style="width: 80px; height: 80px;">
+													<strong>{{ucwords($a['name'])}}</strong>
 													<ul>
-														<li class="unpaid">Unpaid</li>
-														<li>Order: #20551</li>
-														<li>Date: 01/08/2019</li>
+														<li>Order: #{{$item['order_id']}}</li>
+														<li>Date: {{$t['date']}}</li>
 													</ul>
 													<div class="buttons-to-right">
 														<a href="dashboard-invoice.html" class="button gray">View Invoice</a>
@@ -122,6 +125,7 @@ let transactionsData1 = [
 											 }
                                             ?>											 
 											</ul>
+											<h4><center><a href="{{url('transactions')}}" class="btn btn-theme">View more</a></center></h4>
 											<?php
 											 }
 											 else
@@ -157,6 +161,7 @@ let transactionsData1 = [
 											 }
                                             ?>											 
 											</ul>
+											<h4><center><a href="{{url('messages')}}" class="btn btn-theme">View more</a></center></h4>
 											<?php
 											 }
 											 else

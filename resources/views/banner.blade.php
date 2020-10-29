@@ -1,3 +1,11 @@
+<?php
+$date = date("m/d/Y");
+$ddd = new DateTime($date);
+$fmt = "m/d/Y";
+$today = $ddd->format($fmt);
+$ddd->add(new DateInterval('P1D'));
+$tomorrow = $ddd->format($fmt);
+?>
 <!-- ======================= Start Banner ===================== -->
 			<div class="main-banner full" style="background-image:url({{asset('img/banner.jpg')}});" data-overlay="7">
 				<div class="container">
@@ -8,14 +16,15 @@
 							<h1>Explore Choice Apartments</h1>
 						</div>
 						
-						<form class="st-search-form-tour icon-frm withlbl">
+						<form class="st-search-form-tour icon-frm withlbl" id="landing-search-form" method="post">
+						{!! csrf_field() !!}
 							<div class="g-field-search">
 								<div class="row">
 									<div class="col-lg-4 col-md-4 border-right mxnbr">
 										<div class="form-group">
 											<i class="ti-location-pin field-icon"></i>
 											<label>Location</label>
-											<input type="text" class="form-control" placeholder="Where are you going?">
+											<input type="text" class="form-control" id="landing-search-location" name="location" placeholder="Where are you going?">
 										</div>
 									</div>
 									
@@ -23,7 +32,7 @@
 										<div class="form-group">
 											<i class="ti-calendar field-icon"></i>
 											<label>From - To</label>
-											<input type="text" class="form-control check-in-out" name="dates" value="01/01/2018 - 01/15/2018" />
+											<input type="text" class="form-control check-in-out"id="landing-search-dates" name="dates" value="{{$today}} - {{$tomorrow}}" />
 										</div>
 									</div>
 									
@@ -43,8 +52,8 @@
 												</div>
 											</div>
 											<div class="dropdown-menu select-guests-dropdown">
-												<input type="hidden" name="adults" value="1" min="1" max="20">
-												<input type="hidden" name="children" value="0" min="0" max="20">
+												<input type="hidden" name="adults" id="landing-search-adults" value="1" min="1" max="20">
+												<input type="hidden" name="children" id="landing-search-kids" value="0" min="0" max="20">
 												<div class="dropdown-item-row">
 													<div class="label">Adults</div>
 													<div class="val">
@@ -67,7 +76,7 @@
 								
 									<div class="col-lg-2 p-0 mp-15">
 										<div class="form-group  search">
-											<button class="btn btn-theme btn-search" type="submit">Book Now</button>
+											<button class="btn btn-theme btn-search" id="landing-search-btn">Book Now</button>
 										</div>
 									</div>
 								</div>

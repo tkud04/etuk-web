@@ -572,6 +572,26 @@ $(document).ready(function() {
 			
 	});
 	
+	$('#landing-search-btn').click(e => {
+		e.preventDefault();
+		console.log("landing search");
+		/**
+		let m = $('#host-total-revenue-month').val(), y = $('#host-total-revenue-year').val();
+		
+		if(m == "none" || y == ""){
+			Swal.fire({
+			 icon: 'error',
+             title: "Select a period."
+           });
+		}
+		else{
+			 $(`#host-total-revenue-loading`).fadeIn();
+			 getAnalytics({type: "total-revenue",month: m,year: y});
+		}
+		**/
+		
+	});
+	
 	
 	//APARTMENT
 	$('#apartment-hostchat-btn').click(e => {
