@@ -62,8 +62,9 @@ let transactionsData1 = [
 			<section class="gray">
 				<div class="container-fluid">
 					<div class="row">
+						@include('host-dashboard-sidebar',['user' => $user])
 						
-						<div class="col-lg-12 col-md-12 col-sm-12">
+						<div class="col-lg-9 col-md-8 col-sm-12">
 							<div class="dashboard-wrapers">
 								
 								<!-- Row -->
