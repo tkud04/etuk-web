@@ -35,10 +35,12 @@ let landingSearchDT = {
 				<?php
 				  if(count($def['facilities']) > 0)
 				  {
-					 foreach($def['facilities'] as $f)
+					 for($i = 0; $i < count($def['facilities']); $i++)
 					 {
+						 $f = $def['facilities'][$i];
+						 $ss = $i != count($def['facilities']) - 1 ? "," : ""
 				?>
-				   "{{$f}}"
+				   "{{$f['facility']}}"{{$ss}}
 				<?php
 					 }
 				  }
@@ -107,8 +109,7 @@ let landingSearchDT = {
 					<div class="row">
 						<div class="col-lg-12 col-md-12">
 							<div class="sec-heading center">
-								<p>Popular Apartments</p>
-								<h2>Featured Apartments</h2>
+								<h2>Featured</h2>
 							</div>
 						</div>
 					</div>
@@ -190,7 +191,9 @@ $pt['name'] = $pa['name'];
 								
 								<div class="single-item">
 									<div class="destination-item">
-										<span class="discount-off">-35%</span>
+										<span class="discount-off">
+										  <i class="ti-thumbs-up"></i>35
+										</span>
 										<figure class="destination-list-wrap">
 											<a class="destination-listlink" href="search.html">
 												<img class="cover" src="{{asset('img/cat-1.jpg')}}" alt="room">
@@ -206,7 +209,7 @@ $pt['name'] = $pa['name'];
 								
 								<div class="single-item">
 									<div class="destination-item">
-										<span class="discount-off">-50%</span>
+										<span class="discount-off"> <i class="ti-thumbs-up"></i>35</span>
 										<figure class="destination-list-wrap">
 											<a class="destination-listlink" href="search.html">
 												<img class="cover" src="{{asset('img/cat-7.jpg')}}" alt="room">
@@ -277,102 +280,83 @@ $pt['name'] = $pa['name'];
 			<!-- ========================= End Ads Section ============================ -->
 			
 			
-				<!-- ================= Bouquets start ========================= -->
-			<section class="">
+										<!-- ================= Apartments start ========================= -->
+			<section class="min">
 				<div class="container">
-					
+				
 					<div class="row">
 						<div class="col-lg-12 col-md-12">
 							<div class="sec-heading center">
-								<p>Top Bouquets</p>
-								<h2>Get More For Less!</h2>
+								<h2>Top Apartments</h2>
 							</div>
 						</div>
 					</div>
 					
 					<div class="row">
-						<div class="col-lg-12 col-md-12">
-							<div class="owl-carousel owl-theme" id="lists-slide">
-								<?php
-								  $bouquets = [
-								   [
-								     'apartment_id' => "ETUK88293CD768",
-								     'location' => "Maryland, Lagos",
-									 'img'=> asset("img/des-2.jpg"),
-									 'href' => "javascript:void(0)",
-									 'discount' => "5000",
-									 'amount' => "20000",
-									 'description' => "A lovely description about my apartment and why you would have an amazing time here."
-								   ],
-								   [
-								     'apartment_id' => "ETUK979293CD7",
-								     'location' => "Naby Barracks, Calabar",
-									 'img'=> asset("img/des-3.jpg"),
-									 'href' => "javascript:void(0)",
-									 'discount' => "5000",
-									 'amount' => "20000",
-									 'description' => "A lovely description about my apartment and why you would have an amazing time here."
-								   ],
-								   [
-								     'apartment_id' => "ETUK882956768",
-								     'location' => "Maitama, Abuja",
-									 'img'=> asset("img/des-4.jpg"),
-									 'href' => "javascript:void(0)",
-									 'discount' => "5000",
-									 'amount' => "20000",
-									 'description' => "A lovely description about my apartment and why you would have an amazing time here."
-								   ],
-								   [
-								     'apartment_id' => "ETUK882454CD808",
-								     'location' => "Oshogbo, Osun",
-									 'img'=> asset("img/des-5.jpg"),
-									 'href' => "javascript:void(0)",
-									 'discount' => "5000",
-									 'amount' => "20000",
-									 'description' => "A lovely description about my apartment and why you would have an amazing time here."
-								   ],
-								   [
-								     'apartment_id' => "ETUK57593CD444",
-								     'location' => "Ikoyi, Lagos",
-									 'img'=> asset("img/des-6.jpg"),
-									 'href' => "javascript:void(0)",
-									 'discount' => "5000",
-									 'amount' => "20000",
-									 'description' => "A lovely description about my apartment and why you would have an amazing time here."
-								   ],
-								  ];
-								  
-								  foreach($bouquets as $bq)
-								  {
-								?>
-								<div class="single-item">
-									<div class="destination-discount">
-										<div class="destination-discount-thumb">
-											<a href="{{$bq['href']}}"><img src="{{$bq['img']}}" class="img-responsive" alt="Apartment #{{$bq['apartment_id']}}" /></a>
+						<?php
+						 $popularApartmentss = [
+						   ['img' => asset('img/des-2.jpg'),'href' => "javascript-void(0)", 'tc' => "5",'location' => "Ikeja, Lagos",'stars' => "5", 'amount' => "20000"],
+						   ['img' => asset('img/des-3.jpg'),'href' => "javascript-void(0)", 'tc' => "6",'location' => "Ikorodu, Lagos",'stars' => "3", 'amount' => "10000"],
+						   ['img' => asset('img/des-4.jpg'),'href' => "javascript-void(0)", 'tc' => "5",'location' => "Victoria Island, Lagos",'stars' => "5", 'amount' => "20000"],
+						   ['img' => asset('img/des-5.jpg'),'href' => "javascript-void(0)", 'tc' => "5",'location' => "Bodija, Oyo",'stars' => "3", 'amount' => "7000"],
+						   ['img' => asset('img/des-6.jpg'),'href' => "javascript-void(0)", 'tc' => "7",'location' => "Mokola, Ibadan",'stars' => "4", 'amount' => "10000"],
+						   ['img' => asset('img/des-7.jpg'),'href' => "javascript-void(0)", 'tc' => "7",'location' => "Yaba, Lagos",'stars' => "4", 'amount' => "10000"],
+						 ];
+						 
+						 foreach($popularApartments as $pa)
+						 {
+							 $pt = [];
+$adata = $pa['data'];
+$address = $pa['address'];
+$cmedia = $pa['cmedia'];
+$imgs = $cmedia['images'];
+
+$pt['img'] = $imgs[0];
+$pt['href'] = url('apartment')."?xf=".$pa['url'];
+$pt['tc'] = $adata['max_adults'];
+$pt['location'] = $address['city'].", ".$address['state'];
+$pt['stars'] = $pa['rating'];
+$pt['amount'] = $adata['amount'];
+$pt['name'] = $pa['name'];
+						?>
+						<!-- Single Tour Place -->
+						<div class="col-lg-4 col-md-6 col-sm-12">
+							<div class="tour-simple-wrap">
+								<div class="tour-simple-thumb">
+									<a href="{{$pt['href']}}"><img src="{{$pt['img']}}" class="img-fluid img-responsive" alt="{{$pt['name']}}" style="width: 348px; height: 237px;"/></a>
+								</div>
+								<div class="tour-simple-caption">
+									<div class="ts-caption-left">
+										<h4 class="ts-title">
+										 <a href="{{$pt['href']}}">{{$pt['name']}}</a><br>
+										 <a href="javascript:void(0)">{{$pt['location']}}</a>
+										</h4>
+										<span>{{$pt['tc']}} adults max.</span>
+									</div>
+									<div class="ts-caption-right">
+										<div class="ts-caption-rating">
+										   @for($i = 0; $i < $pt['stars']; $i++)
+											<i class="ti-star filled"></i>
+										   @endfor
+										   @for($i = 0; $i < 5 - $pt['stars']; $i++)
+											<i class="ti-star"></i>
+										   @endfor
 										</div>
-										<div class="destination-discount-caption">
-											<div class="discount-box">
-												<h4 class="discount-title"><sup class="current-title">&#8358;</sup>{{number_format($bq['discount'],2)}}</h4>
-												<span>Off</span>
-											</div>
-											<h4 class="destination-title"><a href="{{$bq['href']}}">{{$bq['location']}}</a></h4>
-											<p>{{$bq['description']}}</p>
-											<h5 class="destination-price theme-cl"><span>From</span>&#8358;{{$bq['amount'] - $bq['discount']}}</h5>
-											<a href="{{$bq['href']}}" class="check-btn">Check<i class="ti-arrow-right"></i></a>
-										</div>
+										<h5 class="ts-price">&#8358;{{number_format($pt['amount'],2)}}</h5>
 									</div>
 								</div>
-								<?php
-								  }
-								?>
-							
 							</div>
 						</div>
+						<?php
+						 }
+						?>
+						
+						
 					</div>
-					
+				
 				</div>
 			</section>
-			<!-- ========================= End Bouquets Section ============================ -->
+			<!-- ========================= End Apartment Section ============================ -->
 
       @include('recent-blog')
       @include('newsletter-cta')
