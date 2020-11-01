@@ -347,7 +347,7 @@ const toggleFacility = dt => {
 
 const aptAddImage = dt => {
 	let i = $(`#${dt.id}-images`), ctr = $(`#${dt.id}-images div.row`).length;
-	let sciText = dt.id == "add-apartment" ? "<a href='javascript:void(0)' onclick=\"aptSetCoverImage('${ctr}')\" class='btn btn-theme btn-sm'>Set as cover image</a>" : "";
+	let sciText = dt.id == "add-apartment" ? `<a href='javascript:void(0)' onclick="aptSetCoverImage('${ctr}')" class='btn btn-theme btn-sm'>Set as cover image</a>` : "";
 	
 	i.append(`
 			  <div id="${dt.id}-image-div-${ctr}" class="row">
@@ -579,6 +579,9 @@ const addApartment = (dt) => {
 			   let hh = ``;
 			   if(res.message == "validation"){
 				 hh = `Please fill all required fields and try again.`;  
+			   }
+			   else if(res.message == "network"){
+				 hh = `A network error has occured, please check your connection and try again.`;  
 			   }
 			   else if(res.message == "Technical error"){
 				 hh = `A technical error has occured, please try again.`;  

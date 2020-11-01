@@ -788,8 +788,16 @@ function isDuplicateUser($data)
           	$ret = [];
           	$dt = ['cloud_name' => "etuk-ng"];
               $preset = "uwh1p75e";
-          	$rett = \Cloudinary\Uploader::unsigned_upload($path,$preset,$dt);
-                                                      
+			  
+          	try
+			  {
+				$rett = \Cloudinary\Uploader::unsigned_upload($path,$preset,$dt);  
+			  }
+			  catch(Throwable $e)
+			  {
+				  $rett = ['status' => "error",'message' => "network"];
+			  }   
+			  
              return $rett; 
          }
 		 

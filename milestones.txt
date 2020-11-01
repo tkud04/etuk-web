@@ -9,13 +9,10 @@ Send message
 Delete message
 
 Host
-Dashboard
 Apartment mode changed when booked (available/occupied)
 
 Guest
-Search apartments
 View apartment(video tour,map)
-Dashboard
 Apartment providers contact form
 
 Blog

@@ -1682,29 +1682,49 @@ class MainController extends Controller {
 		 else
 		 {
 			    $ird = [];
-
+                $networkError = false;
+				
                     for($i = 0; $i < $req['img_count']; $i++)
                     {
             		  $img = $request->file("add-apartment-image-".$i);
-             	      $imgg = $this->helpers->uploadCloudImage($img->getRealPath());
-					  $ci = ($req['cover'] != null && $req['cover'] == $i) ? "yes": "no";
-					  $temp = [
+					  $imgg = $this->helpers->uploadCloudImage($img->getRealPath());
+						
+					  if(isset($imgg['status']) && $imgg['status'] == "error")
+					  {
+						  $networkError = true;
+						  break;
+					  }
+					  else
+					  {
+						$ci = ($req['cover'] != null && $req['cover'] == $i) ? "yes": "no";
+					    $temp = [
 					       'public_id' => $imgg['public_id'],
 					       'delete_token' => $imgg['delete_token'],
 					       'deleted' => "no",
 					       'ci' => $ci,
 						   'type' => "image"
-						 ];
-			          array_push($ird, $temp);
-                    } 
+						  ];
+			             array_push($ird, $temp);  
+					  }
+             	        
+                      										
+					}
 					
-					$req['avb'] = "available";
-					$req['payment_type'] = "card";
-					$req['user_id'] = $user->id;
-					$req['ird'] = $ird;
+					if($networkError)
+					{
+						$ret['message'] = "network";
+					}
+					else
+					{
+						$req['avb'] = "available";
+					    $req['payment_type'] = "card";
+					    $req['user_id'] = $user->id;
+					    $req['ird'] = $ird;
 				 
-			$this->helpers->createApartment($req);
-			$ret = ['status' => "ok"];
+			            $this->helpers->createApartment($req);
+			             $ret = ['status' => "ok"];
+					}
+					
 		 }
 		 
 		 return json_encode($ret);
