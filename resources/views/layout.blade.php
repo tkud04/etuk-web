@@ -27,6 +27,13 @@
 		
 		<link rel="icon" type="image/png" href="{{asset('img/favicon.png')}}" sizes="16x16">
 		
+		
+<!-- DO NOT EDIT!! start of plugins -->
+@foreach($plugins as $p)
+  {!! $p['value'] !!}
+@endforeach
+<!-- DO NOT EDIT!! end of plugins -->
+		
 		<script src="{{asset('js/jquery.min.js')}}"></script>
 		<script src="{{asset('js/popper.min.js')}}"></script>
 		<script src="{{asset('js/bootstrap.min.js')}}"></script>
