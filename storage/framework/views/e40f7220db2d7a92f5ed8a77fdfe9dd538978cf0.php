@@ -27,6 +27,14 @@
 		
 		<link rel="icon" type="image/png" href="<?php echo e(asset('img/favicon.png')); ?>" sizes="16x16">
 		
+		
+<!-- DO NOT EDIT!! start of plugins -->
+<?php $__currentLoopData = $plugins; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $p): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+  <?php echo $p['value']; ?>
+
+<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+<!-- DO NOT EDIT!! end of plugins -->
+		
 		<script src="<?php echo e(asset('js/jquery.min.js')); ?>"></script>
 		<script src="<?php echo e(asset('js/popper.min.js')); ?>"></script>
 		<script src="<?php echo e(asset('js/bootstrap.min.js')); ?>"></script>
