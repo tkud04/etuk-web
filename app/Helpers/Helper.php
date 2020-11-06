@@ -2767,10 +2767,44 @@ function createSocial($data)
            }
 		   
 		   
+		    function addTicket($dt)
+		   {
+			   #dd($dt);
+			   if($dt['id'] == null) $dt['id'] = "";
+			   $u = User::where('email',$dt['email'])->first();
+			   $ret = "error";
+			   
+			   if($u != null)
+			   {
+				   $temp = [
+				      'user_id' => $u->id,
+				      'subject' => $dt['subject'],
+				      'type' => $dt['type'],
+				      'resource_id' => $dt['id'],
+					  
+				   ];
+
+				   $tk = $this->createTicket($temp);
+				   
+				   if($tk != null)
+				   {
+					   $temp = [
+					     'ticket_id' => $tk->ticket_id,
+						 'msg' => $dt['msg'],
+						 'added_by' => $dt['added_by']
+					   ];
+					   $ti = $this->createTicketItem($temp);
+				   }
+				   $ret = "ok";
+			   }
+			   
+			   return $ret;
+		   }
+		   
 		   function createTicket($dt)
 		   {
 			    $ret = Tickets::where('user_id',$dt['user_id'])
-				                ->where('apartment_id',$dt['apartment_id'])
+				                ->where('resource_id',$dt['resource_id'])
 								->where('status',"unresolved")->first();
 				
 				if($ret == null)
@@ -2779,7 +2813,8 @@ function createSocial($data)
 					$ret = Tickets::create(['user_id' => $dt['user_id'], 
                                              'ticket_id' => $tid,
                                              'subject' => $dt['subject'],
-                                             'apartment_id' => $dt['apartment_id'],
+                                             'type' => $dt['type'],
+                                             'resource_id' => $dt['resource_id'],
                                              'status' => "unresolved",
                                             ]);
 				}
@@ -2790,7 +2825,7 @@ function createSocial($data)
 		   
 		   function createTicketItem($dt)
 		   {
-					$ret = TicketItems::create(['ticket_id' => $tid,
+					$ret = TicketItems::create(['ticket_id' => $dt['ticket_id'],
                                              'msg' => $dt['msg'],
                                              'added_by' => $dt['added_by']
                                             ]);
@@ -2801,7 +2836,8 @@ function createSocial($data)
 		   function getTicket($id)
 		   {
 			   $ret = [];
-			   $t = Tickets::where('id',$id)->first();
+			   $t = Tickets::where('id',$id)
+			               ->orWhere('ticket_id',$id)->first();
 			   
 			   if($t != null)
                {
@@ -2811,13 +2847,28 @@ function createSocial($data)
 				  $temp['user'] = $this->getUser($t->user_id);
 				  $temp['ticket_id'] = $t->ticket_id;
 				  $temp['subject'] = $t->subject;
+				  $temp['type'] = $t->type;
 				  $temp['items'] = $this->getTicketItems($t->ticket_id);
-				  $temp['apartment_id'] = $t->apartment_id;
+				  $temp['resource_id'] = $t->resource_id;
 				  $temp['status'] = $t->status;
-				  $temp['apartment'] = $this->getApartment($t->apartment_id);
-				  $temp['date'] = $t->created_at->format("jS F, Y");
-     			  $ret = $temp;
-               }
+
+				    if($t->type == "apartment")
+				    {
+					  $temp['resource'] = $this->getApartment($t->resource_id);
+				    }
+				    else if($t->type == "billing")
+				    {
+					  $temp['resource'] = $this->getOrder($t->resource_id);  
+				    }
+					else
+				    {
+					  $temp['resource'] = [];  
+				    }
+					$temp['date'] = $t->created_at->format("jS F, Y");
+				  }
+				  
+				  
+     			  $ret = $temp;               
 
                return $ret;			   
 		   }
@@ -2875,6 +2926,29 @@ function createSocial($data)
 					  $temp = $this->getTicket($t->id);
 					  array_push($ret,$temp);
 				  }
+               }                         
+                                  
+                return $ret;
+           }
+
+		   
+		   function removeTicket($dt)
+           {
+           	$ret = [];
+			$t = Tickets::where('ticket_id',$dt['ticket_id'])
+			            ->where('user_id',$dt['user_id'])->first();
+			  
+              if($t != null)
+               {
+				   $tis = TicketItems::where('ticket_id',$id)->get();			  
+                    if($tis != null)
+					{
+						foreach($tis as $ti)
+				        {
+					      $ti->delete();
+					    }
+					}
+				   $t->delete(); 
                }                         
                                   
                 return $ret;
