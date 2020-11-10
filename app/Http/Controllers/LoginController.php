@@ -347,9 +347,10 @@ class LoginController extends Controller {
 			return redirect()->intended('/');
 		}
 		$signals = $this->helpers->signals;
+		$banner = $this->helpers->getBanner();
 		$plugins = $this->helpers->getPlugins();
 		$cart = [];
-         return view('forgot-password', compact(['cart','user','signals','plugins']));
+         return view('forgot-password', compact(['cart','user','signals','plugins','banner']));
     }
     
     /**
@@ -428,6 +429,7 @@ class LoginController extends Controller {
 			return redirect()->intended('/');
 		}
 		$signals = $this->helpers->signals;
+		$banner = $this->helpers->getBanner();
 		$plugins = $this->helpers->getPlugins();
 		$cart = [];
             $req = $request->all();
@@ -441,7 +443,7 @@ class LoginController extends Controller {
                 	return redirect()->back()->withErrors("The code is invalid or has expired. ","errors"); 
                 }
                 $v = ($uu->role == "user") ? 'reset' : 'admin.reset';
-				return view($v,compact(['cart','user','uu','plugins']));
+				return view($v,compact(['cart','user','uu','plugins','banner']));
             }
             
             else

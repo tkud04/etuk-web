@@ -192,8 +192,9 @@ class PaymentController extends Controller {
 		            shuffle($ads);
 		            $ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
 	        	    $signals = $this->helpers->signals;
+					$banner = $this->helpers->getBanner();
 			
-			        return view("cps",compact(['user','cart','c','messages','ad','signals','plugins']));
+			        return view("cps",compact(['user','cart','c','messages','ad','signals','plugins','banner']));
                }
                else
                {
@@ -307,8 +308,9 @@ class PaymentController extends Controller {
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
 		$signals = $this->helpers->signals;
+		$banner = $this->helpers->getBanner();
 			
-			return view("cps",compact(['user','cart','c','messages','ad','signals','plugins']));
+			return view("cps",compact(['user','cart','c','messages','ad','signals','plugins','banner']));
         }
         else
         {
