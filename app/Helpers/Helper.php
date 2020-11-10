@@ -3209,28 +3209,31 @@ function createSocial($data)
 		       return json_encode($s);
 		   }	
 
-             function getBanners()
+             function getBanner($type="top-header")
 		   {
-			   $ret = [];
-			   $banners = Banners::where('id',">",'0')
-			                     ->where('status',"enabled")->get();
+			   $ret = "";
+			   $temp = "";
+			   $b = Banners::where('cover',"yes")
+			                     ->where('status',"enabled")
+			                     ->where('type',$type)->first();
 			   #dd($ads);
-			   if(!is_null($banners))
+			   if(!is_null($b))
 			   {
-				   foreach($banners as $b)
+				  $temp = $b['url'];
+			   }
+			   else
+			   {
+				   $banners = Banners::where('status',"enabled")
+			                     ->where('type',$type)->get();
+				   if($banners != null)
 				   {
-					   $temp = [];
-					   $temp['id'] = $b->id;
-					   $img = $b->img;
-					   $temp['img'] = $this->getCloudinaryImage($img);
-					   $temp['title'] = $b->title;
-					   $temp['subtitle'] = $b->subtitle;
-					   $temp['copy'] = $b->copy;
-					   $temp['status'] = $b->status;
-					   array_push($ret,$temp);
+					   $b = $banners[0];
+					   $temp = $b->url;
 				   }
 			   }
 			   
+			   if($temp != "") $ret = $this->getCloudinaryImage($temp);
+			  # dd($ret);
 			   return $ret;
 		   }
 

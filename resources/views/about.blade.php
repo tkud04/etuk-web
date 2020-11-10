@@ -11,7 +11,7 @@ $subtitle = "Who we are & What we strive for";
 @stop
 
 @section('content')
-@include('banner-2',['title' => $title,'subtitle' => $subtitle])
+@include('banner-2',['title' => $title,'subtitle' => $subtitle,'banner' => $banner])
 
 <!-- ============================ Our Story Start ================================== -->
 			<section>

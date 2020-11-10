@@ -9,7 +9,7 @@ $tomorrow = $ddd->format($fmt);
 ?>
 
 <!-- ======================= Start Banner ===================== -->
-			<div class="main-banner full" style="background-image:url({{asset('img/banner.jpg')}});" data-overlay="7">
+			<div class="main-banner full" style="background-image:url({{$banner}});" data-overlay="7">
 				<div class="container">
 					<div class="col-md-12 col-sm-12">
 					

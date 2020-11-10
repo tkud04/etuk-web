@@ -54,7 +54,7 @@ let landingSearchDT = {
 
 <?php $__env->startSection('content'); ?>
 
-<?php echo $__env->make('banner',['def' => $def], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php echo $__env->make('banner',['def' => $def,'banner' => $banner], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
 <!-- ================= true Facts start ========================= -->
 			<section class="facts">

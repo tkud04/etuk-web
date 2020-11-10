@@ -53,7 +53,7 @@ let landingSearchDT = {
 
 @section('content')
 
-@include('banner',['def' => $def])
+@include('banner',['def' => $def,'banner' => $banner])
 
 <!-- ================= true Facts start ========================= -->
 			<section class="facts">

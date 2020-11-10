@@ -47,7 +47,7 @@ class MainController extends Controller {
 		$signals = $this->helpers->signals;
 		
 		$ads = $this->helpers->getAds("wide-ad");
-		$banners = $this->helpers->getBanners();
+		$banner = $this->helpers->getBanner("landing");
 		$plugins = $this->helpers->getPlugins();
 		#$this->helpers->populateTips();
 		
@@ -56,10 +56,9 @@ class MainController extends Controller {
 		$popularApartments = $this->helpers->getPopularApartments();
 		
 		shuffle($ads);
-		shuffle($banners);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
 
-    	return view("index",compact(['user','cart','messages','c','apf','banners','hasUnpaidOrders','popularApartments','ad','signals','plugins']));
+    	return view("index",compact(['user','cart','messages','c','apf','hasUnpaidOrders','popularApartments','ad','signals','plugins','banner']));
     }
 	
 	/**
@@ -84,16 +83,15 @@ class MainController extends Controller {
 		$signals = $this->helpers->signals;
 		
 		$ads = $this->helpers->getAds("wide-ad");
-		$banners = $this->helpers->getBanners();
+		$banner = $this->helpers->getBanner("landing");
 		$plugins = $this->helpers->getPlugins();
 		
 		#dd($hasUnpaidOrders);
 		
 		shuffle($ads);
-		shuffle($banners);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
 
-    	return view("temp",compact(['user','cart','messages','c','banners','ad','signals','plugins']));
+    	return view("temp",compact(['user','cart','messages','c','banner','ad','signals','plugins','banner']));
     }
 
 	/**
@@ -114,6 +112,7 @@ class MainController extends Controller {
 		$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
 		$cart = $this->helpers->getCart($user,$gid);
 		$c = $this->helpers->getCategories();
+		$banner = $this->helpers->getBanner();
 		//dd($bs);
 		$signals = $this->helpers->signals;
 		
@@ -125,7 +124,7 @@ class MainController extends Controller {
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
 
-    	return view("about",compact(['user','cart','messages','c','ad','signals','plugins']));
+    	return view("about",compact(['user','cart','messages','c','ad','banner','signals','plugins','banner']));
     }
 	
 	/**
@@ -148,6 +147,7 @@ class MainController extends Controller {
 		$c = $this->helpers->getCategories();
 		//dd($bs);
 		$signals = $this->helpers->signals;
+		$banner = $this->helpers->getBanner();
 		
 		$ads = $this->helpers->getAds("wide-ad");
 		$plugins = $this->helpers->getPlugins();
@@ -157,7 +157,7 @@ class MainController extends Controller {
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
 
-    	return view("terms",compact(['user','cart','messages','c','ad','signals','plugins']));
+    	return view("terms",compact(['user','cart','messages','c','ad','signals','plugins','banner']));
     }
 	
 	/**
@@ -180,6 +180,7 @@ class MainController extends Controller {
 		$c = $this->helpers->getCategories();
 		//dd($bs);
 		$signals = $this->helpers->signals;
+		$banner = $this->helpers->getBanner();
 		
 		$ads = $this->helpers->getAds("wide-ad");
 		$plugins = $this->helpers->getPlugins();
@@ -189,7 +190,7 @@ class MainController extends Controller {
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
 
-    	return view("privacy",compact(['user','cart','messages','c','ad','signals','plugins']));
+    	return view("privacy",compact(['user','cart','messages','c','ad','signals','plugins','banner']));
     }
 	
 	/**
@@ -219,6 +220,7 @@ class MainController extends Controller {
 		$c = $this->helpers->getCategories();
 		//dd($bs);
 		$signals = $this->helpers->signals;
+		$banner = $this->helpers->getBanner();
 		
 		$ads = $this->helpers->getAds("wide-ad");
 		$plugins = $this->helpers->getPlugins();
@@ -234,7 +236,7 @@ class MainController extends Controller {
 			$revenueData = $this->helpers->getTransactionData($user);
 			$bsa = $this->helpers->getBestSellingApartments($user);
 			#dd($transactions);
-			$cpt = ['user','cart','messages','transactions','revenueData','bsa','c','ad','signals','plugins'];
+			$cpt = ['user','cart','messages','transactions','revenueData','bsa','c','ad','signals','plugins','banner'];
 			$v = "host-dashboard";
 		}
 		else if($user->mode == "guest")
@@ -243,7 +245,7 @@ class MainController extends Controller {
 			$sapts = $this->helpers->getSavedApartments($user);
 			$orders = $this->helpers->getOrders($user);
 			#dd($sps);
-			$cpt = ['user','cart','messages','sps','sapts','orders','c','ad','signals','plugins'];
+			$cpt = ['user','cart','messages','sps','sapts','orders','c','ad','signals','plugins','banner'];
 			$v = "guest-dashboard";
 		}
 		
@@ -278,6 +280,7 @@ class MainController extends Controller {
 		$c = $this->helpers->getCategories();
 		//dd($bs);
 		$signals = $this->helpers->signals;
+		$banner = $this->helpers->getBanner();
 		
 		$ads = $this->helpers->getAds("wide-ad");
 		$plugins = $this->helpers->getPlugins();
@@ -287,7 +290,7 @@ class MainController extends Controller {
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
         
-    	return view("saved-apartments",compact(['user','cart','messages','c','ad','sapts','signals','plugins']));
+    	return view("saved-apartments",compact(['user','cart','messages','c','ad','sapts','signals','plugins','banner']));
     }
 	
 	/**
@@ -360,6 +363,8 @@ class MainController extends Controller {
 		$c = $this->helpers->getCategories();
 		//dd($bs);
 		$signals = $this->helpers->signals;
+		$banner = $this->helpers->getBanner();
+		
 		$states = $this->helpers->states;
 		$services = $this->helpers->getServices();
 		
@@ -371,7 +376,7 @@ class MainController extends Controller {
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
         
-    	return view("apartment-preferences",compact(['user','cart','messages','c','states','services','ad','apf','signals','plugins']));
+    	return view("apartment-preferences",compact(['user','cart','messages','c','states','services','ad','apf','signals','plugins','banner']));
     }
 	
 	/**
@@ -527,6 +532,7 @@ class MainController extends Controller {
 		$c = $this->helpers->getCategories();
 		//dd($bs);
 		$signals = $this->helpers->signals;
+		$banner = $this->helpers->getBanner();
 		
 		$ads = $this->helpers->getAds("wide-ad");
 		$plugins = $this->helpers->getPlugins();
@@ -539,7 +545,7 @@ class MainController extends Controller {
 			$transactions = $this->helpers->getTransactions($user);
 			$revenueData = $this->helpers->getTransactionData($user);
 			$bsa = $this->helpers->getBestSellingApartments($user);
-			$cpt = ['user','cart','messages','transactions','revenueData','bsa','c','ad','signals','plugins'];
+			$cpt = ['user','cart','messages','transactions','revenueData','bsa','c','ad','signals','plugins','banner'];
 			$v = "analytics";
 		
     	return view($v,compact($cpt));
@@ -572,6 +578,7 @@ class MainController extends Controller {
 		$c = $this->helpers->getCategories();
 		//dd($bs);
 		$signals = $this->helpers->signals;
+		$banner = $this->helpers->getBanner();
 		
 		$ads = $this->helpers->getAds("wide-ad");
 		$plugins = $this->helpers->getPlugins();
@@ -581,7 +588,7 @@ class MainController extends Controller {
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
         
-    	return view("profile",compact(['user','cart','messages','c','ad','u','signals','plugins']));
+    	return view("profile",compact(['user','cart','messages','c','ad','u','signals','plugins','banner']));
     }
 	
 	/**
@@ -686,6 +693,7 @@ class MainController extends Controller {
 		$c = $this->helpers->getCategories();
 		//dd($bs);
 		$signals = $this->helpers->signals;
+		$banner = $this->helpers->getBanner();
 		
 		$ads = $this->helpers->getAds("wide-ad");
 		$plugins = $this->helpers->getPlugins();
@@ -695,7 +703,7 @@ class MainController extends Controller {
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
         
-    	return view("messages",compact(['user','cart','messages','c','ad','u','signals','plugins']));
+    	return view("messages",compact(['user','cart','messages','c','ad','u','signals','plugins','banner']));
     }
 	
 	
@@ -723,6 +731,8 @@ class MainController extends Controller {
 		    $c = $this->helpers->getCategories();
 		    //dd($bs);
 		    $signals = $this->helpers->signals;
+			$banner = $this->helpers->getBanner();
+			
 		    $states = $this->helpers->states;
 		
 	    	$ads = $this->helpers->getAds("wide-ad");
@@ -737,7 +747,7 @@ class MainController extends Controller {
 				$isSaved = $user == null ? false : $this->helpers->isApartmentSaved($user->id,$apartment['id']);
 			   shuffle($ads);
 		       $ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
-    	       return view("apartment",compact(['user','cart','messages','c','isSaved','ad','apartment','services','tips','states','signals','plugins']));
+    	       return view("apartment",compact(['user','cart','messages','c','isSaved','ad','apartment','services','tips','states','signals','plugins','banner']));
 			}
 			else
 			{
@@ -779,7 +789,8 @@ class MainController extends Controller {
 		    $c = $this->helpers->getCategories();
 		    
 		    $signals = $this->helpers->signals;
-		
+		    $banner = $this->helpers->getBanner();
+			
 	    	$ads = $this->helpers->getAds("wide-ad");
 		    $plugins = $this->helpers->getPlugins();
 		
@@ -790,7 +801,7 @@ class MainController extends Controller {
 		       shuffle($ads);
 		       $ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
         
-    	       return view("apartments",compact(['user','cart','messages','c','ad','apf','apartments','services','states','signals','plugins']));		
+    	       return view("apartments",compact(['user','cart','messages','c','ad','apf','apartments','services','states','signals','plugins','banner']));		
     }
 
 	/**
@@ -830,6 +841,8 @@ class MainController extends Controller {
 			 $cart = $this->helpers->getCart($user,$gid);
 		    $c = $this->helpers->getCategories();	    
 		    $signals = $this->helpers->signals;	
+			$banner = $this->helpers->getBanner();
+			
 	    	$ads = $this->helpers->getAds("wide-ad");
 			shuffle($ads);
 		    $ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
@@ -842,7 +855,7 @@ class MainController extends Controller {
 			#dd($results);
 			if(count($results) > 0)
 			{
-				return view("search-results",compact(['user','cart','messages','apf','c','ad','results','services','states','signals','plugins']));
+				return view("search-results",compact(['user','cart','messages','apf','c','ad','results','services','states','signals','plugins','banner']));
 			}
 			else
 			{
@@ -890,6 +903,8 @@ class MainController extends Controller {
 			 #dd($cart);
 		    $c = $this->helpers->getCategories();	    
 		    $signals = $this->helpers->signals;	
+			$banner = $this->helpers->getBanner();
+			
 	    	$ads = $this->helpers->getAds("wide-ad");
 			shuffle($ads);
 		    $ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
@@ -902,7 +917,7 @@ class MainController extends Controller {
 			#dd($results);
 			if(count($results) > 0)
 			{
-				return view("search-results",compact(['user','cart','messages','apf','c','ad','results','services','states','signals','plugins']));
+				return view("search-results",compact(['user','cart','messages','apf','c','ad','results','services','states','signals','plugins','banner']));
 			}
 			else
 			{
@@ -1181,7 +1196,7 @@ class MainController extends Controller {
 		       shuffle($ads);
 		       $ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
               # dd($cart);
-    	       return view("cart",compact(['user','cart','messages','c','ad','signals','plugins']));		
+    	       return view("cart",compact(['user','cart','messages','c','ad','signals','plugins','banner']));		
 		**/
 		return redirect()->intended('/');
     }
@@ -1310,6 +1325,7 @@ class MainController extends Controller {
 		$c = $this->helpers->getCategories();
 		//dd($bs);
 		$signals = $this->helpers->signals;
+		$banner = $this->helpers->getBanner();
 		
 		$ads = $this->helpers->getAds("wide-ad");
 		$plugins = $this->helpers->getPlugins();
@@ -1320,7 +1336,7 @@ class MainController extends Controller {
 		$ref = "ETUK_".$this->helpers->getRandomString(6);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
 
-    	return view("checkout",compact(['user','cart','sps','messages','secure','ref','c','ad','signals','plugins']));
+    	return view("checkout",compact(['user','cart','sps','messages','secure','ref','c','ad','signals','plugins','banner']));
     }
 	
 	
@@ -1348,6 +1364,7 @@ class MainController extends Controller {
 		$c = $this->helpers->getCategories();
 		//dd($bs);
 		$signals = $this->helpers->signals;
+		$banner = $this->helpers->getBanner();
 		
 		$ads = $this->helpers->getAds("wide-ad");
 		$plugins = $this->helpers->getPlugins();
@@ -1358,7 +1375,7 @@ class MainController extends Controller {
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
 
-    	return view("orders",compact(['user','cart','messages','orders','c','ad','signals','plugins']));
+    	return view("orders",compact(['user','cart','messages','orders','c','ad','signals','plugins','banner']));
     }
 	
 	/**
@@ -1385,6 +1402,7 @@ class MainController extends Controller {
 		$c = $this->helpers->getCategories();
 		//dd($bs);
 		$signals = $this->helpers->signals;
+		$banner = $this->helpers->getBanner();
 		
 		$ads = $this->helpers->getAds("wide-ad");
 		$plugins = $this->helpers->getPlugins();
@@ -1395,7 +1413,7 @@ class MainController extends Controller {
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
 
-    	return view("sps",compact(['user','cart','messages','sps','c','ad','signals','plugins']));
+    	return view("sps",compact(['user','cart','messages','sps','c','ad','signals','plugins','banner']));
     }
 	
 	/**
@@ -1572,6 +1590,7 @@ class MainController extends Controller {
 		$c = $this->helpers->getCategories();
 		//dd($bs);
 		$signals = $this->helpers->signals;
+		$banner = $this->helpers->getBanner();
 		
 		$ads = $this->helpers->getAds("wide-ad");
 		$plugins = $this->helpers->getPlugins();
@@ -1581,7 +1600,7 @@ class MainController extends Controller {
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
         
-    	return view("my-apartments",compact(['user','cart','messages','c','ad','apartments','signals','plugins']));
+    	return view("my-apartments",compact(['user','cart','messages','c','ad','apartments','signals','plugins','banner']));
     }
 	
 	/**
@@ -1616,6 +1635,8 @@ class MainController extends Controller {
 		$c = $this->helpers->getCategories();
 		//dd($bs);
 		$signals = $this->helpers->signals;
+		$banner = $this->helpers->getBanner();
+		
 		$states = $this->helpers->states;
 		$services = $this->helpers->getServices();
 		
@@ -1625,7 +1646,7 @@ class MainController extends Controller {
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
         
-    	return view("add-apartment",compact(['user','cart','messages','c','ad','services','states','signals','plugins']));
+    	return view("add-apartment",compact(['user','cart','messages','c','ad','services','states','signals','plugins','banner']));
     }
 	
 	/**
@@ -1764,6 +1785,8 @@ class MainController extends Controller {
 		    $c = $this->helpers->getCategories();
 		    //dd($bs);
 		    $signals = $this->helpers->signals;
+			$banner = $this->helpers->getBanner();
+			
 		    $states = $this->helpers->states;
 		
 	    	$ads = $this->helpers->getAds("wide-ad");
@@ -1775,7 +1798,7 @@ class MainController extends Controller {
 		    shuffle($ads);
 		    $ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
         
-    	    return view("my-apartment",compact(['user','cart','messages','c','ad','services','apartment','states','signals','plugins']));
+    	    return view("my-apartment",compact(['user','cart','messages','c','ad','services','apartment','states','signals','plugins','banner']));
 		}
 		else
 		{
@@ -2000,6 +2023,8 @@ class MainController extends Controller {
 		    $c = $this->helpers->getCategories();
 		    //dd($bs);
 		    $signals = $this->helpers->signals;
+			$banner = $this->helpers->getBanner();
+			
 		    $states = $this->helpers->states;
 		
 	    	$ads = $this->helpers->getAds("wide-ad");
@@ -2011,7 +2036,7 @@ class MainController extends Controller {
 		    shuffle($ads);
 		    $ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
         
-    	    return view("receipt",compact(['user','cart','messages','c','ad','services','order','states','signals','plugins']));
+    	    return view("receipt",compact(['user','cart','messages','c','ad','services','order','states','signals','plugins','banner']));
 		}
 		else
 		{

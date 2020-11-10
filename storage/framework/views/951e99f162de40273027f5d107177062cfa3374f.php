@@ -11,7 +11,7 @@ $subtitle = "Who we are & What we strive for";
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
-<?php echo $__env->make('banner-2',['title' => $title,'subtitle' => $subtitle], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php echo $__env->make('banner-2',['title' => $title,'subtitle' => $subtitle,'banner' => $banner], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
 <!-- ============================ Our Story Start ================================== -->
 			<section>

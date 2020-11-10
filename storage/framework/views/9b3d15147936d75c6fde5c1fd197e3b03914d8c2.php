@@ -1,5 +1,5 @@
 			<!-- ============================ Page Title Start================================== -->
-			<div class="image-cover page-title" style="background:url(<?php echo e(asset('img/banner-5.jpg')); ?>) no-repeat;" data-overlay="6">
+			<div class="image-cover page-title" style="background:url(<?php echo e($banner); ?>) no-repeat;" data-overlay="6">
 				<div class="container">
 					<div class="row">
 						<div class="col-lg-12 col-md-12">
