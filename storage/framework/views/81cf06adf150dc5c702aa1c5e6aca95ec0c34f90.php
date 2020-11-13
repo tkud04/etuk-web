@@ -1,6 +1,7 @@
 <?php
 $cart = ['data' => [],'subtotal' => 0];
 $messages = [];
+$plugins = [];
 $title = "Page Not Found";
 $subtitle = "We checked very hard but could not find what you were looking for";
 ?>

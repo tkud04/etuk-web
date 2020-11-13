@@ -17,6 +17,7 @@ Route::get('temp', 'MainController@getTemp');
 Route::get('about', 'MainController@getAbout');
 Route::get('terms', 'MainController@getTerms');
 Route::get('privacy', 'MainController@getPrivacy');
+Route::get('contact', 'MainController@getContact');
 
 //Authentication
 Route::get('signup', 'LoginController@getSignup');

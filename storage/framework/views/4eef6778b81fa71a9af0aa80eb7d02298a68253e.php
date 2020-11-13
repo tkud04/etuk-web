@@ -2,16 +2,16 @@
 $title = "Contact Us";
 $subtitle = "We'd like to hear from you";
 ?>
-@extends('layout')
 
-@section('title',"Contact Us")
 
-@section('top-header')
-@include('top-header')
-@stop
+<?php $__env->startSection('title',"Contact Us"); ?>
 
-@section('content')
-@include('banner-2',['title' => $title,'subtitle' => $subtitle])
+<?php $__env->startSection('top-header'); ?>
+<?php echo $__env->make('top-header', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+<?php echo $__env->make('banner-2',['title' => $title,'subtitle' => $subtitle], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
 	<!-- ============================ Page Title End ================================== -->
 			
@@ -44,10 +44,10 @@ $subtitle = "We'd like to hear from you";
 							<div class="contact-box">
 								
 								
-								<h4>{{$ct['designation']}}</h4>
-								{{$ct['name']}}<br>
-								<i class="ti-email"></i> <a style="margin-bottom: 10px;" href="mailto:{{$ct['email']}}">{{$ct['email']}}</a><br>
-								<i class="ti-headphone"></i> <a style="margin-bottom: 10px;" href="tel:{{$ct['phone']}}">{{$ct['phone']}}</a>
+								<h4><?php echo e($ct['designation']); ?></h4>
+								<?php echo e($ct['name']); ?><br>
+								<i class="ti-email"></i> <a style="margin-bottom: 10px;" href="mailto:<?php echo e($ct['email']); ?>"><?php echo e($ct['email']); ?></a><br>
+								<i class="ti-headphone"></i> <a style="margin-bottom: 10px;" href="tel:<?php echo e($ct['phone']); ?>"><?php echo e($ct['phone']); ?></a>
 							</div>
 						</div>
 						  <?php
@@ -114,4 +114,5 @@ $subtitle = "We'd like to hear from you";
 			<div class="clearfix"></div>
 			<!-- ============================ Who We Are End ================================== -->
 
-@stop
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\bkupp\lokl\repo\etuk-web\resources\views/contact.blade.php ENDPATH**/ ?>

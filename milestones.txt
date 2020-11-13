@@ -3,6 +3,8 @@ Index
 about us
 faq
 
+
+
 Messages
 View message
 Send message
@@ -10,6 +12,25 @@ Delete message
 
 Host
 Apartment mode changed when booked (available/occupied)
+
+hotel info
+-amenities
+-name
+-description
+-amount
+
+[COPY FOR HINTS AND TIPS]
+Location and Media
+-address
+-city
+-state
+-pics (required dimensions, bedroom, living room, bathroom/toilet,building front view)
+
+after upload
+edit apartment
+-landmarks
+-video(must show all the rooms mentioned above. Other facilities are optional but recommended. Must not exceed 2 minutes)
+
 
 Guest
 View apartment(video tour,map)
