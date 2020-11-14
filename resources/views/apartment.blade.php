@@ -346,6 +346,8 @@ let sec = 0, svc = 0, loc = 0, cln = 0, cmf = 0;
 										 $stats = $r['stats'];
 										$u = $r['user'];
 										$rxf = $r['id'];
+										$upvotes = isset($stats['upvotes']) ? $stats['upvotes'] : 0;
+										$downvotes = isset($stats['downvotes']) ? $stats['downvotes'] : 0;
 										$ru = $u['id'] == $uid ? "You" : $u['fname']." ".substr($u['lname'],0,1).". ";
 										$av = $u['avatar'] == ""  ? asset("img/avatar.png") : $u['avatar'][0];
 								   ?>
@@ -371,8 +373,8 @@ let sec = 0, svc = 0, loc = 0, cln = 0, cmf = 0;
 											<div class="clearfix"></div>
 											<p>" {{$r['comment']}} "</p>
 											<div class="pull-left reviews-reaction">
-												<a href="javascript:void(0)" class="comment-like active" onclick="voteReview({r: '{{$rxf}}', xf: '{{$xf}}', type: 'up'})"><i class="ti-thumb-up"></i> <span id="apartment-upvotes">{{$stats['upvotes']}}</span></a>
-												<a href="javascript:void(0)" class="comment-dislike active" onclick="voteReview({r: '{{$rxf}}', xf: '{{$xf}}', type: 'down'})"><i class="ti-thumb-down"></i> <span id="apartment-downvotes">{{$stats['downvotes']}}</span></a>
+												<a href="javascript:void(0)" class="comment-like active" onclick="voteReview({r: '{{$rxf}}', xf: '{{$xf}}', type: 'up'})"><i class="ti-thumb-up"></i> <span id="apartment-upvotes">{{$upvotes}}</span></a>
+												<a href="javascript:void(0)" class="comment-dislike active" onclick="voteReview({r: '{{$rxf}}', xf: '{{$xf}}', type: 'down'})"><i class="ti-thumb-down"></i> <span id="apartment-downvotes">{{$downvotes}}</span></a>
 												<a id="review-{{$rxf}}-loading" class="review-loading"><img alt="Loading.." src="{{asset('img/loading.gif')}}"></a>
 											</div>
 										</div>

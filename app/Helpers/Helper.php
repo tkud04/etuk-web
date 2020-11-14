@@ -1441,14 +1441,12 @@ function updateApartment($data)
 		   function voteReview($dt)
 		   {
 			   $ret = ['u' => "0",'v' => "0"];
-			   $r = ReviewStats::where(['user_id' => $dt['user_id'],'review_id' => $dt['rxf']])->first();
-			   dd($r);
+			   $r = ReviewStats::where(['user_id' => $dt['xf'],'review_id' => $dt['rxf']])->first();
+			   #dd($r);
 			   if($r == null)
 			   {
-				   $stats = $this->createReviewStats(['review_id' => $ret->id,'user_id' => $data['user_id']]);
+				   $r = $this->createReviewStats(['review_id' => $dt['rxf'],'user_id' => $dt['xf']]);
 			   }
-			   else
-			   {
 				   $u = $r->upvotes; $d = $r->downvotes;
 				   
 				   switch($dt['type'])
@@ -1462,9 +1460,9 @@ function updateApartment($data)
 					   break;
 				   }
 				   
-				   $u->update(['upvotes' => $u,'downvotes' => $d]);
+				   $r->update(['upvotes' => $u,'downvotes' => $d]);
 				   $ret = ['u' => $u,'d' => $d];
-			   } 
+			   
 			   return $ret;
 		   }
 		   

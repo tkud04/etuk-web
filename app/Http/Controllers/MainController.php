@@ -1203,7 +1203,7 @@ class MainController extends Controller {
 			$user = Auth::user();
 			
 			$req = $request->all();
-       dd($req);
+       #dd($req);
 	    
 		$validator = Validator::make($req,[
 		                    'rxf' => 'required|numeric',
