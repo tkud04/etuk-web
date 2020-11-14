@@ -10,12 +10,14 @@
 								<div class="d-navigation">
 									<ul>
 										<li class="active"><a href="<?php echo e(url('dashboard')); ?>"><i class="ti-dashboard"></i>Dashboard</a></li>
-										<li><a href="<?php echo e(url('profile')); ?>"><i class="ti-user"></i>My Profile</a></li>
-										<li><a href="<?php echo e(url('transactions')); ?>"><i class="ti-credit-card"></i>Transactions</a></li>
-										<li><a href="<?php echo e(url('my-apartments')); ?>"><i class="ti-home"></i>My Apartments</a></li>
-										<li><a href="<?php echo e(url('host-analytics')); ?>"><i class="ti-stats-up"></i>Analytics</a></li>
-										<li><a href="<?php echo e(url('change-password')); ?>"><i class="ti-unlock"></i>Change Password</a></li>
-										<li><a href="<?php echo e(url('logout')); ?>"><i class="ti-power-off"></i>Log Out</a></li>
+										<li><a href="<?php echo e(url('add-apartment')); ?>"><i class="ti-home"></i>Post a Property</a></li>
+										<li><a href="<?php echo e(url('my-apartments')); ?>"><i class="ti-home"></i>My Listings</a></li>
+										<li><a href="<?php echo e(url('my-apartments')); ?>"><i class="ti-home"></i>Callback Requests</a></li>
+										<li><a href="<?php echo e(url('my-apartments')); ?>"><i class="ti-home"></i>Client Requests</a></li>
+										<li><a href="<?php echo e(url('my-apartments')); ?>"><i class="ti-home"></i>Subscriptions</a></li>
+										<li><a href="<?php echo e(url('profile')); ?>"><i class="ti-user"></i>Profile</a></li>
+										<li><a href="<?php echo e(url('messages')); ?>"><i class="ti-email"></i>My Messages</a></li>
+										<li><a href="<?php echo e(url('logout')); ?>"><i class="ti-power-off"></i>Sign Out</a></li>
 									</ul>
 								</div>
 								

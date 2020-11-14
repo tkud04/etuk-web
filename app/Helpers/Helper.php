@@ -75,6 +75,7 @@ class Helper implements HelperContract
 					 "remove-saved-payment-status" => "Payment details removed from your account.",
 					 "add-ticket-status" => "Ticket created.",
 					 "update-ticket-status" => "Ticket updated.",
+					 "contact-status" => "Message sent! Our officials will get back to you shortly.",
 					 
 					 //ERROR NOTIFICATIONS
 					 "invalid-apartment-id-status-error" => "Apartment not found.",
@@ -95,6 +96,7 @@ class Helper implements HelperContract
 					 "no-results-status-error" => "No results found!",
 					 "add-ticket-status-error" => "Ticket could not be created, please try again",
 					 "update-ticket-status-error" => "Ticket could not be updated, please try again.",
+					 "contact-status-error" => "Message could not be updated, please try again.",
                      ],
                      'errors'=> ["login-status-error" => "Wrong username or password, please try again.",
 					 "signup-status-error" => "There was a problem creating your account, please try again.",
