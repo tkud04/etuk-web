@@ -13,7 +13,7 @@ $def = [
   'facilities' => []
 ];
 
-if(count($apf) > 0) $def = $apf;
+if(count($apf) < 1) $apf = $def;
 ?>
 <div class="order-2 col-lg-4 col-md-12 order-lg-1 order-md-2">
 						
@@ -33,7 +33,7 @@ if(count($apf) > 0) $def = $apf;
 												$avbs = ['available' => "Available",'occupied' => "Occupied",'booked' => "Booked"];
 												foreach($avbs as $k => $v)
 												{
-												  $ss = $def['avb'] == $k ? " selected='selected'" : "";
+												  $ss = $apf['avb'] == $k ? " selected='selected'" : "";
 												?>
 												<option value="<?php echo e($k); ?>"<?php echo e($ss); ?>><?php echo e(ucwords($v)); ?></option>
 												<?php
@@ -60,7 +60,7 @@ if(count($apf) > 0) $def = $apf;
 												<?php
 												foreach($states as $k => $v)
 												{
-												  $ss = $def['state'] == $k ? " selected='selected'" : "";
+												  $ss = $apf['state'] == $k ? " selected='selected'" : "";
 												?>
 												<option value="<?php echo e($k); ?>"<?php echo e($ss); ?>><?php echo e(ucwords($v)); ?></option>
 												<?php
@@ -88,7 +88,7 @@ if(count($apf) > 0) $def = $apf;
 												   $ir = ['yes' => "Yes",'no' => "No"];
 												   foreach($ir as $key => $value)
 												   {
-													   $ss = $def['id_required'] == $key ? " selected='selected'" : "";
+													   $ss = $apf['id_required'] == $key ? " selected='selected'" : "";
 												  ?>
 												    <option value="<?php echo e($key); ?>"<?php echo e($ss); ?>><?php echo e($value); ?></option>
 												  <?php
@@ -114,7 +114,7 @@ if(count($apf) > 0) $def = $apf;
 														 ];
 												   foreach($ic as $key => $value)
 												   {
-													   $ss = $def['children'] == $key ? " selected='selected'" : "";
+													   $ss = $apf['children'] == $key ? " selected='selected'" : "";
 												  ?>
 												    <option value="<?php echo e($key); ?>"<?php echo e($ss); ?>><?php echo e($value); ?></option>
 												  <?php
@@ -136,7 +136,7 @@ if(count($apf) > 0) $def = $apf;
 														 ];
 												   foreach($ipt as $key => $value)
 												   {
-													   $ss = $def['pets'] == $key ? " selected='selected'" : "";
+													   $ss = $apf['pets'] == $key ? " selected='selected'" : "";
 												  ?>
 												    <option value="<?php echo e($key); ?>"<?php echo e($ss); ?>><?php echo e($value); ?></option>
 												  <?php
@@ -150,7 +150,7 @@ if(count($apf) > 0) $def = $apf;
 									<div class="form-group">
 									   <label>Max. adults</label>
 										<div class="input-with-icon">
-											<input id="guest-apt-sidebar-max-adults" value="<?php echo e($def['max_adults']); ?>" type="number" class="form-control" placeholder="Max. adults allowed">
+											<input id="guest-apt-sidebar-max-adults" value="<?php echo e($apf['max_adults']); ?>" type="number" class="form-control" placeholder="Max. adults allowed">
 											<i class="ti-user"></i>
 										</div>
 									</div>
@@ -158,7 +158,7 @@ if(count($apf) > 0) $def = $apf;
 									<div class="form-group">
 									   <label>Max. children</label>
 										<div class="input-with-icon">
-											<input id="guest-apt-sidebar-max-children" value="<?php echo e($def['max_children']); ?>" type="number" class="form-control" placeholder="Max. children allowed">
+											<input id="guest-apt-sidebar-max-children" value="<?php echo e($apf['max_children']); ?>" type="number" class="form-control" placeholder="Max. children allowed">
 											<i class="ti-user"></i>
 										</div>
 									</div>
@@ -189,7 +189,7 @@ if(count($apf) > 0) $def = $apf;
 									<div class="range-slider mt-5">
 										<label>Show apartments with</label>
 										<div class="distance-title">a rating of at least <span class="theme-cl"></span> stars</div>
-										<input id="guest-apt-sidebar-rating" class="distance-radius rangeslider--horizontal" type="range" min="1" max="5" step="1" value="<?php echo e($def['rating']); ?>" data-title="Rating of at least">
+										<input id="guest-apt-sidebar-rating" class="distance-radius rangeslider--horizontal" type="range" min="1" max="5" step="1" value="<?php echo e($apf['rating']); ?>" data-title="Rating of at least">
 									</div>
 									<form method="get" id="guest-apt-sidebar-form" action="search">
 									  <input type="hidden" name="dt" id="guest-apt-sidebar-dt">

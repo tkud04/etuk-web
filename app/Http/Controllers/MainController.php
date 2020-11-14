@@ -858,6 +858,7 @@ class MainController extends Controller {
 			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
 			$apf = $this->helpers->getPreference($user);
 		}
+		#dd($apf);
 		$req = $request->all();
 		
 			$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
