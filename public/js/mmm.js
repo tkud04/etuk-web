@@ -811,4 +811,26 @@ $(document).ready(function() {
 	**/
 	});
 	
+	
+	//CONTACT US
+	$('#contact-btn').click(e => {
+		e.preventDefault();
+		
+		let msg = $('#contact-msg').val(), em = $('#contact-em').val(), dept = $('#contact-dept').val(),
+      		name = $('#contact-name').val(), subject = $('#contact-subject').val();
+
+        let validation = name == "" || subject == "" || em == "" || msg == "" || dept == "none";
+				
+        if(validation){
+			Swal.fire({
+			 icon: 'error',
+             title: "Please fill all required fields."
+           });
+		}
+        else{
+			$('#contact-form').submit();
+		}		
+	});
+	
+	
 });

@@ -3186,7 +3186,7 @@ function createSocial($data)
 
            function contact($data)
 		   {
-			   #dd($data);
+			   dd($data);
 			   $ret = $this->getCurrentSender();
 		       $ret['data'] = $data;
     		   $ret['subject'] = "New message from ".$data['name'];	

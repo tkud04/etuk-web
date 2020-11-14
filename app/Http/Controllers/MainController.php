@@ -161,6 +161,50 @@ class MainController extends Controller {
     }
 	
 	/**
+	 * Handle add new apartment.
+	 *
+	 * @return Response
+	 */
+	public function postContact(Request $request)
+    {
+		$user = null;
+		if(Auth::check())
+		{
+			$user = Auth::user();
+		}
+		else
+		{
+			return redirect()->intended('/');
+		}
+
+		$req = $request->all();
+        #dd($req);
+		$ret = ['status' => "error",'message' => "nothing happened"];
+	    
+		$validator = Validator::make($req,[
+		                    'name' => 'required',
+		                    'email' => 'required|email',
+		                    'subject' => 'required',
+		                    'msg' => 'required'
+		]);
+		
+		if($validator->fails())
+         {
+             $ret['message'] = "validation";
+         }
+		 else
+		 {					
+					$req['payment_type'] = "card";
+					$req['user_id'] = $user->id;
+				 
+			$this->helpers->contact($req);
+			$ret = ['status' => "ok"];
+		 }
+		 
+		 return json_encode($ret);
+    }
+	
+	/**
 	 * Show the terms & conditions page.
 	 *
 	 * @return Response
