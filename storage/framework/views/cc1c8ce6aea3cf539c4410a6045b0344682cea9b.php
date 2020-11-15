@@ -141,139 +141,11 @@ let myApartmentDescriptionEditor = new Simditor({
 										
 										<div class="col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group">
-												<label>Max. adults<i class="req">*</i></label>
+												<label>Max no. of guests<i class="req">*</i></label>
 												<input type="number" class="form-control" id="my-apartment-max-adults" value="<?php echo e($adata['max_adults']); ?>" placeholder="The max number of adults allowed to check-in">
 											</div>
 										</div>
 										
-										<div class="col-lg-6 col-md-6 col-sm-12">
-											<div class="form-group">
-												<label>Max. children<i class="req">*</i></label>
-												<input type="number" class="form-control" id="my-apartment-max-children" value="<?php echo e($adata['max_children']); ?>" placeholder="The max number of children allowed to check-in">
-											</div>
-										</div>
-										
-										<div class="col-lg-12 col-md-12 col-sm-12">
-											<div class="form-group">
-												<label>Description</label>
-												<textarea id="my-apartment-description" class="form-control"></textarea>
-											</div>
-										</div>
-										
-										<div class="col-lg-12 col-md-12 col-sm-12" style="margin-top: 20px;">
-											<h4 class="mb-3">Terms & Conditions</h4>
-										</div>
-										<?php
-										  $times = ['12pm' => "12:00 pm",
-										            '1pm' => "1:00 pm",
-										            '2pm' => "2:00 pm",
-										            '3pm' => "3:00 pm",
-										            '4pm' => "4:00 pm",
-										            '5pm' => "5:00 pm",
-										            '6pm' => "6:00 pm",
-										            '7pm' => "7:00 pm"
-												   ];
-										?>
-										<div class="col-lg-6 col-md-6 col-sm-12">
-											<div class="form-group">
-												<label>Check In<i class="req">*</i></label>
-												<select class="form-control" id="my-apartment-checkin">
-												  <option value="none">Select check-in time</option>
-												  <?php
-												  foreach($times as $key => $value)
-												  {
-													  $ss = $key == $terms['checkin'] ? " selected='selected'" : "";
-												  ?>
-												  <option value="<?php echo e($key); ?>"<?php echo e($ss); ?>>From <?php echo e($value); ?></option>
-												  <?php
-												  }
-												  ?>
-												</select>
-											</div>
-										</div>
-										
-										<div class="col-lg-6 col-md-6 col-sm-12">
-											<div class="form-group">
-												<label>Check Out<i class="req">*</i></label>
-												<select class="form-control" id="my-apartment-checkout">
-												  <option value="none">Select check-out time</option>
-												  <?php
-												  foreach($times as $key => $value)
-												  {
-													    $ss = $key == $terms['checkout'] ? " selected='selected'" : "";
-												  ?>
-												  <option value="<?php echo e($key); ?>"<?php echo e($ss); ?>>By <?php echo e($value); ?></option>
-												  <?php
-												  }
-												  ?>
-												</select>
-											</div>
-										</div>
-										<div class="col-lg-6 col-md-6 col-sm-12">
-											<div class="form-group">
-												<label>Payment Type<i class="req">*</i></label>
-												<?php
-												 $paymentTypes = ['none' => "Select payment type",'card' => "Card"];
-												?>
-												<select class="form-control" id="my-apartment-payment-type">
-												<?php
-												  foreach($paymentTypes as $key => $value)
-												  {
-													  $ss = $key == $terms['payment_type'] ? " selected='selected'" : "";
-												?>
-												  <option value="<?php echo e($key); ?>"<?php echo e($ss); ?>><?php echo e($value); ?></option>
-												<?php
-												  }
-												?>
-												</select>
-											</div>
-										</div>
-										<div class="col-lg-6 col-md-6 col-sm-12">
-											<div class="form-group">
-												<label>ID Required on Check-in<i class="req">*</i></label>
-												<?php
-												 $opts1 = ['none' => "ID required on check-in?",'yes' => "Yes",'no' => "No"];
-												?>
-												<select class="form-control" id="my-apartment-id-required">
-												<?php
-												  foreach($opts1 as $key => $value)
-												  {
-													  $ss = $key == $terms['id_required'] ? " selected='selected'" : "";
-												?>
-												  <option value="<?php echo e($key); ?>"<?php echo e($ss); ?>><?php echo e($value); ?></option>
-												<?php
-												  }
-												?>
-												</select>
-											</div>
-										</div>
-										<div class="col-lg-6 col-md-6 col-sm-12">
-											<div class="form-group">
-												<label>Children<i class="req">*</i></label>
-												<?php
-												 $opts2 = [
-												    'nonee' => "Select payment type",
-													'none' => "No children allowed",
-													'1-5yrs' => "1-5yrs",
-													'6-10yrs' => "6-10yrs",
-													'11-20yrs' => "11-20yrs",
-													'>20yrs' => "20yrs above",
-													'all' => "All children allowed"
-												 ];
-												?>
-												<select class="form-control" id="my-apartment-children">
-												<?php
-												  foreach($opts2 as $key => $value)
-												  {
-													  $ss = $key == $terms['children'] ? " selected='selected'" : "";
-												?>
-												  <option value="<?php echo e($key); ?>"<?php echo e($ss); ?>><?php echo e($value); ?></option>
-												<?php
-												  }
-												?>
-												</select>
-											</div>
-										</div>
 										<div class="col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group">
 												<label>Pets<i class="req">*</i></label>
@@ -296,6 +168,135 @@ let myApartmentDescriptionEditor = new Simditor({
 												</select>
 											</div>
 										</div>
+										
+										<div class="col-lg-12 col-md-12 col-sm-12">
+											<div class="form-group">
+												<label>Description</label>
+												<textarea id="my-apartment-description" class="form-control"></textarea>
+											</div>
+										</div>
+										
+										<div class="col-lg-6 col-md-6 col-sm-12">
+											<div class="form-group">
+												<label>Category<i class="req">*</i></label>
+												<select class="form-control" id="my-apartment-category">
+												  <option value="none">Select category</option>
+												  <?php
+												  $aptCategories = [
+												    'studio' => "Studio",
+												    '1bed' => "1 bedroom",
+												    '2bed' => "2 bedrooms",
+												    '3bed' => "3 bedrooms",
+												    'penthouse' => "Penthouse apartment",
+												    'duplex' => "Duplex"
+												  ];
+												  foreach($aptCategories as $key => $value)
+												  {
+													  $ss = $adata['category'] == $key ? " selected='selected'" : "";
+												  ?>
+												  <option value="<?php echo e($key); ?>"<?php echo e($ss); ?>><?php echo e($value); ?></option>
+												  <?php
+												  }
+												  ?>
+												</select>
+											</div>
+										</div>
+										
+										<div class="col-lg-6 col-md-6 col-sm-12">
+											<div class="form-group">
+												<label>Property type<i class="req">*</i></label>
+												<select class="form-control" id="my-apartment-ptype">
+												  <option value="none">Select type</option>
+												  <?php
+												  $aptTypes = [
+												    'unfurnished' => "Unfurnished apartment",
+												    'Furnished' => "Furnished apartment",
+												    'serviced' => "Serviced apartment",
+												  ];
+												  foreach($aptTypes as $key => $value)
+												  {
+													  $ss = $adata['property_type'] == $key ? " selected='selected'" : "";
+												  ?>
+												  <option value="<?php echo e($key); ?>"<?php echo e($ss); ?>><?php echo e($value); ?></option>
+												  <?php
+												  }
+												  ?>
+												</select>
+											</div>
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-12">
+											<div class="form-group">
+												<label>No. of rooms<i class="req">*</i></label>
+												<select class="form-control" id="my-apartment-rooms">
+												  <option value="none">Select number of rooms</option>
+												  <?php
+												   for($i = 0; $i < 5; $i++)
+												   {
+                                                     $rr = $i == 0 ? "room" : "rooms";
+                                                     $ss = $adata['rooms'] == ($i + 1) ? " selected='selected'" : "";													 
+												  ?>
+												  <option value="<?php echo e($i + 1); ?>"<?php echo e($ss); ?>><?php echo e($i + 1); ?> <?php echo e($rr); ?></option>
+												  <?php
+												   }
+												  ?>
+												</select>
+											</div>
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-12">
+											<div class="form-group">
+												<label>No. of units<i class="req">*</i></label>
+												<select class="form-control" id="my-apartment-units">
+												  <option value="none">Select number of units</option>
+												  <?php
+												   for($i = 0; $i < 5; $i++)
+												   {
+                                                     $rr = $i == 0 ? "unit" : "units";
+                                                     $ss = $adata['units'] == ($i + 1) ? " selected='selected'" : "";													 
+												  ?>
+												  <option value="<?php echo e($i + 1); ?>"<?php echo e($ss); ?>><?php echo e($i + 1); ?> <?php echo e($rr); ?></option>
+												  <?php
+												   }
+												  ?>
+												</select>
+											</div>
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-12">
+											<div class="form-group">
+												<label>No. of bathrooms<i class="req">*</i></label>
+												<select class="form-control" id="my-apartment-bathrooms">
+												  <option value="none">Select number of bathrooms</option>
+												  <?php
+												   for($i = 0; $i < 5; $i++)
+												   {
+                                                     $rr = $i == 0 ? "bathroom" : "bathrooms";
+                                                     $ss = $adata['bathrooms'] == ($i + 1) ? " selected='selected'" : "";													 
+												  ?>
+												  <option value="<?php echo e($i + 1); ?>"<?php echo e($ss); ?>><?php echo e($i + 1); ?> <?php echo e($rr); ?></option>
+												  <?php
+												   }
+												  ?>
+												</select>
+											</div>
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-12">
+											<div class="form-group">
+												<label>No. of bedrooms<i class="req">*</i></label>
+												<select class="form-control" id="my-apartment-bedrooms">
+												  <option value="none">Select number of bedrooms</option>
+												  <?php
+												   for($i = 0; $i < 5; $i++)
+												   {
+                                                     $rr = $i == 0 ? "bedroom" : "bedrooms";
+                                                     $ss = $adata['bedrooms'] == ($i + 1) ? " selected='selected'" : "";													 
+												  ?>
+												  <option value="<?php echo e($i + 1); ?>"<?php echo e($ss); ?>><?php echo e($i + 1); ?> <?php echo e($rr); ?></option>
+												  <?php
+												   }
+												  ?>
+												</select>
+											</div>
+										</div>
+										
 										
                                         <div class="col-lg-12 col-md-12 col-sm-12" style="margin-top: 20px;">
 											<h4 class="mb-3">Facilities & Services</h4>
@@ -362,6 +363,13 @@ let myApartmentDescriptionEditor = new Simditor({
 											<div class="form-group">
 												<label>City<i class="req">*</i></label>
 												<input type="text" class="form-control" id="my-apartment-city" value="<?php echo e($address['city']); ?>" placeholder="City">
+											</div>
+										</div>
+										
+										<div class="col-lg-6 col-md-6 col-sm-12">
+											<div class="form-group">
+												<label>LGA<i class="req">*</i></label>
+												<input type="text" class="form-control" id="my-apartment-lga" value="<?php echo e($address['lga']); ?>" placeholder="LGA">
 											</div>
 										</div>
 										
@@ -438,12 +446,11 @@ let myApartmentDescriptionEditor = new Simditor({
 												<div id="my-apartment-images">
 												<div id="my-apartment-image-div-0" class="row">
 												  <div class="col-md-7">
-												    <input type="file" class="form-control" onchange="readURL(this,'0')" id="my-apartment-image-0" name="my-apartment-images[]">												    
+												    <input type="file" class="form-control" onchange="readURL(this,{id: 'my-apartment',ctr: '0'})" id="my-apartment-image-0" name="my-apartment-images[]">												    
 												  </div>
 												  <div class="col-md-5">
 												    <img id="my-apartment-preview-0" src="#" alt="preview" style="width: 50px; height: 50px;"/>
-													<a href="javascript:void(0)" onclick="aptSetCoverImage(0)" class="btn btn-theme btn-sm">Set as cover image</a>
-												    <a href="javascript:void(0)" onclick="aptRemoveImage({id: 'add-apartment',ctr: '0'})" class="btn btn-warning btn-sm">Remove</a>
+													<a href="javascript:void(0)" onclick="aptRemoveImage({id: 'my-apartment',ctr: '0'})" class="btn btn-warning btn-sm">Remove</a>
 												  </div>
 												</div>
 												</div>

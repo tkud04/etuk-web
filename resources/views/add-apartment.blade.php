@@ -83,15 +83,31 @@ let addApartmentDescriptionEditor = new Simditor({
 										
 										<div class="col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group">
-												<label>Max. adults<i class="req">*</i></label>
+												<label>Max no. of guests<i class="req">*</i></label>
 												<input type="number" class="form-control" id="add-apartment-max-adults" placeholder="The max number of adults allowed to check-in">
 											</div>
 										</div>
 										
 										<div class="col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group">
-												<label>Max. children<i class="req">*</i></label>
-												<input type="number" class="form-control" id="add-apartment-max-children" placeholder="The max number of children allowed to check-in">
+												<label>Pets<i class="req">*</i></label>
+												<?php
+												 $opts3 = [
+												    'no' => "No",
+													'yes' => "Yes"
+												 ];
+												?>
+												<select class="form-control" id="add-apartment-pets">
+												 <option value="none">Are pets allowed?</option>
+												<?php
+												  foreach($opts3 as $key => $value)
+												  {
+												?>
+												  <option value="{{$key}}">{{$value}}</option>
+												<?php
+												  }
+												?>
+												</select>
 											</div>
 										</div>
 										

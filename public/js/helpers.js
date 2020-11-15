@@ -395,11 +395,12 @@ const aptFinalPreview = (id) => {
 	 //side 1 
 	   let aptName = $(`#${id}-name`).val(), aptUrl = $(`#${id}-url`).val(), aptMaxAdults = $(`#${id}-max-adults`).val(),
 	    aptMaxChildren = $(`#${id}-max-children`).val(), aptAmount = $(`#${id}-amount`).val(),aptDescription = $(`#${id}-description`).val(),
-	       aptCheckin = $(`#${id}-checkin`).val(), aptCheckout = $(`#${id}-checkout`).val(),aptIdRequired = $(`#${id}-id-required`).val(),
-	       aptChildren = $(`#${id}-children`).val(), aptIdPets = $(`#${id}-pets`).val(),
+	       aptCategory = $(`#${id}-category`).val(), aptPType = $(`#${id}-ptype`).val(),aptRooms = $(`#${id}-rooms`).val(),
+	       aptUnits = $(`#${id}-units`).val(),aptBathrooms = $(`#${id}-bathrooms`).val(),
+		   aptBedrooms = $(`#${id}-bedrooms`).val(),  aptPets = $(`#${id}-pets`).val(),
 		 
        //side 2
-	       aptAddress = $(`#${id}-address`).val(), aptCity = $(`#${id}-city`).val(),aptState = $(`#${id}-state`).val(),
+	       aptAddress = $(`#${id}-address`).val(), aptCity = $(`#${id}-city`).val(),aptLGA = $(`#${id}-lga`).val(),aptState = $(`#${id}-state`).val(),
 	       aptImages = $(`#${id}-images input[type=file]`), axf = $(`#tk-axf`).val();
 		   
 		   let fff = [];
@@ -423,16 +424,16 @@ const aptFinalPreview = (id) => {
 	     <li>Apartment ID.<span>Will be generated</span></li>
 												<li>Friendly name<span>${aptName}</span></li>
 												<li>Friendly URL<span>${axf}?xf=<b>${aptUrl}</b></span></li>
-												<li>Max. adults<span>${aptMaxAdults}</span></li>
-												<li>Max. children<span>${aptMaxChildren}</span></li>
+												<li>Max. guests<span>${aptMaxAdults}</span></li>
 												<li>Availability<span>${aptAvb}</span></li>
 												<li>Price per day<span>&#8358;${aptAmount}</span></li>
-												<li>Description<span></span></li>
-												<li>Check in<span>${aptCheckin}</span></li>
-												<li>Check out<span>${aptCheckout}</span></li>
-												<li>Payment type<span>Card</span></li>
-												<li>ID required on check-in<span>${aptIdRequired}</span></li>
-												<li>Children<span>${aptChildren}</span></li>
+												<li>Category<span>${aptCategory}</span></li>
+												<li>Property type<span>${aptPType}</span></li>
+												<li>No. of rooms<span>${aptRooms}</span></li>
+												<li>No. of units<span>${aptUnits}</span></li>
+												<li>No. of bedrooms<span>${aptBedrooms}</span></li>
+												<li>No. of bathrooms<span>${aptBathrooms}</span></li>
+												<li>Pets<span>${aptPets}</span></li>
 												<li>Facilities & services<span>${ff}</span></li>
 	`;
 	

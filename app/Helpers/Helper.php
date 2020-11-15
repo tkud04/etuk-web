@@ -670,7 +670,7 @@ function isDuplicateUser($data)
                                                       'bathrooms' => $data['bathrooms'],                                                       
                                                       'bedrooms' => $data['bedrooms'],                                                       
                                                       'max_adults' => $data['max_adults'],                                                       
-                                                      'max_children' => $data['max_children'],                                                       
+                                                      'max_children' => "",                                                       
                                                       'amount' => $data['amount']                                                       
                                                       ]);
                               
@@ -1225,6 +1225,7 @@ function updateApartment($data)
            	       $aa->update([
                                                       'address' => $data['address'],                                                       
                                                       'city' => $data['city'],                                                       
+                                                      'lga' => $data['lga'],                                                       
                                                       'state' => $data['state']
                                                       ]);
 			   }               
@@ -1237,10 +1238,17 @@ function updateApartment($data)
 			
 			   if($adt != null)
 			   {
+				   $mc = isset($data['max_children']) ? $data['max_children'] : "";
            	       $adt->update([
-                                                     'description' => $data['description'],                                                       
+                                                     'description' => $data['description'], 
+                                                     'category' => $data['category'], 
+                                                     'property_type' => $data['property_type'], 
+                                                     'rooms' => $data['rooms'], 
+                                                     'units' => $data['units'], 
+                                                     'bathrooms' => $data['bathrooms'], 
+                                                     'bedrooms' => $data['bedrooms'],                                                  													 
                                                       'max_adults' => $data['max_adults'],                                                       
-                                                      'max_children' => $data['max_children'],                                                       
+                                                      'max_children' => $mc,                                                       
                                                       'amount' => $data['amount']                                                       
                                                        ]);
 			   }
@@ -1255,12 +1263,12 @@ function updateApartment($data)
            	if($at != null)
 			   {
            	       $at->update([
-                                                      'checkin' => $data['checkin'],                                                       
-                                                      'checkout' => $data['checkout'],                                                      
-                                                      'id_required' => $data['id_required'],                                                      
-                                                      'children' => $data['children'],                                                      
+                                                     // 'checkin' => $data['checkin'],                                                       
+                                                     // 'checkout' => $data['checkout'],                                                      
+                                                  //   'id_required' => $data['id_required'],                                                      
+                                                    //  'children' => $data['children'],                                                      
                                                       'pets' => $data['pets'],                                                      
-                                                      'payment_type' => $data['payment_type']                                                      
+                                                 //     'payment_type' => $data['payment_type']                                                      
                                                       ]);
                 }
            }

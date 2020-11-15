@@ -1765,7 +1765,6 @@ class MainController extends Controller {
 		                    'bathrooms' => 'required|numeric',
 		                    'bedrooms' => 'required|numeric',
 		                    'max_adults' => 'required|numeric',
-		                    'max_children' => 'required|numeric',
 		                    'amount' => 'required|numeric',
 		                    'address' => 'required',
 		                    'city' => 'required',
@@ -1924,16 +1923,17 @@ class MainController extends Controller {
 		                    'url' => 'required',
 		                    'avb' => 'required',
 		                    'description' => 'required',
-		                    'checkin' => 'required',
-		                    'checkout' => 'required',
-							'max_adults' => 'required|numeric',
-							'max_children' => 'required|numeric',
-		                    'id_required' => 'required',
+		                    'category' => 'required|not_in:none',
+		                    'property_type' => 'required|not_in:none',
+		                    'rooms' => 'required',
+		                    'units' => 'required',
+		                    'bathrooms' => 'required',
+		                    'bedrooms' => 'required',
+		                    'max_adults' => 'required|numeric',
 		                    'amount' => 'required|numeric',
-		                    'children' => 'required',
-		                    'pets' => 'required',
 		                    'address' => 'required',
 		                    'city' => 'required',
+		                    'lga' => 'required',
 		                    'state' => 'required',
 		                    'facilities' => 'required',
 		                    'img_count' => 'required|numeric'
@@ -1941,7 +1941,7 @@ class MainController extends Controller {
 		
 		if($validator->fails())
          {
-             $ret = ['message' => "validation"];
+             $ret['message'] = "validation";
          }
 		 else
 		 {
