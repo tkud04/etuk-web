@@ -652,6 +652,7 @@ function isDuplicateUser($data)
            	$ret = ApartmentAddresses::create(['apartment_id' => $data['apartment_id'], 
                                                       'address' => $data['address'],                                                       
                                                       'city' => $data['city'],                                                       
+                                                      'lga' => $data['lga'],                                                       
                                                       'state' => $data['state']
                                                       ]);
                               
@@ -661,7 +662,13 @@ function isDuplicateUser($data)
 		   function createApartmentData($data)
            {
            	$ret = ApartmentData::create(['apartment_id' => $data['apartment_id'], 
-                                                      'description' => $data['description'],                                                       
+                                                      'description' => $data['description'],													  
+                                                      'category' => $data['category'],                                                       
+                                                      'property_type' => $data['property_type'],                                                       
+                                                      'rooms' => $data['rooms'],                                                       
+                                                      'units' => $data['units'],                                                       
+                                                      'bathrooms' => $data['bathrooms'],                                                       
+                                                      'bedrooms' => $data['bedrooms'],                                                       
                                                       'max_adults' => $data['max_adults'],                                                       
                                                       'max_children' => $data['max_children'],                                                       
                                                       'amount' => $data['amount']                                                       
@@ -930,6 +937,12 @@ function isDuplicateUser($data)
 				  $temp['id'] = $adt->id;
 				  $temp['apartment_id'] = $adt->apartment_id;
      			  $temp['description'] = $adt->description;
+				  $temp['category'] = $adt->category;
+     			  $temp['property_type'] = $adt->property_type;
+     			  $temp['rooms'] = $adt->rooms;
+     			  $temp['units'] = $adt->units;
+     			  $temp['bathrooms'] = $adt->bathrooms;
+     			  $temp['bedrooms'] = $adt->bedrooms;
      			  $temp['max_adults'] = $adt->max_adults;
      			  $temp['max_children'] = $adt->max_children;
 				  $temp['amount'] = $adt->amount;
@@ -953,6 +966,7 @@ function isDuplicateUser($data)
 				  $temp['apartment_id'] = $aa->apartment_id;
      			  $temp['address'] = $aa->address;
 				  $temp['city'] = $aa->city;
+				  $temp['lga'] = $aa->lga;
 				  $temp['state'] = $aa->state;
 				  $ret = $temp;
                }                         

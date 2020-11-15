@@ -103,30 +103,24 @@ let addApartmentDescriptionEditor = new Simditor({
 											</div>
 										</div>
 										
-										<div class="col-lg-12 col-md-12 col-sm-12" style="margin-top: 20px;">
-											<h4 class="mb-3">Terms & Conditions</h4>
-										</div>
-										<?php
-										  $times = ['12pm' => "12:00 pm",
-										            '1pm' => "1:00 pm",
-										            '2pm' => "2:00 pm",
-										            '3pm' => "3:00 pm",
-										            '4pm' => "4:00 pm",
-										            '5pm' => "5:00 pm",
-										            '6pm' => "6:00 pm",
-										            '7pm' => "7:00 pm"
-												   ];
-										?>
 										<div class="col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group">
-												<label>Check In<i class="req">*</i></label>
-												<select class="form-control" id="add-apartment-checkin">
-												  <option value="none">Select check-in time</option>
+												<label>Category<i class="req">*</i></label>
+												<select class="form-control" id="add-apartment-category">
+												  <option value="none">Select category</option>
 												  <?php
-												  foreach($times as $key => $value)
+												  $aptCategories = [
+												    'studio' => "Studio",
+												    '1bed' => "1 bedroom",
+												    '2bed' => "2 bedrooms",
+												    '3bed' => "3 bedrooms",
+												    'penthouse' => "Penthouse apartment",
+												    'duplex' => "Duplex"
+												  ];
+												  foreach($aptCategories as $key => $value)
 												  {
 												  ?>
-												  <option value="<?php echo e($key); ?>">From <?php echo e($value); ?></option>
+												  <option value="<?php echo e($key); ?>"><?php echo e($value); ?></option>
 												  <?php
 												  }
 												  ?>
@@ -136,14 +130,19 @@ let addApartmentDescriptionEditor = new Simditor({
 										
 										<div class="col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group">
-												<label>Check Out<i class="req">*</i></label>
-												<select class="form-control" id="add-apartment-checkout">
-												  <option value="none">Select check-out time</option>
+												<label>Property type<i class="req">*</i></label>
+												<select class="form-control" id="add-apartment-ptype">
+												  <option value="none">Select type</option>
 												  <?php
-												  foreach($times as $key => $value)
+												  $aptTypes = [
+												    'unfurnished' => "Unfurnished apartment",
+												    'Furnished' => "Furnished apartment",
+												    'serviced' => "Serviced apartment",
+												  ];
+												  foreach($aptTypes as $key => $value)
 												  {
 												  ?>
-												  <option value="<?php echo e($key); ?>">By <?php echo e($value); ?></option>
+												  <option value="<?php echo e($key); ?>"><?php echo e($value); ?></option>
 												  <?php
 												  }
 												  ?>
@@ -152,46 +151,77 @@ let addApartmentDescriptionEditor = new Simditor({
 										</div>
 										<div class="col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group">
-												<label>Payment Type<i class="req">*</i></label>
-												<select class="form-control">
-												  <option value="card">Card</option>
+												<label>No. of rooms<i class="req">*</i></label>
+												<select class="form-control" id="add-apartment-rooms">
+												  <option value="none">Select number of rooms</option>
+												  <?php
+												   for($i = 0; $i < 5; $i++)
+												   {
+                                                     $rr = $i == 0 ? "room" : "rooms";													   
+												  ?>
+												  <option value="<?php echo e($i + 1); ?>"><?php echo e($i + 1); ?> <?php echo e($rr); ?></option>
+												  <?php
+												   }
+												  ?>
 												</select>
 											</div>
 										</div>
 										<div class="col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group">
-												<label>ID Required on Check-in<i class="req">*</i></label>
-												<select class="form-control" id="add-apartment-id-required">
-												  <option value="yes">Yes</option>
-												  <option value="no">No</option>
+												<label>No. of units<i class="req">*</i></label>
+												<select class="form-control" id="add-apartment-units">
+												  <option value="none">Select number of units</option>
+												  <?php
+												   for($i = 0; $i < 5; $i++)
+												   {
+                                                     $rr = $i == 0 ? "unit" : "units";													   
+												  ?>
+												  <option value="<?php echo e($i + 1); ?>"><?php echo e($i + 1); ?> <?php echo e($rr); ?></option>
+												  <?php
+												   }
+												  ?>
 												</select>
 											</div>
 										</div>
 										<div class="col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group">
-												<label>Children<i class="req">*</i></label>
-												<select class="form-control" id="add-apartment-children">
-												  <option value="none">No children allowed</option>
-												  <option value="1-5yrs">1-5yrs</option>
-												  <option value="6-10yrs">6-10yrs</option>
-												  <option value="11-20yrs">11-20yrs</option>
-												  <option value=">20yrs">20yrs above</option>
-												  <option value="all">All children allowed</option>
+												<label>No. of bathrooms<i class="req">*</i></label>
+												<select class="form-control" id="add-apartment-bathrooms">
+												  <option value="none">Select number of bathrooms</option>
+												  <?php
+												   for($i = 0; $i < 5; $i++)
+												   {
+                                                     $rr = $i == 0 ? "bathroom" : "bathrooms";													   
+												  ?>
+												  <option value="<?php echo e($i + 1); ?>"><?php echo e($i + 1); ?> <?php echo e($rr); ?></option>
+												  <?php
+												   }
+												  ?>
 												</select>
 											</div>
 										</div>
 										<div class="col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group">
-												<label>Pets<i class="req">*</i></label>
-												<select class="form-control" id="add-apartment-pets">
-												  <option value="yes">Yes</option>
-												  <option value="no" selected="selected">No</option>
+												<label>No. of bedrooms<i class="req">*</i></label>
+												<select class="form-control" id="add-apartment-bedrooms">
+												  <option value="none">Select number of bedrooms</option>
+												  <?php
+												   for($i = 0; $i < 5; $i++)
+												   {
+                                                     $rr = $i == 0 ? "bedroom" : "bedrooms";													   
+												  ?>
+												  <option value="<?php echo e($i + 1); ?>"><?php echo e($i + 1); ?> <?php echo e($rr); ?></option>
+												  <?php
+												   }
+												  ?>
 												</select>
 											</div>
 										</div>
+										
+										
 										
                                         <div class="col-lg-12 col-md-12 col-sm-12" style="margin-top: 20px;">
-											<h4 class="mb-3">Facilities & Services</h4>
+											<h4 class="mb-3">Amenities (check all that apply)</h4>
 										</div>										
 										
 										<div class="col-lg-12 col-md-12 col-sm-12" style="margin-bottom: 20px;">
@@ -244,7 +274,7 @@ let addApartmentDescriptionEditor = new Simditor({
 											<h4 class="mb-3">Location & Media</h4>
 										</div>
 																			
-										<div class="col-lg-12 col-md-12 col-sm-12">
+										<div class="col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group">
 												<label>Address<i class="req">*</i></label>
 												<input type="text" class="form-control" id="add-apartment-address" placeholder="House address">
@@ -255,6 +285,13 @@ let addApartmentDescriptionEditor = new Simditor({
 											<div class="form-group">
 												<label>City<i class="req">*</i></label>
 												<input type="text" class="form-control" id="add-apartment-city" placeholder="City">
+											</div>
+										</div>
+										
+										<div class="col-lg-6 col-md-6 col-sm-12">
+											<div class="form-group">
+												<label>LGA<i class="req">*</i></label>
+												<input type="text" class="form-control" id="add-apartment-lga" placeholder="LGA">
 											</div>
 										</div>
 										

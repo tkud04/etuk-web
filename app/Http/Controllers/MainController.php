@@ -1758,16 +1758,18 @@ class MainController extends Controller {
 		                    'name' => 'required',
 		                    'url' => 'required',
 		                    'description' => 'required',
-		                    'checkin' => 'required',
-		                    'checkout' => 'required',
+		                    'category' => 'required|not_in:none',
+		                    'property_type' => 'required|not_in:none',
+		                    'rooms' => 'required|numeric',
+		                    'units' => 'required|numeric',
+		                    'bathrooms' => 'required|numeric',
+		                    'bedrooms' => 'required|numeric',
 		                    'max_adults' => 'required|numeric',
 		                    'max_children' => 'required|numeric',
-		                    'id_required' => 'required',
 		                    'amount' => 'required|numeric',
-		                    'children' => 'required',
-		                    'pets' => 'required',
 		                    'address' => 'required',
 		                    'city' => 'required',
+		                    'lga' => 'required',
 		                    'state' => 'required',
 		                    'facilities' => 'required',
 		                    'img_count' => 'required|numeric',
@@ -1819,6 +1821,11 @@ class MainController extends Controller {
 					    $req['payment_type'] = "card";
 					    $req['user_id'] = $user->id;
 					    $req['ird'] = $ird;
+					    $req['checkin'] = "12pm";
+					    $req['checkout'] = "1pm";
+					    $req['id_required'] = "1pm";
+					    $req['children'] = "none";
+					    $req['pets'] = "no";
 				 
 			            $this->helpers->createApartment($req);
 			             $ret = ['status' => "ok"];
