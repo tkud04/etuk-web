@@ -83,9 +83,9 @@ let sec = 0, svc = 0, loc = 0, cln = 0, cmf = 0;
 									<div class="row">
 										<div class="col-lg-8 col-md-8">
 											<div class="row">
-											
+											<div class="col-md-12 list-inline">
 												<!-- Single Items -->
-												<div class="col-xs-6 col-lg-4 col-md-6">
+												<div class="">
 													<div class="singles_item">
 														<div class="icon">
 															<i class="icofont-home"></i>
@@ -98,7 +98,7 @@ let sec = 0, svc = 0, loc = 0, cln = 0, cmf = 0;
 												</div>
 												
 												<!-- Single Items -->
-												<div class="col-xs-6 col-lg-3 col-md-6">
+												<div class="">
 													<div class="singles_item">
 														<div class="icon">
 															<i class="icofont-credit-card"></i>
@@ -111,7 +111,7 @@ let sec = 0, svc = 0, loc = 0, cln = 0, cmf = 0;
 												</div>
 												
 												<!-- Single Items -->
-												<div class="col-xs-6 col-lg-2 col-md-6">
+												<div class="">
 													<div class="singles_item">
 														<div class="icon">
 															<i class="icofont-travelling"></i>
@@ -124,7 +124,7 @@ let sec = 0, svc = 0, loc = 0, cln = 0, cmf = 0;
 												</div>
 												
 												<!-- Single Items -->
-												<div class="col-xs-6 col-lg-3 col-md-6">
+												<div class="">
 													<div class="singles_item">
 														<div class="icon">
 															<i class="icofont-island"></i>
@@ -135,7 +135,7 @@ let sec = 0, svc = 0, loc = 0, cln = 0, cmf = 0;
 														</div>
 													</div>
 												</div>
-												
+											  </div>
 											</div>
 										</div>
 									</div>
