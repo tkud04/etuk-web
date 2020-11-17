@@ -81,9 +81,7 @@ let sec = 0, svc = 0, loc = 0, cln = 0, cmf = 0;
 								
 								<div class="slide-property-first">
 									<div class="row">
-										<div class="col-lg-8 col-md-8">
-											<div class="row">
-											<div class="col-md-12 list-inline">
+										<div class="col-md-3">
 												<!-- Single Items -->
 												<div class="">
 													<div class="singles_item">
@@ -96,7 +94,8 @@ let sec = 0, svc = 0, loc = 0, cln = 0, cmf = 0;
 														</div>
 													</div>
 												</div>
-												
+										</div>
+										<div class="col-md-3">
 												<!-- Single Items -->
 												<div class="">
 													<div class="singles_item">
@@ -109,7 +108,8 @@ let sec = 0, svc = 0, loc = 0, cln = 0, cmf = 0;
 														</div>
 													</div>
 												</div>
-												
+										</div>
+										<div class="col-md-3">		
 												<!-- Single Items -->
 												<div class="">
 													<div class="singles_item">
@@ -117,12 +117,13 @@ let sec = 0, svc = 0, loc = 0, cln = 0, cmf = 0;
 															<i class="icofont-travelling"></i>
 														</div>
 														<div class="info">
-															<h4 class="name">{{$adata['max_adults']}}</h4>
+															<h4 class="name">{{$terms['max_adults']}}</h4>
 															<p class="value">Max. adults</p>
 														</div>
 													</div>
 												</div>
-												
+										</div>
+										<div class="col-md-3">		
 												<!-- Single Items -->
 												<div class="">
 													<div class="singles_item">
@@ -135,8 +136,8 @@ let sec = 0, svc = 0, loc = 0, cln = 0, cmf = 0;
 														</div>
 													</div>
 												</div>
-											  </div>
-											</div>
+										</div>
+											  
 										</div>
 									</div>
 								</div>
@@ -553,12 +554,12 @@ let sec = 0, svc = 0, loc = 0, cln = 0, cmf = 0;
 															
 																<div class="guest-type">
 																	<h5>Adults</h5>
-																	<span>{{$adata['max_adults']}} max.</span>
+																	<span>{{$terms['max_adults']}} max.</span>
 																</div>
 																
 																<div class="guests-box">
 																	  <button class="counter-btn" type="button" id="cnt-down"><i class="ti-minus"></i></button>
-																	  <input type="text" id="guestNo" name="guests" value="2" max="{{$adata['max_children']}}"/>
+																	  <input type="text" id="guestNo" name="guests" value="2" max="{{$terms['max_children']}}"/>
 																	  <button class="counter-btn" type="button" id="cnt-up"><i class="ti-plus"></i></button>
 																</div>
 																
@@ -574,12 +575,12 @@ let sec = 0, svc = 0, loc = 0, cln = 0, cmf = 0;
 															
 																<div class="guest-type">
 																	<h5>Child</h5>
-																	<span>{{$adata['max_children']}} max.</span>
+																	<span>{{$terms['max_children']}} max.</span>
 																</div>
 																
 																<div class="guests-box">
 																	<button class="counter-btn" type="button" id="kcnt-down"><i class="ti-minus"></i></button>
-																	<input type="text" id="kidsNo" name="kids" value="0" max="{{$adata['max_children']}}"/>
+																	<input type="text" id="kidsNo" name="kids" value="0" max="{{$terms['max_children']}}"/>
 																	<button class="counter-btn" type="button" id="kcnt-up"><i class="ti-plus"></i></button>
 																</div>
 																
