@@ -15,10 +15,17 @@ EOD;
 $def = [
   'avb' => "available",
   'city' => "",
+  'lga' => "",
   'state' => "none",
   'amount' => "0",
   'rating' => "4",
   'id_required' => "yes",
+  'category' => "",
+  'property_type' => "none",
+  'rooms' => "none",
+  'units' => "none",
+  'bedrooms' => "none",
+  'bathrooms' => "none",
   'children' => "none",
   'pets' => "no",
   'max_adults' => "4",
@@ -95,12 +102,158 @@ $('#apartment-preference-loading').hide();
 										
 										<div class="col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group">
+												<label>Price per day(&#8358;)<i class="req">*</i></label>
+												<input type="number" class="form-control" value="{{$def['amount']}}" id="apartment-preference-amount" placeholder="Enter amount in NGN">
+											</div>
+										</div>
+										
+										<div class="col-lg-6 col-md-6 col-sm-12">
+											<div class="form-group">
+												<label>Rating of at least:<i class="req">*</i></label>
+												<input type="number" class="form-control" value="{{$def['rating']}}" id="apartment-preference-rating" max=5 placeholder="Rating">
+											</div>
+										</div>
+										
+									<div class="col-lg-6 col-md-6 col-sm-12">
+											<div class="form-group">
+												<label>Category<i class="req">*</i></label>
+												<select class="form-control" id="apartment-preference-category">
+												  <option value="none">Select category</option>
+												  <?php
+												  $aptCategories = [
+												    'studio' => "Studio",
+												    '1bed' => "1 bedroom",
+												    '2bed' => "2 bedrooms",
+												    '3bed' => "3 bedrooms",
+												    'penthouse' => "Penthouse apartment",
+												    'duplex' => "Duplex"
+												  ];
+												  foreach($aptCategories as $key => $value)
+												  {
+													  $ss = $def['category'] == $key ? " selected='selected'" : "";
+												  ?>
+												  <option value="{{$key}}"{{$ss}}>{{$value}}</option>
+												  <?php
+												  }
+												  ?>
+												</select>
+											</div>
+										</div>
+										
+										<div class="col-lg-6 col-md-6 col-sm-12">
+											<div class="form-group">
+												<label>Property type<i class="req">*</i></label>
+												<select class="form-control" id="apartment-preference-ptype">
+												  <option value="none">Select type</option>
+												  <?php
+												  $aptTypes = [
+												    'unfurnished' => "Unfurnished apartment",
+												    'Furnished' => "Furnished apartment",
+												    'serviced' => "Serviced apartment",
+												  ];
+												  foreach($aptTypes as $key => $value)
+												  {
+													   $ss = $def['property_type'] == $key ? " selected='selected'" : "";
+												  ?>
+												  <option value="{{$key}}"{{$ss}}>{{$value}}</option>
+												  <?php
+												  }
+												  ?>
+												</select>
+											</div>
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-12">
+											<div class="form-group">
+												<label>No. of rooms<i class="req">*</i></label>
+												<select class="form-control" id="apartment-preference-rooms">
+												  <option value="none">Select number of rooms</option>
+												  <?php
+												   for($i = 0; $i < 5; $i++)
+												   {
+                                                     $rr = $i == 0 ? "room" : "rooms";
+                                                      $ss = $def['rooms'] == ($i + 1) ? " selected='selected'" : "";													 
+												  ?>
+												  <option value="{{$i + 1}}"{{$ss}}>{{$i + 1}} {{$rr}}</option>
+												  <?php
+												   }
+												  ?>
+												</select>
+											</div>
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-12">
+											<div class="form-group">
+												<label>No. of units<i class="req">*</i></label>
+												<select class="form-control" id="apartment-preference-units">
+												  <option value="none">Select number of units</option>
+												  <?php
+												   for($i = 0; $i < 5; $i++)
+												   {
+                                                     $rr = $i == 0 ? "unit" : "units";
+                                                      $ss = $def['units'] == ($i + 1) ? " selected='selected'" : "";													 
+												  ?>
+												  <option value="{{$i + 1}}"{{$ss}}>{{$i + 1}} {{$rr}}</option>
+												  <?php
+												   }
+												  ?>
+												</select>
+											</div>
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-12">
+											<div class="form-group">
+												<label>No. of bathrooms<i class="req">*</i></label>
+												<select class="form-control" id="apartment-preference-bathrooms">
+												  <option value="none">Select number of bathrooms</option>
+												  <?php
+												   for($i = 0; $i < 5; $i++)
+												   {
+                                                     $rr = $i == 0 ? "bathroom" : "bathrooms";
+                                                      $ss = $def['bathrooms'] == ($i + 1) ? " selected='selected'" : "";													 
+												  ?>
+												  <option value="{{$i + 1}}"{{$ss}}>{{$i + 1}} {{$rr}}</option>
+												  <?php
+												   }
+												  ?>
+												</select>
+											</div>
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-12">
+											<div class="form-group">
+												<label>No. of bedrooms<i class="req">*</i></label>
+												<select class="form-control" id="apartment-preference-bedrooms">
+												  <option value="none">Select number of bedrooms</option>
+												  <?php
+												   for($i = 0; $i < 5; $i++)
+												   {
+                                                     $rr = $i == 0 ? "bedroom" : "bedrooms";
+                                                     $ss = $def['bedrooms'] == ($i + 1) ? " selected='selected'" : "";													 
+												  ?>
+												  <option value="{{$i + 1}}"{{$ss}}>{{$i + 1}} {{$rr}}</option>
+												  <?php
+												   }
+												  ?>
+												</select>
+											</div>
+										</div>
+										
+										<div class="col-lg-12 col-md-12 col-sm-12" style="margin-top: 20px;">
+											<h4 class="mb-3 mt-3">Location</h4>
+										</div>
+										
+										<div class="col-lg-4 col-md-4 col-sm-12">
+											<div class="form-group">
 												<label>City<i class="req">*</i></label>
 												<input type="text" class="form-control" value="{{$def['city']}}" id="apartment-preference-city" placeholder="City">
 											</div>
 										</div>
 										
-										<div class="col-lg-6 col-md-6 col-sm-12">
+										<div class="col-lg-4 col-md-4 col-sm-12">
+											<div class="form-group">
+												<label>LGA<i class="req">*</i></label>
+												<input type="text" class="form-control" value="{{$def['lga']}}" id="apartment-preference-lga" placeholder="LGA">
+											</div>
+										</div>
+										
+										<div class="col-lg-4 col-md-4 col-sm-12">
 											<div class="form-group">
 												<label>State<i class="req">*</i></label>
 												<select class="form-control" id="apartment-preference-state">
@@ -118,52 +271,10 @@ $('#apartment-preference-loading').hide();
 											</div>
 										</div>
 										
-										<div class="col-lg-6 col-md-6 col-sm-12">
-											<div class="form-group">
-												<label>Price per day(&#8358;)<i class="req">*</i></label>
-												<input type="number" class="form-control" value="{{$def['amount']}}" id="apartment-preference-amount" placeholder="Enter amount in NGN">
-											</div>
-										</div>
-										
-										<div class="col-lg-6 col-md-6 col-sm-12">
-											<div class="form-group">
-												<label>Rating<i class="req">*</i></label>
-												<input type="number" class="form-control" value="{{$def['rating']}}" id="apartment-preference-rating" max=5 placeholder="Rating">
-											</div>
-										</div>
-										
-										
-										
-										
 										<div class="col-lg-12 col-md-12 col-sm-12" style="margin-top: 20px;">
-											<h4 class="mb-3">Terms & Conditions</h4>
+											<h4 class="mb-3 mt-3">Terms & Conditions</h4>
 										</div>
-
-										<div class="col-lg-6 col-md-6 col-sm-12">
-											<div class="form-group">
-												<label>Payment Type<i class="req">*</i></label>
-												<select class="form-control">
-												  <option value="card">Card</option>
-												</select>
-											</div>
-										</div>
-										<div class="col-lg-6 col-md-6 col-sm-12">
-											<div class="form-group">
-												<label>ID Required on Check-in<i class="req">*</i></label>
-												<select class="form-control" id="apartment-preference-id-required">
-												   <?php
-												   $ir = ['yes' => "Yes",'no' => "No"];
-												   foreach($ir as $key => $value)
-												   {
-													   $ss = $def['id_required'] == $key ? " selected='selected'" : "";
-												  ?>
-												    <option value="{{$key}}"{{$ss}}>{{$value}}</option>
-												  <?php
-												   }
-												  ?>
-												</select>
-											</div>
-										</div>
+										
 										<div class="col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group">
 												<label>Children<i class="req">*</i></label>
