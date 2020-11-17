@@ -14,4 +14,5 @@ class ApartmentTerms extends Model
      */
     protected $fillable = [
         'id', 'apartment_id', 'max_adults', 'max_children', 'children', 'pets', 'payment_type'
+	];
 }
