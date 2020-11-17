@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ApartmentData extends Model
+class PreferenceData extends Model
 {
 
     /**
@@ -13,6 +13,6 @@ class ApartmentData extends Model
      * @var array
      */
     protected $fillable = [
-        'id', 'apartment_id', 'description', 'category', 'property_type', 'rooms', 'units', 'bathrooms', 'bedrooms', 'amount', 'landmarks'
-	];
+        'id', 'user_id', 'category', 'property_type', 'rooms', 'units', 'amount', 'bathrooms', 'bedrooms'
+    ];
 }

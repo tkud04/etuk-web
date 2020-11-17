@@ -1822,7 +1822,7 @@ class MainController extends Controller {
 					    $req['ird'] = $ird;
 					    $req['checkin'] = "12pm";
 					    $req['checkout'] = "1pm";
-					    $req['id_required'] = "1pm";
+					    $req['id_required'] = "yes";
 					    $req['children'] = "none";
 					    $req['pets'] = "no";
 				 
