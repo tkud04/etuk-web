@@ -450,6 +450,7 @@ class MainController extends Controller {
 		
 		$apf = $this->helpers->getPreference($user);
 		#dd($apf);
+		#dd($apf);
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
         
@@ -479,13 +480,6 @@ class MainController extends Controller {
 	    
 		$validator = Validator::make($req,[
 		                    'avb' => 'required',
-		                    'rating' => 'required',
-		                    'max_adults' => 'required|numeric',
-		                    'max_children' => 'required|numeric',
-		                    'id_required' => 'required',
-		                    'amount' => 'required|numeric',
-		                    'pets' => 'required',
-		                    'city' => 'required',
 		                    'state' => 'required',
 		                    'facilities' => 'required'
 		]);
@@ -498,6 +492,7 @@ class MainController extends Controller {
 		 {					
 					$req['payment_type'] = "card";
 					$req['user_id'] = $user->id;
+				 
 				 
 			$this->helpers->createPreference($req);
 			$ret = ['status' => "ok"];

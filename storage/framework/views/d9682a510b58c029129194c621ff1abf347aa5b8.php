@@ -1,6 +1,6 @@
 <?php
 $title = "Apartment Preferences";
-$subtitle = "Edit your apartment preferences";
+$subtitle = "tell us more about your ideal apartment";
 
 $checkoutHead = <<<EOD
                                 <div class="checkout-head">

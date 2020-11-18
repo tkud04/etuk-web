@@ -13,6 +13,6 @@ class Preferences extends Model
      * @var array
      */
     protected $fillable = [
-        'id', 'user_id', 'avb', 'city', 'state', 'id_required', 'amount', 'children', 'max_adults', 'max_children', 'pets', 'payment_type', 'rating'
+        'id', 'user_id', 'avb', 'rating'
     ];
 }

@@ -13,6 +13,6 @@ class PreferenceTerms extends Model
      * @var array
      */
     protected $fillable = [
-        'id', 'user_id', 'max_adults', 'max_children', 'children', 'pets', 'payment_type', 'rating'
+        'id', 'preference_id', 'max_adults', 'max_children', 'children', 'pets', 'payment_type'
     ];
 }

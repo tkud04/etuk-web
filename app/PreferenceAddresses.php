@@ -13,6 +13,6 @@ class PreferenceAddresses extends Model
      * @var array
      */
     protected $fillable = [
-        'id', 'user_id', 'address', 'city', 'lga', 'state'
+        'id', 'preference_id', 'address', 'city', 'lga', 'state'
     ];
 }

@@ -13,6 +13,6 @@ class PreferenceFacilities extends Model
      * @var array
      */
     protected $fillable = [
-        'id', 'user_id', 'facility', 'selected'
+        'id', 'preference_id', 'facility', 'selected'
     ];
 }

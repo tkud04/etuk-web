@@ -2,10 +2,17 @@
 $def = [
   'avb' => "available",
   'city' => "",
+  'lga' => "",
   'state' => "none",
   'amount' => "0",
   'rating' => "4",
   'id_required' => "yes",
+  'category' => "",
+  'property_type' => "none",
+  'rooms' => "none",
+  'units' => "none",
+  'bedrooms' => "none",
+  'bathrooms' => "none",
   'children' => "none",
   'pets' => "no",
   'max_adults' => "4",
@@ -80,17 +87,128 @@ if(count($apf) < 1) $apf = $def;
 									</div>
 									
 									<div class="form-group">
-									   <label>ID Required:</label>
+									   <label>Category:</label>
 										<div class="input-with-icon">
-											<select id="guest-apt-sidebar-id-required" class="form-control">
-												<option value="none">ID Required?</option>
-												   <?php
-												   $ir = ['yes' => "Yes",'no' => "No"];
-												   foreach($ir as $key => $value)
-												   {
-													   $ss = $apf['id_required'] == $key ? " selected='selected'" : "";
+											<select id="guest-apt-sidebar-category" class="form-control">
+												<option value="none">Select category</option>
+												  <?php
+												  $aptCategories = [
+												    'studio' => "Studio",
+												    '1bed' => "1 bedroom",
+												    '2bed' => "2 bedrooms",
+												    '3bed' => "3 bedrooms",
+												    'penthouse' => "Penthouse apartment",
+												    'duplex' => "Duplex"
+												  ];
+												  foreach($aptCategories as $key => $value)
+												  {
+													  $ss = $apf['category'] == $key ? " selected='selected'" : "";
 												  ?>
-												    <option value="<?php echo e($key); ?>"<?php echo e($ss); ?>><?php echo e($value); ?></option>
+												  <option value="<?php echo e($key); ?>"<?php echo e($ss); ?>><?php echo e($value); ?></option>
+												  <?php
+												  }
+												  ?>
+											</select>
+											<i class="ti-briefcase"></i>
+										</div>
+									</div>
+									
+									<div class="form-group">
+									   <label>Property type:</label>
+										<div class="input-with-icon">
+											<select id="guest-apt-sidebar-ptype" class="form-control">
+												<option value="none">Select type</option>
+												  <?php
+												  $aptTypes = [
+												    'unfurnished' => "Unfurnished apartment",
+												    'Furnished' => "Furnished apartment",
+												    'serviced' => "Serviced apartment",
+												  ];
+												  foreach($aptTypes as $key => $value)
+												  {
+													   $ss = $apf['property_type'] == $key ? " selected='selected'" : "";
+												  ?>
+												  <option value="<?php echo e($key); ?>"<?php echo e($ss); ?>><?php echo e($value); ?></option>
+												  <?php
+												  }
+												  ?>
+											</select>
+											<i class="ti-briefcase"></i>
+										</div>
+									</div>
+									
+									<div class="form-group">
+									   <label>No. of rooms:</label>
+										<div class="input-with-icon">
+											<select id="guest-apt-sidebar-rooms" class="form-control">
+												<option value="none">Select number of rooms</option>
+												  <?php
+												   for($i = 0; $i < 5; $i++)
+												   {
+                                                     $rr = $i == 0 ? "room" : "rooms";
+                                                      $ss = $apf['rooms'] == ($i + 1) ? " selected='selected'" : "";													 
+												  ?>
+												  <option value="<?php echo e($i + 1); ?>"<?php echo e($ss); ?>><?php echo e($i + 1); ?> <?php echo e($rr); ?></option>
+												  <?php
+												   }
+												  ?>
+											</select>
+											<i class="ti-briefcase"></i>
+										</div>
+									</div>
+									
+									<div class="form-group">
+									   <label>No. of units:</label>
+										<div class="input-with-icon">
+											<select id="guest-apt-sidebar-units" class="form-control">
+												<option value="none">Select number of units</option>
+												  <?php
+												   for($i = 0; $i < 5; $i++)
+												   {
+                                                     $rr = $i == 0 ? "unit" : "units";
+                                                      $ss = $apf['units'] == ($i + 1) ? " selected='selected'" : "";													 
+												  ?>
+												  <option value="<?php echo e($i + 1); ?>"<?php echo e($ss); ?>><?php echo e($i + 1); ?> <?php echo e($rr); ?></option>
+												  <?php
+												   }
+												  ?>
+											</select>
+											<i class="ti-briefcase"></i>
+										</div>
+									</div>
+									
+									<div class="form-group">
+									   <label>No. of bathrooms:</label>
+										<div class="input-with-icon">
+											<select id="guest-apt-sidebar-bathrooms" class="form-control">
+												<option value="none">Select number of bathrooms</option>
+												  <?php
+												   for($i = 0; $i < 5; $i++)
+												   {
+                                                     $rr = $i == 0 ? "bathroom" : "bathrooms";
+                                                      $ss = $apf['bathrooms'] == ($i + 1) ? " selected='selected'" : "";													 
+												  ?>
+												  <option value="<?php echo e($i + 1); ?>"<?php echo e($ss); ?>><?php echo e($i + 1); ?> <?php echo e($rr); ?></option>
+												  <?php
+												   }
+												  ?>
+											</select>
+											<i class="ti-briefcase"></i>
+										</div>
+									</div>
+									
+									<div class="form-group">
+									   <label>No. of bedrooms:</label>
+										<div class="input-with-icon">
+											<select id="guest-apt-sidebar-bedrooms" class="form-control">
+												<option value="none">Select number of bedrooms</option>
+												  <?php
+												   for($i = 0; $i < 5; $i++)
+												   {
+                                                     $rr = $i == 0 ? "bedroom" : "bedrooms";
+                                                     $ss = $apf['bedrooms'] == ($i + 1) ? " selected='selected'" : "";													 
+												  ?>
+												  <option value="<?php echo e($i + 1); ?>"<?php echo e($ss); ?>><?php echo e($i + 1); ?> <?php echo e($rr); ?></option>
 												  <?php
 												   }
 												  ?>

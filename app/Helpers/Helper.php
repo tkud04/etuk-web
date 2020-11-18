@@ -35,6 +35,10 @@ use App\SavedApartments;
 use App\ApartmentPreferences;
 use App\Transactions;
 use App\Preferences;
+use App\PreferenceAddresses;
+use App\PreferenceData;
+use App\PreferenceMedia;
+use App\PreferenceTerms;
 use App\PreferenceFacilities;
 use App\Tickets;
 use App\TicketItems;
@@ -1571,23 +1575,28 @@ function updateApartment($data)
 		   function search($data)
 		   {
 			   $dt = json_decode($data);
-			 #dd($dt);
+			 dd($dt);
 			 $avb = $dt->avb;
 			 $city = $dt->city;
 			 $state = $dt->state;
 			 $max_adults = $dt->max_adults;
 			 $max_children = $dt->max_children;
 			 
-			 if($dt->kids > 0)
+			 if(isset($dt->kids) && $dt->kids > 0)
 			 {
 				 if($dt->kids > $dt->max_children) $max_children = $dt->kids;
 			 }
-			 if($dt->adults > 0)
+			 if(isset($dt->adults) && $dt->adults > 0)
 			 {
 				 if($dt->adults > $dt->max_adults) $max_adults = $dt->adults;
 			 }
 			 $amount = $dt->amount;
-			 $id_required = $dt->id_required;
+			 $category = $dt->category;
+			 $property_type = $dt->property_type;
+			 $rooms = $dt->rooms;
+			 $units = $dt->units;
+			 $bathrooms = $dt->bathrooms;
+			 $bedrooms = $dt->bedrooms;
 			 $children = $dt->children;
 			 $pets = $dt->pets;
 			 $rating = $dt->rating;
@@ -1605,15 +1614,22 @@ function updateApartment($data)
 			 
 			 //Terms
 			 $byTerms = ApartmentTerms::where([
-			                           'id_required' => $id_required,
 			                           'children' => $children,
 			                           'pets' => $pets,
-									   ])->get();
+									   ])
+									   ->where('max_adults',"<=",$max_adults)
+			                           ->where('max_children',"<=",$max_children)->get();
 			 
 			 //Data
-			 $byData = ApartmentData::where('max_adults',"<=",$max_adults)
-			                        ->where('max_children',"<=",$max_children)
-			                         ->where('amount',"<=",$amount)->get();
+			 $byData = ApartmentData::where([
+			                           'category' => $category,
+			                           'property_type' => $property_type,
+			                           'rooms' => $rooms,
+			                           'units' => $units,
+			                           'bathrooms' => $bathrooms,
+			                           'bedrooms' => $bedrooms,
+									   ])
+									   ->where('amount',"<=",$amount)->get();
 									   
 			 //collect all
 			 $ret = [];
@@ -2663,43 +2679,35 @@ function createSocial($data)
 			   
 			   if($p == null)
 			   {
+	 
 				   $p = Preferences::create(['user_id' => $dt['user_id'], 
                                              'avb' => $dt['avb'],
-                                             'city' => $dt['city'],
-                                             'state' => $dt['state'],
-                                             'amount' => $dt['amount'],
-                                             'id_required' => $dt['id_required'],
-                                             'children' => $dt['children'],
-                                             'max_adults' => $dt['max_adults'],
-                                             'max_children' => $dt['max_children'],
-                                             'pets' => $dt['pets'],
-                                             'payment_type' => $dt['payment_type'],
                                              'rating' => $dt['rating']
                                             ]);
+					
+					$dt['preference_id'] = $p->id;
+					
+					$this->createPreferenceAddress($dt);
+					$this->createPreferenceData($dt);
+					$this->createPreferenceTerms($dt);	
 			   }
 			   else
 			   {
-				   $p->update(['user_id' => $dt['user_id'], 
-                                             'avb' => $dt['avb'],
-                                             'city' => $dt['city'],
-                                             'state' => $dt['state'],
-                                             'amount' => $dt['amount'],
-                                             'id_required' => $dt['id_required'],
-                                             'children' => $dt['children'],
-                                             'max_adults' => $dt['max_adults'],
-                                             'max_children' => $dt['max_children'],
-                                             'pets' => $dt['pets'],
-                                             'payment_type' => $dt['payment_type'],
+				   $p->update(['avb' => $dt['avb'],
                                              'rating' => $dt['rating']
                                             ]);
 											
-				   PreferenceFacilities::where('user_id',$dt['user_id'])->delete();
+					$dt['preference_id'] = $p->id;						
+				   PreferenceFacilities::where('preference_id',$dt['preference_id'])->delete();
+				   $this->updatePreferenceAddress($dt);
+					$this->updatePreferenceData($dt);
+					$this->updatePreferenceTerms($dt);
 			   }
 			   
 			   foreach($facilities as $f)
 				{
 					$af = $this->createPreferenceFacilities([
-					    'user_id' => $dt['user_id'],
+					    'preference_id' => $dt['preference_id'],
 					    'facility' => $f->id
 					]);
 				}
@@ -2707,9 +2715,55 @@ function createSocial($data)
                 return $p;
 		   }
 		   
+		   function createPreferenceAddress($data)
+           {
+			   $address = isset($data['address']) ? $data['address'] : "";
+			   $city = isset($data['city']) ? $data['city'] : "";
+			   $lga = isset($data['lga']) ? $data['lga'] : "";
+			   $state = isset($data['state']) ? $data['state'] : "";
+			   
+           	$ret = PreferenceAddresses::create(['preference_id' => $data['preference_id'], 
+                                                      'address' => $address,                                                       
+                                                      'city' => $city,                                                       
+                                                      'lga' => $lga,                                                       
+                                                      'state' => $state
+                                                      ]);
+                              
+                return $ret;
+           }
+		   
+		   function createPreferenceData($data)
+           {
+           	$ret = PreferenceData::create(['preference_id' => $data['preference_id'], 
+                                                      'category' => $data['category'],                                                       
+                                                      'property_type' => $data['property_type'],                                                       
+                                                      'rooms' => $data['rooms'],                                                       
+                                                      'units' => $data['units'],                                                       
+                                                      'bathrooms' => $data['bathrooms'],                                                       
+                                                      'bedrooms' => $data['bedrooms'],                                                
+                                                      'amount' => $data['amount']                                                       
+                                                      ]);
+                              
+                return $ret;
+           }
+		   
+		   
+		   function createPreferenceTerms($data)
+           {
+           	$ret = PreferenceTerms::create(['preference_id' => $data['preference_id'], 
+                                                      'max_adults' => $data['max_adults'],                                                       
+                                                      'max_children' => $data['max_children'],                                                      
+                                                      'children' => $data['children'],                                                      
+                                                      'pets' => $data['pets'],                                                      
+                                                      'payment_type' => $data['payment_type']                                                      
+                                                      ]);
+                              
+                return $ret;
+           }
+		   
 		   function createPreferenceFacilities($dt)
 		   {
-			   $ret = PreferenceFacilities::create(['user_id' => $dt['user_id'], 
+			   $ret = PreferenceFacilities::create(['preference_id' => $dt['preference_id'], 
                                                       'facility' => $dt['facility'],                                                       
                                                       'selected' => "true"                                                       
                                                       ]);
@@ -2724,24 +2778,36 @@ function createSocial($data)
            	  
 			  $ret = [];
               $p = Preferences::where('user_id',$user->id)->first();
- 
+              #dd($p);
               if($p != null)
                {
+				  $data = $this->getPreferenceData($p->id);
+				  $address = $this->getPreferenceAddress($p->id);
+				  $terms = $this->getPreferenceTerms($p->id);
+				  #dd($address);
+				  
 				  $temp = [];
 				  $temp['id'] = $p->id;
 				  $temp['user_id'] = $p->user_id;
 				  $temp['avb'] = $p->avb;
-				  $temp['city'] = $p->city;
-				  $temp['state'] = $p->state;
-				  $temp['amount'] = $p->amount;
-				  $temp['id_required'] = $p->id_required;
-				  $temp['children'] = $p->children;
-				  $temp['max_adults'] = $p->max_adults;
-				  $temp['max_children'] = $p->max_children;
-				  $temp['pets'] = $p->pets;
-				  $temp['payment_type'] = $p->payment_type;
-				  $temp['facilities'] = $this->getPreferenceFacilities($user);	  
 				  $temp['rating'] = $p->rating;
+				  $temp['city'] = $address['city'];
+				  $temp['lga'] = $address['lga'];
+				  $temp['state'] = $address['state'];
+				  $temp['amount'] = $data['amount'];
+				  $temp['property_type'] = $data['property_type'];
+				  $temp['rooms'] = $data['rooms'];
+				  $temp['units'] = $data['units'];
+				  $temp['bedrooms'] = $data['bedrooms'];
+				  $temp['bathrooms'] = $data['bathrooms'];
+				  $temp['category'] = $data['category'];
+				  $temp['children'] = $terms['children'];
+				  $temp['max_adults'] = $terms['max_adults'];
+				  $temp['max_children'] = $terms['max_children'];
+				  $temp['pets'] = $terms['pets'];
+				  $temp['payment_type'] = $terms['payment_type'];
+				  $temp['facilities'] = $this->getPreferenceFacilities($p->id);	  
+				  
 				   $temp['date'] = $p->created_at->format("jS F, Y h:i A");
 				  $ret = $temp;
                }                         
@@ -2749,10 +2815,75 @@ function createSocial($data)
                 return $ret;
            }
 		   
-		   function getPreferenceFacilities($user)
+    function getPreferenceData($id)
            {
            	$ret = [];
-              $pfs = PreferenceFacilities::where('user_id',$user->id)->get();
+              $pdt = PreferenceData::where('preference_id',$id)->first();
+ 
+              if($pdt != null)
+               {
+				  $temp = [];
+				  $temp['id'] = $pdt->id;
+				  $temp['preference_id'] = $pdt->preference_id;
+     			  $temp['category'] = $pdt->category;
+     			  $temp['property_type'] = $pdt->property_type;
+     			  $temp['rooms'] = $pdt->rooms;
+     			  $temp['units'] = $pdt->units;
+     			  $temp['bathrooms'] = $pdt->bathrooms;
+     			  $temp['bedrooms'] = $pdt->bedrooms;
+     			  $temp['amount'] = $pdt->amount;
+				  $temp['landmarks'] = $pdt->landmarks;
+				  $ret = $temp;
+               }                         
+                                                      
+                return $ret;
+           }			   
+	
+	function getPreferenceAddress($id)
+           {
+           	$ret = [];
+               $pa = PreferenceAddresses::where('preference_id',$id)->first();
+ 
+              if($pa != null)
+               {
+				  $temp = [];
+				  $temp['id'] = $pa->id;
+				  $temp['preference_id'] = $pa->preference_id;
+     			  $temp['address'] = $pa->address;
+				  $temp['city'] = $pa->city;
+				  $temp['lga'] = $pa->lga;
+				  $temp['state'] = $pa->state;
+				  $ret = $temp;
+               }                         
+                                                      
+                return $ret;
+           }
+	
+	function getPreferenceTerms($id)
+           {
+           	$ret = [];
+              $pt = PreferenceTerms::where('preference_id',$id)->first();
+ 
+              if($pt != null)
+               {
+				  $temp = [];
+				  $temp['id'] = $pt->id;
+				  $temp['preference_id'] = $pt->preference_id;
+     			  $temp['max_adults'] = $pt->max_adults;
+     			  $temp['max_children'] = $pt->max_children;
+     			  $temp['children'] = $pt->children;
+     			  $temp['pets'] = $pt->pets;
+     			  $temp['payment_type'] = $pt->payment_type;
+				  $ret = $temp;
+               }                         
+                                                      
+                return $ret;
+           }		   
+		   
+		   function getPreferenceFacilities($id)
+           {
+           	$ret = [];
+              $pfs = PreferenceFacilities::where('preference_id',$id)->get();
  
               if($pfs != null)
                {
@@ -2782,6 +2913,59 @@ function createSocial($data)
                }                         
                                                       
                 return $ret;
+           }
+		   
+		   function updatePreferenceAddress($data)
+           {
+			    $pa = PreferenceAddresses::where('preference_id',$data['preference_id'])->first();
+			
+			   if($pa != null)
+			   {
+           	       $pa->update([
+                                                      'address' => $data['address'],                                                       
+                                                      'city' => $data['city'],                                                       
+                                                      'lga' => $data['lga'],                                                       
+                                                      'state' => $data['state']
+                                                      ]);
+			   }               
+           }
+		   
+		   function updatePreferenceData($data)
+           {
+			   $pdt = PreferenceData::where('preference_id',$data['preference_id'])->first();
+			
+			   if($pdt != null)
+			   {
+				   $landmarks = isset($data['landmarks']) ? $data['landmarks'] : "";
+				   
+           	       $pdt->update([
+                                                     'category' => $data['category'], 
+                                                     'property_type' => $data['property_type'], 
+                                                     'rooms' => $data['rooms'], 
+                                                     'units' => $data['units'], 
+                                                     'bathrooms' => $data['bathrooms'], 
+                                                     'bedrooms' => $data['bedrooms'],                                                      
+                                                      'amount' => $data['amount'],                                                      
+                                                      'landmarks' => $landmarks                                                    
+                                                       ]);
+			   }
+           }
+		   
+
+		   function updatePreferenceTerms($data)
+           {
+            $pt = PreferenceTerms::where('preference_id',$data['preference_id'])->first();
+			   
+           	if($pt != null)
+			   {
+           	       $pt->update([
+                                                      'max_adults' => $data['max_adults'],                                                       
+                                                      'max_children' => $data['max_children'],  
+                                                      'children' => $data['children'],                                                      
+                                                      'pets' => $data['pets'],                                                      
+                                                      'payment_type' => $data['payment_type']                                                      
+                                                      ]);
+                }
            }
 		   
 		   

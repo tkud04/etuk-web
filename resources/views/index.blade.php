@@ -7,10 +7,17 @@
 $def = [
   'avb' => "available",
   'city' => "",
+  'lga' => "",
   'state' => "none",
   'amount' => "0",
   'rating' => "4",
   'id_required' => "yes",
+  'category' => "",
+  'property_type' => "none",
+  'rooms' => "none",
+  'units' => "none",
+  'bedrooms' => "none",
+  'bathrooms' => "none",
   'children' => "none",
   'pets' => "no",
   'max_adults' => "4",
@@ -129,13 +136,14 @@ let landingSearchDT = {
 						 {
 							 $pt = [];
 $adata = $pa['data'];
+$terms = $pa['terms'];
 $address = $pa['address'];
 $cmedia = $pa['cmedia'];
 $imgs = $cmedia['images'];
 
 $pt['img'] = $imgs[0];
 $pt['href'] = url('apartment')."?xf=".$pa['url'];
-$pt['tc'] = $adata['max_adults'];
+$pt['tc'] = $terms['max_adults'];
 $pt['location'] = $address['city'].", ".$address['state'];
 $pt['stars'] = $pa['rating'];
 $pt['amount'] = $adata['amount'];
@@ -307,13 +315,14 @@ $pt['name'] = $pa['name'];
 						 {
 							 $pt = [];
 $adata = $pa['data'];
+$terms = $pa['terms'];
 $address = $pa['address'];
 $cmedia = $pa['cmedia'];
 $imgs = $cmedia['images'];
 
 $pt['img'] = $imgs[0];
 $pt['href'] = url('apartment')."?xf=".$pa['url'];
-$pt['tc'] = $adata['max_adults'];
+$pt['tc'] = $terms['max_adults'];
 $pt['location'] = $address['city'].", ".$address['state'];
 $pt['stars'] = $pa['rating'];
 $pt['amount'] = $adata['amount'];

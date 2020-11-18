@@ -13,6 +13,6 @@ class PreferenceData extends Model
      * @var array
      */
     protected $fillable = [
-        'id', 'user_id', 'category', 'property_type', 'rooms', 'units', 'amount', 'bathrooms', 'bedrooms'
+        'id', 'preference_id', 'category', 'property_type', 'rooms', 'units', 'amount', 'bathrooms', 'bedrooms'
     ];
 }
