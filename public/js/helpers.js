@@ -876,9 +876,9 @@ const isMobile = () =>{
 
 
 const search = dt => {
-	console.log("dt: ",dt);
-	$('#guest-apt-sidebar-dt').val(JSON.stringify(dt));
-	$('#guest-apt-sidebar-form').submit();
+	let request = new XMLHttpRequest();
+    request.open("POST", "search");
+    request.send(dt);
 }
 
 const sendMessage = (dt,id) => {

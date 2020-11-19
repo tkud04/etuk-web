@@ -850,12 +850,14 @@ class MainController extends Controller {
 		$user = null;
 		$messages = [];
 		$apf = [];
+		$def = $this->helpers->def;
 		
 		if(Auth::check())
 		{
 			$user = Auth::user();
 			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
 			$apf = $this->helpers->getPreference($user);
+			if(count($apf) > 0) $def = $apf;
 		}
 		#dd($apf);
 		$req = $request->all();
@@ -878,7 +880,7 @@ class MainController extends Controller {
 		       shuffle($ads);
 		       $ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
         
-    	       return view("apartments",compact(['user','cart','messages','c','ad','apf','apartments','services','states','signals','plugins','banner']));		
+    	       return view("apartments",compact(['user','cart','messages','c','ad','def','apartments','services','states','signals','plugins','banner']));		
     }
 
 	/**
@@ -891,6 +893,7 @@ class MainController extends Controller {
 		$user = null;
 		$messages = [];
 		$apf = [];
+		$def = $this->helpers->def;
 		$cart = [];
 		
 		if(Auth::check())
@@ -898,6 +901,7 @@ class MainController extends Controller {
 			$user = Auth::user();
 			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
 			$apf = $this->helpers->getPreference($user);
+			if(count($apf) > 0) $def = $apf;
 			$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
 			
 		}
@@ -932,7 +936,7 @@ class MainController extends Controller {
 			#dd($results);
 			if(count($results) > 0)
 			{
-				return view("search-results",compact(['user','cart','messages','apf','c','ad','results','services','states','signals','plugins','banner']));
+				return view("search-results",compact(['user','cart','messages','def','c','ad','results','services','states','signals','plugins','banner']));
 			}
 			else
 			{
@@ -956,7 +960,6 @@ class MainController extends Controller {
 		$apf = [];
 		$def = $this->helpers->def;
 
-		if(count($apf) > 0) $def = $apf;
 		if(Auth::check())
 		{
 			$user = Auth::user();
@@ -966,7 +969,7 @@ class MainController extends Controller {
 		}
 		
 		$req = $request->all();
-		
+		dd($req);
 		$validator = Validator::make($req, [
                              'dt' => 'required'
          ]);

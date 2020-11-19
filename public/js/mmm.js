@@ -557,7 +557,7 @@ $(document).ready(function() {
        aptPType = $(`#guest-apt-ptype`).val(),aptRooms = $(`#guest-apt-rooms`).val(),aptBedrooms = $(`#guest-apt-bedrooms`).val(),
        aptUnits = $(`#guest-apt-units`).val(),aptBathrooms = $(`#guest-apt-bathrooms`).val(),
 	   aptChildren = $(`#guest-apt-sidebar-children`).val(), aptPets = $(`#guest-apt-sidebar-pets`).val(),
-       aptCity = $(`#guest-apt-sidebar-city`).val(), aptState = $(`#guest-apt-sidebar-state`).val(),
+       aptCity = $(`#guest-apt-sidebar-city`).val(), aptLGA = "", aptState = $(`#guest-apt-sidebar-state`).val(),
 	   facilities = $('input.guest-apt-sidebar-facility:checked'), validation = (facilities.length < 1 || aptState == "");
 	   
 		console.log(facilities);
@@ -575,26 +575,31 @@ $(document).ready(function() {
 				console.log(f);
 				ff.push($(f).attr('data-tag'));
 			}
-			let dt = {
+			
+			let searchDT = {
 				avb: aptAvb,
 				city: aptCity,
+				lga: "",
 				state: aptState,
-				max_adults: aptMaxAdults,
-				max_children: aptMaxChildren,
-				amount: aptAmount,
 				category: aptCategory,
 				property_type: aptPType,
 				rooms: aptRooms,
 				units: aptUnits,
-				bathrooms: aptBathrooms,
 				bedrooms: aptBedrooms,
+				bathrooms: aptBathrooms,
+				max_adults: aptMaxAdults,
+				max_children: aptMaxChildren,
+				amount: aptAmount,
 				children: aptChildren,
 				pets: aptPets,
 				facilities: ff,
 				rating: aptRating
 			};
-			//console.log(dt);
-			search(dt);
+			
+			$("#guest-apt-sidebar-dt").val(JSON.stringify(searchDT));
+			
+			console.log($("#guest-apt-sidebar-dt").val());
+			//$('#search-form').submit();
 		}
 			
 	});
