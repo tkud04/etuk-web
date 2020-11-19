@@ -2,21 +2,6 @@
 $title = "Search Results";
 $subtitle = count($results)." results found";
 
-$def = [
-  'avb' => "available",
-  'city' => "",
-  'state' => "none",
-  'amount' => "0",
-  'rating' => "4",
-  'id_required' => "yes",
-  'children' => "none",
-  'pets' => "no",
-  'max_adults' => "4",
-  'max_children' => "0",
-  'facilities' => []
-];
-
-if(count($apf) > 0) $def = $apf;
 ?>
 @extends('layout')
 
@@ -46,7 +31,7 @@ $img = $imgs[0];
 $uu = url('apartment')."?xf=".$a['url'];
 $lu = url('like')."?xf=".$a['url'];
 $bu = url('bookmark')."?xf=".$a['url'];
-$tc = $adata['max_adults'];
+$tc = $terms['max_adults'];
 $location = ucwords($address['city'].", ".$address['state']);
 $stars = $a['rating'];
 $amount = $adata['amount'];

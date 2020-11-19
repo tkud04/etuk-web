@@ -3,39 +3,22 @@
 @section('title',"Welcome")
 
 @section('scripts')
-<?php
-$def = [
-  'avb' => "available",
-  'city' => "",
-  'lga' => "",
-  'state' => "none",
-  'amount' => "0",
-  'rating' => "4",
-  'id_required' => "yes",
-  'category' => "",
-  'property_type' => "none",
-  'rooms' => "none",
-  'units' => "none",
-  'bedrooms' => "none",
-  'bathrooms' => "none",
-  'children' => "none",
-  'pets' => "no",
-  'max_adults' => "4",
-  'max_children' => "0",
-  'facilities' => []
-];
 
-if(count($apf) > 0) $def = $apf;
-?>
 <script>
 let landingSearchDT = {
 				avb: "{{$def['avb']}}",
 				city: "{{$def['city']}}",
+				lga: "{{$def['lga']}}",
 				state: "{{$def['state']}}",
+				category: "{{$def['category']}}",
+				property_type: "{{$def['property_type']}}",
+				rooms: "{{$def['rooms']}}",
+				units: "{{$def['units']}}",
+				bedrooms: "{{$def['bedrooms']}}",
+				bathrooms: "{{$def['bathrooms']}}",
 				max_adults: "{{$def['max_adults']}}",
 				max_children: "{{$def['max_children']}}",
 				amount: "{{$def['amount']}}",
-				id_required: "{{$def['id_required']}}",
 				children: "{{$def['children']}}",
 				pets: "{{$def['pets']}}",
 				facilities: [

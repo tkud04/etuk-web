@@ -177,12 +177,32 @@ class Helper implements HelperContract
  ];			
 
   public $ip = "";
-    
+   
+  public $def = [
+  'avb' => "available",
+  'city' => "",
+  'lga' => "",
+  'state' => "none",
+  'amount' => "0",
+  'rating' => "4",
+  'category' => "",
+  'property_type' => "none",
+  'rooms' => "none",
+  'units' => "none",
+  'bedrooms' => "none",
+  'bathrooms' => "none",
+  'children' => "none",
+  'pets' => "no",
+  'max_adults' => "4",
+  'max_children' => "0",
+  'facilities' => []
+];
+   
   
   public $adminEmail = "aquarius4tkud@yahoo.com";
  // public $adminEmail = "aceluxurystore@yahoo.com";
   public $suEmail = "kudayisitobi@gmail.com";
-    
+   
            
 		   #{'msg':msg,'em':em,'subject':subject,'link':link,'sn':senderName,'se':senderEmail,'ss':SMTPServer,'sp':SMTPPort,'su':SMTPUser,'spp':SMTPPass,'sa':SMTPAuth};
            function sendEmailSMTP($data,$view,$type="view")
@@ -1575,7 +1595,7 @@ function updateApartment($data)
 		   function search($data)
 		   {
 			   $dt = json_decode($data);
-			 dd($dt);
+			 #dd($dt);
 			 $avb = $dt->avb;
 			 $city = $dt->city;
 			 $state = $dt->state;

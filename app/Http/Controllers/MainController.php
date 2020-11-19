@@ -33,10 +33,13 @@ class MainController extends Controller {
 		$user = null;
 		$messages = [];
 		$apf = [];
+		$def = $this->helpers->def;
+
 		if(Auth::check())
 		{
 			$user = Auth::user();
 			$apf = $this->helpers->getPreference($user);
+			if(count($apf) > 0) $def = $apf;
 			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
 		}
 		$req = $request->all();
@@ -58,7 +61,7 @@ class MainController extends Controller {
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
 
-    	return view("index",compact(['user','cart','messages','c','apf','hasUnpaidOrders','popularApartments','ad','signals','plugins','banner']));
+    	return view("index",compact(['user','cart','messages','c','def','hasUnpaidOrders','popularApartments','ad','signals','plugins','banner']));
     }
 	
 	/**
@@ -448,13 +451,14 @@ class MainController extends Controller {
 		$ads = $this->helpers->getAds("wide-ad");
 		$plugins = $this->helpers->getPlugins();
 		
+		$def = $this->helpers->def;
 		$apf = $this->helpers->getPreference($user);
-		#dd($apf);
+		if(count($apf) > 0) $def = $apf;
 		#dd($apf);
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
         
-    	return view("apartment-preferences",compact(['user','cart','messages','c','states','services','ad','apf','signals','plugins','banner']));
+    	return view("apartment-preferences",compact(['user','cart','messages','c','states','services','ad','def','signals','plugins','banner']));
     }
 	
 	/**
@@ -950,12 +954,15 @@ class MainController extends Controller {
 		$user = null;
 		$messages = [];
 		$apf = [];
-		
+		$def = $this->helpers->def;
+
+		if(count($apf) > 0) $def = $apf;
 		if(Auth::check())
 		{
 			$user = Auth::user();
 			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
 			$apf = $this->helpers->getPreference($user);
+			if(count($apf) > 0) $def = $apf;
 		}
 		
 		$req = $request->all();
@@ -990,7 +997,7 @@ class MainController extends Controller {
 			#dd($results);
 			if(count($results) > 0)
 			{
-				return view("search-results",compact(['user','cart','messages','apf','c','ad','results','services','states','signals','plugins','banner']));
+				return view("search-results",compact(['user','cart','messages','def','c','ad','results','services','states','signals','plugins','banner']));
 			}
 			else
 			{

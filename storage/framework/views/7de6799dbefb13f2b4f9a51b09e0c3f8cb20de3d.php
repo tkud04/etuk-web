@@ -3,39 +3,22 @@
 <?php $__env->startSection('title',"Welcome"); ?>
 
 <?php $__env->startSection('scripts'); ?>
-<?php
-$def = [
-  'avb' => "available",
-  'city' => "",
-  'lga' => "",
-  'state' => "none",
-  'amount' => "0",
-  'rating' => "4",
-  'id_required' => "yes",
-  'category' => "",
-  'property_type' => "none",
-  'rooms' => "none",
-  'units' => "none",
-  'bedrooms' => "none",
-  'bathrooms' => "none",
-  'children' => "none",
-  'pets' => "no",
-  'max_adults' => "4",
-  'max_children' => "0",
-  'facilities' => []
-];
 
-if(count($apf) > 0) $def = $apf;
-?>
 <script>
 let landingSearchDT = {
 				avb: "<?php echo e($def['avb']); ?>",
 				city: "<?php echo e($def['city']); ?>",
+				lga: "<?php echo e($def['lga']); ?>",
 				state: "<?php echo e($def['state']); ?>",
+				category: "<?php echo e($def['category']); ?>",
+				property_type: "<?php echo e($def['property_type']); ?>",
+				rooms: "<?php echo e($def['rooms']); ?>",
+				units: "<?php echo e($def['units']); ?>",
+				bedrooms: "<?php echo e($def['bedrooms']); ?>",
+				bathrooms: "<?php echo e($def['bathrooms']); ?>",
 				max_adults: "<?php echo e($def['max_adults']); ?>",
 				max_children: "<?php echo e($def['max_children']); ?>",
 				amount: "<?php echo e($def['amount']); ?>",
-				id_required: "<?php echo e($def['id_required']); ?>",
 				children: "<?php echo e($def['children']); ?>",
 				pets: "<?php echo e($def['pets']); ?>",
 				facilities: [

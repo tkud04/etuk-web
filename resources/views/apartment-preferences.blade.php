@@ -12,28 +12,6 @@ $checkoutHead = <<<EOD
 								</div>
 EOD;
 
-$def = [
-  'avb' => "available",
-  'city' => "",
-  'lga' => "",
-  'state' => "none",
-  'amount' => "0",
-  'rating' => "4",
-  'id_required' => "yes",
-  'category' => "",
-  'property_type' => "none",
-  'rooms' => "none",
-  'units' => "none",
-  'bedrooms' => "none",
-  'bathrooms' => "none",
-  'children' => "none",
-  'pets' => "no",
-  'max_adults' => "4",
-  'max_children' => "0",
-  'facilities' => []
-];
-
-if(count($apf) > 0) $def = $apf;
 ?>
 @extends('layout')
 
