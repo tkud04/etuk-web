@@ -141,7 +141,8 @@ class LoginController extends Controller {
                              'email' => 'required|email',                            
                              'phone' => 'required|numeric',
                              'fname' => 'required',
-                             'lname' => 'required'                  
+                             'lname' => 'required',                  
+                             'mode' => 'required'                  
          ]);
          
          if($validator->fails())
@@ -155,7 +156,6 @@ class LoginController extends Controller {
 			 
             $dt['role'] = "user";    
             $dt['status'] = "enabled";           
-            $dt['mode'] = "guest";           
             $dt['currency'] = "ngn";           
             $dt['verified'] = "yes";           
             

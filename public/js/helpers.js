@@ -42,7 +42,7 @@ const hideInputErrors = type => {
 	  switch(types[i]){
 		case "signup":
 		  $('#signup-finish').html(`<b>Signup successful!</b><p class='text-primary'>Redirecting you to the home page.</p>`);
-		  ret = ['#s-fname-error','#s-lname-error','#s-email-error','#s-phone-error','#s-pass-error','#s-pass2-error','#signup-finish'];	 
+		  ret = ['#s-mode-error','#s-fname-error','#s-lname-error','#s-email-error','#s-phone-error','#s-pass-error','#s-pass2-error','#signup-finish'];	 
 		break;
 		
 		case "login":
@@ -119,7 +119,7 @@ const signup = dt => {
 		   if(res.status == "ok"){
               hideElem(['#signup-loading','#signup-submit']); 
               showElem('#signup-finish');
-              window.location = "/"; 			   
+              window.location = "dashboard"; 			   
 		   }
 		   else if(res.status == "error"){
 		     alert("An unknown error has occured, please try again.");			
@@ -168,7 +168,7 @@ const login = dt => {
              	 
 		   if(res.status == "ok"){
               showElem('#login-finish');
-              window.location = "/"; 			   
+              window.location = "dashboard"; 			   
 		   }
 		   else if(res.status == "error"){
 			   console.log(res.message);

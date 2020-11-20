@@ -34,7 +34,6 @@ edit apartment
 
 Guest
 View apartment(video tour,map)
-Apartment providers contact form
 
 Blog
 

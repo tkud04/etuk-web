@@ -43,11 +43,12 @@ $(document).ready(function() {
        e.preventDefault();
 	  
        hideInputErrors("signup");	  
-      let fname = $('#s-fname').val(),lname = $('#s-lname').val(),em = $('#s-email').val(),
+      let mode = $('#s-mode').val(),fname = $('#s-fname').val(),lname = $('#s-lname').val(),em = $('#s-email').val(),
 	      phone = $('#s-phone').val(),p = $('#s-pass').val(),p2 = $('#s-pass2').val();
 		  
 		  
-	   if(fname == "" || lname == "" || em == "" || phone == "" || p == "" || p2 == "" || p != p2){
+	   if(mode == "none" || fname == "" || lname == "" || em == "" || phone == "" || p == "" || p2 == "" || p != p2){
+		   if(mode == "") showElem('#s-mode-error');
 		   if(fname == "") showElem('#s-fname-error');
 		   if(lname == "") showElem('#s-lname-error');
 		   if(em == "") showElem('#s-em-error');
@@ -61,6 +62,7 @@ $(document).ready(function() {
 		  showElem("#signup-loading");
 		  
 		 signup({
+			 mode: mode,
 			 fname: fname,
 			 lname: lname,
 			 email: em,

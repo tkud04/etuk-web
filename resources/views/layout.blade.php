@@ -463,7 +463,27 @@
 								<form id="s-form">
 									<input id="tk-signup" type="hidden" value="{{csrf_token()}}">
 									<div class="row">
-										
+										<?php
+										 $modes = ['guest','host'];
+										?>
+										<div class="col-lg-12 col-md-12">
+											<div class="form-group">
+												<div class="input-with-icon">
+													<select id="s-mode" class="form-control">
+													  <option value="none">Select mode</option>
+													  <?php
+													    foreach($modes as $m)
+														{
+													  ?>
+													   <option value="{{$m}}">{{ucwords($m)}}</option>
+													  <?php
+														}
+													  ?>
+													</select>												
+												</div>
+												<span class="text-danger text-bold input-error" id="s-mode-error">This field is required</span>
+											</div>
+										</div>
 										<div class="col-lg-6 col-md-6">
 											<div class="form-group">
 												<div class="input-with-icon">
@@ -533,7 +553,7 @@
 								
 								</form>
 							</div>
-							<div class="modal-divider"><span>Or login via</span></div>
+							<div class="modal-divider"><span>Or signup via</span></div>
 							<div class="social-login mb-3">
 							<?php
 							$fbSignup = url('oauth')."?type=facebook";
