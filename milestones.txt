@@ -1,15 +1,28 @@
 General
-Index
-about us
-faq
 
+Landing page
+Search
+FAQ
+Contact form
+View apartment(video tour,map)
+Blog
+Forum
+Knowledge Center
 
+--------------------------------------
+Guest
 
 Messages
 View message
 Send message
 Delete message
 
+Tickets
+Create ticket
+Add reply
+View ticket
+
+--------------------------------------
 Host
 Apartment mode changed when booked (available/occupied)
 
@@ -18,25 +31,11 @@ hotel info
 -name
 -description
 -amount
-
-[COPY FOR HINTS AND TIPS]
-Location and Media
--address
--city
--state
 -pics (required dimensions, bedroom, living room, bathroom/toilet,building front view)
 
-after upload
 edit apartment
 -landmarks
 -video(must show all the rooms mentioned above. Other facilities are optional but recommended. Must not exceed 2 minutes)
 
 
-Guest
-View apartment(video tour,map)
-
-Blog
-
-Forum
-
-Knowledge Center
+[COPY FOR HINTS AND TIPS]
