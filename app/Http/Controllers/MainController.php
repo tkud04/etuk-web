@@ -182,10 +182,10 @@ class MainController extends Controller {
 
 		$req = $request->all();
         #dd($req);
-		$ret = ['status' => "error",'message' => "nothing happened"];
-	    
+		
 		$validator = Validator::make($req,[
 		                    'name' => 'required',
+		                    'dept' => 'required',
 		                    'email' => 'required|email',
 		                    'subject' => 'required',
 		                    'msg' => 'required'
@@ -193,18 +193,20 @@ class MainController extends Controller {
 		
 		if($validator->fails())
          {
-             $ret['message'] = "validation";
+             session()->flash("validation-status-error","ok");
+			 return redirect()->back()->withInput();
          }
 		 else
 		 {					
-					$req['payment_type'] = "card";
 					$req['user_id'] = $user->id;
 				 
-			$this->helpers->contact($req);
-			$ret = ['status' => "ok"];
+			$ret = $this->helpers->contact($req);
+			$flashMessage = "contact-status";
+			if($ret != "ok") $flashMessage .= "-error";
+			session()->flash($flashMessage,"ok");
+			return redirect()->back();
 		 }
-		 
-		 return json_encode($ret);
+		
     }
 	
 	/**
@@ -395,7 +397,7 @@ class MainController extends Controller {
 		if($validator->fails())
          {
 			 session()->flash("validation-status-error","ok");
-			 return redirect()->back()->withInput();
+			 return redirect()->back()->withInput();0
          }
 		 else
 		 {  
