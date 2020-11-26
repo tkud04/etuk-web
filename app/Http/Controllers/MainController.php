@@ -194,7 +194,7 @@ class MainController extends Controller {
                  }
 		 else
 		 {					
-					$req['user_id'] = $user->id;
+					#$req['user_id'] = $user->id;
 				 
 			$ret = $this->helpers->contact($req);
 			$flashMessage = "contact-status";
