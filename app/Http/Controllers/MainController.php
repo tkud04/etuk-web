@@ -169,19 +169,15 @@ class MainController extends Controller {
 	 * @return Response
 	 */
 	public function postContact(Request $request)
-    {
+        {
 		$user = null;
 		if(Auth::check())
 		{
 			$user = Auth::user();
 		}
-		else
-		{
-			return redirect()->intended('/');
-		}
 
 		$req = $request->all();
-        #dd($req);
+                #dd($req);
 		
 		$validator = Validator::make($req,[
 		                    'name' => 'required',
@@ -192,10 +188,10 @@ class MainController extends Controller {
 		]);
 		
 		if($validator->fails())
-         {
-             session()->flash("validation-status-error","ok");
+                 {
+                  session()->flash("validation-status-error","ok");
 			 return redirect()->back()->withInput();
-         }
+                 }
 		 else
 		 {					
 					$req['user_id'] = $user->id;
@@ -381,7 +377,7 @@ class MainController extends Controller {
 	 * @return Response
 	 */
 	public function getRemoveSavedApartment(Request $request)
-    {
+        {
 		$user = null;
 		 
 		if(Auth::check())
@@ -394,14 +390,14 @@ class MainController extends Controller {
 		                    'xf' => 'required'
 		    ]);
 		
-		if($validator->fails())
-         {
+		 if($validator->fails())
+                 {
 			 session()->flash("validation-status-error","ok");
-			 return redirect()->back()->withInput();0
-         }
+			 return redirect()->back()->withInput();
+                 }
 		 else
 		 {  
-	        $req['user_id'] = $user->id;	 
+	                $req['user_id'] = $user->id;	 
 			$r = $this->helpers->removeSavedApartment($req);
 			$flashMessage = "remove-saved-apartment-status";
 			if($r != "ok") $flashMessage .= "-error";
