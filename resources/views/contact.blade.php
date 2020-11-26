@@ -43,7 +43,7 @@ if($user != null)
 								$contacts = [
 								  ['tag' => "admin",'name' => "Olajide Tayo",'designation' => "Administrative/IT",'phone' => "08057318627", 'email' => "tayo.olajide@etuk.ng"],
 								  ['tag' => "marketing",'name' => "Paul Adejoh",'designation' => "Sales & Marketing",'phone' => "07019982345", 'email' => "adejoh.paul@etuk.ng"],
-								  ['tag' => "pro",'name' => "Oje Adesola",'designation' => "Customer & Communications Officer",'phone' => "08168923876", 'email' => "adesola.oje@etuk.ng"],
+								  ['tag' => "pro",'name' => "Oje Adesola",'designation' => "Customer & Communications",'phone' => "08168923876", 'email' => "adesola.oje@etuk.ng"],
 								];
 								
 								foreach($contacts as $ct)
@@ -74,6 +74,7 @@ if($user != null)
 						<div class="col-lg-7 col-md-7">
 							<div class="contact-form">
 								<form method="post" id="contact-form">
+									{!! csrf_field() !!}
 									<div class="row">
 										<div class="col-lg-6 col-md-6">
 											<div class="form-group">
@@ -125,7 +126,7 @@ if($user != null)
 									
 									<div class="row">
 										<div class="col-lg-12 col-md-12">
-											<button type="submit" id="contact-btn" class="btn btn-primary">Send Request</button>
+											<button type="submit" id="contact-btn" class="btn btn-primary">Submit</button>
 										</div>
 									</div>
 								</form>
