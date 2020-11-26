@@ -224,6 +224,8 @@ class LoginController extends Controller {
     {
         $user = null;
 		$cart = [];
+		$ru = "/";
+		
 		if(Auth::check())
 		{
 			return redirect()->intended('dashboard');
@@ -245,12 +247,16 @@ class LoginController extends Controller {
 			
 			if($auth['status'] == "ok")
 			{
+				$uu = $auth['user'];
 				if(($auth['message'] == "new-user") || ($auth['message'] == "existing-user-no-pass"))
 				{
 					//set password for new user
-					$uu = $auth['user'];
-					return redirect()->intended("oauth-sp?xf=".$uu->email);
+					$ru = "oauth-sp?xf=".$uu->email;
 				}
+				else
+                {
+					$ru = "dashboard";
+               }
 			}
 			else
 			{
@@ -262,7 +268,7 @@ class LoginController extends Controller {
 			session()->flash("oauth-status-error","ok");
 		 }
 		 
-		 return redirect()->intended("/"); 
+		 return redirect()->intended($ru); 
 		
     }
 	
