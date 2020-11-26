@@ -1829,7 +1829,8 @@ function createSocial($data)
 						  Auth::login($u);
 					      $ret = [
 						          'status' => "ok",
-					              'message' => "existing-user"
+					              'message' => "existing-user",
+					              'user' => $u
 							     ];  
 					   }
 				   }
