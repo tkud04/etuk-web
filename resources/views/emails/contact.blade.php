@@ -9,6 +9,7 @@ $contacts = [
   $name = $data['name'];
   $em = $data['email'];
   $subject = $data['subject'];
+  $msg = $data['msg'];
   $dept = "Unspecified";
   
   foreach($contacts as $c)
@@ -22,12 +23,12 @@ $contacts = [
 ?>
 
 <center><img src="http://etukng.tobi-demos.tk/img/etukng.png" width="150" height="100"/></center>
-<h3 style="background: #be831d; color: #fff; padding: 10px 15px;">New message from {{$data['payment_code']}}</h3>
+<h3 style="background: #be831d; color: #fff; padding: 10px 15px;">New message for {{$dept}}</h3>
 Hello admin,<br> you have a new message from <em>{{$name}}</em>:<br><br>
 Customer: <b>{{$em}}</b><br>
 Department: <b>{{$dept}}</b><br>
 Subject: <b>{{$subject}}</b><br>
-Message: <blockquote>{{$acnum}}</blockquote><br>
+Message: <blockquote>{{$msg}}</blockquote><br>
 
 <h5 style="background: #be831d; color: #fff; padding: 10px 15px;">Next steps</h5>
 
