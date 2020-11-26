@@ -1,6 +1,15 @@
 <?php
 $title = "Contact Us";
 $subtitle = "We'd like to hear from you";
+
+$name = "";
+$em = "";
+
+if($user != null)
+{
+	$name = $user->fname." ".$user->lname;
+	$em = $user->email;
+}
 ?>
 @extends('layout')
 
@@ -69,13 +78,13 @@ $subtitle = "We'd like to hear from you";
 										<div class="col-lg-6 col-md-6">
 											<div class="form-group">
 											  <label>Name</label>
-											  <input type="text" id="contact-name" name="name" class="form-control" placeholder="Your name">
+											  <input type="text" id="contact-name" value="{{$name}}" name="name" class="form-control" placeholder="Your name">
 											</div>
 										</div>
 										<div class="col-lg-6 col-md-6">
 											<div class="form-group">
 											  <label>Email</label>
-											  <input type="email" id="contact-em" name="email" class="form-control" placeholder="Email">
+											  <input type="email" id="contact-em" value="{{$em}}" name="email" class="form-control" placeholder="Email">
 											</div>
 										</div>
 									</div>
