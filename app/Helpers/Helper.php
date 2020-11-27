@@ -3412,7 +3412,7 @@ function createSocial($data)
 			  # dd($data);
 			   $ret = $this->getCurrentSender();
 		       $ret['data'] = $data;
-    		   $ret['subject'] = "New message from ".$data['name'];	
+    		   $ret['subject'] = $data['name'].": ".$data['subject'];	
 		       
 			   try
 		       {
