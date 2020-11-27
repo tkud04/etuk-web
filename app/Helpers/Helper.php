@@ -1719,7 +1719,7 @@ function updateApartment($data)
 					 array_push($ret,$bd->apartment_id);
 				 }
 			 }
-			 
+			 dd($ret);
 			 $ret = array_unique($ret);
 			 $ratings = [];
 			 
