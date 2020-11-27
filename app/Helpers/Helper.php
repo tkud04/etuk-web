@@ -1621,8 +1621,8 @@ function updateApartment($data)
 			   $dt = json_decode($data);
 			 #dd($dt);
 			 $avb = $dt->avb;
-			 $city = $dt->city;
-			 $lga = $dt->lga;
+			 $city = $dt->city == "" ? $dt->state: $dt->city;
+			 $lga = $dt->lga == "" ? $dt->state: $dt->lga;
 			 $state = $dt->state;
 			 $max_adults = $dt->max_adults;
 			 $max_children = $dt->max_children;
@@ -1649,6 +1649,7 @@ function updateApartment($data)
 			 
 			 //Location
 			 $byAddress = ApartmentAddresses::where('city',"LIKE","%$city%")
+				              ->orWhere('lga',"LIKE","%$lga%")
 			                  ->orWhere('state',"LIKE","%$state%")->get();
 			 
              //Apartment			 
