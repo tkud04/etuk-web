@@ -1722,7 +1722,6 @@ function updateApartment($data)
 			 
 			 $ret = array_unique($ret);
 			 $ratings = [];
-			 dd($ret);
 			 
 			 //Get the reviews of each result and filter by rating
 			 foreach($ret as $r)
@@ -1748,7 +1747,7 @@ function updateApartment($data)
 				 $temp = $this->getApartment($fid,['imgId' => true]);
 				 array_push($finalResults,$temp);
 			 }
-			 dd($finalResults);
+			 #dd($finalResults);
 			 return $finalResults;
 		   }
 
