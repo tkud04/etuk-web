@@ -36,7 +36,7 @@ let landingSearchDT = {
 				  }
 				?>
 				],
-				rating: "{{$def['rating']}}"
+				rating: "0"
 			};
 </script>
 @stop
