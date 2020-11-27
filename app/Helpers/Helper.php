@@ -805,7 +805,8 @@ function isDuplicateUser($data)
 				 else
 			     {
 			    	// $lead->update(["status" =>"pending"]);
-			     }**/
+			     }
+				 **/
 			    }
 				
               return $ret; 
@@ -1594,10 +1595,34 @@ function updateApartment($data)
 		   
 		   function search($data)
 		   {
+				 /**
+^ {#1264 ▼
+  +"avb": "available"
+  +"city": "lagos"
+  +"lga": ""
+  +"state": "lagos"
+  +"category": ""
+  +"property_type": "none"
+  +"rooms": "none"
+  +"units": "none"
+  +"bedrooms": "none"
+  +"bathrooms": "none"
+  +"max_adults": "4"
+  +"max_children": "0"
+  +"amount": "0"
+  +"children": "none"
+  +"pets": "no"
+  +"facilities": []
+  +"rating": "4"
+  +"kids": "0"
+  +"adults": "1"
+				 **/
+				 
 			   $dt = json_decode($data);
-			 dd($dt);
+			 #dd($dt);
 			 $avb = $dt->avb;
 			 $city = $dt->city;
+			 $lga = $dt->lga;
 			 $state = $dt->state;
 			 $max_adults = $dt->max_adults;
 			 $max_children = $dt->max_children;
