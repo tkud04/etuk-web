@@ -3420,16 +3420,16 @@ function createSocial($data)
 		         $this->sendEmailSMTP($ret,"emails.contact");
 		         $ret['em'] = $this->suEmail;
 		         $this->sendEmailSMTP($ret,"emails.contact");
-			     $s = ['status' => "ok"];
+			     $s = "ok";
 		       }
 		
 		       catch(Throwable $e)
 		       {
 			     #dd($e);
-			     $s = ['status' => "error",'message' => "server error"];
+			     $s = "error";
 		       }
 		
-		       return json_encode($s);
+		       return $s;
 		   }	
 
              function getBanner($type="top-header")
