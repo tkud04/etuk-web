@@ -1719,7 +1719,7 @@ function updateApartment($data)
 					 array_push($ret,$bd->apartment_id);
 				 }
 			 }
-			 dd($ret);
+			 
 			 $ret = array_unique($ret);
 			 $ratings = [];
 			 
@@ -1748,7 +1748,7 @@ function updateApartment($data)
 				 $temp = $this->getApartment($fid,['imgId' => true]);
 				 array_push($finalResults,$temp);
 			 }
-			 
+			 dd($finalResults);
 			 return $finalResults;
 		   }
 
