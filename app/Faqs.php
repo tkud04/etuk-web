@@ -13,6 +13,6 @@ class Faqs extends Model
      * @var array
      */
     protected $fillable = [
-        'tag', 'question','answer'
+        'id','tag', 'question','answer'
     ];
 }
