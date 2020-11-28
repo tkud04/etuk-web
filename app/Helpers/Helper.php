@@ -42,6 +42,8 @@ use App\PreferenceTerms;
 use App\PreferenceFacilities;
 use App\Tickets;
 use App\TicketItems;
+use App\Faqs;
+use App\FaqTags;
 use App\Guests;
 use \Swift_Mailer;
 use \Swift_SmtpTransport;
