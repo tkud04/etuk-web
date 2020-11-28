@@ -40,11 +40,6 @@ if($user != null)
 						</div>
 						
 						<?php
-								$contacts = [
-								  ['tag' => "admin",'name' => "Olajide Tayo",'designation' => "Administrative/IT",'phone' => "08057318627", 'email' => "tayo.olajide@etuk.ng"],
-								  ['tag' => "marketing",'name' => "Paul Adejoh",'designation' => "Sales & Marketing",'phone' => "07019982345", 'email' => "adejoh.paul@etuk.ng"],
-								  ['tag' => "pro",'name' => "Oje Adesola",'designation' => "Customer & Communications",'phone' => "08168923876", 'email' => "adesola.oje@etuk.ng"],
-								];
 								
 								foreach($contacts as $ct)
 								{
