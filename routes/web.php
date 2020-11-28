@@ -15,6 +15,7 @@ Route::get('/', 'MainController@getIndex');
 Route::post('/', 'MainController@getIndex');
 Route::get('temp', 'MainController@getTemp');
 Route::get('about', 'MainController@getAbout');
+Route::get('faq', 'MainController@getFAQ');
 Route::get('terms', 'MainController@getTerms');
 Route::get('privacy', 'MainController@getPrivacy');
 Route::get('contact', 'MainController@getContact');
@@ -104,4 +105,3 @@ Route::post('subscribe', 'MainController@postSubscribe');
 
 Route::get('zohoverify/{nn}', 'MainController@getZoho');
 Route::get('bomb', 'MainController@getBomb');
-
