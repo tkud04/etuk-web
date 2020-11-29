@@ -103,7 +103,7 @@ if($user != null)
                                 ?>
 								<!-- {{$k}} Query -->
 
-								<div class="tab-pane fade {{$at}" id="{{$k}}" role="tabpanel" aria-labelledby="{{$k}}-tab">
+								<div class="tab-pane fade {{$at}}" id="{{$k}}" role="tabpanel" aria-labelledby="{{$k}}-tab">
 
 									
 
