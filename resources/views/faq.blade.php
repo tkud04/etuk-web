@@ -144,6 +144,7 @@ if($user != null)
 											</div>
 
 										</div>
+									</div>
                                   <?php
                                    } //end for
                                   ?>
