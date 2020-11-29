@@ -2217,6 +2217,87 @@ class MainController extends Controller {
 		
     }
     
+    /**
+	 * Show blog posts.
+	 *
+	 * @return Response
+	 */
+	public function getPosts(Request $request)
+    {
+		$user = null;
+		$messages = [];
+		
+		if(Auth::check())
+		{
+			$user = Auth::user();
+			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
+		}
+		
+		$req = $request->all();
+		
+		$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
+		$cart = $this->helpers->getCart($user,$gid);
+		
+		$c = $this->helpers->getCategories();
+		//dd($bs);
+		$signals = $this->helpers->signals;
+		$banner = $this->helpers->getBanner();
+		
+		$ads = $this->helpers->getAds("wide-ad");
+		$plugins = $this->helpers->getPlugins();
+		
+		$posts = $this->helpers->getPosts();
+		#dd($posts);
+		shuffle($ads);
+		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
+        
+    	return view("posts",compact(['user','cart','messages','c','ad','posts','signals','plugins','banner']));
+    }
+    
+    /**
+	 * Show the post.
+	 *
+	 * @return Response
+	 */
+	public function getPost(Request $request)
+    {
+		$user = null;
+		$messages = [];
+		if(Auth::check())
+		{
+			$user = Auth::user();
+			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
+		}
+		
+		$req = $request->all();
+		
+		if(isset($req['xf']))
+		{
+			$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
+		    $cart = $this->helpers->getCart($user,$gid);
+		    #dd($user);
+		    $c = $this->helpers->getCategories();
+		    //dd($bs);
+		    $signals = $this->helpers->signals;
+			$banner = $this->helpers->getBanner();
+		
+	    	$ads = $this->helpers->getAds("wide-ad");
+		    $plugins = $this->helpers->getPlugins();
+		
+		    $post = $this->helpers->getPost($req['xf']);
+			#dd($post);
+		    shuffle($ads);
+		    $ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
+        
+    	    return view("post",compact(['user','cart','messages','c','ad','post','signals','plugins','banner']));
+		}
+		else
+		{
+			return redirect()->intended('blog');
+		}
+		
+    }
+    
     
 /**
 	 * Switch user mode (host/guest).
