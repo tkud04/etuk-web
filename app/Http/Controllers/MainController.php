@@ -153,6 +153,23 @@ class MainController extends Controller {
 		$signals = $this->helpers->signals;
 		$contacts = $this->helpers->contacts;
 		
+		$questions = $this->helpers->getFAQs();
+		$tags = $this->helpers->getFAQTags();
+		$faqs = [];
+		
+		foreach($tags as $t)
+        {
+        	$tt = $t['tag'];
+        	$faqs[$tt] = [];
+        }
+        
+        foreach($questions as $q)
+        {
+        	$qt = $q['tag'];
+        	if(isset($faqs[$qt])) array_push($faqs[$qt], $q);
+        }
+        
+		
 		$ads = $this->helpers->getAds("wide-ad");
 		$plugins = $this->helpers->getPlugins();
 		
@@ -160,8 +177,8 @@ class MainController extends Controller {
 		
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
-
-    	return view("faq",compact(['user','cart','messages','c','ad','contacts','signals','plugins','banner']));
+        dd([$faqs,$tags]);
+    	return view("faq",compact(['user','cart','messages','c','ad','contacts','faqs','tags','signals','plugins','banner']));
     }
     
     /**
