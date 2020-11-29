@@ -3753,6 +3753,79 @@ function createSocial($data)
 		]);
 		return $ret;
 	}
+	
+	function getFAQs()
+	      {
+	   	   $ret = [];
+	   
+	   	   $faqs = Faqs::where('id','>',"0")->get();
+	   
+	   	   if(!is_null($faqs))
+	   	   {
+	   		   foreach($faqs as $f)
+	   		   {
+	   		     $temp = $this->getFAQ($f->id);
+	   		     array_push($ret,$temp);
+	   	       }
+	   	   }
+	   
+	   	   return $ret;
+	      }
+		  
+	 	 function getFAQ($id)
+	            {
+	            	$ret = [];
+	                $f = Faqs::where('id',$id)->first();
+ 
+	               if($f != null)
+	                {
+                                $temp['id'] = $f->id; 
+	                    	$temp['tag'] = $f->tag; 
+	                        $temp['question'] = $f->question; 
+	                        $temp['answer'] = $f->answer;
+	                        $temp['date'] = $f->created_at->format("jS F, Y"); 
+	                        $ret = $temp; 
+	                }                          
+                                                      
+	                 return $ret;
+	            }
+	
+	         function getFAQTags()
+		  	      {
+		  	   	   $ret = [];
+	   
+		  	   	   $tags = FaqTags::where('id','>',"0")->get();
+	   
+		  	   	   if(!is_null($tags))
+		  	   	   {
+		  	   		   foreach($tags as $t)
+		  	   		   {
+		  	   		     $temp = $this->getFAQTag($t->id);
+		  	   		     array_push($ret,$temp);
+		  	   	       }
+		  	   	   }
+	   
+		  	   	   return $ret;
+		  	      }
+				  
+		 	 	 function getFAQTag($id)
+		 	            {
+		 	            	$ret = [];
+		 	                $t = FaqTags::where('id',$id)->first();
+ 
+		 	               if($t != null)
+		 	                {
+		 	                    	$temp['tag'] = $t->tag; 
+                                                $temp['id'] = $t->id; 
+		 	                        $temp['name'] = $t->name; 
+		 	                        $temp['date'] = $t->created_at->format("jS F, Y"); 
+		 	                        $ret = $temp; 
+		 	                }                          
+                                                      
+		 	                 return $ret;
+		 	            }
+	
+	
    
 }
 ?>
