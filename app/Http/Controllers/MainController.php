@@ -177,7 +177,7 @@ class MainController extends Controller {
 		
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
-        dd([$faqs,$tags]);
+
     	return view("faq",compact(['user','cart','messages','c','ad','contacts','faqs','tags','signals','plugins','banner']));
     }
     
