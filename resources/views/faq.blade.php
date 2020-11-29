@@ -19,6 +19,14 @@ if($user != null)
 @include('top-header')
 @stop
 
+@section('scripts')
+<script>
+	$(document).ready(() => {
+		$('#faq-1-btn').click();
+	});
+</script>
+@stop
+
 @section('content')
 @include('banner-2',['title' => $subtitle,'subtitle' => $subtitle])
 
@@ -114,6 +122,7 @@ if($user != null)
                                       
                                       $ax = $i == 0 ? "true" : "false";
                                       $cs = $i == 0 ? "show" : "";
+									  $fbtn = $i == 0 ? " id='faq-1-btn'" : "";
                                   ?>
 										<div class="card">
 
@@ -121,7 +130,7 @@ if($user != null)
 
 											  <h2 class="mb-0">
 
-												<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse-{{$k}}" aria-expanded="{{$ax}}" aria-controls="collapse-{{$k}}">
+												<button class="btn btn-link"{{$fbtn}} type="button" data-toggle="collapse" data-target="#collapse-{{$k}}" aria-expanded="{{$ax}}" aria-controls="collapse-{{$k}}">
 
 												  {{$f['question']}}
 
