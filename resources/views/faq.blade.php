@@ -4,8 +4,6 @@ $subtitle = "Frequently Asked Questions";
 
 $name = "";
 $em = "";
-$fbtn = null;
-if(count($tags) > 0) $fbtn = $tags[0]['tag']."-tab";
 
 if($user != null)
 {
@@ -21,15 +19,6 @@ if($user != null)
 @include('top-header')
 @stop
 
-@section('scripts')
-@if($fbtn != null)
-<script>
-	$(document).ready(() => {
-		$('#{{$fbtn}}').click();
-	});
-</script>
-	@endif
-@stop
 
 @section('content')
 @include('banner-2',['title' => $subtitle,'subtitle' => $subtitle])
@@ -114,7 +103,7 @@ if($user != null)
                                 ?>
 								<!-- {{$k}} Query -->
 
-								<div class="tab-pane fade {{$k}}" id="{{$k}}" role="tabpanel" aria-labelledby="{{$k}}-tab">
+								<div class="tab-pane fade {{$at}" id="{{$k}}" role="tabpanel" aria-labelledby="{{$k}}-tab">
 
 									
 
