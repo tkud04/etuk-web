@@ -4,6 +4,8 @@ $subtitle = "Frequently Asked Questions";
 
 $name = "";
 $em = "";
+$fbtn = null;
+if(count($tags) > 0) $fbtn = $tags[0]['tag']."-tab";
 
 if($user != null)
 {
@@ -20,11 +22,13 @@ if($user != null)
 @stop
 
 @section('scripts')
+@if($fbtn != null)
 <script>
 	$(document).ready(() => {
-		$('#faq-1-btn').click();
+		$('#{{$fbtn}}').click();
 	});
 </script>
+	@endif
 @stop
 
 @section('content')
@@ -122,7 +126,6 @@ if($user != null)
                                       
                                       $ax = $i == 0 ? "true" : "false";
                                       $cs = $i == 0 ? "show" : "";
-									  $fbtn = $i == 0 ? " id='faq-1-btn'" : "";
                                   ?>
 										<div class="card">
 
@@ -130,7 +133,7 @@ if($user != null)
 
 											  <h2 class="mb-0">
 
-												<button class="btn btn-link"{{$fbtn}} type="button" data-toggle="collapse" data-target="#collapse-{{$k}}" aria-expanded="{{$ax}}" aria-controls="collapse-{{$k}}">
+												<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse-{{$k}}" aria-expanded="{{$ax}}" aria-controls="collapse-{{$k}}">
 
 												  {{$f['question']}}
 
