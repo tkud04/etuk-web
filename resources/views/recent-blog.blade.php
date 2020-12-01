@@ -17,7 +17,7 @@
 							<div class="featured-hm-post">
 								<figure class="featured-hm-post-wrap">
 									<a href="javascript:void(0)">
-										<img class="cover" src="{{asset('img/featured/image2(1).jpeg')}}" alt="room">
+										<img class="cover" src="{{asset('img/featured/blog-1.jpeg')}}" alt="room">
 									</a>
 								</figure>
 								<div class="hm-post-caption">
@@ -32,9 +32,9 @@
 						<div class="col-lg-5 col-md-12">
 						<?php
 						 $posts = [
-						   ['img' => asset('img/featured/image3(1).jpeg'),'href' => "javascript:void(0)",'tag' => "Apartments",'title' => "The Best Apartments in Ekiti Sept 2020",'date' => "Sept 7, 2020"],
-						   ['img' => asset('img/featured/image2(1).jpeg'),'href' => "javascript:void(0)",'tag' => "Apartments",'title' => "The Best Apartments in Lagos Sept 2020",'date' => "Sept 12, 2020"],
-						   ['img' => asset('img/featured/image3(1).jpeg'),'href' => "javascript:void(0)",'tag' => "Apartments",'title' => "How To Pick An Apartment",'date' => "Sept 14, 2020"]
+						   ['img' => asset('img/featured/blog-2.jpeg'),'href' => "javascript:void(0)",'tag' => "Apartments",'title' => "The Best Apartments in Ekiti Sept 2020",'date' => "Sept 7, 2020"],
+						   ['img' => asset('img/featured/blog-1.jpeg'),'href' => "javascript:void(0)",'tag' => "Apartments",'title' => "The Best Apartments in Lagos Sept 2020",'date' => "Sept 12, 2020"],
+						   ['img' => asset('img/featured/blog-2.jpeg'),'href' => "javascript:void(0)",'tag' => "Apartments",'title' => "How To Pick An Apartment",'date' => "Sept 14, 2020"]
 						 ];
 						 foreach($posts as $p)
 						 {

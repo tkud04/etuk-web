@@ -188,11 +188,11 @@ $pt['name'] = $pa['name'];
 								
 								<?php
 								$fa = [
-								  ['name' => "Fravio Apartment",'rating' => "4",'location' => "Abuja, FCT",'likes' => "50",'img' => "{{asset('img/featured/Fravio Apartment.jpg')}}"],
-								  ['name' => "A20 Apartment",'rating' => "5",'location' => "Lekki, Lagos",'likes' => "88",'img' => "{{asset('img/featured/A20 Apartment.png')}}"],
-								  ['name' => "Williams Courtyard",'rating' => "4",'location' => "Ikeja, Lagos",'likes' => "31",'img' => "{{asset('img/featured/Williams Courtyard.jpg')}}"],
-								  ['name' => "Lovitoz Place",'rating' => "5",'location' => "Sapele, Delta",'likes' => "26",'img' => "{{asset('img/featured/Lovitoz Place.jpg')}}"],
-								  ['name' => "Topmost Apartment",'rating' => "4",'location' => "Abuja, FCT",'likes' => "43",'img' => "{{asset('img/featured/Topmost Apartment.jpg')}}"]
+								  ['name' => "Fravio Apartment",'rating' => "4",'location' => "Abuja, FCT",'likes' => "50",'img' => asset('img/featured/fravio-apartment.jpg')],
+								  ['name' => "A20 Apartment",'rating' => "5",'location' => "Lekki, Lagos",'likes' => "88",'img' => asset('img/featured/a20-apartment.png')],
+								  ['name' => "Williams Courtyard",'rating' => "4",'location' => "Ikeja, Lagos",'likes' => "31",'img' => asset('img/featured/williams-courtyard.jpg')],
+								  ['name' => "Lovitoz Place",'rating' => "5",'location' => "Sapele, Delta",'likes' => "26",'img' => asset('img/featured/lovitoz-place.jpg')],
+								  ['name' => "Topmost Apartment",'rating' => "4",'location' => "Abuja, FCT",'likes' => "43",'img' => asset('img/featured/topmost-apartment.jpg')]
 								];
 								
 								 foreach($fa as $f)
