@@ -99,7 +99,7 @@ let landingSearchDT = {
 					<div class="row">
 						<div class="col-lg-12 col-md-12">
 							<div class="sec-heading center">
-								<h2>Featured</h2>
+								<h2>Latest Apartments</h2>
 							</div>
 						</div>
 					</div>
@@ -172,95 +172,51 @@ $pt['name'] = $pa['name'];
 			<!-- ========================= End Apartment Section ============================ -->
 			
 			
-			<!-- ================= Ads start ========================= -->
+			<!-- ================= Featured Apartments start ========================= -->
 			<section class="gray">
 				<div class="container">
-					
+					<div class="row">
+						<div class="col-lg-12 col-md-12">
+							<div class="sec-heading center">
+								<h2>Featured</h2>
+							</div>
+						</div>
+					</div>
 					<div class="row">
 						<div class="col-lg-12 col-md-12">
 							<div class="owl-carousel owl-theme" id="lists-slide">
 								
+								<?php
+								$fa = [/**
+								  ['name' => "",'rating' => "4",'location' => "",'description' => ""],
+								  ['name' => "",'rating' => "5",'location' => "",'description' => ""],
+								  ['name' => "",'rating' => "4",'location' => "",'description' => ""]
+								**/];
+								
+								 foreach($fa as $f)
+								 {
+								?>
 								<div class="single-item">
 									<div class="destination-item">
 										<span class="discount-off">
-										  <i class="ti-thumbs-up"></i>35
+										  <i class="fa fa-star"></i>{{$f['rating']}}
 										</span>
 										<figure class="destination-list-wrap">
-											<a class="destination-listlink" href="search.html">
-												<img class="cover" src="{{asset('img/cat-1.jpg')}}" alt="room">
+											<a class="destination-listlink" href="javascript:void(0)">
+												<img class="cover" src="{{$f['img']}}" alt="{{$f['name']}}">
 											</a>
 										</figure>
 										<div class="destination-listdetails">
-											<span class="destination-list-cat theme-bg">Eat & Drinks</span>
-											<h4 class="title"><a class="title-ln" href="search.html">Machu Picchu, Peru</a></h4>
-											<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+											<span class="destination-list-cat theme-bg">{{$f['name']}}</span>
+											<h4 class="title"><a class="title-ln" href="javascript:void(0)">{{$f['location']}}</a></h4>
+											<p>{{$f['description']}}</p>
 										</div>
 									</div>
 								</div>
+								<?php
+								 }
+								?>
 								
-								<div class="single-item">
-									<div class="destination-item">
-										<span class="discount-off"> <i class="ti-thumbs-up"></i>35</span>
-										<figure class="destination-list-wrap">
-											<a class="destination-listlink" href="search.html">
-												<img class="cover" src="{{asset('img/cat-7.jpg')}}" alt="room">
-											</a>
-										</figure>
-										<div class="destination-listdetails">
-											<span class="destination-list-cat theme-bg">Adventures</span>
-											<h4 class="title"><a class="title-ln" href="search.html">Great Barrier Reef</a></h4>
-											<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-										</div>
-									</div>
-								</div>
-								
-								<div class="single-item">
-									<div class="destination-item">
-										<span class="discount-off">-10%</span>
-										<figure class="destination-list-wrap">
-											<a class="destination-listlink" href="search.html">
-												<img class="cover" src="{{asset('img/cat-3.jpg')}}" alt="room">
-											</a>
-										</figure>
-										<div class="destination-listdetails">
-											<span class="destination-list-cat theme-bg">Restaurants</span>
-											<h4 class="title"><a class="title-ln" href="search.html">Pyramids of Giza</a></h4>
-											<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-										</div>
-									</div>
-								</div>
-								
-								<div class="single-item">
-									<div class="destination-item">
-										<span class="discount-off">-20%</span>
-										<figure class="destination-list-wrap">
-											<a class="destination-listlink" href="search.html">
-												<img class="cover" src="{{asset('img/cat-4.jpg')}}" alt="room">
-											</a>
-										</figure>
-										<div class="destination-listdetails">
-											<span class="destination-list-cat theme-bg">Hotel & Rooms</span>
-											<h4 class="title"><a class="title-ln" href="search.html">Heritage of England</a></h4>
-											<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-										</div>
-									</div>
-								</div>
-								
-								<div class="single-item">
-									<div class="destination-item">
-										<span class="discount-off">-30%</span>
-										<figure class="destination-list-wrap">
-											<a class="destination-listlink" href="search.html">
-												<img class="cover" src="{{asset('img/cat-5.jpg')}}" alt="room">
-											</a>
-										</figure>
-										<div class="destination-listdetails">
-											<span class="destination-list-cat theme-bg">Hike & Ride</span>
-											<h4 class="title"><a class="title-ln" href="search.html">The City of Lights </a></h4>
-											<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-										</div>
-									</div>
-								</div>
 							
 							</div>
 						</div>
@@ -268,7 +224,7 @@ $pt['name'] = $pa['name'];
 					
 				</div>
 			</section>
-			<!-- ========================= End Ads Section ============================ -->
+			<!-- ========================= End Featured Apartments Section ============================ -->
 			
 			
 										<!-- ================= Apartments start ========================= -->

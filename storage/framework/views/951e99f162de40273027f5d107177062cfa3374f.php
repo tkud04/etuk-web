@@ -22,7 +22,7 @@ $subtitle = "Who we are & What we strive for";
 					<div class="row align-items-center">
 
 						<div class="col-lg-6 col-md-6">
-							<img src="<?php echo e(asset('img/about.jpg')); ?>" class="img-fluid" alt="About Us" />
+							<img src="https://res.cloudinary.com/etuk-ng/image/upload/v1585236664/uploads/phpJo05FC_cddvc6" class="img-fluid" alt="About Us" />
 						</div>
 
 						<div class="col-lg-6 col-md-6">
@@ -64,4 +64,5 @@ $subtitle = "Who we are & What we strive for";
 			</section>
 			<!-- ============================ Our Story End ================================== -->
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\bkupp\lokl\repo\etuk-web\resources\views/about.blade.php ENDPATH**/ ?>

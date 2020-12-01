@@ -32,9 +32,9 @@ $subtitle = "We'd like to hear from you";
 						
 						<?php
 								$contacts = [
-								  ['name' => "Olajide Tayo",'designation' => "Administrative/IT",'phone' => "08057318627", 'email' => "tayo.olajide@etuk.ng"],
-								  ['name' => "Paul Adejoh",'designation' => "Sales & Marketing",'phone' => "07019982345", 'email' => "adejoh.paul@etuk.ng"],
-								  ['name' => "Oje Adesola",'designation' => "Customer & Communications Officer",'phone' => "08168923876", 'email' => "adesola.oje@etuk.ng"],
+								  ['tag' => "admin",'name' => "Olajide Tayo",'designation' => "Administrative/IT",'phone' => "08057318627", 'email' => "tayo.olajide@etuk.ng"],
+								  ['tag' => "marketing",'name' => "Paul Adejoh",'designation' => "Sales & Marketing",'phone' => "07019982345", 'email' => "adejoh.paul@etuk.ng"],
+								  ['tag' => "pro",'name' => "Oje Adesola",'designation' => "Customer & Communications Officer",'phone' => "08168923876", 'email' => "adesola.oje@etuk.ng"],
 								];
 								
 								foreach($contacts as $ct)
@@ -81,7 +81,23 @@ $subtitle = "We'd like to hear from you";
 									</div>
 									
 									<div class="row">
-										<div class="col-lg-12 col-md-12">
+									    <div class="col-lg-6 col-md-6">
+											<div class="form-group">
+											  <label>Department</label>
+											  <select id="contact-dept" name="dept" class="form-control">
+											    <option value="none">Select department</option>
+												<?php
+												 foreach($contacts as $c)
+												 {
+												?>
+												 <option value="<?php echo e($c['tag']); ?>"><?php echo e($c['designation']); ?></option>
+												<?php
+												 }
+												?>
+											  </select>
+											</div>
+										</div>
+										<div class="col-lg-6 col-md-6">
 											<div class="form-group">
 												<label>Subject</label>
 												<input type="text" id="contact-subject" name="subject" class="form-control" placeholder="Subject">
