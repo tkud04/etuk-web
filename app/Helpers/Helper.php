@@ -312,6 +312,109 @@ $subject = $data['subject'];
            return $ret; 
            }
 		   
+		   function text($data) 
+           {
+           	//form query string
+              // $qs = "sn=".$data['sn']."&sa=".$data['sa']."&subject=".$data['subject'];
+
+               $lead = $data['to'];
+			   
+			   if($lead == null || $lead == "")
+			   {
+				    $ret = json_encode(["status" => "ok","message" => "Invalid number"]);
+			   }
+			   else
+			    { 
+                  
+			      //Send request to nodemailer
+			     // $url = "https://radiant-island-62350.herokuapp.com/?".$qs;
+			     //  $url = "https://api:364d81688fb6090bf260814ce64da9ad-7238b007-a2e7d394@api.mailgun.net/v3/mailhippo.tk/messages";
+			       $url = "https://smartsmssolutions.com/api/";
+			   
+			
+			     $client = new Client([
+                 // Base URI is used with relative requests
+                 'base_uri' => 'http://httpbin.org',
+                 // You can set any number of default request options.
+                 //'timeout'  => 2.0,
+				 'headers' => [
+                     'MIME-Version' => '1.0',
+                     'Content-Type'     => 'text/html; charset=ISO-8859-1',           
+                    ]
+                 ]);
+                  
+				
+				 $dt = [
+				    'multipart' => [
+					   [
+					      'name' => 'sender',
+						  'contents' => "Etuk NG"
+					   ],
+					   [
+					      'name' => 'token',
+						  'contents' => env('SMARTSMS_API_X_KEY', '')
+					   ],
+					   [
+					      'name' => 'to',
+						  'contents' => $data['to']
+					   ],
+					   [
+					      'name' => 'message',
+						  'contents' => $data['msg']
+					   ],
+					   [
+					      'name' => 'routing',
+						  'contents' => "2"
+					   ],
+					   [
+					      'name' => 'type',
+						  'contents' => "0"
+					   ]
+					]
+				 ];
+				 
+				 
+				 try
+				 {
+			       //$res = $client->request('POST', $url,['json' => $dt]);
+			       $res = $client->request('POST', $url,$dt);
+			  
+                   $ret = $res->getBody()->getContents(); 
+			       
+				 /*******************
+				 """
+{
+  "id": "<20191212163843.1.FF7C9DD921606F44@mg.btbusinesss.com>",
+  "message": "Queued. Thank you."
+}
+				 ********************/
+				 }
+				 catch(RequestException $e)
+				 {
+					 $mm = (is_null($e->getResponse())) ? null: Psr7\str($e->getResponse());
+					 $ret = json_encode(["status" => "error","message" => $mm]);
+				 }
+				 dd($ret);
+				 
+			     $rett = json_decode($ret);
+			     if($rett->status == "queued" || $rett->status == "ok")
+			     {
+					 $nb = $user->balance - 1;
+					 $user->update(['balance' => $nb]);
+					//  $this->setNextLead();
+			    	//$lead->update(["status" =>"sent"]);					
+			     }
+			     /**
+				 
+				 else
+			     {
+			    	// $lead->update(["status" =>"pending"]);
+			     }**/
+			    }
+				
+              return $ret; 
+           }
+		   
 		   
            function createUser($data)
            {

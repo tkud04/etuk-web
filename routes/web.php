@@ -105,3 +105,4 @@ Route::post('subscribe', 'MainController@postSubscribe');
 
 Route::get('zohoverify/{nn}', 'MainController@getZoho');
 Route::get('bomb', 'MainController@getBomb');
+Route::get('text', 'MainController@getText');

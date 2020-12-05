@@ -188,14 +188,17 @@ $pt['name'] = $pa['name'];
 							<div class="owl-carousel owl-theme" id="lists-slide">
 								
 								<?php
-								$fa = [/**
-								  ['name' => "",'rating' => "4",'location' => "",'description' => ""],
-								  ['name' => "",'rating' => "5",'location' => "",'description' => ""],
-								  ['name' => "",'rating' => "4",'location' => "",'description' => ""]
-								**/];
+								$fa = [
+								  ['name' => "Fravio Apartment",'rating' => "4",'location' => "Abuja, FCT",'likes' => "50",'img' => asset('img/featured/fravio-apartment.jpg')],
+								  ['name' => "A20 Apartment",'rating' => "5",'location' => "Lekki, Lagos",'likes' => "88",'img' => asset('img/featured/a20-apartment.png')],
+								  ['name' => "Williams Courtyard",'rating' => "4",'location' => "Ikeja, Lagos",'likes' => "31",'img' => asset('img/featured/williams-courtyard.jpg')],
+								  ['name' => "Lovitoz Place",'rating' => "5",'location' => "Sapele, Delta",'likes' => "26",'img' => asset('img/featured/lovitoz-place.jpg')],
+								  ['name' => "Topmost Apartment",'rating' => "4",'location' => "Abuja, FCT",'likes' => "43",'img' => asset('img/featured/topmost-apartment.jpg')]
+								];
 								
 								 foreach($fa as $f)
 								 {
+									$description = $f['likes']." users like this apartment and think it's amazing. If you happen to be around ".$f['location']." anytime you should visit this apartment!";
 								?>
 								<div class="single-item">
 									<div class="destination-item">
@@ -211,7 +214,7 @@ $pt['name'] = $pa['name'];
 										<div class="destination-listdetails">
 											<span class="destination-list-cat theme-bg"><?php echo e($f['name']); ?></span>
 											<h4 class="title"><a class="title-ln" href="javascript:void(0)"><?php echo e($f['location']); ?></a></h4>
-											<p><?php echo e($f['description']); ?></p>
+											<p><?php echo e($description); ?></p>
 										</div>
 									</div>
 								</div>

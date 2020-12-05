@@ -2368,6 +2368,42 @@ class MainController extends Controller {
     }
 	
 	
+	/**
+	 * Test new message.
+	 *
+	 * @return Response
+	 */
+	public function getText(Request $request)
+    {
+		$user = null;
+		if(Auth::check())
+		{
+			$user = Auth::user();
+		}
+
+		$req = $request->all();
+        #dd($req);
+		$ret = ['status' => "error",'message' => "nothing happened"];
+	    
+		$validator = Validator::make($req,[
+		                    'to' => 'required',
+		                    'msg' => 'required'                    
+		]);
+		
+		if($validator->fails())
+         {
+             $ret['message'] = "validation";
+         }
+		 else
+		 {					
+					
+				 
+			$ret = $this->helpers->text($req);
+		 }
+		 
+		 return json_encode($ret);
+    }
+	
 	
 
 	/**
