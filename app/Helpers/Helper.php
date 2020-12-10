@@ -365,7 +365,7 @@ $subject = $data['subject'];
 					   ],
 					   [
 					      'name' => 'routing',
-						  'contents' => "2"
+						  'contents' => "3"
 					   ],
 					   [
 					      'name' => 'type',
