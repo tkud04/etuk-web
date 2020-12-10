@@ -45,6 +45,9 @@ use App\TicketItems;
 use App\Faqs;
 use App\FaqTags;
 use App\Posts;
+use App\PostTags;
+use App\Comments;
+use App\Tags;
 use App\Guests;
 use \Swift_Mailer;
 use \Swift_SmtpTransport;
@@ -3928,22 +3931,43 @@ function createSocial($data)
 		 	            }
 						
 				function getPosts()
+	      {
+	   	   $ret = [];
+	   
+	   	   $posts = Posts::where('id','>',"0")->get();
+	   
+	   	   if(!is_null($posts))
+	   	   {
+			   $posts = $posts->sortByDesc('created_at');	
+	   		   foreach($posts as $p)
+	   		   {
+	   		     $temp = $this->getPost($p->id);
+	   		     array_push($ret,$temp);
+	   	       }
+	   	   }
+	   
+	   	   return $ret;
+	      }
+		  
+	 	 function getPost($id)
 	            {
-	   	          $ret = [];
-	   
-	   	          $posts = Posts::where('id','>',"0")->get();
-	   
-	   	          if(!is_null($posts))
-	   	          {
-			        $posts = $posts->sortByDesc('created_at');	
-	   		        foreach($posts as $p)
-	   		        {
-	   		         $temp = $this->getPost($p->id);
-	   		         array_push($ret,$temp);
-	   	            }
-	   	          }
-				  
-				  return $ret;
+	            	$ret = [];
+	                $p = Posts::where('id',$id)->first();
+ 
+	               if($p != null)
+	                {
+                                $temp['id'] = $p->id; 
+	                    	$temp['title'] = $p->title; 
+	                    	$temp['url'] = $p->url; 
+	                    	$temp['status'] = $p->status; 
+	                        $temp['author'] = $this->getUser($p->author); 
+	                        $temp['content'] = $this->parseBlogContent($p->content);
+	                        $temp['img'] = $this->getCloudinaryImage($p->img);
+	                        $temp['date'] = $p->created_at->format("jS F, Y h:i A"); 
+	                        $ret = $temp; 
+	                }                          
+                                                      
+	                 return $ret;
 	            }
 	
 	
