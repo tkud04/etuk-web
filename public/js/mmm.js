@@ -600,8 +600,8 @@ $(document).ready(function() {
 			
 			$("#guest-apt-sidebar-dt").val(JSON.stringify(searchDT));
 			
-			console.log($("#guest-apt-sidebar-dt").val());
-			//$('#search-form').submit();
+			//console.log($("#guest-apt-sidebar-dt").val());
+			$('#search-form').submit();
 		}
 			
 	});

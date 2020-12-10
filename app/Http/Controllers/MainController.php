@@ -34,8 +34,8 @@ class MainController extends Controller {
 		$messages = [];
 		$apf = [];
 		$def = $this->helpers->def;
-
-		if(Auth::check())
+       
+	    if(Auth::check())
 		{
 			$user = Auth::user();
 			$apf = $this->helpers->getPreference($user);
@@ -2246,7 +2246,8 @@ class MainController extends Controller {
 		$ads = $this->helpers->getAds("wide-ad");
 		$plugins = $this->helpers->getPlugins();
 		
-		$posts = $this->helpers->getPosts();
+		//$posts = $this->helpers->getPosts();
+		$posts = [];
 		#dd($posts);
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];

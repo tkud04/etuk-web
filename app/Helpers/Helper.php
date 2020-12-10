@@ -44,6 +44,7 @@ use App\Tickets;
 use App\TicketItems;
 use App\Faqs;
 use App\FaqTags;
+use App\Posts;
 use App\Guests;
 use \Swift_Mailer;
 use \Swift_SmtpTransport;
@@ -1778,15 +1779,13 @@ function updateApartment($data)
 			                           ->where('max_children',"<=",$max_children)->get();
 			 
 			 //Data
-			 $byData = ApartmentData::where([
-			                           'category' => $category,
-			                           'property_type' => $property_type,
-			                           'rooms' => $rooms,
-			                           'units' => $units,
-			                           'bathrooms' => $bathrooms,
-			                           'bedrooms' => $bedrooms,
-									   ])
-									   ->where('amount',"<=",$amount)->get();
+			 $byData = ApartmentData::where('category',"LIKE",$category)
+			                        ->orWhere('property_type',"LIKE",$property_type)
+			                        ->orWhere('rooms',"LIKE",$rooms)
+			                        ->orWhere('units',"LIKE",$units)
+			                        ->orWhere('bathrooms',"LIKE",$bathrooms)
+			                        ->orWhere('bedrooms',"LIKE",$bedrooms)
+									->orWhere('amount',"<=",$amount)->get();
 									   
 			 //collect all
 			 $ret = [];
@@ -3927,6 +3926,25 @@ function createSocial($data)
                                                       
 		 	                 return $ret;
 		 	            }
+						
+				function getPosts()
+	            {
+	   	          $ret = [];
+	   
+	   	          $posts = Posts::where('id','>',"0")->get();
+	   
+	   	          if(!is_null($posts))
+	   	          {
+			        $posts = $posts->sortByDesc('created_at');	
+	   		        foreach($posts as $p)
+	   		        {
+	   		         $temp = $this->getPost($p->id);
+	   		         array_push($ret,$temp);
+	   	            }
+	   	          }
+				  
+				  return $ret;
+	            }
 	
 	
    

@@ -93,7 +93,8 @@ Route::get('sci', 'MainController@getSetCoverImage');
 Route::get('ri', 'MainController@getRemoveImage');
 Route::get('tcdi', 'MainController@getTCDI');
 
-
+//Blog
+Route::get('blog', 'MainController@getPosts');
 
 //Payments
 Route::get('payment/callback', 'PaymentController@getPaymentCallback');

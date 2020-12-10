@@ -2,7 +2,6 @@ General
 
 Landing page
 Search
-FAQ
 Contact form
 View apartment(video tour,map)
 Blog

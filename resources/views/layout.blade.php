@@ -337,7 +337,7 @@
 								<div class="footer-widget">
 									<h4 class="widget-title">Learn More</h4>
 									<ul class="footer-menu">
-										<li><a href="javascript:void(0)">Blog</a></li>
+										<li><a href="{{url('blog')}}">Blog</a></li>
 										<li><a href="javascript:void(0)">Knowledge Center</a></li>
 										<li><a href="javascript:void(0)">Forums</a></li>
 									</ul>
