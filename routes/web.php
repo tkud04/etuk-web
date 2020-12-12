@@ -95,6 +95,7 @@ Route::get('tcdi', 'MainController@getTCDI');
 
 //Blog
 Route::get('blog', 'MainController@getPosts');
+Route::get('post', 'MainController@getPost');
 
 //Payments
 Route::get('payment/callback', 'PaymentController@getPaymentCallback');

@@ -3930,7 +3930,7 @@ function createSocial($data)
 		 	                 return $ret;
 		 	            }
 						
-				function getPosts()
+			 function getPosts()
 	      {
 	   	   $ret = [];
 	   
@@ -3949,6 +3949,11 @@ function createSocial($data)
 	   	   return $ret;
 	      }
 		  
+		  function parseBlogPostContent($c)
+		  {
+			  return $c;
+		  }
+		  
 	 	 function getPost($id)
 	            {
 	            	$ret = [];
@@ -3961,15 +3966,79 @@ function createSocial($data)
 	                    	$temp['url'] = $p->url; 
 	                    	$temp['status'] = $p->status; 
 	                        $temp['author'] = $this->getUser($p->author); 
-	                        $temp['content'] = $this->parseBlogContent($p->content);
+	                        $temp['content'] = $this->parseBlogPostContent($p->content);
 	                        $temp['img'] = $this->getCloudinaryImage($p->img);
+	                        $temp['comments'] = $this->getComments($p->id);
 	                        $temp['date'] = $p->created_at->format("jS F, Y h:i A"); 
+	                        $temp['updated'] = $p->updated_at->format("jS F, Y h:i A"); 
 	                        $ret = $temp; 
 	                }                          
                                                       
 	                 return $ret;
 	            }
-	
+				
+				
+		  function getComments($post_id)
+	      {
+	   	   $ret = [];
+	   
+	   	   $comments = Comments::where(['type' => "post",
+		                                'post_id' => $post_id])->get();
+	   
+	   	   if(!is_null($comments))
+	   	   {
+			  # $posts = $posts->sortByDesc('created_at');	
+	   		   foreach($comments as $c)
+	   		   {
+	   		     $temp = $this->getComment($c->id);
+	   		     array_push($ret,$temp);
+	   	       }
+	   	   }
+		   
+		   return $ret;
+		  }
+		  
+		  function getCommentReplies($comment_id)
+	      {
+	   	   $ret = [];
+	   
+	   	   $comments = Comments::where(['type' => "comment",
+		                                'parent_id' => $comment_id])->get();
+	   
+	   	   if(!is_null($comments))
+	   	   {
+			  # $posts = $posts->sortByDesc('created_at');	
+	   		   foreach($comments as $c)
+	   		   {
+	   		     $temp = $this->getComment($c->id);
+	   		     array_push($ret,$temp);
+	   	       }
+	   	   }
+		   
+		   return $ret;
+		  }
+		  
+		  function getComment($id)
+	            {
+	            	$ret = [];
+	                $c = Comments::where('id',$id)->first();
+ 
+	               if($c != null)
+	                {
+                            $temp['id'] = $c->id; 
+	                    	$temp['post_id'] = $c->post_id; 
+	                    	$temp['parent_id'] = $c->parent_id; 
+	                    	$temp['type'] = $c->type; 
+	                    	$temp['status'] = $c->status; 
+	                        $temp['author'] = $this->getUser($c->user_id); 
+	                        $temp['content'] = $c->content;
+	                        $temp['replies'] = $this->getCommentReplies($c->id);
+	                        $temp['date'] = $c->created_at->format("jS F, Y h:i A"); 
+	                        $ret = $temp; 
+	                }                          
+                                                      
+	                 return $ret;
+	            }
 	
    
 }
