@@ -79,7 +79,7 @@ $tomorrow = $ddd->format($fmt);
 								
 									<div class="col-lg-2 p-0 mp-15">
 										<div class="form-group  search">
-											<button class="btn btn-theme btn-search" id="landing-search-btn">Book Now</button>
+											<button class="btn btn-theme btn-search" id="landing-search-btn">Search</button>
 										</div>
 									</div>
 								</div>

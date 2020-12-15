@@ -430,7 +430,7 @@ $(function() {
 	$('.featured-slick-slide').slick({
 		centerMode: true,
 		centerPadding: '80px',
-		slidesToShow:2,
+		slidesToShow:1,
 		responsive: [
 		{
 		breakpoint: 768,
@@ -438,7 +438,7 @@ $(function() {
 		arrows:true,
 		centerMode: true,
 		centerPadding: '60px',
-		slidesToShow:2
+		slidesToShow:1
 		}
 		},
 		{
