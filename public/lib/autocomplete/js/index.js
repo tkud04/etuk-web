@@ -7,7 +7,7 @@ let elem = params.elem, datasrc = params.src;
 // });
 // autoComplete.js input eventListener on initialization event
 document.querySelector(elem).addEventListener("init", function (event) {
-  console.log(event);
+ // console.log(event);
 });
 // // autoComplete.js input eventListener on input event
 // document.querySelector(elem).addEventListener("input", function (event) {
@@ -34,7 +34,7 @@ document.querySelector(elem).addEventListener("init", function (event) {
 //   console.log(event);
 // });
 
-console.log("datasrc: ",datasrc);
+//console.log("datasrc: ",datasrc);
 
 // The autoComplete.js Engine instance creator
 const autoCompleteJS = new autoComplete({
@@ -119,7 +119,7 @@ const autoCompleteJS = new autoComplete({
     // Replace Input value with the selected value
     document.querySelector(elem).value = selection;
     // Console log autoComplete data feedback
-    console.log(feedback);
+    //console.log(feedback);
   },
 });
 

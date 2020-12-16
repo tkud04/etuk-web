@@ -155,6 +155,207 @@ class Helper implements HelperContract
 			];  
 
 
+public $countries = [
+'afghanistan' => "Afghanistan",
+'albania' => "Albania",
+'algeria' => "Algeria",
+'andorra' => "Andorra",
+'angola' => "Angola",
+'antigua-barbuda' => "Antigua and Barbuda",
+'argentina' => "Argentina",
+ArmeniaArmenia
+AustraliaAustralia
+AustriaAustria
+AzerbaijanAzerbaijan
+The BahamasThe Bahamas
+BahrainBahrain
+BangladeshBangladesh
+BarbadosBarbados
+BelarusBelarus
+BelgiumBelgium
+BelizeBelize
+BeninBenin
+BhutanBhutan
+BoliviaBolivia
+Bosnia and HerzegovinaBosnia and Herzegovina
+BotswanaBotswana
+BrazilBrazil
+BruneiBrunei
+BulgariaBulgaria
+Burkina FasoBurkina Faso
+BurundiBurundi
+CambodiaCambodia
+'cameroon' => "Cameroon",
+'canada' => "Canada",
+'cape-verde' => "Cape Verde",
+'caf' => "Central African Republic"
+Chad
+Chile
+China
+Colombia
+Comoros
+Congo, Republic of the
+Congo, Democratic Republic of the
+Costa Rica
+Cote d'Ivoire
+Croatia
+Cuba
+Cyprus
+Czech Republic
+Denmark
+Djibouti
+Dominica
+Dominican Republic
+East Timor (Timor-Leste)
+Ecuador
+Egypt
+El Salvador
+Equatorial Guinea
+Eritrea
+Estonia
+Ethiopia
+Fiji
+Finland
+France
+Gabon
+The Gambia
+Georgia
+Germany
+Ghana
+Greece
+Grenada
+Guatemala
+Guinea
+Guinea-Bissau
+Guyana
+Haiti
+Honduras
+Hungary
+Iceland
+India
+Indonesia
+Iran
+Iraq
+Ireland
+Israel
+Italy
+Jamaica
+Japan
+Jordan
+Kazakhstan
+Kenya
+Kiribati
+Korea, North
+Korea, South
+Kosovo
+Kuwait
+Kyrgyzstan
+Laos
+Latvia
+Lebanon
+Lesotho
+Liberia
+Libya
+Liechtenstein
+Lithuania
+Luxembourg
+Macedonia
+Madagascar
+Malawi
+Malaysia
+Maldives
+Mali
+Malta
+Marshall Islands
+Mauritania
+Mauritius
+Mexico
+Micronesia, Federated States of
+Moldova
+Monaco
+Mongolia
+Montenegro
+Morocco
+Mozambique
+Myanmar (Burma)
+Namibia
+Nauru
+Nepal
+Netherlands
+New Zealand
+Nicaragua
+Niger
+Nigeria
+Norway
+Oman
+Pakistan
+Palau
+Panama
+Papua New Guinea
+Paraguay
+Peru
+Philippines
+Poland
+Portugal
+Qatar
+Romania
+Russia
+Rwanda
+Saint Kitts and Nevis
+Saint Lucia
+Saint Vincent and the Grenadines
+Samoa
+San Marino
+Sao Tome and Principe
+Saudi Arabia
+Senegal
+Serbia
+Seychelles
+Sierra Leone
+Singapore
+Slovakia
+Slovenia
+Solomon Islands
+Somalia
+South Africa
+South Sudan
+Spain
+Sri Lanka
+Sudan
+Suriname
+Swaziland
+Sweden
+Switzerland
+Syria
+Taiwan
+Tajikistan
+Tanzania
+Thailand
+Togo
+Tonga
+Trinidad and Tobago
+Tunisia
+Turkey
+Turkmenistan
+Tuvalu
+Uganda
+Ukraine
+United Arab Emirates
+United Kingdom
+United States of America
+Uruguay
+Uzbekistan
+Vanuatu
+Vatican City (Holy See)
+Venezuela
+Vietnam
+Yemen
+Zambia
+Zimbabwe
+
+
+]
+
  public $banks = [
       'access' => "Access Bank", 
       'citibank' => "Citibank", 
@@ -4043,11 +4244,44 @@ function createSocial($data)
 			function getAutoCompleteData($data)
 			{
 				$ret = [];
+				$country = isset($data['country']) ? $data['country'] : "Nigeria";
 				
 				switch($data['type'])
 				{
 					case "country":
-					  array_push($ret,['country' => 'Nigeria']);
+					  array_push($ret,['country' => $country]);
+					break;
+					
+					case "city":
+					
+					   #$city = $data['city'];
+					   $apts = ApartmentAddresses::where('country','like',"%$country")->get();
+						
+						if($apts != null)
+						{
+							foreach($apts as $a)
+							{
+								array_push($ret,['country' => $country,'city' => $a->city]);
+							}
+						}
+					break;
+					
+					case "location":
+					if(isset($data['city']))
+					 {
+					   #$city = $data['city'];
+					   $apts = ApartmentAddresses::where('country','like',"%$country")
+					                             ->where('city','like',"%city")->get();
+						
+						if($apts != null)
+						{
+							foreach($apts as $a)
+							{
+								array_push($ret,['country' => $country,'city' => $a->city]);
+							}
+						}
+					   
+					 }
 					break;
 				}
 				

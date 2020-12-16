@@ -882,15 +882,26 @@ $(document).ready(function() {
   confirmButtonText: 'Next &rarr;',
   showLoaderOnConfirm: true,
   preConfirm: (country) => {
-    return fetch(`ac?type=city&country=${country}`)
+	  let c = $('#country-input').val();
+    return fetch(`ac?type=city&country=${c}`)
       .then(response => response.json())
-      .then(data => Swal.insertQueueStep(data.ip))
-      .catch(() => {
-        Swal.insertQueueStep({
-          icon: 'error',
-          title: `Unable to find cities for ${country}`
-        })
-      })
+      .then(data => {
+		  console.log("json response: ",data); 
+		  if(data.status == "ok"){
+			 Swal.insertQueueStep({
+		       icon: 'success',
+		       title: `JSON data returned:`,
+		       text: `${data}`
+	         })  
+		  }
+		  else{
+			 Swal.insertQueueStep({
+               icon: 'error',
+               title: `Unable to find cities for ${c}`
+             }) 
+		  }
+		  
+	  })
   }
 }]);
  let cc = JSON.parse(countries), ccc = [];
@@ -898,10 +909,9 @@ $(document).ready(function() {
  for(let i = 0; i < cc.data.length; i++){
 	 ccc.push(cc.data[i].country);
  }
- console.log("cc: ",cc);
+ 
  $('#country-input').ready(() => {
-	 console.log('in script');
-     ac({
+	 ac({
 	   elem: '#country-input',
 	   container: '.swal2-content',
 	   src: JSON.stringify(cc.data),
