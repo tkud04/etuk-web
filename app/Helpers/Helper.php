@@ -163,198 +163,196 @@ public $countries = [
 'angola' => "Angola",
 'antigua-barbuda' => "Antigua and Barbuda",
 'argentina' => "Argentina",
-ArmeniaArmenia
-AustraliaAustralia
-AustriaAustria
-AzerbaijanAzerbaijan
-The BahamasThe Bahamas
-BahrainBahrain
-BangladeshBangladesh
-BarbadosBarbados
-BelarusBelarus
-BelgiumBelgium
-BelizeBelize
-BeninBenin
-BhutanBhutan
-BoliviaBolivia
-Bosnia and HerzegovinaBosnia and Herzegovina
-BotswanaBotswana
-BrazilBrazil
-BruneiBrunei
-BulgariaBulgaria
-Burkina FasoBurkina Faso
-BurundiBurundi
-CambodiaCambodia
+'armenia' => "Armenia",
+'australia' => "Australia",
+'austria' => "Austria",
+'azerbaijan' => "Azerbaijan",
+'bahamas' => "The Bahamas",
+'bahrain' => "Bahrain",
+'bangladesh' => "Bangladesh",
+'barbados' => "Barbados",
+'belarus' => "Belarus",
+'belgium' => "Belgium",
+'belize' => "Belize",
+'benin' => "Benin",
+'bhutan' => "Bhutan",
+'bolivia' => "Bolivia",
+'bosnia' => "Bosnia and Herzegovina",
+'botswana' => "Botswana",
+'brazil' => "Brazil",
+'brunei' => "Brunei",
+'bulgaria' => "Bulgaria",
+'burkina-faso' => "Burkina Faso",
+'burundi' => "Burundi",
+'cambodia' => "Cambodia",
 'cameroon' => "Cameroon",
 'canada' => "Canada",
 'cape-verde' => "Cape Verde",
-'caf' => "Central African Republic"
-Chad
-Chile
-China
-Colombia
-Comoros
-Congo, Republic of the
-Congo, Democratic Republic of the
-Costa Rica
-Cote d'Ivoire
-Croatia
-Cuba
-Cyprus
-Czech Republic
-Denmark
-Djibouti
-Dominica
-Dominican Republic
-East Timor (Timor-Leste)
-Ecuador
-Egypt
-El Salvador
-Equatorial Guinea
-Eritrea
-Estonia
-Ethiopia
-Fiji
-Finland
-France
-Gabon
-The Gambia
-Georgia
-Germany
-Ghana
-Greece
-Grenada
-Guatemala
-Guinea
-Guinea-Bissau
-Guyana
-Haiti
-Honduras
-Hungary
-Iceland
-India
-Indonesia
-Iran
-Iraq
-Ireland
-Israel
-Italy
-Jamaica
-Japan
-Jordan
-Kazakhstan
-Kenya
-Kiribati
-Korea, North
-Korea, South
-Kosovo
-Kuwait
-Kyrgyzstan
-Laos
-Latvia
-Lebanon
-Lesotho
-Liberia
-Libya
-Liechtenstein
-Lithuania
-Luxembourg
-Macedonia
-Madagascar
-Malawi
-Malaysia
-Maldives
-Mali
-Malta
-Marshall Islands
-Mauritania
-Mauritius
-Mexico
-Micronesia, Federated States of
-Moldova
-Monaco
-Mongolia
-Montenegro
-Morocco
-Mozambique
-Myanmar (Burma)
-Namibia
-Nauru
-Nepal
-Netherlands
-New Zealand
-Nicaragua
-Niger
-Nigeria
-Norway
-Oman
-Pakistan
-Palau
-Panama
-Papua New Guinea
-Paraguay
-Peru
-Philippines
-Poland
-Portugal
-Qatar
-Romania
-Russia
-Rwanda
-Saint Kitts and Nevis
-Saint Lucia
-Saint Vincent and the Grenadines
-Samoa
-San Marino
-Sao Tome and Principe
-Saudi Arabia
-Senegal
-Serbia
-Seychelles
-Sierra Leone
-Singapore
-Slovakia
-Slovenia
-Solomon Islands
-Somalia
-South Africa
-South Sudan
-Spain
-Sri Lanka
-Sudan
-Suriname
-Swaziland
-Sweden
-Switzerland
-Syria
-Taiwan
-Tajikistan
-Tanzania
-Thailand
-Togo
-Tonga
-Trinidad and Tobago
-Tunisia
-Turkey
-Turkmenistan
-Tuvalu
-Uganda
-Ukraine
-United Arab Emirates
-United Kingdom
-United States of America
-Uruguay
-Uzbekistan
-Vanuatu
-Vatican City (Holy See)
-Venezuela
-Vietnam
-Yemen
-Zambia
-Zimbabwe
-
-
-]
+'caf' => "Central African Republic",
+'chad' => "Chad",
+'chile' => "Chile",
+'china' => "China",
+'colombia' => "Colombia",
+'comoros' => "Comoros",
+'congo-1' => "Congo, Republic of the",
+'congo-2' => "Congo, Democratic Republic of the",
+'costa-rica' => "Costa Rica",
+'cote-divoire' => "Cote d'Ivoire",
+'croatia' => "Croatia",
+'cuba' => "Cuba",
+'cyprus' => "Cyprus",
+'czech' => "Czech Republic",
+'denmark' => "Denmark",
+'djibouti' => "Djibouti",
+'dominica' => "Dominica",
+'dominica-2' => "Dominican Republic",
+'timor' => "East Timor (Timor-Leste)",
+'ecuador' => "Ecuador",
+'egypt' => "Egypt",
+'el-salvador' => "El Salvador",
+'eq-guinea' => "Equatorial Guinea",
+'eritrea' => "Eritrea",
+'estonia' => "Estonia",
+'ethiopia' => "Ethiopia",
+'fiji' => "Fiji",
+'finland' => "Finland",
+'france' => "France",
+'gabon' => "Gabon",
+'gambia' => "The Gambia",
+'georgia' => "Georgia",
+'germany' => "Germany",
+'ghana' => "Ghana",
+'greece' => "Greece",
+'grenada' => "Grenada",
+'guatemala' => "Guatemala",
+'guinea' => "Guinea",
+'guinea-bissau' => "Guinea-Bissau",
+'guyana' => "Guyana",
+'haiti' => "Haiti",
+'honduras' => "Honduras",
+'hungary' => "Hungary",
+'iceland' => "Iceland",
+'india' => "India",
+'indonesia' => "Indonesia",
+'iran' => "Iran",
+'iraq' => "Iraq",
+'ireland' => "Ireland",
+'israel' => "Israel",
+'italy' => "Italy",
+'jamaica' => "Jamaica",
+'japan' => "Japan",
+'jordan' => "Jordan",
+'kazakhstan' => "Kazakhstan",
+'kenya' => "Kenya",
+'kiribati' => "Kiribati",
+'nk' => "Korea, North",
+'sk' => "Korea, South",
+'kosovo' => "Kosovo",
+'kuwait' => "Kuwait",
+'kyrgyzstan' => "Kyrgyzstan",
+'laos' => "Laos",
+'latvia' => "Latvia",																																																																																							`
+'lebanon' => "Lebanon",
+'lesotho' => "Lesotho",
+'liberia' => "Liberia",
+'libya' => "Libya",
+'liechtenstein' => "Liechtenstein",
+'lithuania' => "Lithuania",
+'luxembourg' => "Luxembourg",
+'macedonia' => "Macedonia",
+'madagascar' => "Madagascar",
+'malawi' => "Malawi",
+'malaysia' => "Malaysia",
+'maldives' => "Maldives",
+'mali' => "Mali",
+'malta' => "Malta",
+'marshall' => "Marshall Islands",
+'mauritania' => "Mauritania",
+'mauritius' => "Mauritius",
+'mexico' => "Mexico",
+'micronesia' => "Micronesia, Federated States of",
+'moldova' => "Moldova",
+'monaco' => "Monaco",
+'mongolia' => "Mongolia",
+'montenegro' => "Montenegro",
+'morocco' => "Morocco",
+'mozambique' => "Mozambique",
+'myanmar' => "Myanmar (Burma)",
+'namibia' => "Namibia",
+'nauru' => "Nauru",
+'nepal' => "Nepal",
+'netherlands' => "Netherlands",
+'nz' => "New Zealand",
+'nicaragua' => "Nicaragua",
+'niger' => "Niger",
+'nigeria' => "Nigeria",
+'norway' => "Norway",
+'oman' => "Oman",
+'pakistan' => "Pakistan",
+'palau' => "Palau",
+'panama' => "Panama",
+'png' => "Papua New Guinea",
+'paraguay' => "Paraguay",
+'peru' => "Peru",
+'philippines' => "Philippines",
+'poland' => "Poland",
+'portugal' => "Portugal",
+'qatar' => "Qatar",
+'romania' => "Romania",
+'russia' => "Russia",
+'rwanda' => "Rwanda",
+'st-kitts' => "Saint Kitts and Nevis",
+'st-lucia' => "Saint Lucia",
+'svg' => "Saint Vincent and the Grenadines",
+'samoa' => "Samoa",
+'san-marino' => "San Marino",
+'sao-tome-principe' => "Sao Tome and Principe",
+'saudi -arabia' => "Saudi Arabia",
+'senegal' => "Senegal",
+'serbia' => "Serbia",
+'seychelles' => "Seychelles",
+'sierra-leone' => "Sierra Leone",
+'singapore' => "Singapore",
+'slovakia' => "Slovakia",
+'slovenia' => "Slovenia",
+'solomon-island' => "Solomon Islands",
+'somalia' => "Somalia",
+'sa' => "South Africa",
+'ss' => "South Sudan",
+'spain' => "Spain",
+'sri-lanka' => "Sri Lanka",
+'sudan' => "Sudan",
+'suriname' => "Suriname",
+'swaziland' => "Swaziland",
+'sweden' => "Sweden",
+'switzerland' => "Switzerland",
+'syria' => "Syria",
+'taiwan' => "Taiwan",
+'tajikistan' => "Tajikistan",
+'tanzania' => "Tanzania",
+'thailand' => "Thailand",
+'togo' => "Togo",
+'tonga' => "Tonga",
+'trinidad-tobago' => "Trinidad and Tobago",
+'tunisia' => "Tunisia",
+'turkey' => "Turkey",
+'turkmenistan' => "Turkmenistan",
+'tuvalu' => "Tuvalu",
+'uganda' => "Uganda",
+'ukraine' => "Ukraine",
+'uae' => "United Arab Emirates",
+'uk' => "United Kingdom",
+'usa' => "United States of America",
+'uruguay' => "Uruguay",
+'uzbekistan' => "Uzbekistan",
+'vanuatu' => "Vanuatu",
+'vatican' => "Vatican City",
+'venezuela' => "Venezuela",
+'vietnam' => "Vietnam",
+'yemen' => "Yemen",
+'zambia' => "Zambia",
+'zimbabwe' => "Zimbabwe"
+];
 
  public $banks = [
       'access' => "Access Bank", 
@@ -4249,7 +4247,8 @@ function createSocial($data)
 				switch($data['type'])
 				{
 					case "country":
-					  array_push($ret,['country' => $country]);
+					foreach($this->countries as $k => $v)
+					  array_push($ret,['country' => $v]);
 					break;
 					
 					case "city":
