@@ -903,6 +903,7 @@ $(document).ready(function() {
 	 console.log('in script');
      ac({
 	   elem: '#country-input',
+	   container: '.swal2-container',
 	   src: JSON.stringify(cc.data),
 	   placeholder: 'Enter your country',
 	   keys: ["country"]
