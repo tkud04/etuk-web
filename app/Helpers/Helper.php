@@ -4039,6 +4039,20 @@ function createSocial($data)
                                                       
 	                 return $ret;
 	            }
+			
+			function getAutoCompleteData($data)
+			{
+				$ret = [];
+				
+				switch($data['type'])
+				{
+					case "country":
+					  array_push($ret,['country' => 'Nigeria']);
+					break;
+				}
+				
+				return $ret;
+			}
 	
    
 }

@@ -239,7 +239,7 @@ $pt['name'] = $pa['name'];
 					<div class="row">
 						<div class="col-lg-12 col-md-12">
 							<div class="sec-heading center">
-								<h2>Top Apartments</h2>
+								<h2>Law School Apartments</h2>
 							</div>
 						</div>
 					</div>

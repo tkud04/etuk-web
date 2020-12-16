@@ -8,6 +8,9 @@ $tomorrow = $ddd->format($fmt);
 
 ?>
 
+<script>
+let countries = `<?php echo $countries; ?>`;
+</script>
 <!-- ======================= Start Banner ===================== -->
 			<div class="main-banner full" style="background-image:url(<?php echo e($banner); ?>);" data-overlay="7">
 				<div class="container">
@@ -28,7 +31,9 @@ $tomorrow = $ddd->format($fmt);
 										<div class="form-group">
 											<i class="ti-location-pin field-icon"></i>
 											<label>Location</label>
-											<input type="text" class="form-control" id="landing-search-location" value="<?php echo e($def['city']); ?>" placeholder="Where are you going?">
+											<a href="javascript:void(0)" id="location-picker-btn">
+											  <input type="text" class="form-control" id="landing-search-location" value="<?php echo e($def['city']); ?>" placeholder="Where are you going?" readonly>
+											</a>
 										</div>
 									</div>
 									
@@ -80,7 +85,7 @@ $tomorrow = $ddd->format($fmt);
 								
 									<div class="col-lg-2 p-0 mp-15">
 										<div class="form-group  search">
-											<button class="btn btn-theme btn-search" id="landing-search-btn">Book Now</button>
+											<button class="btn btn-theme btn-search" id="landing-search-btn">Search</button>
 										</div>
 									</div>
 								</div>

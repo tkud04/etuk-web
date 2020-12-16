@@ -38,6 +38,12 @@
 		<script src="<?php echo e(asset('js/jquery.min.js')); ?>"></script>
 		<script src="<?php echo e(asset('js/popper.min.js')); ?>"></script>
 		<script src="<?php echo e(asset('js/bootstrap.min.js')); ?>"></script>
+		
+		<!--AutoComplete.js--> 
+    <link href="<?php echo e(asset('lib/autocomplete/css/autoComplete.css')); ?>" rel="stylesheet">
+    <script src="<?php echo e(asset('lib/autocomplete/js/autoComplete.js')); ?>"></script>
+    <script src="<?php echo e(asset('lib/autocomplete/js/index.js')); ?>"></script>
+		
 		<script src="<?php echo e(asset('js/helpers.js').'?ver='.rand(23,999)); ?>"></script>
 		<script src="<?php echo e(asset('js/mmm.js').'?ver='.rand(23,999)); ?>"></script>
 		
@@ -49,7 +55,9 @@
         <script type="text/javascript" src="<?php echo e(asset('lib/simeditor/js/uploader.js')); ?>"></script>
         <script type="text/javascript" src="<?php echo e(asset('lib/simeditor/js/simditor.js')); ?>"></script>		
 		
-		<!--SweetAlert--> 
+		
+	
+	<!--SweetAlert--> 
     <link href="<?php echo e(asset('lib/sweet-alert/sweetalert2.css')); ?>" rel="stylesheet">
     <script src="<?php echo e(asset('lib/sweet-alert/sweetalert2.js')); ?>"></script>
 		

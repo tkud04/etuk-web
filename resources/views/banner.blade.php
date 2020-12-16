@@ -8,6 +8,9 @@ $tomorrow = $ddd->format($fmt);
 
 ?>
 
+<script>
+let countries = `{!!$countries!!}`;
+</script>
 <!-- ======================= Start Banner ===================== -->
 			<div class="main-banner full" style="background-image:url({{$banner}});" data-overlay="7">
 				<div class="container">
@@ -27,7 +30,9 @@ $tomorrow = $ddd->format($fmt);
 										<div class="form-group">
 											<i class="ti-location-pin field-icon"></i>
 											<label>Location</label>
-											<input type="text" class="form-control" id="landing-search-location" value="{{$def['city']}}" placeholder="Where are you going?">
+											<a href="javascript:void(0)" id="location-picker-btn">
+											  <input type="text" class="form-control" id="landing-search-location" value="{{$def['city']}}" placeholder="Where are you going?" readonly>
+											</a>
 										</div>
 									</div>
 									

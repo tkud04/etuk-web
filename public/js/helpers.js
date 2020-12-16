@@ -1435,6 +1435,11 @@ function showCheckout(type){
 }
 
 
+function acc(){
+		let step = $('.swal2-container').attr('data-queue-step'), txt = $('.swal2-input').val();
+        console.log(`we are in step ${step}, current text is ${txt}`);		
+}
+
 
 const getCart = () => {
 	let cart = null;

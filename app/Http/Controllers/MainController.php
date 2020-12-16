@@ -57,11 +57,14 @@ class MainController extends Controller {
 		#dd($messages);
 		
 		$popularApartments = $this->helpers->getPopularApartments();
-		#dd($popularApartments);
+		$rett = $this->helpers->getAutoCompleteData(['type' => 'country']);
+		$countries = json_encode(['status' => "ok",'data' => $rett]);
+		
+		#dd($countries);
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
 
-    	return view("index",compact(['user','cart','messages','c','def','hasUnpaidOrders','popularApartments','ad','signals','plugins','banner']));
+    	return view("index",compact(['user','cart','messages','c','def','hasUnpaidOrders','popularApartments','countries','ad','signals','plugins','banner']));
     }
 	
 	/**
@@ -2298,6 +2301,43 @@ class MainController extends Controller {
 		}
 		
     }
+	
+	/**
+	 * Handle autocomplete suggestions for apartment search
+	 *
+	 * @return Response
+	 */
+	public function getAutoComplete(Request $request)
+    {
+		$user = null;
+		if(Auth::check())
+		{
+		   $user = Auth::user();
+		}
+		
+		$req = $request->all();
+        #dd($req);
+		$ret = ['status' => "error",'message' => "nothing happened"];
+	    
+		$validator = Validator::make($req,[
+		                    'type' => 'required',
+		    		]);
+		
+		if($validator->fails())
+         {
+             $ret['message'] = "validation";
+         }
+		 else
+		 {					
+			$req['user_id'] = $user->id;
+			$rett = $this->helpers->getAutoCompleteData($req);
+			
+			$ret = ['status' => "ok",'data' => $rett];
+		 }
+		 
+		 return json_encode($ret);
+    }
+	
     
     
 /**
