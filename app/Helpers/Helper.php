@@ -155,7 +155,35 @@ class Helper implements HelperContract
 			];  
 
 
-public $countries = [
+
+ public $banks = [
+      'access' => "Access Bank", 
+      'citibank' => "Citibank", 
+      'diamond-access' => "Diamond-Access Bank", 
+      'ecobank' => "Ecobank", 
+      'fidelity' => "Fidelity Bank", 
+      'fbn' => "First Bank", 
+      'fcmb' => "FCMB", 
+      'globus' => "Globus Bank", 
+      'gtb' => "GTBank", 
+      'heritage' => "Heritage Bank", 
+      'jaiz' => "Jaiz Bank", 
+      'keystone' => "KeyStone Bank", 
+      'polaris' => "Polaris Bank", 
+      'providus' => "Providus Bank", 
+      'stanbic' => "Stanbic IBTC Bank", 
+      'standard-chartered' => "Standard Chartered Bank", 
+      'sterling' => "Sterling Bank", 
+      'suntrust' => "SunTrust Bank", 
+      'titan-trust' => "Titan Trust Bank", 
+      'union' => "Union Bank", 
+      'uba' => "UBA", 
+      'unity' => "Unity Bank", 
+      'wema' => "Wema Bank", 
+      'zenith' => "Zenith Bank"
+ ];			
+
+  public $countries = [
 'afghanistan' => "Afghanistan",
 'albania' => "Albania",
 'algeria' => "Algeria",
@@ -197,7 +225,7 @@ public $countries = [
 'congo-1' => "Congo, Republic of the",
 'congo-2' => "Congo, Democratic Republic of the",
 'costa-rica' => "Costa Rica",
-'cote-divoire' => "Cote d'Ivoire",
+'cote-divoire' => "Cote DIvoire",
 'croatia' => "Croatia",
 'cuba' => "Cuba",
 'cyprus' => "Cyprus",
@@ -251,7 +279,7 @@ public $countries = [
 'kuwait' => "Kuwait",
 'kyrgyzstan' => "Kyrgyzstan",
 'laos' => "Laos",
-'latvia' => "Latvia",																																																																																							`
+'latvia' => "Latvia",																																																																																							
 'lebanon' => "Lebanon",
 'lesotho' => "Lesotho",
 'liberia' => "Liberia",
@@ -353,33 +381,6 @@ public $countries = [
 'zambia' => "Zambia",
 'zimbabwe' => "Zimbabwe"
 ];
-
- public $banks = [
-      'access' => "Access Bank", 
-      'citibank' => "Citibank", 
-      'diamond-access' => "Diamond-Access Bank", 
-      'ecobank' => "Ecobank", 
-      'fidelity' => "Fidelity Bank", 
-      'fbn' => "First Bank", 
-      'fcmb' => "FCMB", 
-      'globus' => "Globus Bank", 
-      'gtb' => "GTBank", 
-      'heritage' => "Heritage Bank", 
-      'jaiz' => "Jaiz Bank", 
-      'keystone' => "KeyStone Bank", 
-      'polaris' => "Polaris Bank", 
-      'providus' => "Providus Bank", 
-      'stanbic' => "Stanbic IBTC Bank", 
-      'standard-chartered' => "Standard Chartered Bank", 
-      'sterling' => "Sterling Bank", 
-      'suntrust' => "SunTrust Bank", 
-      'titan-trust' => "Titan Trust Bank", 
-      'union' => "Union Bank", 
-      'uba' => "UBA", 
-      'unity' => "Unity Bank", 
-      'wema' => "Wema Bank", 
-      'zenith' => "Zenith Bank"
- ];			
 
   public $ip = "";
    
