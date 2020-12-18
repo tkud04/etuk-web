@@ -2329,7 +2329,7 @@ class MainController extends Controller {
          }
 		 else
 		 {					
-			$req['user_id'] = $user->id;
+			$req['user_id'] = $user == null ? "" : $user->id;
 			$rett = $this->helpers->getAutoCompleteData($req);
 			
 			$ret = ['status' => "ok",'data' => $rett];
