@@ -889,9 +889,32 @@ $(document).ready(function() {
 		  console.log("json response: ",data); 
 		  if(data.status == "ok"){
 			 Swal.insertQueueStep({
-		       icon: 'success',
-		       title: `JSON data returned:`,
-		       text: `${data}`
+		       title: 'City',
+               html: `<input type="text" class="swal2-input" id="city-input">`,
+               confirmButtonText: 'Next &rarr;',
+               showLoaderOnConfirm: true,
+                preConfirm: (city) => {
+					let c2 = $('#city-input').val();
+					return fetch(`ac?type=city&country=${c}`)
+                     .then(response => response.json())
+                     .then(data => {
+		             console.log("json response: ",data); 
+		             if(data.status == "ok"){
+						 Swal.insertQueueStep({
+		                   icon: 'success',
+		                   title: `JSON data returned:`,
+		                   text: `${data}`
+	                     })
+					 }
+					 else{
+						 Swal.insertQueueStep({
+                          icon: 'error',
+                          title: `Unable to find locations for ${c2}`
+                         }) 
+					 }
+					 });
+					//
+				}
 	         })  
 		  }
 		  else{
