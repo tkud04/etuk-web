@@ -992,7 +992,8 @@ function isDuplicateUser($data)
                                                       'address' => $data['address'],                                                       
                                                       'city' => $data['city'],                                                       
                                                       'lga' => $data['lga'],                                                       
-                                                      'state' => $data['state']
+                                                      'state' => $data['state'],
+                                                      'country' => $data['country']
                                                       ]);
                               
                 return $ret;
@@ -1304,6 +1305,7 @@ function isDuplicateUser($data)
 				  $temp['city'] = $aa->city;
 				  $temp['lga'] = $aa->lga;
 				  $temp['state'] = $aa->state;
+				  $temp['country'] = $aa->country;
 				  $ret = $temp;
                }                         
                                                       
@@ -1562,7 +1564,8 @@ function updateApartment($data)
                                                       'address' => $data['address'],                                                       
                                                       'city' => $data['city'],                                                       
                                                       'lga' => $data['lga'],                                                       
-                                                      'state' => $data['state']
+                                                      'state' => $data['state'],
+                                                      'country' => $data['country'],
                                                       ]);
 			   }               
            }
@@ -1938,6 +1941,7 @@ function updateApartment($data)
 			 $avb = $dt->avb;
 			 $city = $dt->city == "" ? $dt->state: $dt->city;
 			 $lga = $dt->lga == "" ? $dt->state: $dt->lga;
+			 $country = $dt->country == "" ? $dt->country: "nigeria";
 			 $state = $dt->state;
 			 $max_adults = $dt->max_adults;
 			 $max_children = $dt->max_children;
@@ -1965,7 +1969,8 @@ function updateApartment($data)
 			 //Location
 			 $byAddress = ApartmentAddresses::where('city',"LIKE","%$city%")
 				              ->orWhere('lga',"LIKE","%$lga%")
-			                  ->orWhere('state',"LIKE","%$state%")->get();
+			                  ->orWhere('state',"LIKE","%$state%")
+			                  ->orWhere('country',"LIKE","%$country%")->get();
 			 
              //Apartment			 
 			 $byApartment = Apartments::where('avb',"LIKE","%$avb%")->get();
