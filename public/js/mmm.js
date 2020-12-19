@@ -1,7 +1,6 @@
 
 	let  toolbar = ['title', 'bold', 'italic', 'underline', 'strikethrough', 'fontScale', 'color', '|', 'ol', 'ul', 'blockquote', 'code', 'table', '|', 'link', 'image', 'hr', '|', 'indent', 'outdent', 'alignment'];
 	
-
 $(document).ready(function() {
     "use strict";
 	hideInputErrors(["signup","login","forgot-password","reset-password","oauth-sp"]);
@@ -883,17 +882,29 @@ $(document).ready(function() {
   showLoaderOnConfirm: true,
   preConfirm: (country) => {
 	  let c = $('#country-input').val();
-    return fetch(`ac?type=city&country=${c}`)
+    return fetch(`ac?type=state&country=${c}`)
       .then(response => response.json())
       .then(data => {
 		  console.log("json response: ",data); 
 		  if(data.status == "ok"){
-			
+			 let stateData = data.data;
+			 stateACData = {
+				 elem: "#state-input",
+				 container: ".swal2-content",
+				 src: JSON.stringify(stateData),
+				 placeholder: "Enter your state",
+				 keys: ["country","state"]
+				 };
+			 
 			 Swal.insertQueueStep({
 		       title: 'State',
                html: `<input type="text" class="swal2-input" id="state-input">`,
                confirmButtonText: 'Next &rarr;',
                showLoaderOnConfirm: true,
+			   willOpen: (elem) => {
+				   //console.log(elem);
+				   activateAC('state');	
+			   },
                 preConfirm: (city) => {
 					let s = $('#state-input').val();
 					return fetch(`ac?type=city&country=${c}&state=${s}`)
@@ -916,16 +927,9 @@ $(document).ready(function() {
 					 });
 					//
 				}
-	         })  
-			 $('#state-input').ready(() => {
-	          ac({
-	           elem: '#state-input',
-	           container: '.swal2-content',
-	           src: JSON.stringify(cc.data),
-	           placeholder: 'Enter your state',
-	           keys: ["country","state"]
-              });
-             });
+	         });
+             		 
+			 
 		  }
 		  else{
 			 Swal.insertQueueStep({

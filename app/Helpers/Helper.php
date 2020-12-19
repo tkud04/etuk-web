@@ -4248,7 +4248,7 @@ function createSocial($data)
 			function getAutoCompleteData($data)
 			{
 				$ret = [];
-				$country = isset($data['country']) ? $data['country'] : "Nigeria";
+				$country = isset($data['country']) ? strtolower($data['country']) : "nigeria";
 				
 				switch($data['type'])
 				{

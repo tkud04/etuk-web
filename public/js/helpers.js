@@ -1,3 +1,6 @@
+let stateACData = {};
+
+
 const showElem = (name) => {
 	let names = [];
 	
@@ -1540,4 +1543,13 @@ const searchToCart = (s) => {
 	 let qty = $(`#search-qty-${s}`).val();
 	   //console.log("qty: ",qty);
 	   addToCart({sku: s,qty: qty});
+}
+
+const activateAC = (input) => {
+	switch(input){
+		case "state":
+		  console.log(stateACData);
+		  ac(stateACData);
+		break;
+	}
 }
