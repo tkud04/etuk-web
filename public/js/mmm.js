@@ -888,14 +888,15 @@ $(document).ready(function() {
       .then(data => {
 		  console.log("json response: ",data); 
 		  if(data.status == "ok"){
+			
 			 Swal.insertQueueStep({
-		       title: 'City',
-               html: `<input type="text" class="swal2-input" id="city-input">`,
+		       title: 'State',
+               html: `<input type="text" class="swal2-input" id="state-input">`,
                confirmButtonText: 'Next &rarr;',
                showLoaderOnConfirm: true,
                 preConfirm: (city) => {
-					let c2 = $('#city-input').val();
-					return fetch(`ac?type=city&country=${c}`)
+					let s = $('#state-input').val();
+					return fetch(`ac?type=city&country=${c}&state=${s}`)
                      .then(response => response.json())
                      .then(data => {
 		             console.log("json response: ",data); 
@@ -909,13 +910,22 @@ $(document).ready(function() {
 					 else{
 						 Swal.insertQueueStep({
                           icon: 'error',
-                          title: `Unable to find locations for ${c2}`
+                          title: `Unable to find cities for ${s}`
                          }) 
 					 }
 					 });
 					//
 				}
 	         })  
+			 $('#state-input').ready(() => {
+	          ac({
+	           elem: '#state-input',
+	           container: '.swal2-content',
+	           src: JSON.stringify(cc.data),
+	           placeholder: 'Enter your state',
+	           keys: ["country","state"]
+              });
+             });
 		  }
 		  else{
 			 Swal.insertQueueStep({
@@ -942,6 +952,8 @@ $(document).ready(function() {
 	   keys: ["country"]
      });
 });
+
+
 
 });
 	
