@@ -893,7 +893,7 @@ $(document).ready(function() {
 				 container: ".swal2-content",
 				 src: JSON.stringify(stateData),
 				 placeholder: "Enter your state",
-				 keys: ["country","state"]
+				 keys: ["state"]
 				 };
 			 
 			 Swal.insertQueueStep({
