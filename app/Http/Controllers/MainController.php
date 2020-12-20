@@ -2331,7 +2331,7 @@ class MainController extends Controller {
 		 {					
 			$req['user_id'] = $user == null ? "" : $user->id;
 			$rett = $this->helpers->getAutoCompleteData($req);
-			
+			#$rett = array_unique($rett);
 			$ret = ['status' => "ok",'data' => $rett];
 		 }
 		 

@@ -905,7 +905,7 @@ $(document).ready(function() {
 				   //console.log(elem);
 				   activateAC('state');	
 			   },
-                preConfirm: (city) => {
+                preConfirm: (state) => {
 					let s = $('#state-input').val();
 					return fetch(`ac?type=city&country=${c}&state=${s}`)
                      .then(response => response.json())
@@ -913,9 +913,30 @@ $(document).ready(function() {
 		             console.log("json response: ",data); 
 		             if(data.status == "ok"){
 						 Swal.insertQueueStep({
-		                   icon: 'success',
-		                   title: `JSON data returned:`,
-		                   text: `${data}`
+		                   title: 'City',
+		                   html: `<input type="text" class="swal2-input" id="city-input">`,
+		                   confirmButtonText: 'Search apartments',
+						   showLoaderOnConfirm: true,
+						   willOpen: (elem) => {
+							   activateAC('city');	
+						   },
+						   preConfirm: (state) => {
+							   let c = $('#city-input').val();
+							   return fetch(`ac?type=city&country=${c}&state=${s}`)
+							     .then(response => response.json())
+								 .then(data => {
+									 console.log("json response: ",data); 
+									 if(data.status == "ok"){
+										 alert("ok");
+									 }
+									 else{
+										Swal.insertQueueStep({
+											icon: 'error',
+											title: `Unable to find apartments in ${c}`
+										}); 
+									 }
+								 });
+						   }
 	                     })
 					 }
 					 else{
