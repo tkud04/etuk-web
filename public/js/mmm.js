@@ -610,7 +610,8 @@ $(document).ready(function() {
 		console.log("landing search");
 		
 		let loc = $('#landing-search-location').val(), dts = $('#landing-search-dates').val(),
-		    kids = $('#landing-search-kids').val(), adults = $('#landing-search-adults').val();
+		    country = $('#landing-search-country').val(), city = $('#landing-search-city').val(),
+		    state = $('#landing-search-state').val(), kids = $('#landing-search-kids').val(), adults = $('#landing-search-adults').val();
 		
 		if(loc == "" || parseInt(adults) < 1){
 			let hh = "";
@@ -623,8 +624,9 @@ $(document).ready(function() {
            });
 		}
 		else{
-			 landingSearchDT.city = loc;
-			 landingSearchDT.state = loc;
+			 landingSearchDT.country = country;
+			 landingSearchDT.city = city;
+			 landingSearchDT.state = state;
 			 landingSearchDT.kids = kids;
 			 landingSearchDT.adults = adults;
 			
@@ -923,7 +925,7 @@ $(document).ready(function() {
 						 Swal.insertQueueStep({
 		                   title: 'City',
 		                   html: `<input type="text" class="swal2-input" id="city-input">`,
-		                   confirmButtonText: 'Search apartments',
+		                   confirmButtonText: 'OK',
 						   showLoaderOnConfirm: true,
 						   willOpen: (elem) => {
 							   console.log(elem);
@@ -931,7 +933,11 @@ $(document).ready(function() {
 						   },
 						   preConfirm: (state) => {
 							   let c2 = $('#city-input').val();
-							   window.location = `landing-search?country=${c}&state=${s}&city=${c2}`;
+							   //window.location = `landing-search?country=${c}&state=${s}&city=${c2}`;
+							   $('#landing-search-country').val(c);
+							   $('#landing-search-state').val(s);
+							   $('#landing-search-city').val(c2);
+							   $('#landing-search-location').val(`${c} - ${s} - ${c2}`);
 						   }
 	                     })
 					 }

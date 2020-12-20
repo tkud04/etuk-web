@@ -1968,9 +1968,8 @@ function updateApartment($data)
 			 
 			 //Location
 			 $byAddress = ApartmentAddresses::where('city',"LIKE","%$city%")
-				              ->orWhere('lga',"LIKE","%$lga%")
-			                  ->orWhere('state',"LIKE","%$state%")
-			                  ->orWhere('country',"LIKE","%$country%")->get();
+				              ->where('state',"LIKE","%$state%")
+			                  ->where('country',"LIKE","%$country%")->get();
 			 
              //Apartment			 
 			 $byApartment = Apartments::where('avb',"LIKE","%$avb%")->get();

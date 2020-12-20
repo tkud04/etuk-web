@@ -23,6 +23,9 @@ let countries = `{!!$countries!!}`;
 						
 						<form class="st-search-form-tour icon-frm withlbl" action="{{url('search')}}" id="landing-search-form" method="post">
 						{!! csrf_field() !!}
+						<input type="hidden" id="landing-search-country" value="">
+						<input type="hidden" id="landing-search-state" value="">
+						<input type="hidden" id="landing-search-city" value="">
 						<input type="hidden" name="dt" id="landing-search-dt"/>
 							<div class="g-field-search">
 								<div class="row">
@@ -31,6 +34,7 @@ let countries = `{!!$countries!!}`;
 											<i class="ti-location-pin field-icon"></i>
 											<label>Location</label>
 											<a href="javascript:void(0)" id="location-picker-btn">
+											
 											  <input type="text" class="form-control" id="landing-search-location" value="{{$def['city']}}" placeholder="Where are you going?" readonly>
 											</a>
 										</div>
@@ -66,7 +70,7 @@ let countries = `{!!$countries!!}`;
 													<div class="label">Adults</div>
 													<div class="val">
 														<span class="btn-minus" data-input="adults"><i class="ti-minus"></i></span>
-														<span class="count-display">1</span>
+														<span class="count-display" id="counter-adults">1</span>
 														<span class="btn-add" data-input="adults"><i class="ti-plus"></i></span>
 													</div>
 												</div>
@@ -74,7 +78,7 @@ let countries = `{!!$countries!!}`;
 													<div class="label">Children</div>
 													<div class="val">
 														<span class="btn-minus" data-input="children"><i class="ti-minus"></i></span>
-														<span class="count-display">0</span>
+														<span class="count-display" id="counter-children">0</span>
 														<span class="btn-add" data-input="children"><i class="ti-plus"></i></span>
 													</div>
 												</div>

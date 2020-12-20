@@ -162,23 +162,35 @@ $(function() {
 	// Search Form Guest Script
 	$('.select-guests-dropdown .btn-minus').click(function(e) {
 		e.stopPropagation();
+		let type = $(this).attr('data-input'), ttype = type == "children" ? "kids" : type;
+		
 		var parent = $(this).closest('.form-select-guests');
-		var input = parent.find('.select-guests-dropdown [name=' + $(this).data('input') + ']');
+		let input = $(`#landing-search-${ttype}`);
+		
 		var min = parseInt(input.attr('min'));
 		var old = parseInt(input.val());
+		console.log("minus");
+		console.log("old: ",old);
+		console.log("min: ",min);
 		if (old <= min) {
 			return;
 		}
 		input.val(old - 1);
 		$(this).next().html(old - 1);
 		updateGuestCountText(parent);
+		
 	});
 	$('.select-guests-dropdown .btn-add').click(function(e) {
 		e.stopPropagation();
+		let type = $(this).attr('data-input'), ttype = type == "children" ? "kids" : type;
+		
 		var parent = $(this).closest('.form-select-guests');
-		var input = parent.find('.select-guests-dropdown [name=' + $(this).data('input') + ']');
+		let input = $(`#landing-search-${ttype}`);
 		var max = parseInt(input.attr('max'));
 		var old = parseInt(input.val());
+		console.log("plus");
+		console.log("old: ",old);
+		console.log("max: ",max);
 		if (old >= max) {
 			return;
 		}
@@ -188,8 +200,9 @@ $(function() {
 	});
 
 	function updateGuestCountText(parent) {
-		var adults = parseInt(parent.find('[name=adults]').val());
-		var children = parseInt(parent.find('[name=children]').val());
+		//var adults = parseInt(parent.find('[name=adults]').val());
+		//var children = parseInt(parent.find('[name=children]').val());
+		let adults = $(`#landing-search-adults`).val(), children = $(`#landing-search-kids`).val();
 		var adultsHtml = parent.find('.render .adults .multi').data('html');
 		console.log(parent, adultsHtml);
 		parent.find('.render .adults .multi').html(adultsHtml.replace(':count', adults));
