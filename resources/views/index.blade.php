@@ -45,6 +45,8 @@ let landingSearchDT = {
 
 @include('banner',['def' => $def,'banner' => $banner])
 
+
+
 <!-- ================= true Facts start ========================= -->
 			<section class="facts">
 				<div class="container">
@@ -91,6 +93,7 @@ let landingSearchDT = {
 			</section>
 			<!-- ================= End true Facts ========================= -->
 			
+			@include('special-search-filter',[])
 			
 						<!-- ================= Apartments start ========================= -->
 			<section class="min">

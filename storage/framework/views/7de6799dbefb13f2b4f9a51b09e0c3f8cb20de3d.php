@@ -46,6 +46,8 @@ let landingSearchDT = {
 
 <?php echo $__env->make('banner',['def' => $def,'banner' => $banner], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
+
+
 <!-- ================= true Facts start ========================= -->
 			<section class="facts">
 				<div class="container">
@@ -92,6 +94,7 @@ let landingSearchDT = {
 			</section>
 			<!-- ================= End true Facts ========================= -->
 			
+			<?php echo $__env->make('special-search-filter',[], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 			
 						<!-- ================= Apartments start ========================= -->
 			<section class="min">
