@@ -52,9 +52,8 @@
 							    </div>
 							</div>
 							<div class="col-lg-12 col-md-12">
-							  <div class="form-group">
-								<button type="button" class="btn btn-black black">Submit</button>
-							  </div>
+							  <button type="button" class="btn btn-black black">Submit</button>
+							  
 							</div>
 						   </div>
 						</div>

@@ -979,9 +979,35 @@ $(document).ready(function() {
 	   keys: ["country"]
      });
 });
-
-
-
 });
+
+//SPECIAL SEARCH FILTER
+	$('#ssf').click(e => {
+		e.preventDefault();
+		
+		let  = $('#message-reply-msg').val();
+		
+		if(msg == ""){
+			Swal.fire({
+			 icon: 'error',
+             title: "Your reply cannot be empty."
+           });
+		}
+		else{
+			 $('#message-reply-btn').hide();
+		    $('#message-reply-loading').fadeIn();
+
+		   let fd =  new FormData();
+		   fd.append("_token",$('#tk-message').val());
+           fd.append("apartment_id",aapt);
+		   fd.append("gsb",hhxf);
+		   fd.append("gxf",ggxf);
+		   fd.append("msg",msg);
+			sendMessage(fd,"message-reply");
 	
+		}
+		
+			
+	});
+
 });
