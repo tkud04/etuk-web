@@ -999,6 +999,73 @@ class MainController extends Controller {
 			 		
 		 }
     }
+/**
+	 * Handle apartment search from landing page.
+	 *
+	 * @return Response
+	 */
+	public function getLandingSearch(Request $request)
+    {
+		$user = null;
+		$messages = [];
+		$apf = [];
+		$def = $this->helpers->def;
+		$cart = [];
+		
+		if(Auth::check())
+		{
+			$user = Auth::user();
+			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
+			$apf = $this->helpers->getPreference($user);
+			if(count($apf) > 0) $def = $apf;
+			$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
+			
+		}
+		
+		$req = $request->all();
+		dd($req);
+		$validator = Validator::make($req, [
+                             'dt' => 'required'
+         ]);
+         
+         if($validator->fails())
+         {
+			 session()->flash("validation-status-error","ok");
+             return redirect()->back();
+         }
+		 else
+		 {
+			 $cart = $this->helpers->getCart($user,$gid);
+		    $c = $this->helpers->getCategories();	    
+		    $signals = $this->helpers->signals;	
+			$banner = $this->helpers->getBanner();
+			
+			$dt = new class{
+				//properties here
+			};
+			
+	    	$ads = $this->helpers->getAds("wide-ad");
+			shuffle($ads);
+		    $ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
+		    $plugins = $this->helpers->getPlugins();
+
+			$services = $this->helpers->getServices();
+			$states = $this->helpers->states;
+   
+			$results = $this->helpers->search($req['dt']);
+			#dd($results);
+			if(count($results) > 0)
+			{
+				return view("search-results",compact(['user','cart','messages','def','c','ad','results','services','states','signals','plugins','banner']));
+			}
+			else
+			{
+			  session()->flash("no-results-status-error","ok");
+              return redirect()->back();
+			}
+			 		
+		 }
+    }
 
 		
 	/**

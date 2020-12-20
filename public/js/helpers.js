@@ -1,4 +1,4 @@
-let stateACData = {};
+let stateACData = {}, cityACData = {};
 
 
 const showElem = (name) => {
@@ -1548,8 +1548,12 @@ const searchToCart = (s) => {
 const activateAC = (input) => {
 	switch(input){
 		case "state":
-		  console.log(stateACData);
+		  //console.log(stateACData);
 		  ac(stateACData);
+		break;
+		case "city":
+		  //console.log(cityACData);
+		  ac(cityACData);
 		break;
 	}
 }

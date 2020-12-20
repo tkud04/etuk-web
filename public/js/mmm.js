@@ -910,32 +910,28 @@ $(document).ready(function() {
 					return fetch(`ac?type=city&country=${c}&state=${s}`)
                      .then(response => response.json())
                      .then(data => {
-		             console.log("json response: ",data); 
+		             //console.log("json response: ",data); 
 		             if(data.status == "ok"){
+						 let cityData = data.data;
+			             cityACData = {
+				           elem: "#city-input",
+				           container: ".swal2-content",
+				           src: JSON.stringify(cityData),
+				           placeholder: "Enter your city",
+				           keys: ["city"]
+				        };
 						 Swal.insertQueueStep({
 		                   title: 'City',
 		                   html: `<input type="text" class="swal2-input" id="city-input">`,
 		                   confirmButtonText: 'Search apartments',
 						   showLoaderOnConfirm: true,
 						   willOpen: (elem) => {
+							   console.log(elem);
 							   activateAC('city');	
 						   },
 						   preConfirm: (state) => {
-							   let c = $('#city-input').val();
-							   return fetch(`ac?type=city&country=${c}&state=${s}`)
-							     .then(response => response.json())
-								 .then(data => {
-									 console.log("json response: ",data); 
-									 if(data.status == "ok"){
-										 alert("ok");
-									 }
-									 else{
-										Swal.insertQueueStep({
-											icon: 'error',
-											title: `Unable to find apartments in ${c}`
-										}); 
-									 }
-								 });
+							   let c2 = $('#city-input').val();
+							   window.location = `landing-search?country=${c}&state=${s}&city=${c2}`;
 						   }
 	                     })
 					 }

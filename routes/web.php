@@ -75,6 +75,7 @@ Route::get('receipt', 'MainController@getReceipt');
 
 Route::post('search', 'MainController@postSearch');
 Route::get('search', 'MainController@getSearch');
+Route::get('landing-search', 'MainController@getLandingSearch');
 Route::get('tb', 'MainController@getTestBomb');
 
 

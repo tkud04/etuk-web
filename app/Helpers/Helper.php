@@ -4272,24 +4272,24 @@ function createSocial($data)
 					break;
 					
 					case "city":
-					if(isset($data['state']) && isset($data['city']))
+					if(isset($data['state']))
 					 {
 					   $state = $data['state'];
-					   $city = $data['city'];
 					   $apts = ApartmentAddresses::where('country','like',"%$country")
-					                             ->where('state','like',"%$state")
-					                             ->where('city','like',"%$city")->get();
+					                             ->where('state','like',"%$state")->get();
 						
 						if($apts != null)
 						{
 							foreach($apts as $a)
 							{
-								array_push($ret,['apartment_id' => $a->apartment_id]);
+								array_push($ret,['country' => $country,'state' => $a->state,'city' => $a->city]);
 							}
 						}
 					   
 					 }
 					break;
+					
+					
 				}
 		
 				return $ret;
