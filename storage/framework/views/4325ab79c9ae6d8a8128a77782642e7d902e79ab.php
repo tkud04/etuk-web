@@ -27,17 +27,18 @@
 							  </select>
 							  </div>
 							  <div class="form-group">
-							    <label class="mb-1 text-light" for="ssf-apt-type">Apartment type</label>
+							    <label class="mb-1 text-light" for="ssf-apt-type">Beds</label>
 							    <input type="text" class="form-control" id="ssf-beds" placeholder="Number of beds">
 							  </div>
 							 </div>
 							 <div class="col-lg-6 col-md-6">
 							   <div class="form-group">
-							    <label class="mb-1 text-light" for="ssf-apt-type">Apartment type</label>
+							    <label class="mb-1 text-light" for="ssf-apt-type">Location</label>
 							    <input type="text" class="form-control" id="ssf-location" placeholder="Location e.g Lekki or Ibadan">
 							   </div>
 							    <div class="form-group">
 							      <label class="mb-1 text-light" for="ssf-amount">Budget</label>
+							      <p class="form-control-plaintext text-light">&#8358;<span id="ssf-amount-display">10000</span></p>
 								  <div class="row">
 								    <div class="col-lg-2 col-md-2">
 								      <label class="mt-3 text-light">&#8358;<span id="ssf-min">10000</span></label>
@@ -52,7 +53,7 @@
 							    </div>
 							</div>
 							<div class="col-lg-12 col-md-12">
-							  <button type="button" class="btn btn-black black">Submit</button>
+							  <button type="button" class="btn btn-black black" id="ssf-btn">Submit</button>
 							  
 							</div>
 						   </div>

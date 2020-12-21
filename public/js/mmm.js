@@ -982,9 +982,9 @@ $(document).ready(function() {
 });
 
 //SPECIAL SEARCH FILTER
-	$('#ssf').click(e => {
+	$('#ssf-btn').click(e => {
 		e.preventDefault();
-		
+		/**
 		let  = $('#message-reply-msg').val();
 		
 		if(msg == ""){
@@ -1005,6 +1005,24 @@ $(document).ready(function() {
 		   fd.append("msg",msg);
 			sendMessage(fd,"message-reply");
 	
+		}
+		**/
+			
+	});
+	
+	$('#ssf-amount').change(e => {
+		e.preventDefault();
+		
+		let amount = $('#ssf-amount').val();
+		console.log("amount: ",amount);
+		if(amount < 1){
+			Swal.fire({
+			 icon: 'error',
+             title: "Your budget cannot be zero."
+           });
+		}
+		else{
+			 $('#ssf-amount-display').html(amount);
 		}
 		
 			

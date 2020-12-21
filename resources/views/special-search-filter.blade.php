@@ -38,6 +38,7 @@
 							   </div>
 							    <div class="form-group">
 							      <label class="mb-1 text-light" for="ssf-amount">Budget</label>
+							      <p class="form-control-plaintext text-light">&#8358;<span id="ssf-amount-display">10000</span></p>
 								  <div class="row">
 								    <div class="col-lg-2 col-md-2">
 								      <label class="mt-3 text-light">&#8358;<span id="ssf-min">10000</span></label>
