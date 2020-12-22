@@ -52,14 +52,16 @@
 								   $lowest = $priceRange['lowest'];
 								   $highest = $priceRange['highest'];
 								  ?>
-							      <p class="form-control-plaintext text-light">&#8358;<span id="ssf-amount-display">{{$lowest}}</span></p>
-								  <div class="row">
+							      <div class="row">
 								    <div class="col-lg-2 col-md-2">
-								      <label class="mt-3 text-light">&#8358;<span id="ssf-min">{{$lowest}}</span></label>
+								      <label class="mt-3 text-light"></label>
 									</div>
 									<div class="col-lg-8 col-md-8">
-							          <input type="range" class="form-control" id="ssf-amount" min="{{$lowest}}" max="{{$highest}}" value="{{$lowest}}" step="500">
-								    </div>
+									  <div class="form-group">
+										<label for="ssf-amount text-light">&#8358;<span id="ssf-min">{{$lowest}}</span></label>
+							            <input type="range" class="form-control form-control-range" id="ssf-amount" min="1000" max="{{$highest}}" value="{{$lowest}}" step="1000">
+								      </div>
+								   </div>
 									<div class="col-lg-2 col-md-2">
 									  <label class="mt-3 text-light">&#8358;<span id="ssf-max">{{$highest}}</span></label>
 									</div>
