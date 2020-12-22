@@ -617,37 +617,6 @@ let sec = 0, svc = 0, loc = 0, cln = 0, cmf = 0;
 							
 							<div class="page-sidebar" id="apartment-hostchat">
 							
-								<!-- Agent Detail -->
-								<div class="agent-widget">
-								   <input type="hidden" id="tk-apt-chat" value="<?php echo e(csrf_token()); ?>"/>
-								   <input type="hidden" id="apt-id" value="<?php echo e($apartment['apartment_id']); ?>"/>
-								   <input type="hidden" id="apt-gxf" value="<?php echo e($uid); ?>"/>
-								   <input type="hidden" id="apt-gsb" value="<?php echo e($uid); ?>"/>
-									<div class="agent-title">
-										<div class="agent-photo"><img src="assets/img/user-3.jpg" alt=""></div>
-										<div class="agent-details">
-											<h4><a href="javascript:void(0)"><?php echo e($hostName); ?></a></h4>
-											<span><i class="ti-mobile"></i><?php echo e($hostNum); ?></span>
-										</div>
-										<div class="clearfix"></div>
-									</div>
-
-									<div class="form-group">
-										<label>Full Name</label>
-										<input type="text" class="form-control" id="apt-message-name" value="<?php echo e($myName); ?>" placeholder="Your Name">
-									</div>
-									<div class="form-group">
-										<label>Your Email</label>
-										<input type="text" class="form-control" id="apt-message-email" value="<?php echo e($myEmail); ?>" placeholder="Your Email">
-									</div>
-									<div class="form-group">
-										<label>Message</label>
-										<textarea class="form-control" id="apt-chat-msg" placeholder="Send a message to <?php echo e($host['fname']); ?>..."></textarea>
-									</div>
-									<button class="btn btn-theme full-width" id="apt-chat-btn">Send</button>
-									<h4 class="text-primary" id="apt-chat-loading">Sending.. <img alt="Loading.." src="<?php echo e(asset('img/loading.gif')); ?>"></h4>
-									<h4 class="text-primary" id="apt-chat-finish"><b>Message sent!</b></h4>
-								</div>
 								
 								<!-- Statics Info -->
 								<div class="tr-single-box">
