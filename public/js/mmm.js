@@ -1011,21 +1011,11 @@ $(document).ready(function() {
 	});
 	
 	$('#ssf-amount').change(e => {
-		e.preventDefault();
-		
-		let amount = $('#ssf-amount').val();
-		console.log("amount: ",amount);
-		if(amount < 1){
-			Swal.fire({
-			 icon: 'error',
-             title: "Your budget cannot be zero."
-           });
-		}
-		else{
-			 $('#ssf-amount-display').html(amount);
-		}
-		
-			
+		handleRange(e);
+	});
+	
+	$('#ssf-amount').mousemove(e => {
+		handleRange(e);
 	});
 
 });

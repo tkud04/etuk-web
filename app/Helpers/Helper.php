@@ -4293,6 +4293,15 @@ function createSocial($data)
 		
 				return $ret;
 			}
+			
+			function getPriceRange()
+			{
+				$ret = [];
+				$ret['highest'] = ApartmentData::where('amount','>',"0")->max('amount');
+				$ret['lowest'] = ApartmentData::where('amount','>',"0")->min('amount');
+				
+				return $ret;
+			}
 	
    
 }

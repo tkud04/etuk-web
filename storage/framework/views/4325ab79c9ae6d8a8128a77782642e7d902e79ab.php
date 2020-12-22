@@ -38,16 +38,20 @@
 							   </div>
 							    <div class="form-group">
 							      <label class="mb-1 text-light" for="ssf-amount">Budget</label>
-							      <p class="form-control-plaintext text-light">&#8358;<span id="ssf-amount-display">10000</span></p>
+								  <?php
+								   $lowest = $priceRange['lowest'];
+								   $highest = $priceRange['highest'];
+								  ?>
+							      <p class="form-control-plaintext text-light">&#8358;<span id="ssf-amount-display"><?php echo e($lowest); ?></span></p>
 								  <div class="row">
 								    <div class="col-lg-2 col-md-2">
-								      <label class="mt-3 text-light">&#8358;<span id="ssf-min">10000</span></label>
+								      <label class="mt-3 text-light">&#8358;<span id="ssf-min"><?php echo e($lowest); ?></span></label>
 									</div>
 									<div class="col-lg-8 col-md-8">
-							          <input type="range" class="form-control" id="ssf-amount" min="10000" max="100000" value="10000" step="500">
+							          <input type="range" class="form-control" id="ssf-amount" min="<?php echo e($lowest); ?>" max="<?php echo e($highest); ?>" value="<?php echo e($lowest); ?>" step="500">
 								    </div>
 									<div class="col-lg-2 col-md-2">
-									  <label class="mt-3 text-light">&#8358;<span id="ssf-max">100000</span></label>
+									  <label class="mt-3 text-light">&#8358;<span id="ssf-max"><?php echo e($highest); ?></span></label>
 									</div>
 							      </div>
 							    </div>

@@ -66,11 +66,12 @@ class MainController extends Controller {
 			'serviced' => "Serviced apartment",
 		  ]
 		];
+		$priceRange = $this->helpers->getPriceRange();
 		#dd($countries);
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
 
-    	return view("index",compact(['user','cart','messages','c','def','ssf','hasUnpaidOrders','popularApartments','countries','ad','signals','plugins','banner']));
+    	return view("index",compact(['user','cart','messages','c','def','ssf','priceRange','hasUnpaidOrders','popularApartments','countries','ad','signals','plugins','banner']));
     }
 	
 	/**
