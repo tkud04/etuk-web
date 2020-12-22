@@ -4302,6 +4302,17 @@ function createSocial($data)
 				
 				return $ret;
 			}
+			
+			function getCities()
+			{
+				$ret = [];
+				$apts = ApartmentAddresses::where('id','>',"0")->pluck('city');
+				$ret = $apts->all();
+				for($i = 0; $i < count($ret); $i++) $ret[$i] = ucwords($ret[$i]);
+				sort($ret);
+				#dd($ret);
+				return $ret;
+			}
 	
    
 }

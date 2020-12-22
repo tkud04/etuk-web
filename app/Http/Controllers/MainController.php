@@ -64,7 +64,8 @@ class MainController extends Controller {
 		    'unfurnished' => "Unfurnished apartment",
 			'Furnished' => "Furnished apartment",
 			'serviced' => "Serviced apartment",
-		  ]
+		  ],
+		  'locations' => $this->helpers->getCities()
 		];
 		$priceRange = $this->helpers->getPriceRange();
 		#dd($countries);

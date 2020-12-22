@@ -34,7 +34,17 @@
 							 <div class="col-lg-6 col-md-6">
 							   <div class="form-group">
 							    <label class="mb-1 text-light" for="ssf-apt-type">Location</label>
-							    <input type="text" class="form-control" id="ssf-location" placeholder="Location e.g Lekki or Ibadan">
+							    <select class="form-control" id="ssf-location">
+							    <option value="none">Select location</option>
+								<?php
+								foreach($ssf['locations'] as $l)
+								{
+								?>
+								 <option value="<?php echo e($l); ?>"><?php echo e($l); ?></option>
+								<?php
+								}
+								?>
+							  </select>
 							   </div>
 							    <div class="form-group">
 							      <label class="mb-1 text-light" for="ssf-amount">Budget</label>
