@@ -4310,8 +4310,54 @@ function createSocial($data)
 				$ret = $apts->all();
 				for($i = 0; $i < count($ret); $i++) $ret[$i] = ucwords($ret[$i]);
 				sort($ret);
+				$ret = array_unique($ret);
 				#dd($ret);
 				return $ret;
+			}
+			
+			function searchSSF($data)
+			{
+				$city = $data['location'];
+				$amount = $data['amount'];
+				$beds = $data['beds'];
+				$type = $data['apt-type'];
+				
+				//Location
+			 $byCity = ApartmentAddresses::where('city',"LIKE","%$city%")->get();
+
+			 //Data
+			 $byData = ApartmentData::where('property_type',"LIKE","%$type%")
+			                        ->orWhere('bedrooms',$beds)
+									->orWhere('amount',$amount)->get();
+									   
+			 //collect all
+			 $ret = [];
+			 if($byCity != null)
+			 {
+				 foreach($byCity as $bc)
+				 {
+					 array_push($ret,$bc->apartment_id);
+				 }
+			 }
+			 
+			 if($byData != null)
+			 {
+				 foreach($byData as $bd)
+				 {
+					 array_push($ret,$bd->apartment_id);
+				 }
+			 }
+			 
+			 $finalIDs = array_unique($ret);
+			 $finalResults = [];
+			 
+			 foreach($finalIDs as $fid)
+			 {
+				 $temp = $this->getApartment($fid,['imgId' => true]);
+				 array_push($finalResults,$temp);
+			 }
+			 #dd($finalResults);
+			 return $finalResults;
 			}
 	
    

@@ -73,6 +73,7 @@ Route::post('checkout', 'MainController@postCheckout');
 Route::get('bookings', 'MainController@getOrders');
 Route::get('receipt', 'MainController@getReceipt');
 
+Route::post('ssf', 'MainController@postSSF');
 Route::post('search', 'MainController@postSearch');
 Route::get('search', 'MainController@getSearch');
 Route::get('landing-search', 'MainController@getLandingSearch');

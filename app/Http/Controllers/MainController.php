@@ -1140,6 +1140,73 @@ class MainController extends Controller {
     }
 	
 	/**
+	 * Handle apartment search from special search on landing page
+	 *
+	 * @return Response
+	 */
+	public function postSSF(Request $request)
+    {
+		$user = null;
+		$messages = [];
+		$apf = [];
+		$def = $this->helpers->def;
+
+		if(Auth::check())
+		{
+			$user = Auth::user();
+			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
+			$apf = $this->helpers->getPreference($user);
+			if(count($apf) > 0) $def = $apf;
+		}
+		
+		$req = $request->all();
+		
+		$validator = Validator::make($req, [
+                             'apt-type' => 'required|not_in:none',
+                             'beds' => 'required|numeric',
+                             'location' => 'required|not_in:none',
+                             'amount' => 'required|numeric',
+							 
+         ]);
+         
+         if($validator->fails())
+         {
+			 session()->flash("validation-status-error","ok");
+             return redirect()->back();
+         }
+		 else
+		 {
+			 $gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
+			$cart = $this->helpers->getCart($user,$gid);
+			 #dd($cart);
+		    $c = $this->helpers->getCategories();	    
+		    $signals = $this->helpers->signals;	
+			$banner = $this->helpers->getBanner();
+			
+	    	$ads = $this->helpers->getAds("wide-ad");
+			shuffle($ads);
+		    $ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
+		    $plugins = $this->helpers->getPlugins();
+
+			$services = $this->helpers->getServices();
+			$states = $this->helpers->states;
+   
+			$results = $this->helpers->searchSSF($req);
+			#dd($results);
+			if(count($results) > 0)
+			{
+				return view("search-results",compact(['user','cart','messages','def','c','ad','results','services','states','signals','plugins','banner']));
+			}
+			else
+			{
+			  session()->flash("no-results-status-error","ok");
+              return redirect()->back();
+			}
+			 		
+		 }
+    }
+	
+	/**
 	 * Get chat history with host.
 	 *
 	 * @return Response

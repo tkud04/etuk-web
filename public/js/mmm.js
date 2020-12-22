@@ -984,37 +984,32 @@ $(document).ready(function() {
 //SPECIAL SEARCH FILTER
 	$('#ssf-btn').click(e => {
 		e.preventDefault();
-		/**
-		let  = $('#message-reply-msg').val();
 		
-		if(msg == ""){
+		let  aptType = $('#ssf-apt-type').val(), beds = $('#ssf-beds').val(), lowest = $('#ssf-min').val(),
+		     location = $('#ssf-apt-type').val(), amount = $('#ssf-amount').val(), 
+			 validation = (aptType == "none" || parseInt(beds) < 1 || location == "none" || parseInt(amount) < 1000),
+			 validation2 = (parseInt(amount) <= parseInt(lowest));
+		
+		if(validation){
 			Swal.fire({
 			 icon: 'error',
-             title: "Your reply cannot be empty."
+             title: "All fields are required"
+           });
+		}
+		else if(validation2){
+			Swal.fire({
+			 icon: 'error',
+             title: "No apartments with that price range"
            });
 		}
 		else{
-			 $('#message-reply-btn').hide();
-		    $('#message-reply-loading').fadeIn();
-
-		   let fd =  new FormData();
-		   fd.append("_token",$('#tk-message').val());
-           fd.append("apartment_id",aapt);
-		   fd.append("gsb",hhxf);
-		   fd.append("gxf",ggxf);
-		   fd.append("msg",msg);
-			sendMessage(fd,"message-reply");
-	
+			 $('#ssf-form').submit();
 		}
-		**/
+		
 			
 	});
 	
 	$('#ssf-amount').change(e => {
-		handleRange(e);
-	});
-	
-	$('#ssf-amount').mousemove(e => {
 		handleRange(e);
 	});
 
