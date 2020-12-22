@@ -607,7 +607,7 @@ let sec = 0, svc = 0, loc = 0, cln = 0, cmf = 0;
 											<h4 class="stbooking-title" id="checkout-total">&#8358;<?php echo e(number_format($adata['amount'],2)); ?></h4>
 										</div>
 										<div class="stbooking-footer-bottom">
-											<a href="javascript:void(0)" id="apartment-hostchat-btn" class="books-btn btn-theme">Chat with host</a>
+											<a href="javascript:void(0)" id="apartment-reservation-btn" class="books-btn btn-theme">Confirm Reservation</a>
 											<a href="javascript:void(0)" id="apartment-book-now-btn" class="books-btn black">Add to cart</a>
 										</div>
 									</div>

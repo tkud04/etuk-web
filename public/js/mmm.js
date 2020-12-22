@@ -638,10 +638,17 @@ $(document).ready(function() {
 	
 	
 	//APARTMENT
-	$('#apartment-hostchat-btn').click(e => {
+	$('#apartment-reservation-btn').click(e => {
 		e.preventDefault();
-		scrollTo({'id': "#apartment-hostchat"});
-			
+		//scrollTo({'id': "#apartment-hostchat"});
+		let aptID = $('#apt-id').val(), aptGXF = $('#apt-gxf').val();
+		if(aptGXF == ""){
+			$('#login').modal("show");
+		}
+		else{
+		window.location = `reserve-apartment?axf=${aptID}&gxf=${aptGXF}`;
+		}
+		
 	});
 	
 	$('#apt-chat-btn').click(e => {

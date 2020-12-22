@@ -1288,6 +1288,58 @@ class MainController extends Controller {
     }
 	
 	/**
+	 * Handle reserve apartment.
+	 *
+	 * @return Response
+	 */
+	public function getReserveApartment(Request $request)
+    {
+		$user = null;
+		if(Auth::check())
+		{
+			$user = Auth::user();
+		}
+		else
+		{
+			session()->flash("reserve-apartment-status-error","ok");
+			return redirect()->back();
+		}
+
+		$req = $request->all();
+       dd($req);
+	    
+		$validator = Validator::make($req,[
+		                    'gxf' => 'required',
+		                    'axf' => 'required'
+		]);
+		
+		if($validator->fails())
+         {
+			 $messages = $validator->messages();
+             return redirect()->back()->withInput()->with('errors',$messages);
+         }
+		 else
+		 {
+			if($this->helpers->hasReview(['user_id' => $user->id,'apartment_id' => $req['apt-id']]))
+			{
+				session()->flash("duplicate-review-status-error","ok");
+			    return redirect()->back();
+			}
+			else
+			{
+			   $req['user_id'] = $user->id;	  
+			   $req['apartment_id'] = $req['apt-id'];	  
+			   $req['comment'] = $req['msg'];	  
+		       $this->helpers->createReview($req);
+			   session()->flash("add-review-status","ok");
+			   $uu = "apartment?xf=".$req['axf'];
+			   return redirect()->intended($uu);	
+			}
+			
+		 }
+    }
+	
+	/**
 	 * Handle profile update.
 	 *
 	 * @return Response
