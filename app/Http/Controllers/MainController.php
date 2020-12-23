@@ -1511,7 +1511,7 @@ class MainController extends Controller {
 		if($validator->fails())
          {
 			 $messages = $validator->messages();
-             return redirect()->back()->withInput()->with('errors',$messages);
+             return redirect()->intended('/');
          }
 		 else
 		 {

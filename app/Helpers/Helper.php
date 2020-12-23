@@ -89,6 +89,7 @@ class Helper implements HelperContract
 					 "add-reservation-status" => "Reservation made.",
 					 "update-reservation-status" => "Reservation log updated.",
 					 "remove-reservation-status" => "Reservation log removed.",
+					 "respond-to-reservation-status" => "Response sent.",
 					 "contact-status" => "Message sent! Our officials will get back to you shortly.",
 					 
 					 //ERROR NOTIFICATIONS
