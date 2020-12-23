@@ -957,7 +957,7 @@ function isDuplicateUser($data)
                                                       'avb' => $data['avb'],                                                       
                                                       'url' => $data['url'],                                                       
                                                       'in_catalog' => "no", 
-                                                      'status' => "enabled", 
+                                                      'status' => "pending", 
                                                       ]);
                                                       
                  $data['apartment_id'] = $ret->apartment_id;                         
@@ -1172,7 +1172,7 @@ function isDuplicateUser($data)
            {
            	$ret = [];
               $apartments = Apartments::where('id',">","0")
-			                       ->where('status',"enabled")->get();
+			                       ->where('status',"approved")->get();
 								   
 				$apartments = $apartments->sortByDesc('created_at');				   
  
@@ -1194,7 +1194,7 @@ function isDuplicateUser($data)
               if($user == null)
 			  {
 				   $apartments = Apartments::where('id',">","0")
-			                       ->where('status',"enabled")->get();
+			                       ->where('status',"approved")->get();
 				   
 				   $apartments = $apartments->sortByDesc('created_at');				   
  
@@ -1210,7 +1210,7 @@ function isDuplicateUser($data)
 			  else
 			  {
 				 $apartments = Apartments::where('user_id',$user->id)
-			                       ->where('status',"enabled")->get();
+			                       ->where('status',"approved")->get();
 								   
 				  $apartments = $apartments->sortByDesc('created_at');				   
  
@@ -1237,7 +1237,8 @@ function isDuplicateUser($data)
 			  $ret = [];
               $apartment = Apartments::where('id',$id)
 			                 ->orWhere('apartment_id',$id)
-			                 ->orWhere('url',$id)->first();
+			                 ->orWhere('url',$id)
+			                 ->where('status',"approved")->first();
  
               if($apartment != null)
                {
@@ -2071,7 +2072,7 @@ function updateApartment($data)
 			 foreach($finalIDs as $fid)
 			 {
 				 $temp = $this->getApartment($fid,['imgId' => true]);
-				 array_push($finalResults,$temp);
+				 if($temp['status'] == "approved") array_push($finalResults,$temp);
 			 }
 			 #dd($finalResults);
 			 return $finalResults;
@@ -4363,7 +4364,7 @@ function createSocial($data)
 			 foreach($finalIDs as $fid)
 			 {
 				 $temp = $this->getApartment($fid,['imgId' => true]);
-				 array_push($finalResults,$temp);
+				 if($temp['status'] == "approved") array_push($finalResults,$temp);
 			 }
 			 #dd($finalResults);
 			 return $finalResults;
