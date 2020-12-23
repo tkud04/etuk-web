@@ -1342,8 +1342,9 @@ class MainController extends Controller {
 			   try
 		       {
 				 $apt = $this->helpers->getApartment($req['axf'],['host' => true,'imgId' => true]);
+				 $h = $apt['host'];
 			     $ret['subject'] = $user->fname." ".$user->lname.": is ".$apt['name']." available for booking?";	
-				 $ret['em'] = $user->email;
+				 $ret['em'] = $h['email'];
 			     $ret['a'] = $apt;
 			     $ret['u'] = $user;
 			     $ret['l'] = $l;
@@ -1466,7 +1467,7 @@ class MainController extends Controller {
 			 
 			if($this->helpers->hasReservation($dt))
 			{
-			   $this->helpers->removeReservationLog($dt);
+			   $this->helpers->removeReservationLog($dt['id']);
 			   session()->flash("remove-reservation-status","ok");
 			   return redirect()->back();
 			}
@@ -1474,6 +1475,65 @@ class MainController extends Controller {
 			{
 			   	session()->flash("duplicate-reservation-status-error","ok");
 			    return redirect()->back();
+			}
+			
+		 }
+    }
+	
+	/**
+	 * Handle respond to apartment reservation.
+	 *
+	 * @return Response
+	 */
+	public function getRespondToReservation(Request $request)
+    {
+		$user = null;
+		$req = $request->all();
+		
+		if(Auth::check())
+		{
+			$user = Auth::user();
+			
+		}
+		else
+		{
+			return redirect()->intended('apartments');
+		}
+
+		
+        
+		$validator = Validator::make($req,[
+		                    'xf' => 'required|numeric',
+							'axf' => 'required',
+							'gxf' => 'required|numeric'
+		]);
+		
+		if($validator->fails())
+         {
+			 $messages = $validator->messages();
+             return redirect()->back()->withInput()->with('errors',$messages);
+         }
+		 else
+		 {
+			 $dt = [
+			   'id' => $req['xf'],
+			   'apartment_id' => $req['axf'],
+			   'user_id' => $req['gxf']
+			 ];
+			 
+			if($this->helpers->hasReservation($dt))
+			{
+				$dt['type'] = $req['type'];
+				$dt['auth'] = $user->id;
+				
+			   $this->helpers->respondToReservation($dt);
+			   session()->flash("respond-to-reservation-status","ok");
+			   return redirect()->intended('/');
+			}
+			else
+			{
+			   	session()->flash("duplicate-reservation-status-error","ok");
+			    return redirect()->intended('/');
 			}
 			
 		 }

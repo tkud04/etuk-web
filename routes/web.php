@@ -56,6 +56,7 @@ Route::get('reserve-apartment', 'MainController@getReserveApartment');
 Route::get('reservations', 'MainController@getReservations');
 Route::get('cancel-reservation', 'MainController@getCancelReservation');
 Route::get('remove-reservation', 'MainController@getRemoveReservation');
+Route::get('respond-to-reservation', 'MainController@getRespondToReservation');
 Route::get('test-chat', 'MainController@getTestChat');
 Route::post('chat', 'MainController@postChat');
 Route::post('add-review', 'MainController@postAddReview');

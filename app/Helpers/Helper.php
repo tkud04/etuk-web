@@ -4469,6 +4469,67 @@ function createSocial($data)
                   
 				  return $ret;
 		        }
+				
+				function respondToReservation($dt)
+		        {
+					#dd($dt);
+			        $ret = "error";
+					
+                  $l = ReservationLogs::where('id',$dt['id'])->first();
+			      
+				  if($l != null)
+				  {
+					  $type = $dt['type'];
+					  
+					  $apt = $this->getApartment($dt['apartment_id'],['host' => true,'imgId' => true]);
+					  $h = $apt['host'];
+					  $u = $this->getUser($dt['user_id']);
+					  
+					  #dd([$h,$dt]);
+					  if($h['id'] == $dt['auth'])
+					  {
+						 if($type=="approve")
+					     {
+						   $l->update(['status' => "approved"]);
+					   	   $subject = $h['fname']." ".$h['lname'].": ".$apt['name']." is available for booking!";
+					       $adminSubject = $apt['name']." just approved a reservation from ".$u['fname']." ".$u['lname'];
+					     }
+					     else if($type=="decline")
+					     {
+						    $l->update(['status' => "declined"]);
+						    $subject = $h['fname']." ".$h['lname'].": ".$apt['name']." is unavailable at the moment";
+						    $adminSubject = $apt['name']." just declined a reservation from ".$u['fname']." ".$u['lname'];
+					     }
+					     //send guest email
+					     $ret = $this->getCurrentSender();
+		               
+			             try
+		                 {
+				           $ret['subject'] = $subject;
+                           $ret['em'] = $u['email'];
+                           $ret['a'] = $apt;
+			               $ret['h'] = $h;
+			               $ret['u'] = $u;
+			               $ret['l'] = $l;
+				           #dd($ret);
+		                   $this->sendEmailSMTP($ret,"emails.respond-to-reservation");
+		                   $ret['em'] = $this->suEmail;
+						   $ret['subject'] = $adminSubject;
+		                   $ret['admin'] = true;
+		                   $this->sendEmailSMTP($ret,"emails.respond-to-reservation");
+			             }
+		
+		                 catch(Throwable $e)
+		                 {
+			               #dd($e);
+			               $s = "error";
+		                 }
+					     $ret = "ok"; 
+					  }
+				  }
+				  
+				  return $ret;
+		        }
 
 	
    
