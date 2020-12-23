@@ -286,14 +286,21 @@ class LoginController extends Controller {
 			$user = Auth::user();
 		}
 		$signals = $this->helpers->signals;
+		$banner = $this->helpers->getBanner();
+		
+		$ads = $this->helpers->getAds("wide-ad");
+		
 		$plugins = $this->helpers->getPlugins();
-		$cart = [];
+		$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
+		$cart = $this->helpers->getCart($user,$gid);
+		$messages = [];
+		
             $req = $request->all();
 			#dd($req);
 			if(isset($req['xf']) && $this->helpers->isOAuthSP($req['xf']))
             {
 				$xf = $req['xf'];
-				return view("oauth-sp",compact(['cart','user','xf','plugins']));
+				return view("oauth-sp",compact(['cart','user','xf','messages','signals','plugins','banner']));
             }
             
             else

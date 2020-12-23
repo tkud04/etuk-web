@@ -4449,7 +4449,7 @@ function createSocial($data)
 	              {
 	   			    #dd($data);
 	   			    $ret = "error";
-	   			     $l = ReservationLogs::where('id',$data['xf'])->first();
+	   			     $l = ReservationLogs::where('id',$xf)->first();
 			 
 			 
 	   			    if(!is_null($l))

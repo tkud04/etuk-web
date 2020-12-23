@@ -1338,18 +1338,20 @@ class MainController extends Controller {
 			    send email to host and admin here
 			   **/
 			   $ret = $this->helpers->getCurrentSender();
-		       $ret['subject'] = $data['name'].": ".$data['subject'];	
 		       
 			   try
 		       {
 				 $apt = $this->helpers->getApartment($req['axf'],['host' => true,'imgId' => true]);
-			     $ret['em'] = $user->email;
-			     $ret['apartment'] = $apt;
-			     $ret['reservation_id'] = $l->id;
-				 dd($ret);
-		         $this->sendEmailSMTP($ret,"emails.reserve-apt");
-		         $ret['em'] = $this->suEmail;
-		         $this->sendEmailSMTP($ret,"emails.reserve-apt");
+			     $ret['subject'] = $user->fname." ".$user->lname.": is ".$apt['name']." available for booking?";	
+				 $ret['em'] = $user->email;
+			     $ret['a'] = $apt;
+			     $ret['u'] = $user;
+			     $ret['l'] = $l;
+				 #dd($ret);
+		         $this->helpers->sendEmailSMTP($ret,"emails.reserve-apartment");
+		         $ret['em'] = $this->helpers->suEmail;
+		         $ret['admin'] = true;
+		         $this->helpers->sendEmailSMTP($ret,"emails.reserve-apartment");
 			     $s = "ok";
 		       }
 		
