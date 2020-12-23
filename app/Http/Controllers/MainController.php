@@ -1306,7 +1306,7 @@ class MainController extends Controller {
 		}
 
 		$req = $request->all();
-       dd($req);
+       #dd($req);
 	    
 		$validator = Validator::make($req,[
 		                    'gxf' => 'required',
@@ -1320,20 +1320,80 @@ class MainController extends Controller {
          }
 		 else
 		 {
-			if($this->helpers->hasReview(['user_id' => $user->id,'apartment_id' => $req['apt-id']]))
+			 $dt = [
+			   'apartment_id' => $req['axf'],
+			   'user_id' => $req['gxf'],
+			   'status' => "pending",
+			 ];
+			 
+			if($this->helpers->hasReservation($dt))
 			{
-				session()->flash("duplicate-review-status-error","ok");
+				session()->flash("duplicate-reservation-status-error","ok");
 			    return redirect()->back();
 			}
 			else
 			{
-			   $req['user_id'] = $user->id;	  
-			   $req['apartment_id'] = $req['apt-id'];	  
-			   $req['comment'] = $req['msg'];	  
-		       $this->helpers->createReview($req);
-			   session()->flash("add-review-status","ok");
+			   $this->helpers->createReservationLog($dt);
+			   /**
+			    send email to host and admin here
+			   **/
+			   session()->flash("add-reservation-status","ok");
 			   $uu = "apartment?xf=".$req['axf'];
 			   return redirect()->intended($uu);	
+			}
+			
+		 }
+    }
+	
+	/**
+	 * Handle cancel apartment reservation.
+	 *
+	 * @return Response
+	 */
+	public function getCancelReservation(Request $request)
+    {
+		$user = null;
+		if(Auth::check())
+		{
+			$user = Auth::user();
+		}
+		else
+		{
+			session()->flash("reserve-apartment-status-error","ok");
+			return redirect()->back();
+		}
+
+		$req = $request->all();
+        
+		$validator = Validator::make($req,[
+		                    'gxf' => 'required',
+		                    'axf' => 'required'
+		]);
+		
+		if($validator->fails())
+         {
+			 $messages = $validator->messages();
+             return redirect()->back()->withInput()->with('errors',$messages);
+         }
+		 else
+		 {
+			 $dt = [
+			   'apartment_id' => $req['axf'],
+			   'user_id' => $req['gxf'],
+			   'status' => "cancelled",
+			 ];
+			 
+			if($this->helpers->hasReservation($dt))
+			{
+			   $this->helpers->updateReservationLog($dt);
+			   session()->flash("add-reservation-status","ok");
+			   $uu = "apartment?xf=".$req['axf'];
+			   return redirect()->intended($uu);
+			}
+			else
+			{
+			   	session()->flash("duplicate-reservation-status-error","ok");
+			    return redirect()->back();
 			}
 			
 		 }

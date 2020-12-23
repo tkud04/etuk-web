@@ -399,8 +399,9 @@ let sec = 0, svc = 0, loc = 0, cln = 0, cmf = 0;
 							 <form method="post" action="add-review" id="apartment-add-review-form">
 							   <?php echo csrf_field(); ?>
 
-							   <input type="hidden" name="apt-id" value="<?php echo e($apartment['apartment_id']); ?>">
+							   <input type="hidden" name="apt-id" id="apt-id" value="<?php echo e($apartment['apartment_id']); ?>">
 							   <input type="hidden" name="axf" value="<?php echo e($apartment['url']); ?>">
+							   <input type="hidden" name="gxf" id="apt-gxf" value="<?php echo e($uid); ?>">
 							   
 								<?php
 								$ars = [

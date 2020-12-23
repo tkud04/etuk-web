@@ -48,6 +48,7 @@ use App\Posts;
 use App\PostTags;
 use App\Comments;
 use App\Tags;
+use App\ReservationLogs;
 use App\Guests;
 use \Swift_Mailer;
 use \Swift_SmtpTransport;
@@ -85,12 +86,15 @@ class Helper implements HelperContract
 					 "remove-saved-payment-status" => "Payment details removed from your account.",
 					 "add-ticket-status" => "Ticket created.",
 					 "update-ticket-status" => "Ticket updated.",
+					 "add-reservation-status" => "Reservation made.",
+					 "update-reservation-status" => "Reservation log updated.",
 					 "contact-status" => "Message sent! Our officials will get back to you shortly.",
 					 
 					 //ERROR NOTIFICATIONS
 					 "invalid-apartment-id-status-error" => "Apartment not found.",
 					 "add-review-status-error" => "Please sign in to add a review.",
 					 "duplicate-review-status-error" => "You have added a review already.",
+					 "duplicate-reservation-status-error" => "You have made a reservation already.",
 					 "oauth-status-error" => "Social login failed, please try again.",
 					 "checkout-auth-status-error" => "Please sign in to book an apartment.",
 					 "cart-auth-status-error" => "Please sign in to view your cart.",
@@ -4359,6 +4363,111 @@ function createSocial($data)
 			 #dd($finalResults);
 			 return $finalResults;
 			}
+			
+			function createReservationLog($data)
+	        {
+	   			   #dd($data);
+	   			 $ret = null;
+			     $ret = ReservationLogs::create(['user_id' => $data['user_id'], 
+	                                   'apartment_id' => $data['apartment_id'], 
+	                                   'status' => $data['status']
+	                                  ]);
+	   			 return $ret;
+	         }
+
+	      function getReservationLogs($user)
+	      {
+	   	   $ret = [];
+	       
+		   if($user != null)
+		   {
+	   	     $logs = ReservationLogs::where('user_id',$user->id)->get();
+	   
+	   	     if(!is_null($logs))
+	   	     {
+			   $logs = $logs->sortByDesc('created_at');	
+	   		   foreach($logs as $l)
+	   		   {
+	   		     $temp = $this->getReservationLog($l->id);
+	   		     array_push($ret,$temp);
+	   	       }
+			 }
+	   	   }
+	   
+	   	   return $ret;
+	      }
+		  
+		  
+	 	 function getReservationLog($id)
+	            {
+	            	$ret = [];
+	                $l = ReservationLogs::where('id',$id)->first();
+ 
+	               if($l != null)
+	                {
+                            $temp['id'] = $l->id; 
+	                    	$temp['status'] = $l->status; 
+	                        //$temp['user'] = $this->getUser($p->user); 
+	                        $temp['user_id'] = $l->user_id; 
+	                        $temp['apartment'] = $this->getApartment($l->apartment_id,['host' => true,'imgId' => true]);
+	                        $temp['date'] = $l->created_at->format("jS F, Y h:i A"); 
+	                        $temp['updated'] = $l->updated_at->format("jS F, Y h:i A"); 
+	                        $ret = $temp; 
+	                }                          
+                                                      
+	                 return $ret;
+	            }
+   
+  
+		   
+		   
+	   		  function updateReservationLog($data)
+	              {
+	   			   #dd($data);
+	   			 $ret = "error";
+                 $l = ReservationLogs::where('id',$data['xf'])->first();
+			 
+			 
+	   			 if(!is_null($l))
+	   			 {
+					 $fields = [
+					             'status' => $data['status']
+	                           ];
+					  $l->update($fields);
+	   			   $ret = "ok";
+	   			 }
+           	
+                                                      
+	                   return $ret;
+	              }
+
+	   		   function removeReservationLog($xf)
+	              {
+	   			    #dd($data);
+	   			    $ret = "error";
+	   			     $l = ReservationLogs::where('id',$data['xf'])->first();
+			 
+			 
+	   			    if(!is_null($l))
+	   			    {
+	   				  $l->delete();
+	   			      $ret = "ok";
+	   			    }
+           
+	              }
+				  
+				function hasReservation($dt)
+		        {
+			      $ret = false;
+                  $l = ReservationLogs::where([
+				                           'user_id' => $dt['user_id'],
+										   'apartment_id' => $dt['apartment_id'],
+										   'status' => "pending",
+										 ])->first();
+			      if($l != null) $ret = true;
+                  return $ret;
+		        }
+
 	
    
 }
