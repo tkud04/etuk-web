@@ -194,59 +194,6 @@
 									</div>
 								</li>
 								
-								<li class="login-attri">
-									<div class="btn-group account-drop">
-										<button type="button" class="btn btn-order-by-filt theme-cl" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-											<i class="ti-email"></i>
-											<span class="cart-count"><?php echo e(count($messages)); ?></span>
-										</button>
-										<div class="dropdown-menu p-0 dm-lg pull-right animated flipInX">
-											<div class="cart-card">
-												<div class="cart-card-header">
-													<h4>Your Messages</h4>
-												</div>
-												
-												<div class="cart-card-body">
-												<?php
-												$mLength = count($messages) > 4 ? 4 : count($messages);
-												for($i = 0; $i < $mLength; $i++)
-												{
-													$m = $messages[$i];
-													$guest = $m['guest'];
-													$guestName = $guest['fname']." ".substr($guest['lname'],0,1).".";
-													$host = $m['host'];
-													$msg = $m['msg'];
-													$date = $m['date'];
-													$uu = url('message')."?xf=".$m['id'];
-													$img = $guest['avatar'] == ""  ? asset("img/avatar.png") : $guest['avatar'][0];
-												?>
-													<!-- Single Cart Wrap -->
-													<div class="single-cart-wrap">
-														<a href="javascript:void(0)" class="cart-close"><i class="icofont-envelope"></i></a>
-														<div class="single-cart-thumb">
-															<img src="<?php echo e($img); ?>" alt="" style="width: 40px; height: 40px;"/>
-														</div>
-														<div class="single-cart-detail">
-															<h3 class="sc-title"><?php echo e($guestName); ?></h3>
-															<span><i class="ti-time mr-1"></i><?php echo e($date); ?></span>
-															<h4 class="sc-price theme-cl"><?php echo e(substr($msg,0,20)); ?>..</h4>
-														</div>
-													</div>
-												<?php
-												}
-												?>
-													
-												</div>
-												
-												<div class="cart-card-footer">
-													<a href="<?php echo e(url('messages')); ?>" class="btn btn-theme">Go To Messages</a>
-													
-												</div>
-												
-											</div>
-										</div>
-									</div>
-								</li>
 								
 								<?php
 								if(isset($user) && $user != null)

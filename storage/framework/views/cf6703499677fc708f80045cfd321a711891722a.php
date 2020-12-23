@@ -49,9 +49,13 @@ $subtitle = "List of your apartment reservations";
 											   $name = $a['name'];
 											   $address = $a['address'];
 											   $reviews = $a['reviews'];
+											   $host = $a['host'];
 											   $uu = url('apartment')."?xf=".$a['url'];
 											   $cu = url('cancel-reservation')."?xf=".$r['id']."&axf=".$a['apartment_id']."&gxf=".$r['user_id'];
-											   
+											   $du = url('remove-reservation')."?xf=".$r['id']."&axf=".$a['apartment_id']."&gxf=".$r['user_id'];
+											   $ss = "info";
+											   if($r['status'] == "cancelled") $ss = "danger";
+											   if($r['status'] == "approved") $ss = "success";
 											   $imgs = $a['cmedia']['images'];
 											   
 									   ?>
@@ -84,12 +88,27 @@ $subtitle = "List of your apartment reservations";
 															 }
 															?>
 														</div>
-														<h4>Booked: <em><?php echo e($r['date']); ?></em></h4>
+														<span>Host: <em><?php echo e($host['fname']." ".$host['lname']); ?></em></span><br>
+														<span>Booked: <em><?php echo e($r['date']); ?></em></span><br>
+														<span>Status: <span class="label label-<?php echo e($ss); ?>"><?php echo e(strtoupper($r['status'])); ?></em></span>
 													</div>
 												</div>
 											</div>
 											<div class="buttons-to-right">
-												<a href="<?php echo e($cu); ?>" class="button gray"><i class="ti-trash"></i> Cancel</a>
+											<?php
+											if($r['status'] == "pending")
+											{
+											?>
+												<a href="<?php echo e($cu); ?>" class="button gray"><i class="ti-close"></i> Cancel</a>
+											<?php
+											}
+											else
+											{
+											?>
+												<a href="<?php echo e($du); ?>" class="button gray"><i class="ti-trash"></i> Remove</a>
+											<?php
+											}
+											?>
 											</div>
 										</li>
 										<?php

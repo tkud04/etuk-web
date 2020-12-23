@@ -88,6 +88,7 @@ class Helper implements HelperContract
 					 "update-ticket-status" => "Ticket updated.",
 					 "add-reservation-status" => "Reservation made.",
 					 "update-reservation-status" => "Reservation log updated.",
+					 "remove-reservation-status" => "Reservation log removed.",
 					 "contact-status" => "Message sent! Our officials will get back to you shortly.",
 					 
 					 //ERROR NOTIFICATIONS
@@ -112,6 +113,7 @@ class Helper implements HelperContract
 					 "update-ticket-status-error" => "Ticket could not be updated, please try again.",
 					 "add-reservation-status-error" => "Reservation could not be created, please try again",
 					 "update-reservation-status-error" => "Reservation could not be updated, please try again.",
+					 "remove-reservation-status-error" => "Reservation could not be removed, please try again.",
 					 "contact-status-error" => "Message could not be updated, please try again.",
                      ],
                      'errors'=> ["login-status-error" => "Wrong username or password, please try again.",

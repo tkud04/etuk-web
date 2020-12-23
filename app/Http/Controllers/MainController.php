@@ -1405,15 +1405,68 @@ class MainController extends Controller {
 			   'id' => $req['xf'],
 			   'apartment_id' => $req['axf'],
 			   'user_id' => $req['gxf'],
-			   'status' => "cancelled",
+			   'status' => "pending",
 			 ];
 			 
 			if($this->helpers->hasReservation($dt))
 			{
+				$dt['status'] = "cancelled";
 			   $this->helpers->updateReservationLog($dt);
-			   session()->flash("add-reservation-status","ok");
-			   $uu = "apartment?xf=".$req['axf'];
-			   return redirect()->intended($uu);
+			   session()->flash("update-reservation-status","ok");
+			   return redirect()->back();
+			}
+			else
+			{
+			   	session()->flash("duplicate-reservation-status-error","ok");
+			    return redirect()->back();
+			}
+			
+		 }
+    }
+	/**
+	 * Handle remove apartment reservation.
+	 *
+	 * @return Response
+	 */
+	public function getRemoveReservation(Request $request)
+    {
+		$user = null;
+		if(Auth::check())
+		{
+			$user = Auth::user();
+		}
+		else
+		{
+			session()->flash("reserve-apartment-status-error","ok");
+			return redirect()->back();
+		}
+
+		$req = $request->all();
+        
+		$validator = Validator::make($req,[
+		                    'xf' => 'required|numeric',
+							'axf' => 'required',
+							'gxf' => 'required|numeric'
+		]);
+		
+		if($validator->fails())
+         {
+			 $messages = $validator->messages();
+             return redirect()->back()->withInput()->with('errors',$messages);
+         }
+		 else
+		 {
+			 $dt = [
+			   'id' => $req['xf'],
+			   'apartment_id' => $req['axf'],
+			   'user_id' => $req['gxf']
+			 ];
+			 
+			if($this->helpers->hasReservation($dt))
+			{
+			   $this->helpers->removeReservationLog($dt);
+			   session()->flash("remove-reservation-status","ok");
+			   return redirect()->back();
 			}
 			else
 			{
