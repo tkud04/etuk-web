@@ -121,7 +121,7 @@
 								  <li><a href="javascript:void(0);">Hello, <em><?php echo e($user->fname); ?></em><span class="submenu-indicator"></span></a>
 									<ul class="nav-dropdown nav-submenu">
 										<li><a href="<?php echo e(url('dashboard')); ?>">Dashboard</a></li>                              
-										<li><a href="<?php echo e(url('messages')); ?>">Messages</a></li>
+										<li><a href="<?php echo e(url('reservations')); ?>">My Reservations</a></li>
 										<li><a href="<?php echo e(url('bye')); ?>">Sign out</a></li>  
 									</ul>
 								</li>

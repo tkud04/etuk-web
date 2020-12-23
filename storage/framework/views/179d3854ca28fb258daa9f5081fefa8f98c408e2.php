@@ -40,7 +40,7 @@ $subtitle = "List of previously used payment details";
 													<div class="inner">
 														<h3><a href="javascript:void(0)"><?php echo e($dt->bank); ?> - <b><?php echo e(strtoupper($dt->card_type)); ?></b></a></h3>
 														<span>Expires: <?php echo e($dt->exp_month); ?>/<?php echo e($dt->exp_year); ?></span><br>
-														<span>**** **** **** <?php echo e($dt->last4); ?></span>												
+														<span> **** <?php echo e($dt->last4); ?></span>												
 													</div>
 												</div>
 											</div>

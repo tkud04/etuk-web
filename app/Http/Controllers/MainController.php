@@ -1333,10 +1333,33 @@ class MainController extends Controller {
 			}
 			else
 			{
-			   $this->helpers->createReservationLog($dt);
+			   $l = $this->helpers->createReservationLog($dt);
 			   /**
 			    send email to host and admin here
 			   **/
+			   $ret = $this->helpers->getCurrentSender();
+		       $ret['subject'] = $data['name'].": ".$data['subject'];	
+		       
+			   try
+		       {
+				 $apt = $this->helpers->getApartment($req['axf'],['host' => true,'imgId' => true]);
+			     $ret['em'] = $user->email;
+			     $ret['apartment'] = $apt;
+			     $ret['reservation_id'] = $l->id;
+				 dd($ret);
+		         $this->sendEmailSMTP($ret,"emails.reserve-apt");
+		         $ret['em'] = $this->suEmail;
+		         $this->sendEmailSMTP($ret,"emails.reserve-apt");
+			     $s = "ok";
+		       }
+		
+		       catch(Throwable $e)
+		       {
+			     #dd($e);
+			     $s = "error";
+		       }
+
+
 			   session()->flash("add-reservation-status","ok");
 			   $uu = "apartment?xf=".$req['axf'];
 			   return redirect()->intended($uu);	
@@ -1366,8 +1389,9 @@ class MainController extends Controller {
 		$req = $request->all();
         
 		$validator = Validator::make($req,[
-		                    'gxf' => 'required',
-		                    'axf' => 'required'
+		                    'xf' => 'required|numeric',
+							'axf' => 'required',
+							'gxf' => 'required|numeric'
 		]);
 		
 		if($validator->fails())
@@ -1378,6 +1402,7 @@ class MainController extends Controller {
 		 else
 		 {
 			 $dt = [
+			   'id' => $req['xf'],
 			   'apartment_id' => $req['axf'],
 			   'user_id' => $req['gxf'],
 			   'status' => "cancelled",
@@ -1397,6 +1422,46 @@ class MainController extends Controller {
 			}
 			
 		 }
+    }
+	
+	/**
+	 * Show reservation log for user.
+	 *
+	 * @return Response
+	 */
+	public function getReservations(Request $request)
+    {
+		$user = null;
+		$messages = [];
+		if(Auth::check())
+		{
+			$user = Auth::user();
+			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
+		}
+		else
+		{
+			return redirect()->intended('/');
+		}
+		
+		$req = $request->all();
+		
+		$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
+		$cart = $this->helpers->getCart($user,$gid);
+		
+		$c = $this->helpers->getCategories();
+		//dd($bs);
+		$signals = $this->helpers->signals;
+		$banner = $this->helpers->getBanner();
+		
+		$ads = $this->helpers->getAds("wide-ad");
+		$plugins = $this->helpers->getPlugins();
+		
+		$reservations = $this->helpers->getReservationLogs($user);
+		#dd($reservations);
+		shuffle($ads);
+		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
+        
+    	return view("my-reservations",compact(['user','cart','messages','c','ad','reservations','signals','plugins','banner']));
     }
 	
 	/**

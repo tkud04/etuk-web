@@ -110,6 +110,8 @@ class Helper implements HelperContract
 					 "no-results-status-error" => "No results found!",
 					 "add-ticket-status-error" => "Ticket could not be created, please try again",
 					 "update-ticket-status-error" => "Ticket could not be updated, please try again.",
+					 "add-reservation-status-error" => "Reservation could not be created, please try again",
+					 "update-reservation-status-error" => "Reservation could not be updated, please try again.",
 					 "contact-status-error" => "Message could not be updated, please try again.",
                      ],
                      'errors'=> ["login-status-error" => "Wrong username or password, please try again.",
@@ -4425,7 +4427,7 @@ function createSocial($data)
 	              {
 	   			   #dd($data);
 	   			 $ret = "error";
-                 $l = ReservationLogs::where('id',$data['xf'])->first();
+                 $l = ReservationLogs::where('id',$data['id'])->first();
 			 
 			 
 	   			 if(!is_null($l))
@@ -4459,13 +4461,11 @@ function createSocial($data)
 				function hasReservation($dt)
 		        {
 			      $ret = false;
-                  $l = ReservationLogs::where([
-				                           'user_id' => $dt['user_id'],
-										   'apartment_id' => $dt['apartment_id'],
-										   'status' => "pending",
-										 ])->first();
+				  
+                  $l = ReservationLogs::where($dt)->first();
 			      if($l != null) $ret = true;
-                  return $ret;
+                  
+				  return $ret;
 		        }
 
 	
