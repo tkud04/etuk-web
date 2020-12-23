@@ -141,7 +141,7 @@ let myApartmentDescriptionEditor = new Simditor({
 										<div class="col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group">
 												<label>Max no. of guests<i class="req">*</i></label>
-												<input type="number" class="form-control" id="my-apartment-max-adults" value="{{$adata['max_adults']}}" placeholder="The max number of adults allowed to check-in">
+												<input type="number" class="form-control" id="my-apartment-max-adults" value="{{$terms['max_adults']}}" placeholder="The max number of adults allowed to check-in">
 											</div>
 										</div>
 										
