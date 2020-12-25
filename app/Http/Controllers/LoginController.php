@@ -323,6 +323,7 @@ class LoginController extends Controller {
     {
     	$req = $request->all(); 
         $validator = Validator::make($req, [
+                             'mode' => 'required|not_in:none',
                              'pass' => 'required|min:6|confirmed',
                              'acsrf' => 'required'
                   ]);
@@ -339,11 +340,20 @@ class LoginController extends Controller {
 		 {
          	$id = $req['acsrf'];
              $ret = $req['pass'];
+			 $mu = "";
+            if($req['mode'] == "host" || $req['mode'] == "both") $mu = "host";			
+            else if($req['mode'] == "guest") $mu = "guest";			
+            $req['mode_type'] = $req['mode'];           
+            $req['mode'] = $mu;
 
             $user = User::where('email',$id)->first();
 			if($user != null)
 			{
-				$user->update(['password' => bcrypt($ret)]);
+				$user->update([
+				'password' => bcrypt($ret),
+				'mode' => $req['mode'],
+				'mode_type' => $req['mode_type'],
+				]);
                 Auth::login($user);
                 session()->flash("oauth-sp-status","ok");                  
 			}

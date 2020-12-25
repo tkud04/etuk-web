@@ -24,10 +24,28 @@ $subtitle = "Set your account password here";
 							 <input type="hidden" name="acsrf" value="{{$xf}}"/>
 								<!-- Basic Information -->
 								<div class="form-submit">	
-									<h4>Set your account password</h4>
+									<h4>Set your account mode and password</h4>
 									<div class="submit-section">
 										<div class="form-row">
-											
+											<?php
+										 $modes = ['guest' => "Sign up as a Guest",'host' => "Sign up as a Host",'both' => "Switch between Guest and Host"];
+										?>
+											<div class="form-group col-md-12">
+												<div class="input-with-icon">
+													<select id="osp-mode" name="mode" class="form-control">
+													  <option value="none">Select mode</option>
+													  <?php
+													    foreach($modes as $k => $v)
+														{
+													  ?>
+													   <option value="{{$k}}">{{$v}}</option>
+													  <?php
+														}
+													  ?>
+													</select>												
+												</div>
+												<span class="text-danger text-bold input-error" id="osp-mode-error">This field is required</span>
+											</div>
 											<div class="form-group col-md-12">
 												<label>New password</label>
 												<input type="password" class="form-control" id="osp-pass" name="pass" placeholder="Your new password">

@@ -140,10 +140,11 @@ $(document).ready(function() {
        e.preventDefault();
 	  
        hideInputErrors("oauth-sp");	  
-      let p = $('#osp-pass').val(), p2 = $('#osp-pass2').val();
+      let mode = $('#osp-mode').val(), p = $('#osp-pass').val(), p2 = $('#osp-pass2').val();
 		  
 		  
-	   if(p == "" || p2 == "" || p != p2){
+	   if(mode == "none" || p == "" || p2 == "" || p != p2){
+		   if(mode == "none") showElem('#osp-mode-error');
 		   if(p == "") showElem('#osp-pass-error');
 		   if(p2 == "" || p != p2) showElem('#osp-pass2-error');
 	   }
