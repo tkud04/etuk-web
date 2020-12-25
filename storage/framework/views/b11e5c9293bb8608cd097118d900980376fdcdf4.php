@@ -290,7 +290,7 @@ let addApartmentDescriptionEditor = new Simditor({
 											<h4 class="mb-3">Location & Media</h4>
 										</div>
 																			
-										<div class="col-lg-6 col-md-6 col-sm-12">
+										<div class="col-lg-12 col-md-12 col-sm-12">
 											<div class="form-group">
 												<label>Address<i class="req">*</i></label>
 												<input type="text" class="form-control" id="add-apartment-address" placeholder="House address">
@@ -318,6 +318,22 @@ let addApartmentDescriptionEditor = new Simditor({
 												  <option value="none">Select state</option>
 												  <?php
 												   foreach($states as $key => $value)
+												   {
+												  ?>
+												    <option value="<?php echo e($key); ?>"><?php echo e($value); ?></option>
+												  <?php
+												   }
+												  ?>
+												</select>
+											</div>
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-12">
+											<div class="form-group">
+												<label>Country<i class="req">*</i></label>
+												<select class="form-control" id="my-apartment-country">
+												  <option value="none">Select country</option>
+												  <?php
+												   foreach($countries as $key => $value)
 												   {
 												  ?>
 												    <option value="<?php echo e($key); ?>"><?php echo e($value); ?></option>
