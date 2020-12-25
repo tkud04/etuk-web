@@ -871,8 +871,9 @@ class MainController extends Controller {
 			$banner = $this->helpers->getBanner();
 			
 		    $states = $this->helpers->states;
-		
-	    	$ads = $this->helpers->getAds("wide-ad");
+		    $countries = $this->helpers->countries;
+	    	
+			$ads = $this->helpers->getAds("wide-ad");
 		    $plugins = $this->helpers->getPlugins();
 		    $services = $this->helpers->getServices();
 		    $tips = $this->helpers->getApartmentTips();
@@ -884,7 +885,7 @@ class MainController extends Controller {
 				$isSaved = $user == null ? false : $this->helpers->isApartmentSaved($user->id,$apartment['id']);
 			   shuffle($ads);
 		       $ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
-    	       return view("apartment",compact(['user','cart','messages','c','isSaved','ad','apartment','services','tips','states','signals','plugins','banner']));
+    	       return view("apartment",compact(['user','cart','messages','c','isSaved','ad','apartment','services','tips','states','countries','signals','plugins','banner']));
 			}
 			else
 			{
@@ -2364,6 +2365,7 @@ class MainController extends Controller {
 			$banner = $this->helpers->getBanner();
 			
 		    $states = $this->helpers->states;
+			$countries = $this->helpers->countries;
 		
 	    	$ads = $this->helpers->getAds("wide-ad");
 			$services = $this->helpers->getServices();
@@ -2374,7 +2376,7 @@ class MainController extends Controller {
 		    shuffle($ads);
 		    $ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
         
-    	    return view("my-apartment",compact(['user','cart','messages','c','ad','services','apartment','states','signals','plugins','banner']));
+    	    return view("my-apartment",compact(['user','cart','messages','c','ad','services','apartment','states','countries''signals','plugins','banner']));
 		}
 		else
 		{

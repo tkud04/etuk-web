@@ -388,6 +388,23 @@ let myApartmentDescriptionEditor = new Simditor({
 												</select>
 											</div>
 										</div>
+										<div class="col-lg-6 col-md-6 col-sm-12">
+											<div class="form-group">
+												<label>Country<i class="req">*</i></label>
+												<select class="form-control" id="my-apartment-country">
+												  <option value="none">Select country</option>
+												  <?php
+												   foreach($countries as $key => $value)
+												   {
+													   $ss = $key == $address['country'] ? " selected='selected'" : "";
+												  ?>
+												    <option value="{{$key}}"{{$ss}}>{{$value}}</option>
+												  <?php
+												   }
+												  ?>
+												</select>
+											</div>
+										</div>
 									</div>
 									
 									<div class="row">

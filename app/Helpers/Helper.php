@@ -492,19 +492,27 @@ $subject = $data['subject'];
                   
 				 
 				 $dt = [
-				    'multipart' => []
+				    
 				 ];
 				 
 				 if(isset($data['data']))
 				 {
-				   foreach($data['data'] as $k => $v)
-				   {
-					  $temp = [
+					if(isset($data['type']) && $data['type'] == "raw")
+					{
+					  $dt = ['body' => $data['data']];
+					}
+					else
+					{
+					  foreach($data['data'] as $k => $v)
+				      {
+					    $temp = [
 					      'name' => $k,
 						  'contents' => $v
-					   ];
-					   array_push($dt['multipart'],$temp);
-				   }
+					     ];
+					     array_push($dt['multipart'],$temp);
+				      }
+					}
+				   
 				 }
 				 
 				 try
