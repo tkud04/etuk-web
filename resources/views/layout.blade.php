@@ -198,18 +198,24 @@
 								if(isset($user) && $user != null)
 								{
 								$mode = $user->mode; $mu = "";
-								if($mode == "guest")
-								{
+								
+							      if($mode == "guest")
+								  {
 									$mu = "Switch to Host";
-								}
-								elseif($mode == "host")
-								{
+								  }
+								  elseif($mode == "host")
+								  {
 									$mu = "Switch to Guest";
-								}
+								  }
 								?>
 							    <li><a href="javascript:void(0)"><i class="fas fa-user mr-1"></i>Mode: <span class="label label-info">{{strtoupper($mode)}}</span></a></li>
+								<?php
+								if($user->mode_type == "both")
+								{
+								?>
 								<li class="add-listing theme-bg"><a href="javascript:void(0)" onclick="switchMode({mode:'{{$mode}}'})">{{$mu}}</a></li>
 								<?php
+								}
 								}
 								?>
 							</ul>
@@ -418,7 +424,7 @@
 									<input id="tk-signup" type="hidden" value="{{csrf_token()}}">
 									<div class="row">
 										<?php
-										 $modes = ['guest','host'];
+										 $modes = ['guest' => "Sign up as a Guest",'host' => "Sign up as a Host",'both' => "Switch between Guest and Host"];
 										?>
 										<div class="col-lg-12 col-md-12">
 											<div class="form-group">
@@ -426,10 +432,10 @@
 													<select id="s-mode" class="form-control">
 													  <option value="none">Select mode</option>
 													  <?php
-													    foreach($modes as $m)
+													    foreach($modes as $k => $v)
 														{
 													  ?>
-													   <option value="{{$m}}">{{ucwords($m)}}</option>
+													   <option value="{{$k}}">{{$v}}</option>
 													  <?php
 														}
 													  ?>
@@ -571,6 +577,7 @@
 		 {
 		?>
 		<script>
+		/**
 		let interval = 1000 * 25;
 		 $(document).ready(() => {
 			 Swal.fire({
@@ -584,12 +591,14 @@
 	          }
            });
 		   
+		    
 		   	//check for new messages every 1 minute
 			setInterval(() => {
 			  checkForMessages();
 			},interval);
 	        
 		 });
+		 **/
 		</script>
 		<?php
 		 }

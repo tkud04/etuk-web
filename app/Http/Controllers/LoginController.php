@@ -157,7 +157,12 @@ class LoginController extends Controller {
             $dt['role'] = "user";    
             $dt['status'] = "enabled";           
             $dt['currency'] = "ngn";           
-            $dt['verified'] = "yes";           
+            $dt['verified'] = "yes";
+            $mu = "";
+            if($dt['mode'] == "host" || $dt['mode'] == "both") $mu = "host";			
+            else if($dt['mode'] == "guest") $mu = "guest";			
+            $dt['mode_type'] = $dt['mode'];           
+            $dt['mode'] = $mu;           
             
             # dd($isNew);            
             

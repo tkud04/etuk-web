@@ -2125,7 +2125,7 @@ class MainController extends Controller {
 				 break;
 			 }
 			 session()->flash("switch-mode-status","ok");
-			 return redirect()->intended('/');
+			 return redirect()->intended('dashboard');
 		 }
     }
 	
