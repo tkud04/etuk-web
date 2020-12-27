@@ -158,17 +158,29 @@ $(document).ready(function() {
 	$("#add-apartment-side-1-next").click(e => {
        e.preventDefault();
 	   
-	   if(facilities.length > 0){
-		   let aptSidebarFacilitiesHTML = ``;
+	   let aptUrl = $('#add-apartment-url').val(), aptName = $('#add-apartment-name').val(), aptAmount = $('#add-apartment-amount').val(),
+	   aptMaxAdults = $('#add-apartment-max-adults').val(),aptMaxChildren = $('#add-apartment-max-children').val(),aptDescription = $('#add-apartment-description').val(),
+	       aptCategory = $('#add-apartment-category').val(), aptPType = $('#add-apartment-ptype').val(),aptRooms = $('#add-apartment-rooms').val(),
+	       aptUnits = $('#add-apartment-units').val(),aptBathrooms = $('#add-apartment-bathrooms').val(),
+		   aptBedrooms = $('#add-apartment-bedrooms').val(), aptPets = $('#add-apartment-pets').val(),
+		      side1_validation = (aptUrl == "" || aptName == "" || aptMaxAdults == "" || aptMaxChildren == "" || aptAmount < 0 || aptDescription == "" || aptCategory == "none" || aptPType == "none" || aptRooms == "none" || aptUnits == "none" || aptBedrooms == "none" || aptBathrooms == "none" || aptPets == "none" || facilities.length < 1);	  
+	  
+	   if(side1_validation){
+		  Swal.fire({
+			     icon: 'error',
+                 title: `All fields are required`
+               }); 
+	   }
+	   else{
+		 let aptSidebarFacilitiesHTML = ``;
 		   for(let adf = 0; adf < facilities.length; adf++){
 			   aptSidebarFacilitiesHTML += `<li>${facilities[adf].id}</li>`;
 		   }
 		   $('#apt-sidebar-facilities').html(aptSidebarFacilitiesHTML);
+		   hideElem(['#add-apartment-side-1','#add-apartment-side-3']);
+	       selectCheckoutSide({side: 2,type: ".add-apartment",content: "ti-check"});
+	       showElem(['#add-apartment-side-2']);
 	   }
-	   
-	  hideElem(['#add-apartment-side-1','#add-apartment-side-3']);
-	  selectCheckoutSide({side: 2,type: ".add-apartment",content: "ti-check"});
-	  showElem(['#add-apartment-side-2']);
     });
 	$("#add-apartment-side-2-prev").click(e => {
        e.preventDefault();
@@ -178,33 +190,46 @@ $(document).ready(function() {
     });	
 	$("#add-apartment-side-2-next").click(e => {
        e.preventDefault();
-	  hideElem(['#add-apartment-side-1','#add-apartment-side-2']);
-	  selectCheckoutSide({side: 3,type: ".add-apartment",content: "ti-check"});
-	  aptFinalPreview("add-apartment"); 
+	   
+	   //side 2 validation imgs = $(`${BUUPlist[bc].id}-images-div input[type=file]`);
+	   let aptAddress = $('#add-apartment-address').val(), aptCity = $('#add-apartment-city').val(), aptLGA = $('#add-apartment-lga').val(),aptState = $('#add-apartment-state').val(),
+	       aptImages = $(`#add-apartment-images input[type=file]`), emptyImage = false,
+           side2_validation = (aptAddress == "" || aptCity == "" || aptLGA == "" || aptState == "none");
+		   
+		   if(side2_validation){
+			 Swal.fire({
+			     icon: 'error',
+                 title: `All fields are required`
+               });   
+		   }
+		   else{
+			  hideElem(['#add-apartment-side-1','#add-apartment-side-2']);
+	         selectCheckoutSide({side: 3,type: ".add-apartment",content: "ti-check"});
+	         aptFinalPreview("add-apartment"); 
 	  
-	  let aptImages = $(`#add-apartment-images input[type=file]`);
-	  let ac = aptCover == "none" ? 0 : aptCover;
-	  //Add the cover image to the apt sidebar
-	  if (aptImages[ac].files && aptImages[ac].files[0]) {
-        let reader = new FileReader();
+	         let ac = aptCover == "none" ? 0 : aptCover;
+	         //Add the cover image to the apt sidebar
+	         if (aptImages[ac].files && aptImages[ac].files[0]) {
+	         let reader = new FileReader();
     
-        reader.onload = function(e) {
-		  $(`#apt-sidebar-cover`).attr({
-	        'src': e.target.result,
-	        'width': "236",
-	        'height': "161"
-	      });
-        }
+	         reader.onload = function(e) {
+	           $(`#apt-sidebar-cover`).attr({
+	             'src': e.target.result,
+	             'width': "236",
+	             'height': "161"
+	           });
+            }
     
-        reader.readAsDataURL(aptImages[ac].files[0]); // convert to base64 string
+            reader.readAsDataURL(aptImages[ac].files[0]); // convert to base64 string
 		
-		let ii = aptImages.length == 1 ? "image" : "images";
-		$('#apt-sidebar-img-count').html(`${aptImages.length} ${ii}`);
-     }
-	  
-	  
-	  showElem(['#add-apartment-side-3']);
-    });
+		    let ii = aptImages.length == 1 ? "image" : "images";
+		    $('#apt-sidebar-img-count').html(`${aptImages.length} ${ii}`);
+           }
+	       
+		   showElem(['#add-apartment-side-3']);
+    
+		   }
+	     });
 	$("#add-apartment-side-3-prev").click(e => {
        e.preventDefault();
 	  hideElem(['#add-apartment-side-1','#add-apartment-side-3']);

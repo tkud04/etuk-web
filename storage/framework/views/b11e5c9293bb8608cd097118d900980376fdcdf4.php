@@ -425,16 +425,39 @@ let addApartmentDescriptionEditor = new Simditor({
 											
 											<h4>Final Notes</h4>
 											<p>Take a moment to preview the information about your apartment to ensure there are no errors or mistypes as your request will be reviewed by an admin. If you are sure all your information is correct click on <b>Submit</b> below. To make changes click on <b>Back</b>.</p>
-											
 										</div>
+										
+										
+											<div class="col-lg-12 col-md-12 col-sm-12 mt-5">
+											  <h4>Choose a Plan</h4>
+											  <div class="form-group">
+												<label>Property type<i class="req">*</i></label>
+												<select class="form-control" id="add-apartment-ptype">
+												  <option value="none">Select type</option>
+												  <?php
+												  $aptTypes = [
+												    'unfurnished' => "Unfurnished apartment",
+												    'Furnished' => "Furnished apartment",
+												    'serviced' => "Serviced apartment",
+												  ];
+												  foreach($aptTypes as $key => $value)
+												  {
+												  ?>
+												  <option value="<?php echo e($key); ?>"><?php echo e($value); ?></option>
+												  <?php
+												  }
+												  ?>
+												</select>
+											 </div>
+										   </div>
 										
 										<div class="col-lg-12 col-md-12 col-sm-12">
 											<div class="form-group text-center" id="add-apartment-submit">
 												<a href="javascript:void(0)" id="add-apartment-side-3-prev" class="btn btn-theme">Back</a>
-												<a href="javascript:void(0)" id="add-apartment-side-3-next" class="btn btn-theme">Submit</a>
+												<a href="javascript:void(0)" id="add-apartment-side-3-next" class="btn btn-theme">Pay now</a>
 											</div>
 											<div class="form-group text-center" id="add-apartment-loading">
-												 <h4>Adding apartment.. <img src="<?php echo e(asset('img/loading.gif')); ?>" class="img img-fluid" alt="Adding apartment.."></h4><br>
+												 <h4>Proceeding to payment.. <img src="<?php echo e(asset('img/loading.gif')); ?>" class="img img-fluid" alt="Proceeding to payment.."></h4><br>
 											</div>
 										</div>
 									</div>
