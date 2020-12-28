@@ -12,6 +12,7 @@ use Validator;
 use Carbon\Carbon; 
 //use Codedge\Fpdf\Fpdf\Fpdf;
 use PDF;
+use Paystack; 
 
 class MainController extends Controller {
 
@@ -2211,14 +2212,15 @@ class MainController extends Controller {
 		$states = $this->helpers->states;
 		$countries = $this->helpers->countries;
 		$services = $this->helpers->getServices();
-		
+		$plans = Paystack::getAllPlans();
+		#dd($plans);
 		$ads = $this->helpers->getAds("wide-ad");
 		$plugins = $this->helpers->getPlugins();
 		
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
         
-    	return view("add-apartment",compact(['user','cart','messages','c','ad','services','states','countries','signals','plugins','banner']));
+    	return view("add-apartment",compact(['user','cart','messages','c','ad','services','plans','states','countries','signals','plugins','banner']));
     }
 	
 	/**
@@ -2373,11 +2375,12 @@ class MainController extends Controller {
 		    $plugins = $this->helpers->getPlugins();
 		
 		    $apartment = $this->helpers->getApartment($req['xf'],['imgId' => true]);
-			#dd($apartment);
+			$plans = Paystack::getAllPlans();
+			#dd($plans);
 		    shuffle($ads);
 		    $ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
         
-    	    return view("my-apartment",compact(['user','cart','messages','c','ad','services','apartment','states','countries','signals','plugins','banner']));
+    	    return view("my-apartment",compact(['user','cart','messages','c','ad','services','plans','apartment','states','countries','signals','plugins','banner']));
 		}
 		else
 		{

@@ -24,7 +24,7 @@ EOD;
 @include('banner-2',['title' => $title,'subtitle' => $subtitle])
 <script>
 let selectedSide = "1", facilities = [], aptImages = [], aptImgCount = 1, aptCover = "none";
-
+  
 $(document).ready(() => {
 $('#add-apartment-loading').hide();
 let addApartmentDescriptionEditor = new Simditor({
@@ -426,21 +426,17 @@ let addApartmentDescriptionEditor = new Simditor({
 										
 										
 											<div class="col-lg-12 col-md-12 col-sm-12 mt-5">
-											  <h4>Choose a Plan</h4>
+											  <h4>Choose a Plan <a href="{{url('plans')}}" target="_blank" class="btn btn-success">See Plans</a></h4>
 											  <div class="form-group">
-												<label>Property type<i class="req">*</i></label>
-												<select class="form-control" id="add-apartment-ptype">
-												  <option value="none">Select type</option>
+												<label>Subscription Plan<i class="req">*</i></label>
+												<select class="form-control" id="add-apartment-plan">
+												  <option value="none">Select plan</option>
+												  <option value="free">Free - &#8358;0.00/month</option>
 												  <?php
-												  $aptTypes = [
-												    'unfurnished' => "Unfurnished apartment",
-												    'Furnished' => "Furnished apartment",
-												    'serviced' => "Serviced apartment",
-												  ];
-												  foreach($aptTypes as $key => $value)
+												  foreach($plans as $p)
 												  {
 												  ?>
-												  <option value="{{$key}}">{{$value}}</option>
+												  <option value="{{$p['plan_code']}}">{{$p['name']}} - &#8358;{{number_format($p['amount']/100,2)}}/month</option>
 												  <?php
 												  }
 												  ?>

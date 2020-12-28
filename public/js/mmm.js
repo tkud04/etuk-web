@@ -260,6 +260,8 @@ $(document).ready(function() {
         // console.log("video: ",aptVideo);
          //console.log("images: ",aptImages);
 	   
+	   let aptPlan = $('#add-apartment-plan').val(), side3_validation = (aptPlan == "none"); 
+	   
 	   if(side1_validation || side2_validation){
 		   Swal.fire({
 			 icon: 'error',
@@ -276,6 +278,12 @@ $(document).ready(function() {
 		   Swal.fire({
 			 icon: 'error',
              title: "Select a cover image."
+           })
+	   }
+	   else if(side3_validation){
+		   Swal.fire({
+			 icon: 'error',
+             title: "Select a subscription plan."
            })
 	   }
 	   /**
@@ -336,7 +344,14 @@ $(document).ready(function() {
 		  
 		  $('#add-apartment-submit').hide();
 		  $('#add-apartment-loading').fadeIn();
-		  addApartment(fd);
+		  
+		  if(aptPlan == "free"){
+			addApartment(fd);  
+		  }
+		  else{
+			  console.log(aptPlan);
+		  }
+		  
 	   }
     });
 	
