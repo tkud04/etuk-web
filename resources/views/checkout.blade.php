@@ -110,7 +110,7 @@ $subtotal = $cart['subtotal'];
 												<label>Save payment info?</label>
 												<select class="form-control" name="sps" id="checkout-sps">
 												  <option value="yes" selected="selected">Yes</option>
-												  <option value="no">Card</option>
+												  <option value="no">No</option>
 												</select>
 											</div>
 										</div>

@@ -10,7 +10,7 @@ $(document).ready(function() {
 			  "#rp-loading","#rp-finish",
 			  "#apt-chat-loading","#apt-chat-finish","#message-reply-loading"
 			  ]);
-	hideElem(["#add-apartment-side-1","#add-apartment-side-2","#add-apartment-side-3"]);
+	hideElem(["#sps-row","#add-apartment-side-1","#add-apartment-side-2","#add-apartment-side-3"]);
 	hideElem(["#apartment-preference-side-2"]);
 	hideElem(["#my-apartment-side-2","#my-apartment-side-3"]);
 	hideElem([".review-loading","#host-total-revenue-loading","#host-best-selling-apartments-loading"]);
@@ -155,6 +155,16 @@ $(document).ready(function() {
 	
 	
 	//ADD APARTMENT
+	$("#add-apartment-plan").change(e => {
+		let p = $('#add-apartment-plan').val();
+		
+		if(parseInt(p) == 1 || p == "none"){
+			hideElem(['#sps-row']);
+		}
+		else{
+			showElem(['#sps-row']);
+		}
+	});
 	$("#add-apartment-side-0-next").click(e => {
 		e.preventDefault();
 		let plan = $('#add-apartment-plan').val();
@@ -174,6 +184,7 @@ $(document).ready(function() {
 		    }
 		    else{
 			  //paying now
+			  
 		    }
 		}
 		

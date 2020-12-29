@@ -11,6 +11,15 @@ $checkoutHead = <<<EOD
 									</ul>
 								</div>
 EOD;
+
+ //for tests
+			  $securePay = "http://etukng.tobi-demos.tk/pay";
+			  $unsecurePay = url('pay');
+			  
+			  $isSecure = (isset($secure) && $secure);
+			  $pay = $isSecure ? $securePay : $unsecurePay;
+			  
+
 ?>
 @extends('layout')
 
@@ -25,6 +34,13 @@ EOD;
 <script>
 let selectedSide = "1", facilities = [], aptImages = [], aptImgCount = 1, aptCover = "none";
   
+let mc = {
+      "type":"posting",
+	  "email":"{{$user->email}}",
+	  "notes":""
+};
+                    
+  
 $(document).ready(() => {
 $('#add-apartment-loading').hide();
 let addApartmentDescriptionEditor = new Simditor({
@@ -35,6 +51,8 @@ let addApartmentDescriptionEditor = new Simditor({
 });
 
 </script>
+<input type="hidden" id="card-action" value="{{$pay}}">
+
 <!-- =================== Add Apartment Search ==================== -->
 			<section class="gray">
 				<div class="container">
@@ -57,15 +75,78 @@ let addApartmentDescriptionEditor = new Simditor({
 												  foreach($plans as $p)
 												  {
 												  ?>
-												  <option value="{{$p['id']}}">{{$p['name']}} - &#8358;{{number_format($p['amount']/100,2)}}/{{$p['frequency']}}</option>
+												  <option value="{{$p['id']}}">{{$p['name']}} - &#8358;{{number_format($p['amount'],2)}}/{{$p['frequency']}}</option>
 												  <?php
 												  }
 												  ?>
 												</select>
-											 </div>
+											 </div><br>
+											 <div class="row" id="sps-row">
+										<div class="col-lg-6 col-md-6">
+										<?php
+										 if(count($sps) > 0)
+										 {
+										?>
+											<div class="form-group">
+												<label>Select saved payment</label>
+												<select class="form-control" id="checkout-payment-type">
+												  <option value="none">Select a card to pay with</option>
+												  <?php
+												   foreach($sps as $s)
+												   {
+													   $dt = $s['data'];
+													   $n = $dt->bank." | **** ".$dt->last4." | Expires: ".$dt->exp_month."/".$dt->exp_year;
+												  ?>
+												    <option value="{{$s['id']}}">{{$n}}</option>
+												  <?php
+												   }
+												  ?>
+												  <option value="card">Use a different card</option>
+												</select>
+											</div>
+											
+										<?php
+										 }
+										 else
+										 {
+										?>
+										<div class="form-group">
+												<label>Payment type</label>
+												<select class="form-control" id="checkout-payment-type">
+												  <option value="none">Select payment type</option>
+												  <option value="card" selected="selected">Card</option>
+												</select>
+											</div>
+										<?php
+										 }
+										?>
+                                        </div>
+										<div class="col-lg-6 col-md-6">
+											<div class="form-group">
+												<label>Save payment info?</label>
+												<select class="form-control" name="sps" id="checkout-sps">
+												  <option value="yes" selected="selected">Yes</option>
+												  <option value="no">No</option>
+												</select>
+											</div>
+										</div>
+									</div>
 										   </div>
 										   
 										   <div class="col-lg-12 col-md-12 col-sm-12">
+										    <!-- payment form -->
+										   <form id="posting-form" method="post">
+								            {!! csrf_field() !!}
+											
+                            	            <input type="hidden" name="email" value="{{$user->email}}"> {{-- required --}}
+                            	            <input type="hidden" name="quantity" value="1"> {{-- required --}}
+                            	            <input type="hidden" name="amount" value="100"> {{-- required in kobo --}}
+                            	            <input type="hidden" name="plan" id="posting-plan" value=""> {{-- required for subscriptions --}}
+                            	            <input type="hidden" name="metadata" id="nd" value="" > {{-- For other necessary things you want to add to your payload. it is optional though --}}
+                            
+										   </form>
+										    <!-- payment form -->
+											
 											<div class="form-group text-center">
 											  <a href="javascript:void(0)" id="add-apartment-side-0-next" class="btn btn-theme">Next</a>
 											</div>
