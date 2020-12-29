@@ -10,7 +10,7 @@ $(document).ready(function() {
 			  "#rp-loading","#rp-finish",
 			  "#apt-chat-loading","#apt-chat-finish","#message-reply-loading"
 			  ]);
-	hideElem(["#add-apartment-side-2","#add-apartment-side-3"]);
+	hideElem(["#add-apartment-side-1","#add-apartment-side-2","#add-apartment-side-3"]);
 	hideElem(["#apartment-preference-side-2"]);
 	hideElem(["#my-apartment-side-2","#my-apartment-side-3"]);
 	hideElem([".review-loading","#host-total-revenue-loading","#host-best-selling-apartments-loading"]);
@@ -155,6 +155,30 @@ $(document).ready(function() {
 	
 	
 	//ADD APARTMENT
+	$("#add-apartment-side-0-next").click(e => {
+		e.preventDefault();
+		let plan = $('#add-apartment-plan').val();
+		console.log(plan);
+		
+		if(plan == "none"){
+			Swal.fire({
+				icon: 'error',
+				title: 'Select a plan'
+			});
+		}
+		else{
+			if(parseInt(plan) == 1){
+			  selectCheckoutSide({side: 1,type: ".add-apartment",content: "ti-check"});
+	          hideElem(['#add-apartment-side-0']);
+			  showElem(['#add-apartment-side-1']);
+		    }
+		    else{
+			  //paying now
+		    }
+		}
+		
+	});
+	
 	$("#add-apartment-side-1-next").click(e => {
        e.preventDefault();
 	   
@@ -182,12 +206,12 @@ $(document).ready(function() {
 	       showElem(['#add-apartment-side-2']);
 	   }
     });
-	$("#add-apartment-side-2-prev").click(e => {
+	$("#add-apartment-side-1-prev").click(e => {
        e.preventDefault();
-	  hideElem(['#add-apartment-side-2','#add-apartment-side-3']);
-	  selectCheckoutSide({side: 1,type: ".add-apartment",content: "ti-check"});
-	  showElem(['#add-apartment-side-1']);
+	  hideElem(['#add-apartment-side-1','#add-apartment-side-2','#add-apartment-side-3']);
+	  showElem(['#add-apartment-side-0']);
     });	
+	
 	$("#add-apartment-side-2-next").click(e => {
        e.preventDefault();
 	   

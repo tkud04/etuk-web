@@ -4575,12 +4575,12 @@ function createSocial($data)
 	                {
                             $temp['id'] = $p->id; 
 	                    	$temp['status'] = $p->status; 
-	                        $temp['user'] = $this->getUser($p->user_id); 
 	                        $temp['added_by'] = $this->getUser($p->added_by); 
 	                        $temp['user_id'] = $p->user_id; 
 	                        $temp['name'] = $p->name; 
 	                        $temp['description'] = $p->description; 
 	                        $temp['amount'] = $p->amount; 
+	                        $temp['frequency'] = $p->frequency; 
 	                        $temp['ps_id'] = $p->ps_id;
 	                        $temp['date'] = $p->created_at->format("jS F, Y h:i A"); 
 	                        $temp['updated'] = $p->updated_at->format("jS F, Y h:i A"); 

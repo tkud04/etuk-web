@@ -43,11 +43,33 @@ let addApartmentDescriptionEditor = new Simditor({
 							<input type="hidden" id="tk-apt" value="{{csrf_token()}}">
 							<input type="hidden" id="tk-axf" value="{{url('apartments')}}">
 							<!-- Add Apartment Step 1 -->
-							<div class="checkout-wrap" id="add-apartment-side-1">
+							<div class="checkout-wrap" id="add-apartment-side-0">
 								
 								<div class="checkout-body">
 									<div class="row">
-									
+									  <div class="col-lg-12 col-md-12 col-sm-12 mt-5">
+											  <h4>Choose a Plan <a href="{{url('plans')}}" target="_blank" class="btn btn-success">See Plans</a></h4>
+											  <div class="form-group">
+												<label>Subscription Plan<i class="req">*</i></label>
+												<select class="form-control" id="add-apartment-plan">
+												  <option value="none">Select plan</option>
+												  <?php
+												  foreach($plans as $p)
+												  {
+												  ?>
+												  <option value="{{$p['id']}}">{{$p['name']}} - &#8358;{{number_format($p['amount']/100,2)}}/{{$p['frequency']}}</option>
+												  <?php
+												  }
+												  ?>
+												</select>
+											 </div>
+										   </div>
+										   
+										   <div class="col-lg-12 col-md-12 col-sm-12">
+											<div class="form-group text-center">
+											  <a href="javascript:void(0)" id="add-apartment-side-0-next" class="btn btn-theme">Next</a>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -275,6 +297,7 @@ let addApartmentDescriptionEditor = new Simditor({
 										
 										<div class="col-lg-12 col-md-12 col-sm-12">
 											<div class="form-group text-center">
+											    <a href="javascript:void(0)" id="add-apartment-side-1-prev" class="btn btn-theme">Back</a>
 												<a href="javascript:void(0)" id="add-apartment-side-1-next" class="btn btn-theme">Next</a>
 											</div>
 										</div>
@@ -433,25 +456,6 @@ let addApartmentDescriptionEditor = new Simditor({
 											<p>Take a moment to preview the information about your apartment to ensure there are no errors or mistypes as your request will be reviewed by an admin. If you are sure all your information is correct click on <b>Submit</b> below. To make changes click on <b>Back</b>.</p>
 										</div>
 										
-										
-											<div class="col-lg-12 col-md-12 col-sm-12 mt-5">
-											  <h4>Choose a Plan <a href="{{url('plans')}}" target="_blank" class="btn btn-success">See Plans</a></h4>
-											  <div class="form-group">
-												<label>Subscription Plan<i class="req">*</i></label>
-												<select class="form-control" id="add-apartment-plan">
-												  <option value="none">Select plan</option>
-												  <option value="free">Free - &#8358;0.00/month</option>
-												  <?php
-												  foreach($plans as $p)
-												  {
-												  ?>
-												  <option value="{{$p['plan_code']}}">{{$p['name']}} - &#8358;{{number_format($p['amount']/100,2)}}/month</option>
-												  <?php
-												  }
-												  ?>
-												</select>
-											 </div>
-										   </div>
 										
 										<div class="col-lg-12 col-md-12 col-sm-12">
 											<div class="form-group text-center" id="add-apartment-submit">
