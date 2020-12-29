@@ -49,6 +49,8 @@ use App\PostTags;
 use App\Comments;
 use App\Tags;
 use App\ReservationLogs;
+use App\Plans;
+use App\UserPlans;
 use App\Guests;
 use \Swift_Mailer;
 use \Swift_SmtpTransport;
@@ -4543,6 +4545,148 @@ function createSocial($data)
 				  
 				  return $ret;
 		        }
+				
+				
+		function getPlans()
+	      {
+	   	   $ret = [];
+		    $plans = Plans::where('id','>',0)->get();
+	   
+	   	     if(!is_null($plans))
+	   	     {
+			   $plans = $plans->sortByDesc('created_at');	
+	   		   foreach($plans as $p)
+	   		   {
+	   		     $temp = $this->getPlan($p->id);
+	   		     array_push($ret,$temp);
+	   	       }
+			 }
+	   
+	   	   return $ret;
+	      }
+		  
+		  
+	 	 function getPlan($id)
+	            {
+	            	$ret = [];
+	                $p = Plans::where('id',$id)->first();
+ 
+	               if($p != null)
+	                {
+                            $temp['id'] = $p->id; 
+	                    	$temp['status'] = $p->status; 
+	                        $temp['user'] = $this->getUser($p->user_id); 
+	                        $temp['added_by'] = $this->getUser($p->added_by); 
+	                        $temp['user_id'] = $p->user_id; 
+	                        $temp['name'] = $p->name; 
+	                        $temp['description'] = $p->description; 
+	                        $temp['amount'] = $p->amount; 
+	                        $temp['ps_id'] = $p->ps_id;
+	                        $temp['date'] = $p->created_at->format("jS F, Y h:i A"); 
+	                        $temp['updated'] = $p->updated_at->format("jS F, Y h:i A"); 
+	                        $ret = $temp; 
+	                }                          
+                                                      
+	                 return $ret;
+	            }
+				
+				
+				
+				function createUserPlan($data)
+	        {
+	   			   #dd($data);
+	   			 $ret = null;
+			     $ret = UserPlans::create(['user_id' => $data['user_id'], 
+	                                   'plan_id' => $data['plan_id'], 
+	                                   'status' => $data['status']
+	                                  ]);
+	   			 return $ret;
+	         }
+
+	      function getUserPlans($user)
+	      {
+	   	   $ret = [];
+	       if($user != null)
+		   {
+		     $plans = UserPlans::where('user_id',$user->id)->get();
+	   
+	   	     if(!is_null($plans))
+	   	     {
+			   $plans = $plans->sortByDesc('created_at');	
+	   		   foreach($plans as $p)
+	   		   {
+	   		     $temp = $this->getUserPlan($p->id);
+	   		     array_push($ret,$temp);
+	   	       }
+			 }
+	       }
+	   	   return $ret;
+	      }
+		  
+		  
+	 	 function getUserPlan($id)
+	            {
+	            	$ret = [];
+	                $p = UserPlans::where('id',$id)->first();
+ 
+	               if($p != null)
+	                {
+                            $temp['id'] = $p->id; 
+	                    	$temp['status'] = $p->status; 
+	                        $temp['user'] = $this->getUser($p->user_id); 
+	                        $temp['plan'] = $this->getPlan($p->plan_id); 
+	                        $temp['stats'] = $this->getUserPlanStats($temp); 
+	                        $temp['date'] = $p->created_at->format("jS F, Y h:i A"); 
+	                        $temp['updated'] = $p->updated_at->format("jS F, Y h:i A"); 
+	                        $ret = $temp; 
+	                }                          
+                                                      
+	                 return $ret;
+	            }
+   
+  
+		   
+		   
+	   		  function getUserPlanStats($data)
+	              {
+	   			   dd($data);
+	   			 $ret = "error";
+                 $p = Plans::where('id',$data['xf'])->first();
+			 
+			 
+	   			 if(!is_null($p))
+	   			 {
+					 $fields = [
+					             'name' => $data['name'],
+					             'description' => $data['description'],
+					             'amount' => $data['amount'],
+					             'ps_id' => $data['ps_id'],
+					             'status' => $data['status']
+	                           ];
+					  $p->update($fields);
+	   			   $ret = "ok";
+	   			 }
+           	
+                                                      
+	                   return $ret;
+	              }
+
+	   		   function removeUserPlan($xf)
+	              {
+	   			    #dd($data);
+	   			    $ret = "error";
+	   			     $p = UserPlans::where('id',$xf)->first();
+			 
+			 
+	   			    if(!is_null($p))
+	   			    {
+	   				  $p->delete();
+	   			      $ret = "ok";
+	   			    }
+           
+	              }
+				
+				
 
 	
    

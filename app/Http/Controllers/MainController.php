@@ -2212,7 +2212,7 @@ class MainController extends Controller {
 		$states = $this->helpers->states;
 		$countries = $this->helpers->countries;
 		$services = $this->helpers->getServices();
-		$plans = Paystack::getAllPlans();
+		$plans = $this->helpers->getPlans();
 		#dd($plans);
 		$ads = $this->helpers->getAds("wide-ad");
 		$plugins = $this->helpers->getPlugins();

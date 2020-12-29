@@ -5,7 +5,7 @@ $subtitle = "Post a new apartment to your listings";
 $checkoutHead = <<<EOD
                                 <div class="checkout-head">
 									<ul>
-										<li class="add-apartment-active-1 active"><span class="add-apartment-ticker-1">1</span>Apartment Information</li>
+										<li class="add-apartment-active-1"><span class="add-apartment-ticker-1">1</span>Apartment Information</li>
 										<li class="add-apartment-active-2"><span class="add-apartment-ticker-2">2</span>Location & Media</li>
 										<li class="add-apartment-active-3"><span class="add-apartment-ticker-3">3</span>Preview</li>
 									</ul>
@@ -43,6 +43,15 @@ let addApartmentDescriptionEditor = new Simditor({
 							<input type="hidden" id="tk-apt" value="{{csrf_token()}}">
 							<input type="hidden" id="tk-axf" value="{{url('apartments')}}">
 							<!-- Add Apartment Step 1 -->
+							<div class="checkout-wrap" id="add-apartment-side-1">
+								
+								<div class="checkout-body">
+									<div class="row">
+									
+									</div>
+								</div>
+							</div>
+								<!-- Add Apartment Step 1 -->
 							<div class="checkout-wrap" id="add-apartment-side-1">
 								
 								{!! $checkoutHead !!}
