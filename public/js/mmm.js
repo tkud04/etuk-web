@@ -167,13 +167,19 @@ $(document).ready(function() {
 	});
 	$("#add-apartment-side-0-next").click(e => {
 		e.preventDefault();
-		let plan = $('#add-apartment-plan').val();
+		let plan = $('#add-apartment-plan').val(), paymentType = $('#posting-payment-type').val();
 		console.log(plan);
 		
 		if(plan == "none"){
 			Swal.fire({
 				icon: 'error',
 				title: 'Select a plan'
+			});
+		}
+		else if(paymentType == "none"){
+			Swal.fire({
+				icon: 'error',
+				title: 'Select a payment type'
 			});
 		}
 		else{
@@ -184,7 +190,11 @@ $(document).ready(function() {
 		    }
 		    else{
 			  //paying now
-			  
+			  let paymentURL = $("#card-action").val(); 
+			  $('#posting-pt').val(paymentType);
+			  $('#posting-pid').val(plan);
+			  $('#posting-form').attr('action',paymentURL);
+			   $('#posting-form').submit();
 		    }
 		}
 		
@@ -859,7 +869,6 @@ $(document).ready(function() {
 		else{
 			 payCard({ref: ref,pt: pt});
 		}
-		
 	});
 
 

@@ -69,7 +69,7 @@ let addApartmentDescriptionEditor = new Simditor({
 											  <h4>Choose a Plan <a href="{{url('plans')}}" target="_blank" class="btn btn-success">See Plans</a></h4>
 											  <div class="form-group">
 												<label>Subscription Plan<i class="req">*</i></label>
-												<select class="form-control" id="add-apartment-plan">
+												<select class="form-control" id="add-apartment-plan" name="pid">
 												  <option value="none">Select plan</option>
 												  <?php
 												  foreach($plans as $p)
@@ -89,7 +89,7 @@ let addApartmentDescriptionEditor = new Simditor({
 										?>
 											<div class="form-group">
 												<label>Select saved payment</label>
-												<select class="form-control" id="checkout-payment-type">
+												<select class="form-control" id="posting-payment-type">
 												  <option value="none">Select a card to pay with</option>
 												  <?php
 												   foreach($sps as $s)
@@ -112,7 +112,7 @@ let addApartmentDescriptionEditor = new Simditor({
 										?>
 										<div class="form-group">
 												<label>Payment type</label>
-												<select class="form-control" id="checkout-payment-type">
+												<select class="form-control" id="posting-payment-type">
 												  <option value="none">Select payment type</option>
 												  <option value="card" selected="selected">Card</option>
 												</select>
@@ -141,8 +141,8 @@ let addApartmentDescriptionEditor = new Simditor({
                             	            <input type="hidden" name="email" value="{{$user->email}}"> {{-- required --}}
                             	            <input type="hidden" name="quantity" value="1"> {{-- required --}}
                             	            <input type="hidden" name="amount" value="100"> {{-- required in kobo --}}
-                            	            <input type="hidden" name="plan" id="posting-plan" value=""> {{-- required for subscriptions --}}
-                            	            <input type="hidden" name="metadata" id="nd" value="" > {{-- For other necessary things you want to add to your payload. it is optional though --}}
+                            	            <input type="hidden" name="pt" id="posting-pt" value="">
+                            	            <input type="hidden" name="pid" id="posting-pid" value="">
                             
 										   </form>
 										    <!-- payment form -->

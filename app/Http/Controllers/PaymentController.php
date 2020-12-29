@@ -52,7 +52,65 @@ class PaymentController extends Controller {
 		
 		
 		$req = $request->all();
-       #dd($req);
+		#dd($req);
+		if(isset($req['pid']))
+		{
+			$p = $this->helpers->getPlan($req['pid']);
+			$req['plan'] = $p['ps_id'];
+			//you are here
+			
+			if($req['pt'] == "card")
+			{
+				 $request->reference = Paystack::genTranxRef();
+                    $request->key = config('paystack.secretKey');
+			 
+			        try{
+				      return Paystack::getAuthorizationUrl()->redirectNow(); 
+			        }
+			        catch(Exception $e)
+			        {
+				      $request->session()->flash("pay-card-status-error","ok");
+			          return redirect()->intended("checkout");
+			        }
+			}
+			else
+			{
+				$sp = $this->helpers->getSavedPayment($req['pt']);
+				 $ret = [];
+				 
+				 if(count($sp) > 0)
+				 {
+					 $spdt = $sp['data'];
+					 
+					 $rr = [
+                  'data' => [
+				    'authorization_code' => trim($spdt->authorization_code),
+					'email' => trim($spdt->auth_email),
+					'amount' => $req['amount'],
+					'plan' => $req['plan'],
+				  ],
+                  'headers' => [
+		           'Authorization' => "Bearer ".env("PAYSTACK_SECRET_KEY")
+		           ],
+                  'url' => "https://api.paystack.co/transaction/charge_authorization",
+                  'method' => "post"
+                 ];
+      
+                  $dt = [];
+		           #dd($rr);
+			       $rett = $this->helpers->bomb($rr);
+                   $ret = json_decode($rett);
+				   
+				   
+				   dd($ret);
+				 }
+			}
+			 
+		}
+		else
+		{
+		 /**********/
+         #dd($req);
         $metadata = json_decode($req['metadata']);
         
         
@@ -73,6 +131,7 @@ class PaymentController extends Controller {
          
          else
          {
+			 
 			 if($metadata->pt == "card")
 			 {
 				 if($req['amount'] < 1)
@@ -150,37 +209,6 @@ class PaymentController extends Controller {
 					   ];
         	           $this->helpers->checkout($user,$rep);
 			
-			
-			/**
-			//send email to user
-			
-			$o = $this->helpers->getOrder($id);
-               #dd($o);
-			   
-               if($o != null || count($o) > 0)
-               {		  
-				  
-               	//We have the user, notify the customer and admin
-				//$ret = $this->helpers->smtp;
-				$ret = $this->helpers->getCurrentSender();
-				$ret['order'] = $o;
-				$ret['name'] = $name;
-				$ret['subject'] = "Your payment for order ".$o['payment_code']." has been confirmed!";
-		        $ret['em'] = $email;
-		        $this->helpers->sendEmailSMTP($ret,"emails.confirm-payment");
-				
-				#$ret = $this->helpers->smtp;
-				$ret['order'] = $o;
-				$ret['user'] =$email;
-				$ret['phone'] =$phone;
-		        $ret['subject'] = "URGENT: Received payment for order ".$o['payment_code'];
-		        $ret['shipping'] = $shipping;
-		        $ret['em'] = $this->helpers->adminEmail;
-		        $this->helpers->sendEmailSMTP($ret,"emails.admin-payment-alert");
-				$ret['em'] = $this->helpers->suEmail;
-		        $this->helpers->sendEmailSMTP($ret,"emails.admin-payment-alert");
-               }
-			   **/
 			   
                     $request->session()->flash("pay-card-status","ok");
 			
@@ -211,7 +239,10 @@ class PaymentController extends Controller {
 				  
 			 }
 			        
-         }        
+         }		 
+		 /**********/	
+		}
+               
         
         
     }
@@ -264,38 +295,6 @@ class PaymentController extends Controller {
 			 
 			#dd($paymentData);
         	$this->helpers->checkout($user,$paymentData);
-			
-			
-			/**
-			//send email to user
-			
-			$o = $this->helpers->getOrder($id);
-               #dd($o);
-			   
-               if($o != null || count($o) > 0)
-               {		  
-				  
-               	//We have the user, notify the customer and admin
-				//$ret = $this->helpers->smtp;
-				$ret = $this->helpers->getCurrentSender();
-				$ret['order'] = $o;
-				$ret['name'] = $name;
-				$ret['subject'] = "Your payment for order ".$o['payment_code']." has been confirmed!";
-		        $ret['em'] = $email;
-		        $this->helpers->sendEmailSMTP($ret,"emails.confirm-payment");
-				
-				#$ret = $this->helpers->smtp;
-				$ret['order'] = $o;
-				$ret['user'] =$email;
-				$ret['phone'] =$phone;
-		        $ret['subject'] = "URGENT: Received payment for order ".$o['payment_code'];
-		        $ret['shipping'] = $shipping;
-		        $ret['em'] = $this->helpers->adminEmail;
-		        $this->helpers->sendEmailSMTP($ret,"emails.admin-payment-alert");
-				$ret['em'] = $this->helpers->suEmail;
-		        $this->helpers->sendEmailSMTP($ret,"emails.admin-payment-alert");
-               }
-			   **/
 			   
             $request->session()->flash("pay-card-status","ok");
 			//return redirect()->intended($successLocation);
