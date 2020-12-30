@@ -2216,8 +2216,8 @@ class MainController extends Controller {
 		#dd($plans);
 		$secure = (isset($req['ss']) && $req['ss'] == "1") ? false : true;
 		$sps = $this->helpers->getSavedPayments($user);
-		$subs = $this->helpers->getUserPlans($user);
-		ddt($subs);
+		$subs = $this->helpers->getUserPlans($user,['active' => true]);
+		#dd($subs);
 		$ads = $this->helpers->getAds("wide-ad");
 		$plugins = $this->helpers->getPlugins();
 		

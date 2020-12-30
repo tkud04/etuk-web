@@ -65,6 +65,39 @@ let addApartmentDescriptionEditor = new Simditor({
 								
 								<div class="checkout-body">
 									<div class="row">
+									<?php
+									 if(count($subs) > 0)
+									 {
+									 $sub = $subs[0];
+									 $p = $sub['plan'];
+									 $stats = $sub['stats'];
+									 
+									 $exp = new DateTime($sub['date']);
+									 $e1 = new DateTime($exp->format("jS F, Y"));
+									 $e1->add(new DateInterval('P1M'));
+									?>
+                                     <div class="col-lg-12 col-md-12 col-sm-12 mt-1">
+									   <h4>Current Plan: <a href="javascript:void(0)" class="btn btn-success"><?php echo e($p['name']); ?></a></h4>
+									   <input type="hidden" id="ac" value="yes">
+									   
+									   <div class="col-lg-6 col-md-6 col-sm-12">
+											<div class="form-group">
+												<label>Postings left<i class="req">*</i></label>
+												<input type="text" class="form-control" value="<?php echo e($stats['posts_left']); ?> out of <?php echo e($p['pc']); ?> postings" readonly>
+											</div>
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-12">
+											<div class="form-group">
+												<label>Expires on:<i class="req">*</i></label>
+												<input type="text" class="form-control" value="<?php echo e($e1->format('jS F, Y')); ?>" readonly>
+											</div>
+										</div>
+									 </div>
+									<?php
+									 }
+									 else
+									 {
+									?>
 									  <div class="col-lg-12 col-md-12 col-sm-12 mt-5">
 											  <h4>Choose a Plan <a href="<?php echo e(url('plans')); ?>" target="_blank" class="btn btn-success">See Plans</a></h4>
 											  <div class="form-group">
@@ -146,7 +179,9 @@ let addApartmentDescriptionEditor = new Simditor({
                             	            
 										   </form>
 										    <!-- payment form -->
-											
+											<?php
+											}
+											?>
 											<div class="form-group text-center">
 											  <a href="javascript:void(0)" id="add-apartment-side-0-next" class="btn btn-theme">Next</a>
 											</div>

@@ -507,12 +507,14 @@ $subject = $data['subject'];
 					}
 					else
 					{
+					  $dt['multipart'] = [];
 					  foreach($data['data'] as $k => $v)
 				      {
 					    $temp = [
 					      'name' => $k,
 						  'contents' => $v
 					     ];
+						 
 					     array_push($dt['multipart'],$temp);
 				      }
 					}
@@ -2656,7 +2658,7 @@ function createSocial($data)
 			   $sps = $md['sps'];
 			   $ref = $payStackData['reference'];
 			   $plan = $this->getPlan($payStackData['plan']);
-			   #dd($payStackData);
+			   dd($payStackData);
 			   $ret = "error";
 			   
 			   if(count($plan) > 1)
@@ -4654,13 +4656,19 @@ function createSocial($data)
 	   			 return $ret;
 	         }
 
-	      function getUserPlans($user)
+	      function getUserPlans($user,$optionalParams=[])
 	      {
 	   	   $ret = [];
 	       if($user != null)
 		   {
 		     $plans = UserPlans::where('user_id',$user->id)->get();
-	   
+			 if(isset($optionalParams['active']) && $optionalParams['active'])
+			 {
+				 $plans = UserPlans::where([
+				                            'user_id' =>$user->id,
+				                            'status' =>"enabled",
+										   ])->get();
+			 }
 	   	     if(!is_null($plans))
 	   	     {
 			   $plans = $plans->sortByDesc('created_at');	
@@ -4688,8 +4696,8 @@ function createSocial($data)
 	                        $temp['user'] = $this->getUser($p->user_id); 
 	                        $temp['plan'] = $this->getPlan($p->plan_id); 
 	                        $temp['stats'] = $this->getUserPlanStats($temp); 
-	                        $temp['date'] = $p->created_at->format("jS F, Y h:i A"); 
-	                        $temp['updated'] = $p->updated_at->format("jS F, Y h:i A"); 
+	                        $temp['date'] = $p->created_at->format("jS F, Y"); 
+	                        $temp['updated'] = $p->updated_at->format("jS F, Y"); 
 	                        $ret = $temp; 
 	                }                          
                                                       
@@ -4700,28 +4708,15 @@ function createSocial($data)
 		   
 		   
 	   		  function getUserPlanStats($data)
-	              {
-	   			   dd($data);
-	   			 $ret = "error";
-                 $p = Plans::where('id',$data['xf'])->first();
-			 
-			 
-	   			 if(!is_null($p))
-	   			 {
-					 $fields = [
-					             'name' => $data['name'],
-					             'description' => $data['description'],
-					             'amount' => $data['amount'],
-					             'ps_id' => $data['ps_id'],
-					             'status' => $data['status']
-	                           ];
-					  $p->update($fields);
-	   			   $ret = "ok";
-	   			 }
-           	
-                                                      
-	                   return $ret;
-	              }
+	            {
+	   			   #dd($data);
+				   $u = $data['user'];
+				   $p = $data['plan'];
+	   			   $ret = [];
+                   $ret['aptCount'] = Apartments::where('user_id',$u['id'])->count();
+                   $ret['posts_left'] = $p['pc'] - $ret['aptCount'];
+			       return $ret;
+	            }
 
 	   		   function removeUserPlan($xf)
 	              {

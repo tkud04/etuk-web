@@ -167,22 +167,28 @@ $(document).ready(function() {
 	});
 	$("#add-apartment-side-0-next").click(e => {
 		e.preventDefault();
-		let plan = $('#add-apartment-plan').val(), paymentType = $('#posting-payment-type').val();
+		let plan = $('#add-apartment-plan').val(), ac = $('#ac').val(), paymentType = $('#posting-payment-type').val();
 		console.log(plan);
 		
-		if(plan == "none"){
+		if(ac == "yes"){
+	 	      selectCheckoutSide({side: 1,type: ".add-apartment",content: "ti-check"});
+	          hideElem(['#add-apartment-side-0']);
+			  showElem(['#add-apartment-side-1']);	
+		}
+		else{
+		  if(plan == "none"){
 			Swal.fire({
 				icon: 'error',
 				title: 'Select a plan'
 			});
-		}
-		else if(paymentType == "none"){
+		  }
+		  else if(paymentType == "none"){
 			Swal.fire({
 				icon: 'error',
 				title: 'Select a payment type'
 			});
-		}
-		else{
+		  }
+		  else{
 			if(parseInt(plan) == 1){
 			  selectCheckoutSide({side: 1,type: ".add-apartment",content: "ti-check"});
 	          hideElem(['#add-apartment-side-0']);
@@ -203,7 +209,9 @@ $(document).ready(function() {
 			  $('#posting-form').attr('action',paymentURL);
 			   $('#posting-form').submit();
 		    }
+		  }	
 		}
+		
 		
 	});
 	

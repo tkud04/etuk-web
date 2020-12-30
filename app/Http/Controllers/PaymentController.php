@@ -82,28 +82,56 @@ class PaymentController extends Controller {
 				 if(count($sp) > 0)
 				 {
 					 $spdt = $sp['data'];
-					 
-					 $rr = [
+					
+				  $rr = [
                   'data' => [
-				    'authorization_code' => trim($spdt->authorization_code),
-					'email' => trim($spdt->auth_email),
-					'amount' => $req['amount'],
+		             'authorization' => trim($spdt->authorization_code),
+					'customer' => trim($spdt->auth_email),
 					'plan' => $p['ps_id'],
-				  ],
+			      ],
                   'headers' => [
-		           'Authorization' => "Bearer ".env("PAYSTACK_SECRET_KEY")
-		           ],
-                  'url' => "https://api.paystack.co/transaction/charge_authorization",
-                  'method' => "post"
+		            'Authorization' => "Bearer ".env("PAYSTACK_SECRET_KEY")
+		          ],
+                  'url' => "https://api.paystack.co/subscription",
+                  'method' => "post",
+                  'type' => "multipart"
                  ];
-      
-                  $dt = [];
-		           #dd($rr);
-			       $rett = $this->helpers->bomb($rr);
+				  
+		           $rett = $this->helpers->bomb($rr);
                    $ret = json_decode($rett);
 				   
 				   
-				   dd($ret);
+				   #dd($ret);
+				   $psdata = $ret->data;
+					  $successLocation = "add-apartment";
+                      $failureLocation = "my-apartments";
+			
+			         if($psdata->status == "active")
+			         {
+						 /**
+						 $md = $payStackData['metadata'];
+			   $sps = $md['sps'];
+			   $ref = $payStackData['reference'];
+			   $plan = $this->getPlan($payStackData['plan']);
+						 **/
+						 $pd = [
+						   'metadata' => ['sps' => "no"],
+						   'reference' => $psdata->subscription_code,
+						   'plan' => $p['ps_id'],
+						   'npd' => $psdata->next_payment_date
+						 ];
+						 
+				       $this->helpers->subscribe($user,$pd);
+				       $request->session()->flash("subscribe-status","ok");
+			           return redirect()->intended($successLocation);
+			         }
+			         else
+                     {
+        	           //Payment failed, redirect to orders
+                       $request->session()->flash("subscribe-status","error");
+			           return redirect()->intended($failureLocation);
+                     }
+				   
 				 }
 			}
 			 
