@@ -124,7 +124,7 @@ let addApartmentDescriptionEditor = new Simditor({
 										<div class="col-lg-6 col-md-6">
 											<div class="form-group">
 												<label>Save payment info?</label>
-												<select class="form-control" name="sps" id="checkout-sps">
+												<select class="form-control" name="sps" id="posting-sps">
 												  <option value="yes" selected="selected">Yes</option>
 												  <option value="no">No</option>
 												</select>
@@ -142,9 +142,8 @@ let addApartmentDescriptionEditor = new Simditor({
                             	            <input type="hidden" name="email" value="<?php echo e($user->email); ?>"> 
                             	            <input type="hidden" name="quantity" value="1"> 
                             	            <input type="hidden" name="amount" value="100"> 
-                            	            <input type="hidden" name="pt" id="posting-pt" value="">
-                            	            <input type="hidden" name="pid" id="posting-pid" value="">
-                            
+                            	            <input type="hidden" name="metadata" id="posting-md" value="" > 
+                            	            
 										   </form>
 										    <!-- payment form -->
 											

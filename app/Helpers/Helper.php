@@ -93,7 +93,8 @@ class Helper implements HelperContract
 					 "remove-reservation-status" => "Reservation log removed.",
 					 "respond-to-reservation-status" => "Response sent.",
 					 "contact-status" => "Message sent! Our officials will get back to you shortly.",
-					 
+					 "subscribe-status" => "Your subscription is now active!",
+						
 					 //ERROR NOTIFICATIONS
 					 "invalid-apartment-id-status-error" => "Apartment not found.",
 					 "add-review-status-error" => "Please sign in to add a review.",
@@ -118,6 +119,7 @@ class Helper implements HelperContract
 					 "update-reservation-status-error" => "Reservation could not be updated, please try again.",
 					 "remove-reservation-status-error" => "Reservation could not be removed, please try again.",
 					 "contact-status-error" => "Message could not be updated, please try again.",
+					 "subscribe-status-error" => "Subscription could not be activated, please try again.",
                      ],
                      'errors'=> ["login-status-error" => "Wrong username or password, please try again.",
 					 "signup-status-error" => "There was a problem creating your account, please try again.",
@@ -2651,9 +2653,10 @@ function createSocial($data)
 		   function subscribe($user,$payStackData)
 		   {
 			   $md = $payStackData['metadata'];
+			   $sps = $md['sps'];
 			   $ref = $payStackData['reference'];
 			   $plan = $this->getPlan($payStackData['plan']);
-			   dd($payStackData);
+			   #dd($payStackData);
 			   $ret = "error";
 			   
 			   if(count($plan) > 1)
@@ -2670,7 +2673,7 @@ function createSocial($data)
                     //add to saved payments
 			        if($sps == "yes")
 			        {
-				      $authorization = $payStackResponse['authorization'];
+				      $authorization = $payStackData['authorization'];
 				      $authorization['auth_email'] = $user->email;
 				  
 				      $sp = SavedPayments::where([

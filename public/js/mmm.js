@@ -190,9 +190,16 @@ $(document).ready(function() {
 		    }
 		    else{
 			  //paying now
-			  let paymentURL = $("#card-action").val(); 
-			  $('#posting-pt').val(paymentType);
-			  $('#posting-pid').val(plan);
+			  let paymentURL = $("#card-action").val(), ds = {
+				  pid: plan,
+				  pt: paymentType,
+				  sps: $('#posting-sps').val()
+			  }; 
+			 
+			 console.log(ds);
+			 
+			  $('#posting-md').val(JSON.stringify(ds));
+			  
 			  $('#posting-form').attr('action',paymentURL);
 			   $('#posting-form').submit();
 		    }

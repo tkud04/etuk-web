@@ -53,17 +53,18 @@ class PaymentController extends Controller {
 		
 		$req = $request->all();
 		#dd($req);
-		if(isset($req['pid']))
+		$metadata = json_decode($req['metadata']);
+		
+		if(isset($metadata->pid))
 		{
-			$p = $this->helpers->getPlan($req['pid']);
-			$req['plan'] = $p['ps_id'];
+			$p = $this->helpers->getPlan($metadata->pid);
 			//you are here
-			
-			if($req['pt'] == "card")
+			#dd($p);
+			if($metadata->pt == "card")
 			{
 				 $request->reference = Paystack::genTranxRef();
                     $request->key = config('paystack.secretKey');
-                   $request->plan = $req['plan'];			 
+                   $request->plan = $p['ps_id'];			 
 			        try{
 				      return Paystack::getAuthorizationUrl()->redirectNow(); 
 			        }
@@ -75,7 +76,7 @@ class PaymentController extends Controller {
 			}
 			else
 			{
-				$sp = $this->helpers->getSavedPayment($req['pt']);
+				$sp = $this->helpers->getSavedPayment($metadata->pt);
 				 $ret = [];
 				 
 				 if(count($sp) > 0)
@@ -87,7 +88,7 @@ class PaymentController extends Controller {
 				    'authorization_code' => trim($spdt->authorization_code),
 					'email' => trim($spdt->auth_email),
 					'amount' => $req['amount'],
-					'plan' => $req['plan'],
+					'plan' => $p['ps_id'],
 				  ],
                   'headers' => [
 		           'Authorization' => "Bearer ".env("PAYSTACK_SECRET_KEY")
@@ -110,12 +111,7 @@ class PaymentController extends Controller {
 		else
 		{
 		 /**********/
-         #dd($req);
-        $metadata = json_decode($req['metadata']);
-        
-        
-		#$name = isset($req['name']) ? $req['name'] : $req['fname']." ".$req['lname'];
-        #dd($name);
+         
 		
         $validator = Validator::make($req, [
 							 'amount' => 'required',
