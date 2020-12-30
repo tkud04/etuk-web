@@ -16,6 +16,7 @@ Route::post('/', 'MainController@getIndex');
 Route::get('temp', 'MainController@getTemp');
 Route::get('about', 'MainController@getAbout');
 Route::get('faq', 'MainController@getFAQ');
+Route::get('plans', 'MainController@getPlans');
 Route::get('terms', 'MainController@getTerms');
 Route::get('privacy', 'MainController@getPrivacy');
 Route::get('contact', 'MainController@getContact');

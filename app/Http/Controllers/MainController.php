@@ -141,6 +141,40 @@ class MainController extends Controller {
 
     	return view("about",compact(['user','cart','messages','c','ad','banner','signals','plugins','banner']));
     }
+
+	/**
+	 * Show the plans page.
+	 *
+	 * @return Response
+	 */
+	public function getPlans(Request $request)
+    {
+		$user = null;
+		$messages = [];
+		if(Auth::check())
+		{
+			$user = Auth::user();
+			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
+		}
+		$req = $request->all();
+		$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
+		$cart = $this->helpers->getCart($user,$gid);
+		$c = $this->helpers->getCategories();
+		$banner = $this->helpers->getBanner();
+		//dd($bs);
+		$signals = $this->helpers->signals;
+		
+		$ads = $this->helpers->getAds("wide-ad");
+		$plugins = $this->helpers->getPlugins();
+		$plans = $this->helpers->getPlans();
+		
+		dd($plans);
+		
+		shuffle($ads);
+		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
+
+    	return view("plans",compact(['user','cart','messages','plans','c','ad','banner','signals','plugins','banner']));
+    }
 	
 	/**
 	 * Show the Contact page.
