@@ -2658,7 +2658,7 @@ function createSocial($data)
 			   $sps = $md['sps'];
 			   $ref = $payStackData['reference'];
 			   $plan = $this->getPlan($payStackData['plan']);
-			   dd($payStackData);
+			   #dd($payStackData);
 			   $ret = "error";
 			   
 			   if(count($plan) > 1)

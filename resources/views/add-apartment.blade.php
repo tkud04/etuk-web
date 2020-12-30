@@ -74,24 +74,27 @@ let addApartmentDescriptionEditor = new Simditor({
 									 
 									 $exp = new DateTime($sub['date']);
 									 $e1 = new DateTime($exp->format("jS F, Y"));
-									 $e1->add(new DateInterval('P1M'));
+									 $e1->add(new DateInterval('P29D'));
+									 
+									 $ac = $stats['aptCount'] == $p['pc'] ? "lluf" : "sey";
 									?>
                                      <div class="col-lg-12 col-md-12 col-sm-12 mt-1">
 									   <h4>Current Plan: <a href="javascript:void(0)" class="btn btn-success">{{$p['name']}}</a></h4>
-									   <input type="hidden" id="ac" value="yes">
-									   
-									   <div class="col-lg-6 col-md-6 col-sm-12">
+									   <input type="hidden" id="ac" value="{{$ac}}">
+									   <div class="row">
+									     <div class="col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group">
-												<label>Postings left<i class="req">*</i></label>
-												<input type="text" class="form-control" value="{{$stats['posts_left']}} out of {{$p['pc']}} postings" readonly>
+												<label>Postings<i class="req">*</i></label>
+												<input type="text" class="form-control" value="{{$stats['aptCount']}} out of {{$p['pc']}} used" readonly>
 											</div>
-										</div>
-										<div class="col-lg-6 col-md-6 col-sm-12">
+										  </div>
+										  <div class="col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group">
 												<label>Expires on:<i class="req">*</i></label>
 												<input type="text" class="form-control" value="{{$e1->format('jS F, Y')}}" readonly>
 											</div>
-										</div>
+										  </div>
+									   </div>
 									 </div>
 									<?php
 									 }

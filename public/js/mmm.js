@@ -170,10 +170,16 @@ $(document).ready(function() {
 		let plan = $('#add-apartment-plan').val(), ac = $('#ac').val(), paymentType = $('#posting-payment-type').val();
 		console.log(plan);
 		
-		if(ac == "yes"){
+		if(ac == "sey"){
 	 	      selectCheckoutSide({side: 1,type: ".add-apartment",content: "ti-check"});
 	          hideElem(['#add-apartment-side-0']);
 			  showElem(['#add-apartment-side-1']);	
+		}
+		else if(ac == "lluf"){
+		  Swal.fire({
+				icon: 'error',
+				title: 'You have used up all your postings'
+			});
 		}
 		else{
 		  if(plan == "none"){
