@@ -2216,13 +2216,15 @@ class MainController extends Controller {
 		#dd($plans);
 		$secure = (isset($req['ss']) && $req['ss'] == "1") ? false : true;
 		$sps = $this->helpers->getSavedPayments($user);
+		$subs = $this->helpers->getUserPlans($user);
+		ddt($subs);
 		$ads = $this->helpers->getAds("wide-ad");
 		$plugins = $this->helpers->getPlugins();
 		
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
         
-    	return view("add-apartment",compact(['user','cart','messages','c','ad','services','plans','secure','sps','states','countries','signals','plugins','banner']));
+    	return view("add-apartment",compact(['user','cart','messages','c','ad','services','plans','subs','secure','sps','states','countries','signals','plugins','banner']));
     }
 	
 	/**

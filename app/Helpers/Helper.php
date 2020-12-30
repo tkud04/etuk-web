@@ -4629,6 +4629,7 @@ function createSocial($data)
 	                        $temp['name'] = $p->name; 
 	                        $temp['description'] = $p->description; 
 	                        $temp['amount'] = $p->amount; 
+	                        $temp['pc'] = $p->pc; 
 	                        $temp['frequency'] = $p->frequency; 
 	                        $temp['ps_id'] = $p->ps_id;
 	                        $temp['date'] = $p->created_at->format("jS F, Y h:i A"); 
