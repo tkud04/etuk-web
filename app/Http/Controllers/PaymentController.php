@@ -63,7 +63,7 @@ class PaymentController extends Controller {
 			{
 				 $request->reference = Paystack::genTranxRef();
                     $request->key = config('paystack.secretKey');
-			 
+                   $request->plan = $req['plan'];			 
 			        try{
 				      return Paystack::getAuthorizationUrl()->redirectNow(); 
 			        }
@@ -269,7 +269,7 @@ class PaymentController extends Controller {
 		
         $paymentDetails = Paystack::getPaymentData();
 
-        #dd($paymentDetails);       
+        dd($paymentDetails);       
         
         $paymentData = $paymentDetails['data'];
         $md = $paymentData['metadata'];
