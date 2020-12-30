@@ -2648,6 +2648,51 @@ function createSocial($data)
 			   return $ret;
 		   }
 		   
+		   function subscribe($user,$payStackData)
+		   {
+			   $md = $payStackData['metadata'];
+			   $ref = $payStackData['reference'];
+			   $plan = $this->getPlan($payStackData['plan']);
+			   dd($payStackData);
+			   $ret = "error";
+			   
+			   if(count($plan) > 1)
+			   {
+				   $ret = "ok";
+				   
+				   $this->createUserPlan([
+					  'user_id' => $user->id,
+					  'plan_id' => $plan['id'],
+					  'ps_ref' => $ref,
+					  'status' => "enabled"
+					]);
+				   
+                    //add to saved payments
+			        if($sps == "yes")
+			        {
+				      $authorization = $payStackResponse['authorization'];
+				      $authorization['auth_email'] = $user->email;
+				  
+				      $sp = SavedPayments::where([
+				        'user_id' => $user->id,
+					    'data' => json_encode($authorization)
+				      ])->first();
+				  
+				      if($sp == null)
+				      {
+					     $this->createSavedPayment([
+		                   'user_id' => $user->id,
+		                   'type' => "subscribe",
+		                   'gateway' => "paystack",
+		                   'data' => json_encode($authorization),
+		                   'status' => "enabled"
+	    	             ]);  
+				      }
+		            }				   
+			   }
+			   
+			   return $ret;
+		   }
 		   
 		   function payWithPayStack($user, $payStackResponse)
            { 
@@ -4569,7 +4614,8 @@ function createSocial($data)
 	 	 function getPlan($id)
 	            {
 	            	$ret = [];
-	                $p = Plans::where('id',$id)->first();
+	                $p = Plans::where('id',$id)
+					          ->orWhere('ps_id',$id)->first();
  
 	               if($p != null)
 	                {
@@ -4598,6 +4644,7 @@ function createSocial($data)
 	   			 $ret = null;
 			     $ret = UserPlans::create(['user_id' => $data['user_id'], 
 	                                   'plan_id' => $data['plan_id'], 
+	                                   'ps_ref' => $data['ps_ref'], 
 	                                   'status' => $data['status']
 	                                  ]);
 	   			 return $ret;
@@ -4633,6 +4680,7 @@ function createSocial($data)
 	                {
                             $temp['id'] = $p->id; 
 	                    	$temp['status'] = $p->status; 
+	                    	$temp['ps_ref'] = $p->ps_ref; 
 	                        $temp['user'] = $this->getUser($p->user_id); 
 	                        $temp['plan'] = $this->getPlan($p->plan_id); 
 	                        $temp['stats'] = $this->getUserPlanStats($temp); 

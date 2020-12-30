@@ -256,7 +256,7 @@ class PaymentController extends Controller {
     {
 		$user = null;
 		$messages = [];
-		dd($request);
+		#dd($request);
 		if(Auth::check())
 		{
 			$user = Auth::user();
@@ -269,27 +269,49 @@ class PaymentController extends Controller {
 		
         $paymentDetails = Paystack::getPaymentData();
 
-        dd($paymentDetails);       
+        #dd($paymentDetails);       
         
         $paymentData = $paymentDetails['data'];
-        $md = $paymentData['metadata'];
-		
-		
-		#dd($md);       
-		$successLocation = "";
-        $failureLocation = "";
         
-        switch($md['type'])
-        {
+		if(isset($paymentData['plan']))
+		{
+			//host subscription
+			$successLocation = "add-apartment";
+            $failureLocation = "my-apartments";
+			
+			if($paymentData['status'] == 'success')
+			{
+				$this->helpers->subscribe($user,$paymentData);
+				$request->session()->flash("subscribe-status","ok");
+			    return redirect()->intended($successLocation);
+			}
+			else
+            {
+        	  //Payment failed, redirect to orders
+              $request->session()->flash("subscribe-status","error");
+			  return redirect()->intended($failureLocation);
+            }
+		}
+		else
+		{
+		  //guest checkout
+		  $md = $paymentData['metadata'];
+		
+		  dd($md);       
+		  $successLocation = "";
+          $failureLocation = "";
+        
+          switch($md['type'])
+          {
         	case 'checkout':
               $successLocation = "orders";
              $failureLocation = "checkout";           
             break; 
             
-       }
-        //status, reference, metadata(order-id,items,amount,ssa), type
-        if($paymentData['status'] == 'success')
-        {
+          }
+          //status, reference, metadata(order-id,items,amount,ssa), type
+          if($paymentData['status'] == 'success')
+          {
 			#dd($md);
 			$id = $md['ref'];
 			 
@@ -299,24 +321,26 @@ class PaymentController extends Controller {
             $request->session()->flash("pay-card-status","ok");
 			//return redirect()->intended($successLocation);
 			
-			$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
-		$cart = $this->helpers->getCart($user,$gid);
-		$c = $this->helpers->getCategories();
-		$ads = $this->helpers->getAds();
-		$plugins = $this->helpers->getPlugins();
-		shuffle($ads);
-		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
-		$signals = $this->helpers->signals;
-		$banner = $this->helpers->getBanner();
+		   $gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
+		   $cart = $this->helpers->getCart($user,$gid);
+		   $c = $this->helpers->getCategories();
+		   $ads = $this->helpers->getAds();
+		   $plugins = $this->helpers->getPlugins();
+		   shuffle($ads);
+		   $ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
+		   $signals = $this->helpers->signals;
+		   $banner = $this->helpers->getBanner();
 			
 			return view("cps",compact(['user','cart','c','messages','ad','signals','plugins','banner']));
-        }
-        else
-        {
+          }
+          else
+          {
         	//Payment failed, redirect to orders
             $request->session()->flash("pay-card-status","error");
 			return redirect()->intended($failureLocation);
-        }
+          }
+		}
+		
     }
     
 }
