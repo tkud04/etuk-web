@@ -256,7 +256,7 @@ class PaymentController extends Controller {
     {
 		$user = null;
 		$messages = [];
-		
+		dd($request);
 		if(Auth::check())
 		{
 			$user = Auth::user();
