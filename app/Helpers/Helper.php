@@ -1783,7 +1783,7 @@ function updateApartment($data)
                 return $ret;
            }
 
-		   function getReview($id)
+		   function getReview($id,$optionalParams=[])
            {
            	$ret = [];
               $r = Reviews::where('id',$id)
@@ -1791,9 +1791,12 @@ function updateApartment($data)
  
               if($r != null)
                {
+				   $apt = isset($optionalParams['apartment']) ? $optionalParams['apartment'] : false;
+				   
 				  $temp = [];
 				  $temp['id'] = $r->id;
 				  $temp['apartment_id'] = $r->apartment_id;
+				  if($apt) $temp['apartment'] = $this->getApartment($r->apartment_id,['host' => true]);
 				  $temp['user'] = $this->getUser($r->user_id);
 				  $temp['stats'] = $this->getReviewStats($r->id);
      			  $temp['service'] = $r->service;
@@ -4740,6 +4743,7 @@ function createSocial($data)
 	   			 $ret = null;
 			     $ret = Activities::create(['user_id' => $data['user_id'], 
 	                                   'type' => $data['type'], 
+	                                   'data' => $data['data'], 
 	                                   'mode' => $data['mode']	                               
 	                                  ]);
 	   			 return $ret;
@@ -4790,15 +4794,36 @@ function createSocial($data)
 				function getActivityMessage($data)
 				{
 					$u = $data['user'];
-					$ret = "";
+					$ret = ""; $icon = "";
+					$dt = explode(",",$data['data']);
 					
 					switch($data['type'])
 					{
 						case "checkout":
 						break;
+						
+						case "guest-review":
+						//0 - review_id
+						$r = $this->getReview($dt[0],['apartment' => true]);
+						$sum = ($r['service'] + $r['location'] + $r['security'] + $r['cleanliness'] + $r['comfort']) / 5;
+						$apt = $r['apartment'];
+						$rc = $sum > 3.5 ? "high" : "low";
+						$ret = "You left a review of <div class='numerical-rating ".$rc."' data-rating='".$sum."'></div> on <strong><a href='javascript:void(0)'>".$apt['name']."</a></strong>"; 
+						$icon = "ti-home";
+						break;
+						
+						case "host-review":
+						//0 - review_id
+						$r = $this->getReview($dt[0],['apartment' => true]);
+						$sum = ($r['service'] + $r['location'] + $r['security'] + $r['cleanliness'] + $r['comfort']) / 5;
+						$apt = $r['apartment']; $u = $r['user'];
+						$rc = $sum > 3.5 ? "high" : "low";
+						$ret = "<strong><a href='javascript:void(0)'>".$u['fname']." ".$u['lname']."</a></strong> left a review of <div class='numerical-rating ".$rc."' data-rating='".$sum."'></div> on <strong><a href='javascript:void(0)'>".$apt['name']."</a></strong>";
+						$icon = "ti-home";
+						break;
 					}
 					
-					return $ret;
+					return ['icon' => $icon,'msg' => $ret];
 				}
 
 	   		   function removeActivity($xf)

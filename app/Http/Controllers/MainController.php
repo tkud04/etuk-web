@@ -414,7 +414,7 @@ class MainController extends Controller {
 			$revenueData = $this->helpers->getTransactionData($user);
 			$bsa = $this->helpers->getBestSellingApartments($user);
 			#dd($transactions);
-			$cpt = ['user','cart','messages','transactions','revenueData','bsa','c','ad','signals','plugins','banner'];
+			$cpt = ['user','cart','messages','activities','transactions','revenueData','bsa','c','ad','signals','plugins','banner'];
 			$v = "host-dashboard";
 		}
 		else if($user->mode == "guest")
@@ -423,7 +423,7 @@ class MainController extends Controller {
 			$sapts = $this->helpers->getSavedApartments($user);
 			$orders = $this->helpers->getOrders($user);
 			#dd($sps);
-			$cpt = ['user','cart','messages','sps','sapts','orders','c','ad','signals','plugins','banner'];
+			$cpt = ['user','cart','messages','activities','sps','sapts','orders','c','ad','signals','plugins','banner'];
 			$v = "guest-dashboard";
 		}
 		
@@ -1708,7 +1708,27 @@ class MainController extends Controller {
 			   $req['user_id'] = $user->id;	  
 			   $req['apartment_id'] = $req['apt-id'];	  
 			   $req['comment'] = $req['msg'];	  
-		       $this->helpers->createReview($req);
+		       $r = $this->helpers->createReview($req);
+			   
+			   //add activity
+			   //guest
+			   $this->helpers->createActivity([
+			         'type' => "guest-review",
+			         'mode' => "guest",
+			         'user_id' => $user->id,
+			         'data' => $r->id,
+			   ]);
+
+			   //host
+			   $a = $this->helpers->getApartment($req['apt-id'],['host' => true]);
+			   $h = $a['host'];
+			   $this->helpers->createActivity([
+			         'type' => "host-review",
+			         'mode' => "host",
+			         'user_id' => $h['id'],
+			         'data' => $r->id,
+			   ]);
+			   
 			   session()->flash("add-review-status","ok");
 			   $uu = "apartment?xf=".$req['axf'];
 			   return redirect()->intended($uu);	
