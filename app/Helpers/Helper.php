@@ -51,6 +51,7 @@ use App\Tags;
 use App\ReservationLogs;
 use App\Plans;
 use App\UserPlans;
+use App\Activities;
 use App\Guests;
 use \Swift_Mailer;
 use \Swift_SmtpTransport;
@@ -4723,6 +4724,83 @@ function createSocial($data)
 	   			    #dd($data);
 	   			    $ret = "error";
 	   			     $p = UserPlans::where('id',$xf)->first();
+			 
+			 
+	   			    if(!is_null($p))
+	   			    {
+	   				  $p->delete();
+	   			      $ret = "ok";
+	   			    }
+           
+	              }
+				
+		    function createActivity($data)
+	        {
+	   			   #dd($data);
+	   			 $ret = null;
+			     $ret = Plans::create(['name' => $data['name'], 
+	                                   'description' => $data['description'], 
+	                                   'amount' => $data['amount'], 
+	                                   'pc' => $data['pc'], 
+	                                   'ps_id' => $data['ps_id'], 
+	                                   'frequency' => $data['frequency'], 
+	                                   'added_by' => $data['added_by'], 
+	                                   'status' => $data['status']
+	                                  ]);
+	   			 return $ret;
+	         }
+
+	      function getActivities()
+	      {
+	   	   $ret = [];
+	       $plans = Plans::where('id','>',0)->get();
+	   	     if(!is_null($plans))
+	   	     {
+			   $plans = $plans->sortByDesc('created_at');	
+	   		   foreach($plans as $p)
+	   		   {
+	   		     $temp = $this->getPlan($p->id);
+	   		     array_push($ret,$temp);
+	   	       }
+			 }
+	   
+	   	   return $ret;
+	      }
+		  
+		  
+	 	 function getActivity($id)
+	            {
+	            	$ret = [];
+	                $p = Plans::where('id',$id)
+					          ->orWhere('ps_id',$id)->first();
+ 
+	               if($p != null)
+	                {
+                            $temp['id'] = $p->id; 
+	                    	$temp['status'] = $p->status; 
+	                        $temp['added_by'] = $this->getUser($p->added_by); 
+	                        $temp['user_id'] = $p->user_id; 
+	                        $temp['name'] = $p->name; 
+	                        $temp['description'] = $p->description; 
+	                        $temp['amount'] = $p->amount; 
+	                        $temp['pc'] = $p->pc; 
+	                        $temp['frequency'] = $p->frequency; 
+	                        $temp['ps_id'] = $p->ps_id;
+	                        $temp['date'] = $p->created_at->format("jS F, Y h:i A"); 
+	                        $temp['updated'] = $p->updated_at->format("jS F, Y h:i A"); 
+	                        $ret = $temp; 
+	                }                          
+                                                      
+	                 return $ret;
+	            }
+   
+				  
+
+	   		   function removeActivity($xf)
+	              {
+	   			    #dd($data);
+	   			    $ret = "error";
+	   			     $p = Plans::where('id',$xf)->first();
 			 
 			 
 	   			    if(!is_null($p))

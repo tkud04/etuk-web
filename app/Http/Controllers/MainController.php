@@ -406,6 +406,8 @@ class MainController extends Controller {
         
 		$cpt = []; $v = "errors.404";
 		
+		$activities = $this->helpers->getActivities($user);
+		
 		if($user->mode == "host")
 		{
 			$transactions = $this->helpers->getTransactions($user);
