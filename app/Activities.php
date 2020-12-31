@@ -13,6 +13,6 @@ class Activities extends Model
      * @var array
      */
     protected $fillable = [
-        'id', 'user_id', 'type', 'mode'
+        'id', 'user_id', 'type', 'data', 'mode'
     ];
 }
