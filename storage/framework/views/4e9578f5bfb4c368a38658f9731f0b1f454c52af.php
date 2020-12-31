@@ -94,6 +94,48 @@ let transactionsData1 = [
 								
 								<!-- Row -->
 								<div class="row">
+									
+									<div class="col-lg-6 col-md-12">
+										<div class="dashboard-gravity-list with-icons">
+											<h4>Recent Activities</h4>
+											<ul>
+												<li>
+													<i class="dash-icon-box ti-layers"></i> Your booking <strong><a href="javascript:void(0)">Shimla to Goa</a></strong> has been done!
+													<a href="javascript:void(0)" class="close-list-item"><i class="fa fa-close"></i></a>
+												</li>
+
+												<li>
+													<i class="dash-icon-box ti-star"></i> Jodie Farrell left a review <div class="numerical-rating high" data-rating="5.0"></div> on <strong><a href="javascript:void(0)">Burger Villa</a></strong>
+													<a href="javascript:void(0)" class="close-list-item"><i class="fa fa-close"></i></a>
+												</li>
+
+												<li>
+													<i class="dash-icon-box ti-heart"></i> your payment is pending for <strong><a href="javascript:void(0)">Manali Trip</a></strong> tour!
+													<a href="javascript:void(0)" class="close-list-item"><i class="fa fa-close"></i></a>
+												</li>
+
+												<li>
+													<i class="dash-icon-box ti-star"></i> You have calceled <a href="javascript:void(0)">Mumbai Trip</a> approved</strong>
+													<a href="javascript:void(0)" class="close-list-item"><i class="fa fa-close"></i></a>
+												</li>
+
+												<li>
+													<i class="dash-icon-box ti-heart"></i> Someone reply on your comment on <strong><a href="javascript:void(0)">London Trip</a></strong> Tour!
+													<a href="javascript:void(0)" class="close-list-item"><i class="fa fa-close"></i></a>
+												</li>
+
+												<li>
+													<i class="dash-icon-box ti-star"></i> You have give a review <div class="numerical-rating high" data-rating="4.7"></div> on <strong><a href="javascript:void(0)">Preet House</a></strong>
+													<a href="javascript:void(0)" class="close-list-item"><i class="fa fa-close"></i></a>
+												</li>
+
+												<li>
+													<i class="dash-icon-box ti-star"></i>You have give a review <div class="numerical-rating low" data-rating="2.8"></div> on <strong><a href="javascript:void(0)">Shimla Trou Trip</a></strong>
+													<a href="javascript:void(0)" class="close-list-item"><i class="fa fa-close"></i></a>
+												</li>
+											</ul>
+										</div>
+									</div>
 									<div class="col-lg-6 col-md-12">
 										<div class="dashboard-gravity-list with-icons">
 											<h4>Transaction History</h4>
@@ -139,42 +181,6 @@ let transactionsData1 = [
 											?>
 										</div>
 									</div>
-									
-									<div class="col-lg-6 col-md-12">
-										<div class="dashboard-gravity-list with-icons">
-											<h4>New messages</h4>
-											<?php
-											 if(count($messages) > 0)
-											 {
-											?>
-											 <ul>
-											<?php
-											   foreach($messages as $m)
-											   { 
-											?>
-												<li>
-													<i class="dash-icon-box ti-layers"></i> Your booking <strong><a href="#">Shimla to Goa</a></strong> has been done!
-													<a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
-												</li>
-
-											<?php
-											 }
-                                            ?>											 
-											</ul>
-											<h4><center><a href="<?php echo e(url('messages')); ?>" class="btn btn-theme">View more</a></center></h4>
-											<?php
-											 }
-											 else
-											 {
-											?>
-											<ul>
-											<li>No new messages yet.</li>
-											</ul>
-											<?php
-											 }
-											?>
-										</div>
-									</div>	
 								</div>
 								
 								<!-- Row -->
