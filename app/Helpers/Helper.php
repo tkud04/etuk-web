@@ -4738,28 +4738,26 @@ function createSocial($data)
 	        {
 	   			   #dd($data);
 	   			 $ret = null;
-			     $ret = Plans::create(['name' => $data['name'], 
-	                                   'description' => $data['description'], 
-	                                   'amount' => $data['amount'], 
-	                                   'pc' => $data['pc'], 
-	                                   'ps_id' => $data['ps_id'], 
-	                                   'frequency' => $data['frequency'], 
-	                                   'added_by' => $data['added_by'], 
-	                                   'status' => $data['status']
+			     $ret = Activities::create(['user_id' => $data['user_id'], 
+	                                   'type' => $data['type'], 
+	                                   'mode' => $data['mode']	                               
 	                                  ]);
 	   			 return $ret;
 	         }
 
-	      function getActivities()
+	      function getActivities($user)
 	      {
 	   	   $ret = [];
-	       $plans = Plans::where('id','>',0)->get();
-	   	     if(!is_null($plans))
+	       $activities = Activities::where([
+			                                 'user_id' => $user->id,
+											 'mode' => $user->mode
+			                               ])->get();
+	   	     if(!is_null($activities))
 	   	     {
-			   $plans = $plans->sortByDesc('created_at');	
-	   		   foreach($plans as $p)
+			   $activities = $activities->sortByDesc('created_at');	
+	   		   foreach($activities as $a)
 	   		   {
-	   		     $temp = $this->getPlan($p->id);
+	   		     $temp = $this->getActivity($a->id);
 	   		     array_push($ret,$temp);
 	   	       }
 			 }
@@ -4771,36 +4769,43 @@ function createSocial($data)
 	 	 function getActivity($id)
 	            {
 	            	$ret = [];
-	                $p = Plans::where('id',$id)
-					          ->orWhere('ps_id',$id)->first();
+	                $a = Activities::where('id',$id)->first();
  
-	               if($p != null)
+	               if($a != null)
 	                {
-                            $temp['id'] = $p->id; 
-	                    	$temp['status'] = $p->status; 
-	                        $temp['added_by'] = $this->getUser($p->added_by); 
-	                        $temp['user_id'] = $p->user_id; 
-	                        $temp['name'] = $p->name; 
-	                        $temp['description'] = $p->description; 
-	                        $temp['amount'] = $p->amount; 
-	                        $temp['pc'] = $p->pc; 
-	                        $temp['frequency'] = $p->frequency; 
-	                        $temp['ps_id'] = $p->ps_id;
-	                        $temp['date'] = $p->created_at->format("jS F, Y h:i A"); 
-	                        $temp['updated'] = $p->updated_at->format("jS F, Y h:i A"); 
+                            $temp['id'] = $a->id; 
+	                    	$temp['user'] = $this->getUser($a->user_id); 
+	                        $temp['type'] = $a->type; 
+							$temp['data'] = $a->data; 
+	                        $temp['mode'] = $a->mode;
+	                        $temp['date'] = $a->created_at->format("jS F, Y h:i A"); 
+	                        $temp['updated'] = $a->updated_at->format("jS F, Y h:i A"); 
+							$temp['msg'] = $this->getActivityMessage($temp); 
 	                        $ret = $temp; 
 	                }                          
                                                       
 	                 return $ret;
 	            }
    
-				  
+				function getActivityMessage($data)
+				{
+					$u = $data['user'];
+					$ret = "";
+					
+					switch($data['type'])
+					{
+						case "checkout":
+						break;
+					}
+					
+					return $ret;
+				}
 
 	   		   function removeActivity($xf)
 	              {
 	   			    #dd($data);
 	   			    $ret = "error";
-	   			     $p = Plans::where('id',$xf)->first();
+	   			     $p = Activities::where('id',$xf)->first();
 			 
 			 
 	   			    if(!is_null($p))
