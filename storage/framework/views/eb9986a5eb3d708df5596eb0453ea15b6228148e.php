@@ -98,8 +98,35 @@ $subtitle = "Manage your guest account here";
 											   $ratingClass = $stars > 3.5 ? "high" : "low";
 											?>
 												<li>
-											   <i class="dash-icon-box ti-star"></i> <div class="numerical-rating <?php echo e($ratingClass); ?>" data-rating="<?php echo e($stars); ?>"></div> <strong><a href="<?php echo e($au); ?>" target="_blank"><?php echo e($title); ?></a></strong> <?php echo e(ucwords($location)); ?>
+											        <i class="dash-icon-box ti-home"></i>  
+													<div class="row">
+													<div class="col-md-6">
+											        <strong>
+													 <a href="<?php echo e($au); ?>" target="_blank">
+													   <img src="<?php echo e($imgs[0]); ?>" style="width: 80px; height: 80px;"><br>
+													    <?php echo e($title); ?><br> 
+														<?php echo e(ucwords($location)); ?>
 
+													  
+													 </a>
+													 </strong>
+													</div>
+													<div class="col-md-6">
+													 <h3>
+													 Rating: <div class="numerical-rating <?php echo e($ratingClass); ?>" data-rating="<?php echo e($stars); ?>"></div>
+													 <div class="mt-2">
+													 <?php
+													  for($i = 0; $i < $stars; $i++)
+													  {
+													 ?>
+													 <i class="ti-star"></i>
+                                                     <?php
+											          }
+													 ?>
+													 </div>
+													 </h3>
+													</div>
+													</div>
 													<a href="javascript:void(0)" class="close-list-item"><i class="fa fa-close"></i></a>
 												</li>
 
