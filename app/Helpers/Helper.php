@@ -4796,30 +4796,47 @@ function createSocial($data)
 					$u = $data['user'];
 					$ret = ""; $icon = "";
 					$dt = explode(",",$data['data']);
+					$mode = $data['mode'];
 					
 					switch($data['type'])
 					{
 						case "checkout":
 						break;
 						
-						case "guest-review":
+						case "review":
 						//0 - review_id
 						$r = $this->getReview($dt[0],['apartment' => true]);
 						$sum = ($r['service'] + $r['location'] + $r['security'] + $r['cleanliness'] + $r['comfort']) / 5;
 						$apt = $r['apartment'];
 						$rc = $sum > 3.5 ? "high" : "low";
-						$ret = "You left a review of <div class='numerical-rating ".$rc."' data-rating='".$sum."'></div> on <strong><a href='javascript:void(0)'>".$apt['name']."</a></strong>"; 
 						$icon = "ti-home";
+						
+						if($mode == "guest")
+						{
+							$ret = "You left a review of <div class='numerical-rating ".$rc."' data-rating='".$sum."'></div> on <strong><a href='javascript:void(0)'>".$apt['name']."</a></strong>"; 
+						}
+						else if($mode == "host")
+						{
+							$u = $this->getUser($dt[1]);
+							$ret = "<strong><a href='javascript:void(0)'>".$u['fname']." ".$u['lname']."</a></strong> left a review of <div class='numerical-rating ".$rc."' data-rating='".$sum."'></div> on <strong><a href='javascript:void(0)'>".$apt['name']."</a></strong>";
+						}
 						break;
 						
-						case "host-review":
+						case "reservation":
 						//0 - review_id
-						$r = $this->getReview($dt[0],['apartment' => true]);
-						$sum = ($r['service'] + $r['location'] + $r['security'] + $r['cleanliness'] + $r['comfort']) / 5;
-						$apt = $r['apartment']; $u = $r['user'];
-						$rc = $sum > 3.5 ? "high" : "low";
-						$ret = "<strong><a href='javascript:void(0)'>".$u['fname']." ".$u['lname']."</a></strong> left a review of <div class='numerical-rating ".$rc."' data-rating='".$sum."'></div> on <strong><a href='javascript:void(0)'>".$apt['name']."</a></strong>";
-						$icon = "ti-home";
+						$apt = $this->getApartment($dt[0],['host' => true]);
+						$h = $apt['host'];
+						$icon = "ti-alert";
+						$url = url('apartment')."?xf=".$apt['apartment_id'];
+						
+						if($mode == "guest")
+						{
+							$ret = "You made a reservation for <strong><a href='".$url."'>".$apt['name']."</a></strong>"; 
+						}
+						else if($mode == "host")
+						{
+							$ret = "<strong><a href='javascript:void(0)'>".$u['fname']." ".$u['lname']."</a></strong> made a reservation for <strong><a href='".$url."'>".$apt['name']."</a></strong>";
+						}
 						break;
 					}
 					

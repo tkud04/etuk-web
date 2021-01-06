@@ -1399,6 +1399,23 @@ class MainController extends Controller {
 			     #dd($e);
 			     $s = "error";
 		       }
+			   
+			   //Add activities
+			   //guest
+			   $this->helpers->createActivity([
+			         'type' => "reservation",
+			         'mode' => "guest",
+			         'user_id' => $user->id,
+			         'data' => $req['axf'],
+			   ]);
+			   
+			   //host
+			   $this->helpers->createActivity([
+			         'type' => "reservation",
+			         'mode' => "host",
+			         'user_id' => $h['id'],
+			         'data' => $req['axf'],
+			   ]);
 
 
 			   session()->flash("add-reservation-status","ok");
@@ -1710,24 +1727,6 @@ class MainController extends Controller {
 			   $req['comment'] = $req['msg'];	  
 		       $r = $this->helpers->createReview($req);
 			   
-			   //add activity
-			   //guest
-			   $this->helpers->createActivity([
-			         'type' => "guest-review",
-			         'mode' => "guest",
-			         'user_id' => $user->id,
-			         'data' => $r->id,
-			   ]);
-
-			   //host
-			   $a = $this->helpers->getApartment($req['apt-id'],['host' => true]);
-			   $h = $a['host'];
-			   $this->helpers->createActivity([
-			         'type' => "host-review",
-			         'mode' => "host",
-			         'user_id' => $h['id'],
-			         'data' => $r->id,
-			   ]);
 			   
 			   session()->flash("add-review-status","ok");
 			   $uu = "apartment?xf=".$req['axf'];
