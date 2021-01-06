@@ -10,10 +10,13 @@
 						</div>
 						
 						<div class="col-lg-6 col-md-6">
+						<form method="post" action="<?php echo e(url('subscribe')); ?>" id="newsletter-form">
+							<?php echo csrf_field(); ?>
+
 							<div class="input-group">
-							  <input type="text" class="form-control" placeholder="Enter Your Email">
+							  <input type="text" id="newsletter-em" class="form-control" placeholder="Enter Your Email">
 							  <div class="input-group-append">
-								<button type="button" class="btn btn-black black">Subscribe</button>
+								<button type="button" id="newsletter-btn" class="btn btn-black black">Subscribe</button>
 							  </div>
 							</div>
 						</div>

@@ -1125,5 +1125,19 @@ $(document).ready(function() {
 	$('#ssf-amount').change(e => {
 		handleRange(e);
 	});
+	
+//NEWSLETTER
+	$('#newsletter-btn').click(e => {
+		let em = $('#newsletter-em').val(), validation = (em == "");
+		if(validation){
+			Swal.fire({
+			 icon: 'error',
+             title: "Enter your email address"
+           });
+		}
+		else{
+			 $('#newsletter-form').submit();
+		}
+	});
 
 });
