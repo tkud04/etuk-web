@@ -4557,18 +4557,22 @@ function createSocial($data)
 					  #dd([$h,$dt]);
 					  if($h['id'] == $dt['auth'])
 					  {
+						  $s = "";
 						 if($type=="approve")
 					     {
-						   $l->update(['status' => "approved"]);
+							 $s = "approved";
+						   $l->update(['status' => $s]);
 					   	   $subject = $h['fname']." ".$h['lname'].": ".$apt['name']." is available for booking!";
 					       $adminSubject = $apt['name']." just approved a reservation from ".$u['fname']." ".$u['lname'];
 					     }
 					     else if($type=="decline")
 					     {
-						    $l->update(['status' => "declined"]);
+							 $s = "declined";
+						    $l->update(['status' => $s]);
 						    $subject = $h['fname']." ".$h['lname'].": ".$apt['name']." is unavailable at the moment";
 						    $adminSubject = $apt['name']." just declined a reservation from ".$u['fname']." ".$u['lname'];
 					     }
+						 
 					     //send guest email
 					     $ret = $this->getCurrentSender();
 		               
@@ -4593,6 +4597,24 @@ function createSocial($data)
 			               #dd($e);
 			               $s = "error";
 		                 }
+						 
+						  //Add activities
+			              //guest
+			              $this->createActivity([
+			                'type' => "reservation-update",
+			                'mode' => "guest",
+			                'user_id' => $dt['user_id'],
+			                'data' => $dt['apartment_id'].",".$s
+			              ]);
+			   
+			              //host
+			              $this->createActivity([
+			                'type' => "reservation-update",
+			                'mode' => "host",
+			                'user_id' => $h['id'],
+			                'data' => $dt['apartment_id'].",".$s.",".$dt['user_id']
+			              ]);
+						 
 					     $ret = "ok"; 
 					  }
 				  }
@@ -4826,7 +4848,7 @@ function createSocial($data)
 						//0 - review_id
 						$apt = $this->getApartment($dt[0],['host' => true]);
 						$h = $apt['host'];
-						$icon = "ti-alert";
+						$icon = "ti-announcement";
 						$url = url('apartment')."?xf=".$apt['apartment_id'];
 						
 						if($mode == "guest")
@@ -4835,7 +4857,26 @@ function createSocial($data)
 						}
 						else if($mode == "host")
 						{
+							$u = $this->getUser($dt[1]);
 							$ret = "<strong><a href='javascript:void(0)'>".$u['fname']." ".$u['lname']."</a></strong> made a reservation for <strong><a href='".$url."'>".$apt['name']."</a></strong>";
+						}
+						break;
+						
+						case "reservation-update":
+						//0 - review_id
+						$apt = $this->getApartment($dt[0],['host' => true]);
+						$h = $apt['host']; $status = $dt[1];
+						$icon = "ti-announcement";
+						$url = url('apartment')."?xf=".$apt['apartment_id'];
+						
+						if($mode == "guest")
+						{
+							$ret = "Your reservation for <strong><a href='".$url."'>".$apt['name']."</a></strong> was ".$status; 
+						}
+						else if($mode == "host")
+						{
+							$u = $this->getUser($dt[2]);
+							$ret = "You ".$status." a reservation from <strong><a href='javascript:void(0)'>".$u['fname']." ".$u['lname']."</a></strong> for <strong><a href='".$url."'>".$apt['name']."</a></strong>";
 						}
 						break;
 					}

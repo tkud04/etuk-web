@@ -38,14 +38,14 @@ if(!isset($admin))
   if($l->status == "approved")
   {
 ?>
-<p>You can go ahead and book this apartment right away! <a href="<?php echo e($uu); ?>">Click here</a> or copy and paste this link: <?php echo e($uu); ?></p>
+<p>You can go ahead and book this apartment right away! <a href="<?php echo e($uu); ?>">Click here</a> or copy and paste this link: <a href="<?php echo e($uu); ?>"><?php echo e($uu); ?></a></p>
 <?php
   }
   else if($l->status == "declined")
   {
 
 ?>
-  <p>Not to worry, we've got other amazing apartments available for you! <a href="<?php echo e($au); ?>">View apartments now</a> or copy and paste this link: <?php echo e($au); ?></p>
+  <p>Not to worry, we've got other amazing apartments available for you! <a href="<?php echo e($au); ?>">View apartments now</a> or copy and paste this link: <a href="<?php echo e($au); ?>"><?php echo e($au); ?></a></p>
 <?php	  
   }
 }

@@ -1414,7 +1414,7 @@ class MainController extends Controller {
 			         'type' => "reservation",
 			         'mode' => "host",
 			         'user_id' => $h['id'],
-			         'data' => $req['axf'],
+			         'data' => $req['axf'].",".$user->id,
 			   ]);
 
 
