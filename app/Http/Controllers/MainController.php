@@ -2964,7 +2964,7 @@ class MainController extends Controller {
 		}
 
 		$req = $request->all();
-       dd($req);
+       #dd($req);
 	    
 		$validator = Validator::make($req,[
 		                    'em' => 'required'
@@ -2978,24 +2978,22 @@ class MainController extends Controller {
          }
 		 else
 		 {
-			if($this->helpers->hasReview(['user_id' => $user->id,'apartment_id' => $req['apt-id']]))
+			if($this->helpers->isSubscribed(['email' => $req['em']]))
 			{
-				session()->flash("duplicate-review-status-error","ok");
+				session()->flash("duplicate-subscribe-status-error","ok");
 			    return redirect()->back();
 			}
 			else
-			{
-			   $req['user_id'] = $user->id;	  
-			   $req['apartment_id'] = $req['apt-id'];	  
-			   $req['comment'] = $req['msg'];	  
-		       $r = $this->helpers->createReview($req);
+			{  
+			   $req['email'] = $req['em'];	  
+			   $req['status'] = "enabled";	  
+		       $r = $this->helpers->createLead($req);
 			   
 			   
-			   session()->flash("add-review-status","ok");
-			   $uu = "apartment?xf=".$req['axf'];
+			   session()->flash("subscribe-status","ok");
+			   $uu = "/";
 			   return redirect()->intended($uu);	
-			}
-			
+			}		
 		 }
     }
 	

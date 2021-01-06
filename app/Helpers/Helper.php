@@ -52,6 +52,7 @@ use App\ReservationLogs;
 use App\Plans;
 use App\UserPlans;
 use App\Activities;
+use App\Leads;
 use App\Guests;
 use \Swift_Mailer;
 use \Swift_SmtpTransport;
@@ -94,7 +95,7 @@ class Helper implements HelperContract
 					 "remove-reservation-status" => "Reservation log removed.",
 					 "respond-to-reservation-status" => "Response sent.",
 					 "contact-status" => "Message sent! Our officials will get back to you shortly.",
-					 "subscribe-status" => "Your subscription is now active!",
+					 "subscribe-status" => "You are now subscribed!",
 						
 					 //ERROR NOTIFICATIONS
 					 "invalid-apartment-id-status-error" => "Apartment not found.",
@@ -121,6 +122,7 @@ class Helper implements HelperContract
 					 "remove-reservation-status-error" => "Reservation could not be removed, please try again.",
 					 "contact-status-error" => "Message could not be updated, please try again.",
 					 "subscribe-status-error" => "Subscription could not be activated, please try again.",
+					 "duplicate-subscribe-status-error" => "You are already subscribed.",
                      ],
                      'errors'=> ["login-status-error" => "Wrong username or password, please try again.",
 					 "signup-status-error" => "There was a problem creating your account, please try again.",
@@ -4898,8 +4900,63 @@ function createSocial($data)
 	   			    }
            
 	              }
+				  
+				  
+				 function createLead($data)
+	        {
+	   			   #dd($data);
+	   			 $ret = null;
+			     $ret = Leads::create(['email' => $data['email'], 
+	                                   'status' => $data['status']                              
+	                                  ]);
+	   			 return $ret;
+	         }
+
+	      function getLeads()
+	      {
+	   	   $ret = [];
+	       $leads = Leads::where('id','>',"0")->get();
+	   	     if(!is_null($leads))
+	   	     {
+			   $leads = $leads->sortByDesc('created_at');	
+	   		   foreach($leads as $l)
+	   		   {
+	   		     $temp = $this->getLead($l->id);
+	   		     array_push($ret,$temp);
+	   	       }
+			 }
+	   
+	   	   return $ret;
+	      }
+		  
+		  
+	 	 function getLead($id)
+	            {
+	            	$ret = [];
+	                $l = Leads::where('id',$id)->first();
+ 
+	               if($l != null)
+	                {
+                            $temp['id'] = $l->id; 
+	                    	$temp['email'] = $l->email; 
+	                        $temp['status'] = $l->status; 
+							$temp['date'] = $l->created_at->format("jS F, Y h:i A"); 
+	                        $temp['updated'] = $l->updated_at->format("jS F, Y h:i A"); 
+							$ret = $temp; 
+	                }                          
+                                                      
+	                 return $ret;
+	            }
 				
-				
+         function isSubscribed($dt)
+		        {
+			      $ret = false;
+				  
+                  $l = Leads::where($dt)->first();
+			      if($l != null) $ret = true;
+                  
+				  return $ret;
+		        }
 
 	
    

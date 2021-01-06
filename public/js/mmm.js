@@ -38,7 +38,7 @@ $(document).ready(function() {
 	   }
     });
 	
-	$("#s-form").submit(e => {
+	$("#signup-submit").click(e => {
        e.preventDefault();
 	  
        hideInputErrors("signup");	  
@@ -72,7 +72,7 @@ $(document).ready(function() {
 	   }
     });
 	
-	$("#l-form").submit(e => {
+	$("#login-submit").click(e => {
        e.preventDefault();
 	  
        hideInputErrors("login");	  
