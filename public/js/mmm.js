@@ -188,7 +188,7 @@ $(document).ready(function() {
 				title: 'Select a plan'
 			});
 		  }
-		  else if(paymentType == "none"){
+		  else if(plan != "1" && paymentType == "none"){
 			Swal.fire({
 				icon: 'error',
 				title: 'Select a payment type'
