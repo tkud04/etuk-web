@@ -690,10 +690,22 @@ $subject = $data['subject'];
 		   
    
 		   
-		   function getUser($id)
+		  function getUser($id)
            {
            	$ret = [];
-               $u = User::where('email',$id)
+			if($id == "admin")
+			{
+			  $ret = [
+			    'id' => "admin",
+			    'fname' => "Admin",
+			    'lname' => "",
+			    'phone' => "admin",
+			    'email' => "admin",
+			  ];
+			}
+			else
+			{
+				$u = User::where('email',$id)
 			            ->orWhere('id',$id)->first();
               
               if($u != null)
@@ -704,17 +716,19 @@ $subject = $data['subject'];
                        $temp['phone'] = $u->phone; 
                        $temp['email'] = $u->email; 
                        $temp['role'] = $u->role; 
-                       $temp['mode'] = $u->mode; 
-                       $temp['mode_type'] = $u->mode_type; 
                        $temp['status'] = $u->status;
+					   $temp['mode'] = $u->mode; 
+                       $temp['mode_type'] = $u->mode_type; 
 					   $temp['avatar'] = $this->getCloudinaryMedia([[ 'url' => $u->avatar,'src_type' => $u->avatar_type ]]);
                        $temp['verified'] = $u->verified; 
                        $temp['id'] = $u->id; 
                        $temp['date'] = $u->created_at->format("jS F, Y"); 
+                       $temp['updated'] = $u->updated_at->format("jS F, Y h:i A"); 
                        $ret = $temp; 
-               }                          
-                                                      
-                return $ret;
+               }
+			}                                      
+            
+			return $ret;
            }
 		   
 		   
@@ -1007,7 +1021,8 @@ function isDuplicateUser($data)
 								   'delete_token' => $i['delete_token'],
 								   'deleted' => $i['deleted'],
 								   'cover' => $i['ci'],
-								   'type' => $i['type']
+								   'type' => $i['type'],
+								   'src_type' => ""
                          ]);
                     }
 				}
