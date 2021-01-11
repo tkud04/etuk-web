@@ -2447,12 +2447,14 @@ class MainController extends Controller {
 		    $plugins = $this->helpers->getPlugins();
 		
 		    $apartment = $this->helpers->getApartment($req['xf'],['imgId' => true]);
-			$plans = Paystack::getAllPlans();
-			#dd($plans);
+			$plans = $this->helpers->getPlans();
+			$banks = $this->helpers->banks;
+		    $bankAccounts = $this->helpers->getBankDetails($user);
+			#dd($apartment);
 		    shuffle($ads);
 		    $ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
         
-    	    return view("my-apartment",compact(['user','cart','messages','c','ad','services','plans','apartment','states','countries','signals','plugins','banner']));
+    	    return view("my-apartment",compact(['user','cart','messages','c','ad','services','plans','banks','bankAccounts','apartment','states','countries','signals','plugins','banner']));
 		}
 		else
 		{

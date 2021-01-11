@@ -21,6 +21,8 @@ $media = $apartment['media'];
 $rawImgs = $media['images'];
 $imgs = $cmedia['images'];
 $video = $cmedia['video'];
+
+$bank_id = isset($apartment['bank']['id']) ? $apartment['bank']['id'] : "";
 ?>
 
 @extends('layout')
@@ -519,6 +521,49 @@ let myApartmentDescriptionEditor = new Simditor({
 											<h4>Final Notes</h4>
 											<p>Take a moment to preview the information about your apartment to ensure there are no errors or mistypes as your request will be reviewed by an admin. If you are sure all your information is correct click on <b>Submit</b> below. To make changes click on <b>Back</b>.</p>
 											
+										</div>
+										
+										<div class="col-md-12 col-lg-12">
+										  <div class="form-group">
+												<label>Select Bank Account<i class="req">*</i></label>
+												<select class="form-control" id="add-apartment-bank">
+												  <option value="none">Select bank account</option>
+												  <?php
+												   foreach($bankAccounts as $b)
+												   {
+													   $ss = $bank_id == $b['id'] ? " selected='selected'" : "";
+												  ?>
+												    <option value="{{$b['id']}}"{{$ss}}>{{strtoupper($b['bname'])}} - {{$b['acname']}} - {{$b['acnum']}}</option>
+												  <?php
+												   }
+												  ?>
+												  <option value="new">Add a new bank account</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-md-12 col-lg-12" id="add-apartment-bank-new">
+										  <div class="form-group">
+												<label>Select Bank<i class="req">*</i></label>
+												<select class="form-control" id="my-apartment-bname">
+												  <option value="none">Select bank</option>
+												  <?php
+												   foreach($banks as $k => $v)
+												   {
+												  ?>
+												    <option value="{{$k}}">{{$v}}</option>
+												  <?php
+												   }
+												  ?>
+												</select>
+											</div>
+											<div class="form-group">
+												<label>Account name<i class="req">*</i></label>
+												<input type="text" class="form-control" id="my-apartment-acname" placeholder="Account name">
+											</div>
+											<div class="form-group">
+												<label>Account number<i class="req">*</i></label>
+												<input type="text" class="form-control" id="my-apartment-acnum" placeholder="Account number">
+											</div>
 										</div>
 										
 										<div class="col-lg-12 col-md-12 col-sm-12">

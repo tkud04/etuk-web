@@ -591,7 +591,7 @@ let addApartmentDescriptionEditor = new Simditor({
 												   foreach($bankAccounts as $b)
 												   {
 												  ?>
-												    <option value="{{$b['id']}}">{{$b['bname']}} - {{$b['acname']}} - {{$b['acnum']}}</option>
+												    <option value="{{$b['id']}}">{{strtoupper($b['bname'])}} - {{$b['acname']}} - {{$b['acnum']}}</option>
 												  <?php
 												   }
 												  ?>
