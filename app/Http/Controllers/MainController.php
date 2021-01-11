@@ -2272,6 +2272,8 @@ class MainController extends Controller {
 		$secure = (isset($req['ss']) && $req['ss'] == "1") ? false : true;
 		$sps = $this->helpers->getSavedPayments($user);
 		$subs = $this->helpers->getUserPlans($user,['active' => true]);
+		$banks = $this->helpers->banks;
+		$bankAccounts = $this->helpers->getBankDetails($user);
 		#dd($subs);
 		$ads = $this->helpers->getAds("wide-ad");
 		$plugins = $this->helpers->getPlugins();
@@ -2279,7 +2281,7 @@ class MainController extends Controller {
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
         
-    	return view("add-apartment",compact(['user','cart','messages','c','ad','services','plans','subs','secure','sps','states','countries','signals','plugins','banner']));
+    	return view("add-apartment",compact(['user','cart','messages','c','ad','services','plans','subs','banks','bankAccounts','secure','sps','states','countries','signals','plugins','banner']));
     }
 	
 	/**

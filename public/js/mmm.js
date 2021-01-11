@@ -10,7 +10,7 @@ $(document).ready(function() {
 			  "#rp-loading","#rp-finish",
 			  "#apt-chat-loading","#apt-chat-finish","#message-reply-loading"
 			  ]);
-	hideElem(["#sps-row","#add-apartment-side-1","#add-apartment-side-2","#add-apartment-side-3"]);
+	hideElem(["#sps-row","#add-apartment-bank-new","#add-apartment-side-1","#add-apartment-side-2","#add-apartment-side-3"]);
 	hideElem(["#apartment-preference-side-2"]);
 	hideElem(["#my-apartment-side-2","#my-apartment-side-3"]);
 	hideElem([".review-loading","#host-total-revenue-loading","#host-best-selling-apartments-loading"]);
@@ -163,6 +163,16 @@ $(document).ready(function() {
 		}
 		else{
 			showElem(['#sps-row']);
+		}
+	});
+	$("#add-apartment-bank").change(e => {
+		let b = $('#add-apartment-bank').val();
+		
+		if(b == "new"){
+			showElem(['#add-apartment-bank-new']);
+		}
+		else{
+			hideElem(['#add-apartment-bank-new']);
 		}
 	});
 	$("#add-apartment-side-0-next").click(e => {
@@ -327,6 +337,9 @@ $(document).ready(function() {
          //console.log("images: ",aptImages);
 	   
 	   let aptPlan = $('#add-apartment-plan').val(), side3_validation = (aptPlan == "none"); 
+	   let aptBank = $('#add-apartment-bank').val(), aptBname = $('#add-apartment-bname').val(), aptAcname = $('#add-apartment-acname').val(), aptAcnum = $('#add-apartment-acnum').val(),
+	   bankValidation = (aptBank == "none" || ( aptBank == "new" && (aptBname == "none" || aptAcname == "" || aptAcnum == "") ) );
+	   
 	   
 	   if(side1_validation || side2_validation){
 		   Swal.fire({
@@ -350,6 +363,12 @@ $(document).ready(function() {
 		   Swal.fire({
 			 icon: 'error',
              title: "Select a subscription plan."
+           })
+	   }
+	   else if(bankValidation){
+		   Swal.fire({
+			 icon: 'error',
+             title: "Select a bank account or fill all required bank details."
            })
 	   }
 	   /**
@@ -387,6 +406,10 @@ $(document).ready(function() {
 		 fd.append("city",aptCity);
 		 fd.append("lga",aptLGA);
 		 fd.append("state",aptState);
+		 fd.append("bank",aptBank);
+		 fd.append("bname",aptBname);
+		 fd.append("acname",aptAcname);
+		 fd.append("acnum",aptAcnum);
 		 fd.append("facilities",JSON.stringify(ff));
 		 
 		 //fd.append("video",aptVideo[0]);

@@ -567,6 +567,7 @@ let addApartmentDescriptionEditor = new Simditor({
 									
 									
 									<div class="row">
+										
 										<div class="col-md-12 col-lg-12">
 										
 											<ul class="booking-detail-list" id="add-apartment-final-preview">
@@ -578,6 +579,48 @@ let addApartmentDescriptionEditor = new Simditor({
 											<p>Take a moment to preview the information about your apartment to ensure there are no errors or mistypes as your request will be reviewed by an admin. If you are sure all your information is correct click on <b>Submit</b> below. To make changes click on <b>Back</b>.</p>
 										</div>
 										
+										
+										<div class="col-md-12 col-lg-12">
+										  <div class="form-group">
+												<label>Select Bank Account<i class="req">*</i></label>
+												<select class="form-control" id="add-apartment-bank">
+												  <option value="none">Select bank account</option>
+												  <?php
+												   foreach($bankAccounts as $b)
+												   {
+												  ?>
+												    <option value="<?php echo e($b['id']); ?>"><?php echo e($b['bname']); ?> - <?php echo e($b['acname']); ?> - <?php echo e($b['acnum']); ?></option>
+												  <?php
+												   }
+												  ?>
+												  <option value="new">Add a new bank account</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-md-12 col-lg-12" id="add-apartment-bank-new">
+										  <div class="form-group">
+												<label>Select Bank<i class="req">*</i></label>
+												<select class="form-control" id="add-apartment-bname">
+												  <option value="none">Select bank</option>
+												  <?php
+												   foreach($banks as $k => $v)
+												   {
+												  ?>
+												    <option value="<?php echo e($v); ?>"><?php echo e($k); ?></option>
+												  <?php
+												   }
+												  ?>
+												</select>
+											</div>
+											<div class="form-group">
+												<label>Account name<i class="req">*</i></label>
+												<input type="text" class="form-control" id="add-apartment-acname" placeholder="Account name">
+											</div>
+											<div class="form-group">
+												<label>Account number<i class="req">*</i></label>
+												<input type="text" class="form-control" id="add-apartment-acnum" placeholder="Account number">
+											</div>
+										</div>
 										
 										<div class="col-lg-12 col-md-12 col-sm-12">
 											<div class="form-group text-center" id="add-apartment-submit">
