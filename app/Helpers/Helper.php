@@ -5010,7 +5010,7 @@ function createSocial($data)
 		  function getBankDetails($user)
 	      {
 	   	   $ret = [];
-	       $banks = BankDetails::where('id','>',"0")->get();
+	        $banks = BankDetails::where('user_id',$user->id)->get();
 	   	     if(!is_null($banks))
 	   	     {
 			   $banks = $banks->sortByDesc('created_at');	

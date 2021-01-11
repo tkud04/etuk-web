@@ -2313,7 +2313,7 @@ class MainController extends Controller {
 	    
 		$validator = Validator::make($req,[
 		                    'name' => 'required',
-		                    'url' => 'required|unique:apartments',
+		                    'url' => 'required',
 		                    'description' => 'required',
 		                    'category' => 'required|not_in:none',
 		                    'property_type' => 'required|not_in:none',
@@ -2327,19 +2327,17 @@ class MainController extends Controller {
 		                    'city' => 'required',
 		                    'lga' => 'required',
 		                    'state' => 'required',
+		                    'country' => 'required',
 		                    'facilities' => 'required',
 		                    'img_count' => 'required|numeric',
 		                    'cover' => 'required',
-		                    'bank' => 'required|not_in:none',
-		                    'bname' => 'required',
-		                    'acname' => 'required',
-		                    'acnum' => 'required',
+		                    'bank' => 'required|not_in:none'
 							
 		]);
 		
 		if($validator->fails())
          {
-             $ret = ['message' => "validation"];
+             $ret['message'] = "validation";
          }
 		 else
 		 {
@@ -2389,9 +2387,9 @@ class MainController extends Controller {
 					    $req['pets'] = "no";
 				        $bank_id = $req['bank'];
 						
-						if($bank_id == "new")
+						if($bank_id == "new" && isset($req['bname']) && isset($req['acname']) && isset($req['acnum']))
 						{
-							$b = $this->createBankDetails($req);
+							$b = $this->helpers->createBankDetails($req);
 							$bank_id = $b->id;
 						}
 						$req['bank_id'] = $bank_id;

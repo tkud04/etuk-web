@@ -38,7 +38,7 @@ foreach($plans as $p)
 @section('content')
 @include('banner-2',['title' => $title,'subtitle' => $subtitle])
 <script>
-let selectedSide = "1", facilities = [], aptImages = [], aptImgCount = 1, aptCover = "none", fp = "{{$fp}}";
+let selectedSide = "1", facilities = [], aptImages = [], aptImgCount = 1, aptCover = "none", fpp = "{{$fp}}";
   
 let mc = {
       "type":"posting",
@@ -484,7 +484,7 @@ let addApartmentDescriptionEditor = new Simditor({
 										<div class="col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group">
 												<label>Country<i class="req">*</i></label>
-												<select class="form-control" id="my-apartment-country">
+												<select class="form-control" id="add-apartment-country">
 												  <option value="none">Select country</option>
 												  <?php
 												   foreach($countries as $key => $value)
