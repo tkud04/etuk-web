@@ -2222,7 +2222,7 @@ class MainController extends Controller {
 		$ads = $this->helpers->getAds("wide-ad");
 		$plugins = $this->helpers->getPlugins();
 		
-		$apartments = $this->helpers->getApartments($user);
+		$apartments = $this->helpers->getApartments($user,['all' => true]);
 		#dd($apartments);
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];

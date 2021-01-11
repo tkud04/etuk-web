@@ -595,7 +595,7 @@ let addApartmentDescriptionEditor = new Simditor({
 												   foreach($bankAccounts as $b)
 												   {
 												  ?>
-												    <option value="<?php echo e($b['id']); ?>"><?php echo e($b['bname']); ?> - <?php echo e($b['acname']); ?> - <?php echo e($b['acnum']); ?></option>
+												    <option value="<?php echo e($b['id']); ?>"><?php echo e(strtoupper($b['bname'])); ?> - <?php echo e($b['acname']); ?> - <?php echo e($b['acnum']); ?></option>
 												  <?php
 												   }
 												  ?>

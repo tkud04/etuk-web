@@ -1244,13 +1244,19 @@ function isDuplicateUser($data)
                 return $ret;
            }
 	 
-	 function getApartments($user)
+	 function getApartments($user,$optionalParams=[])
            {
            	$ret = [];
               if($user == null)
 			  {
+				  
 				   $apartments = Apartments::where('id',">","0")
 			                       ->where('status',"approved")->get();
+				   
+				   if(isset($optionalParams['all']) && $optionalParams['all'])
+				   {
+					   $apartments = Apartments::where('id',">","0")->get();
+				   }
 				   
 				   $apartments = $apartments->sortByDesc('created_at');				   
  
@@ -1267,7 +1273,12 @@ function isDuplicateUser($data)
 			  {
 				 $apartments = Apartments::where('user_id',$user->id)
 			                       ->where('status',"approved")->get();
-								   
+				 
+                 if(isset($optionalParams['all']) && $optionalParams['all'])
+				   {
+					   $apartments = Apartments::where('user_id',$user->id)->get();
+				   }
+				 
 				  $apartments = $apartments->sortByDesc('created_at');				   
  
                   if($apartments != null)

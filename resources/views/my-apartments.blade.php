@@ -36,7 +36,13 @@ $subtitle = "Manage everything about your apartments here";
 											   $reviews = $a['reviews'];
 											   $uu = url('my-apartment')."?xf=".$a['apartment_id'];
 											   $du = url('delete-apartment')."?xf=".$a['apartment_id'];
-											   
+											   $statusClass = "danger";
+											    $sss = $a['status'];
+												
+											   if($sss == "approved")
+												{
+													$statusClass = "success";
+												}
 											   $imgs = $a['cmedia']['images'];
 											   
 									   ?>
@@ -45,7 +51,7 @@ $subtitle = "Manage everything about your apartments here";
 												<div class="list-box-listing-img"><a href="{{$uu}}"><img src="{{$imgs[0]}}" alt="{{$name}}" style="width: 150px; height: 150px;"></a></div>
 												<div class="list-box-listing-content">
 													<div class="inner">
-														<h3><a href="{{$uu}}">{{$name}}</a></h3>
+														<h3><a href="{{$uu}}">{{$name}}</a><span class="ml-2 label label-{{$statusClass}}">{{strtoupper($sss)}}</span></h3>
 														<span>{{$address['address'].", ".$address['city'].", ".$address['state']}}</span>
 														<div class="star-rating">
 															<div class="rating-counter">({{count($reviews)}} reviews)</div>

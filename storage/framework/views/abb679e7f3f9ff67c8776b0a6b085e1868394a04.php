@@ -36,7 +36,13 @@ $subtitle = "Manage everything about your apartments here";
 											   $reviews = $a['reviews'];
 											   $uu = url('my-apartment')."?xf=".$a['apartment_id'];
 											   $du = url('delete-apartment')."?xf=".$a['apartment_id'];
-											   
+											   $statusClass = "danger";
+											    $sss = $a['status'];
+												
+											   if($sss == "approved")
+												{
+													$statusClass = "success";
+												}
 											   $imgs = $a['cmedia']['images'];
 											   
 									   ?>
@@ -45,7 +51,7 @@ $subtitle = "Manage everything about your apartments here";
 												<div class="list-box-listing-img"><a href="<?php echo e($uu); ?>"><img src="<?php echo e($imgs[0]); ?>" alt="<?php echo e($name); ?>" style="width: 150px; height: 150px;"></a></div>
 												<div class="list-box-listing-content">
 													<div class="inner">
-														<h3><a href="<?php echo e($uu); ?>"><?php echo e($name); ?></a></h3>
+														<h3><a href="<?php echo e($uu); ?>"><?php echo e($name); ?></a><span class="ml-2 label label-<?php echo e($statusClass); ?>"><?php echo e(strtoupper($sss)); ?></span></h3>
 														<span><?php echo e($address['address'].", ".$address['city'].", ".$address['state']); ?></span>
 														<div class="star-rating">
 															<div class="rating-counter">(<?php echo e(count($reviews)); ?> reviews)</div>
