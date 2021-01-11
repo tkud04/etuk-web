@@ -2313,7 +2313,7 @@ class MainController extends Controller {
 	    
 		$validator = Validator::make($req,[
 		                    'name' => 'required',
-		                    'url' => 'required',
+		                    'url' => 'required|unique:apartments',
 		                    'description' => 'required',
 		                    'category' => 'required|not_in:none',
 		                    'property_type' => 'required|not_in:none',
@@ -2330,6 +2330,11 @@ class MainController extends Controller {
 		                    'facilities' => 'required',
 		                    'img_count' => 'required|numeric',
 		                    'cover' => 'required',
+		                    'bank' => 'required|not_in:none',
+		                    'bname' => 'required',
+		                    'acname' => 'required',
+		                    'acnum' => 'required',
+							
 		]);
 		
 		if($validator->fails())
@@ -2382,7 +2387,15 @@ class MainController extends Controller {
 					    $req['id_required'] = "yes";
 					    $req['children'] = "none";
 					    $req['pets'] = "no";
-				 
+				        $bank_id = $req['bank'];
+						
+						if($bank_id == "new")
+						{
+							$b = $this->createBankDetails($req);
+							$bank_id = $b->id;
+						}
+						$req['bank_id'] = $bank_id;
+						
 			            $this->helpers->createApartment($req);
 			             $ret = ['status' => "ok"];
 					}

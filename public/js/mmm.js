@@ -434,7 +434,7 @@ $(document).ready(function() {
 		  $('#add-apartment-submit').hide();
 		  $('#add-apartment-loading').fadeIn();
 		  
-		  if(aptPlan == "free"){
+		  if(aptPlan == fp){
 			addApartment(fd);  
 		  }
 		  else{

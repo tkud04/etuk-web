@@ -18,7 +18,13 @@ EOD;
 			  
 			  $isSecure = (isset($secure) && $secure);
 			  $pay = $isSecure ? $securePay : $unsecurePay;
-			  
+	
+$fp = "";
+
+foreach($plans as $p)
+{
+   if($p['ps_id'] == "free") $fp = $p['id'];
+}			 
 
 ?>
 
@@ -32,7 +38,7 @@ EOD;
 <?php $__env->startSection('content'); ?>
 <?php echo $__env->make('banner-2',['title' => $title,'subtitle' => $subtitle], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <script>
-let selectedSide = "1", facilities = [], aptImages = [], aptImgCount = 1, aptCover = "none";
+let selectedSide = "1", facilities = [], aptImages = [], aptImgCount = 1, aptCover = "none", fp = "<?php echo e($fp); ?>";
   
 let mc = {
       "type":"posting",
@@ -606,7 +612,7 @@ let addApartmentDescriptionEditor = new Simditor({
 												   foreach($banks as $k => $v)
 												   {
 												  ?>
-												    <option value="<?php echo e($v); ?>"><?php echo e($k); ?></option>
+												    <option value="<?php echo e($k); ?>"><?php echo e($v); ?></option>
 												  <?php
 												   }
 												  ?>
@@ -625,10 +631,10 @@ let addApartmentDescriptionEditor = new Simditor({
 										<div class="col-lg-12 col-md-12 col-sm-12">
 											<div class="form-group text-center" id="add-apartment-submit">
 												<a href="javascript:void(0)" id="add-apartment-side-3-prev" class="btn btn-theme">Back</a>
-												<a href="javascript:void(0)" id="add-apartment-side-3-next" class="btn btn-theme">Pay now</a>
+												<a href="javascript:void(0)" id="add-apartment-side-3-next" class="btn btn-theme">Proceed</a>
 											</div>
 											<div class="form-group text-center" id="add-apartment-loading">
-												 <h4>Proceeding to payment.. <img src="<?php echo e(asset('img/loading.gif')); ?>" class="img img-fluid" alt="Proceeding to payment.."></h4><br>
+												 <h4>Processing.. <img src="<?php echo e(asset('img/loading.gif')); ?>" class="img img-fluid" alt="Proceeding to payment.."></h4><br>
 											</div>
 										</div>
 									</div>
