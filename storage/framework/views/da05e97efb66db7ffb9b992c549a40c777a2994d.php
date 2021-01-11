@@ -1,5 +1,5 @@
 <?php
-$title = $apartment['name'];
+$title = ucwords($apartment['name']);
 $subtitle = "View this apartment";
 
 $host = $apartment['host'];
