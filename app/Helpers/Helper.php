@@ -73,7 +73,7 @@ class Helper implements HelperContract
 					 "login-status" => "Welcome back!",            
                      "update-profile-status" => "Profile updated.",
                      "switch-mode-status" => "You have now switched your account mode.",
-					 "valid-mode-status-error" => "Access denied. Try switching your account mode to access the resource.",
+					 "valid-mode-status-error" => "Access denied. You cannot access the resource.",
 					 "sci-status" => "Cover image updated.",
 					 "cover-image-status-error" => "You cannot delete the cover image.",
 					 "ri-status" => "Image deleted.",
