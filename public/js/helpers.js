@@ -593,7 +593,7 @@ const addApartment = (dt) => {
 				 hh = `A network error has occured, please check your connection and try again.`;  
 			   }
 			   else if(res.message == "limit-exceeded"){
-				 hh = `You have reached your limit. Coonsider upgrading your plan to post more listings.`;  
+				 hh = `You have reached your limit for your current plan. Coonsider upgrading your plan to post more listings.`;  
 			   }
 			   else if(res.message == "Technical error"){
 				 hh = `A technical error has occured, please try again.`;  

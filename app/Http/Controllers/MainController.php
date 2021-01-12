@@ -2274,14 +2274,18 @@ class MainController extends Controller {
 		$subs = $this->helpers->getUserPlans($user,['active' => true]);
 		$banks = $this->helpers->banks;
 		$bankAccounts = $this->helpers->getBankDetails($user);
-		#dd($subs);
+		$stats = $this->helpers->getUserPlanStats([
+            'user' => $this->helpers->getUser($user->id),		
+            'plan' => count($subs) == 0 ? [] : $subs[0]['plan']	
+		]);
+		#dd($stats);
 		$ads = $this->helpers->getAds("wide-ad");
 		$plugins = $this->helpers->getPlugins();
 		
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
         
-    	return view("add-apartment",compact(['user','cart','messages','c','ad','services','plans','subs','banks','bankAccounts','secure','sps','states','countries','signals','plugins','banner']));
+    	return view("add-apartment",compact(['user','cart','messages','c','ad','services','plans','subs','stats','banks','bankAccounts','secure','sps','states','countries','signals','plugins','banner']));
     }
 	
 	/**

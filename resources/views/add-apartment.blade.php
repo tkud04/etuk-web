@@ -26,6 +26,8 @@ foreach($plans as $p)
    if($p['ps_id'] == "free") $fp = $p['id'];
 }			 
 
+ 
+
 ?>
 @extends('layout')
 
@@ -70,6 +72,7 @@ let addApartmentDescriptionEditor = new Simditor({
 							<div class="checkout-wrap" id="add-apartment-side-0">
 								
 								<div class="checkout-body">
+									
 									<div class="row">
 									<?php
 									 if(count($subs) > 0)
@@ -80,10 +83,13 @@ let addApartmentDescriptionEditor = new Simditor({
 									 
 									 $exp = new DateTime($sub['date']);
 									 $e1 = new DateTime($exp->format("jS F, Y"));
-									 $e1->add(new DateInterval('P29D'));
+									 $e1->add(new DateInterval('P1M'));
 									 
-									 $ac = $stats['aptCount'] == $p['pc'] ? "lluf" : "sey";
+									$ac = $stats['aptCount'] == $p['pc'] ? "lluf" : "sey";
 									?>
+									   <div class="col-lg-12 col-md-12 col-sm-12">
+										  <h4 class="text-success">{{$stats['aptCount']}} out of {{$p['pc']}} postings used</h4>
+									   </div>
                                      <div class="col-lg-12 col-md-12 col-sm-12 mt-1">
 									   <h4>Current Plan: <a href="javascript:void(0)" class="btn btn-success">{{$p['name']}}</a></h4>
 									   <input type="hidden" id="ac" value="{{$ac}}">
@@ -106,9 +112,14 @@ let addApartmentDescriptionEditor = new Simditor({
 									 }
 									 else
 									 {
+										 $ac = $stats['aptCount'] == $p['pc'] ? "lluf" : "sey";
 									?>
+									   <div class="col-lg-12 col-md-12 col-sm-12">
+										  <h4 class="text-success">{{$stats['aptCount']}} out of {{$p['pc']}} postings used</h4>
+									   </div>
 									  <div class="col-lg-12 col-md-12 col-sm-12 mt-5">
 											  <h4>Choose a Plan <a href="{{url('plans')}}" target="_blank" class="btn btn-success">See Plans</a></h4>
+											  <input type="hidden" id="ac" value="{{$ac}}">
 											  <div class="form-group">
 												<label>Subscription Plan<i class="req">*</i></label>
 												<select class="form-control" id="add-apartment-plan" name="pid">
@@ -116,8 +127,9 @@ let addApartmentDescriptionEditor = new Simditor({
 												  <?php
 												  foreach($plans as $p)
 												  {
+													  $ss = $p['ps_id'] == "free" ? " selected='selected'" : "";
 												  ?>
-												  <option value="{{$p['id']}}">{{$p['name']}} - &#8358;{{number_format($p['amount'],2)}}/{{$p['frequency']}}</option>
+												  <option value="{{$p['id']}}"{{$ss}}>{{$p['name']}} - &#8358;{{number_format($p['amount'],2)}}/{{$p['frequency']}}</option>
 												  <?php
 												  }
 												  ?>

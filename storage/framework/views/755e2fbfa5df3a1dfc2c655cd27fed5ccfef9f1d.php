@@ -16,6 +16,8 @@ $subtitle = "List of available apartments on ".date("jS F, Y");
  let page = 0, perPage = 8, apartments = [], viewType = "grid", apartmentsLength = 0;
  
   <?php
+  $rr = count($apartments) == 1 ? "Result" : "Results";
+  
 		   foreach($apartments as $a)
 		   {
 			   $terms = $a['terms'];
@@ -36,7 +38,6 @@ $location = ucwords($address['city'].", ".$address['state']);
 $stars = $a['rating'];
 $amount = $adata['amount'];
 $description = $adata['description'];
-$rr = count($apartments) == 1 ? "Result" : "Results";
 	?>
 		  
 		  temp = {

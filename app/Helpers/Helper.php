@@ -4790,7 +4790,8 @@ function createSocial($data)
 				   $p = $data['plan'];
 	   			   $ret = [];
                    $ret['aptCount'] = Apartments::where('user_id',$u['id'])->count();
-                   $ret['posts_left'] = $p['pc'] - $ret['aptCount'];
+				   $pc = count($p) == 0 ? 5 : $p['pc'];
+                   $ret['posts_left'] = $pc - $ret['aptCount'];
 			       return $ret;
 	            }
 
