@@ -1884,6 +1884,58 @@ class MainController extends Controller {
     }
 	
 	/**
+	 * Handle update cart.
+	 *
+	 * @return Response
+	 */
+	public function getUpdateCart(Request $request)
+    {
+		$user = null;
+		 
+		if(Auth::check())
+		{
+			$user = Auth::user();
+			
+			$req = $request->all();
+        
+		    $validator = Validator::make($req,[
+		                    'axf' => 'required',
+		                    'guests' => 'required|numeric',
+		                    'kids' => 'required|numeric',
+		    ]);
+		
+		if($validator->fails())
+         {
+			 session()->flash("validation-status-error","ok");
+			 return redirect()->back()->withInput();
+         }
+		 else
+		 {  
+	        $req['user_id'] = $user->id;	 
+			$r = $this->helpers->UpdateCart($req);
+			
+			if($r == "host")
+			{
+				session()->flash("update-cart-host-status-error","ok");
+				return redirect()->back()->withInput();
+			}
+			else
+			{
+				session()->flash("update-cart-status","ok");
+			    return redirect()->intended('checkout');
+			}
+			
+		 }
+		}
+		else
+		{
+			session()->flash("cart-auth-status-error","ok");
+			return redirect()->back();
+		}
+		 
+    }
+	
+	/**
 	 * Handle remove from cart.
 	 *
 	 * @return Response
@@ -1899,7 +1951,6 @@ class MainController extends Controller {
 			$req = $request->all();
         
 		    $validator = Validator::make($req,[
-		                    'xf' => 'required|numeric',
 		                    'axf' => 'required',
 		    ]);
 		

@@ -1576,3 +1576,49 @@ const handleRange = e => {
 			 $('#ssf-amount-display').html(amount);
 		}
 }
+
+const tuc = dt => {
+	let axf = dt.axf, vsb = $(`#${axf}-vsb`).val();
+	console.log("axf: ",axf);
+	console.log("vsb: ",vsb);
+	
+	if(vsb == "h"){
+	  $(`#${axf}-vsb`).val("v");
+	  $(`#${axf}-update`).html("Hide");		
+	  $(`#${axf}-row`).fadeIn();		
+	}
+	else if(vsb == "v"){
+	  $(`#${axf}-vsb`).val("h");
+	  $(`#${axf}-update`).html("Update");		
+	  $(`#${axf}-row`).hide();		
+	}
+
+}
+
+const uc = dt => {
+	let axf = dt.axf, guests = $(`#uc-${axf}-guests`).val(), kids = $(`#uc-${axf}-kids`).val(), validation = (axf == "" || parseInt(guests) < 1 || parseInt(kids) < 1);
+	
+	if(validation){
+		Swal.fire({
+			 icon: 'error',
+             title: "Please fill all required fields."
+           });
+	}
+	else{
+		window.location = `update-cart?axf=${axf}&guests=${guests}&kids=${kids}`;
+	}
+}
+
+const rc = dt => {
+	let axf = dt.axf, validation = (axf == "");
+	
+	if(validation){
+		Swal.fire({
+			 icon: 'error',
+             title: "Please fill all required fields."
+           });
+	}
+	else{
+		window.location = `remove-from-cart?axf=${axf}`;
+	}
+}

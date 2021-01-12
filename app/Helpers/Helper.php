@@ -83,6 +83,7 @@ class Helper implements HelperContract
 					 "oauth-sp-status" => "Welcome to Etuk NG! You can now use your new account.",
 					 "add-review-status" => "Thanks for your review! It will be displayed after review by our admins.",
 					 "add-to-cart-status" => "Added to your cart.",
+					 "update-cart-status" => "Cart updated",
 					 "remove-from-cart-status" => "Removed from your cart.",
 					 "pay-card-status" => "Payment successful. Have a lovely stay!",
 					 "save-apartment-status" => "Apartment saved.",
@@ -110,6 +111,7 @@ class Helper implements HelperContract
 					 "save-payment-auth-status-error" => "Please sign in to save payment details.",
 					 "validation-status-error" => "Please fill all required fields.",
 					 "add-to-cart-host-status-error" => "You cannot book your own apartment.",
+					 "update-cart-host-status-error" => "You cannot book your own apartment.",
 					 "no-cart-status-error" => "Your cart is empty.",
 					 "pay-card-status-error" => "Your payment could not be processed, please try again.",
 					 "save-apartment-status-error" => "Apartment could not be saved, please try again.",
@@ -1043,7 +1045,7 @@ function isDuplicateUser($data)
 								   'deleted' => $i['deleted'],
 								   'cover' => $i['ci'],
 								   'type' => $i['type'],
-								   'src_type' => ""
+								   'src_type' => "cloudinary"
                          ]);
                     }
 				}
@@ -2486,26 +2488,39 @@ function createSocial($data)
              return $ret;
            }
 		   
-		    function updateCart($dt)
+		   function updateCart($dt)
            {
-			  dd($dt);
-           	   $userId = $dt['user_id'];
+			  $xf = $dt['user_id'];
+			 $axf = $dt['axf'];
 			 $ret = "error";
 			 
-			 $c = Carts::where('user_id',$userId)
-			           ->where('sku',$dt['sku'])->first();
-             $p = Products::where('sku',$dt['sku'])->first();
+			 $a = Apartments::where(['user_id' => $xf,'apartment_id' => $axf])->first();
+			 #dd($a);
+			 if($a == null)
+			 {
+				 $aa = Apartments::where(['apartment_id' => $axf])->first();
+			    $c = Carts::where(['user_id' => $xf,'apartment_id' => $aa->apartment_id])->first();
+
+			    if(!is_null($c))
+			    {
+				    $c->update(['guests' => $dt['guests'],
+                                                      'kids' => $dt['kids']
+                                                      ]); 
+				
+				     $ret = "ok";
+			    }	 
+			 }
+			 else
+			 {
+				$ret = "host"; 
+			 }
 			 
-			if($c != null && $p != null && $p->qty >= $dt['qty'])
-			{
-                $c->update(['qty' => $dt['qty']]);				
-				$ret = "ok";
-			}        
-                                                      
-                return $ret;
+             return $ret;
            }	
+		   
            function removeFromCart($data)
            {
+			   $ret = "error";
            	   $xf = $data['user_id'];
 			   $axf = $data['axf'];
 			   $c = Carts::where(['user_id' => $xf,'apartment_id' => $axf])->first();
@@ -2513,9 +2528,14 @@ function createSocial($data)
 			if(!is_null($c))
 			{
 			  $c->delete(); 
+			  $ret = "ok";
             }
-			                                          
-            return "ok";
+			else
+			 {
+				$ret = "host"; 
+			 }
+			 
+             return $ret;
            }
 		   
 		    function getCart($user,$r="")

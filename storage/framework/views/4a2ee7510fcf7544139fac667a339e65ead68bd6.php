@@ -34,7 +34,10 @@ $subtotal = $cart['subtotal'];
 								       "email":"<?php echo e($user->email); ?>",
 									   "notes":""
 									  };
-                             
+                        
+$(document).ready(() => {
+	$('.uc').hide();
+});						
            </script>
 
                             	<input type="hidden" id="card-action" value="<?php echo e($pay); ?>">
@@ -111,7 +114,7 @@ $subtotal = $cart['subtotal'];
 												<label>Save payment info?</label>
 												<select class="form-control" name="sps" id="checkout-sps">
 												  <option value="yes" selected="selected">Yes</option>
-												  <option value="no">Card</option>
+												  <option value="no">No</option>
 												</select>
 											</div>
 										</div>
@@ -177,6 +180,27 @@ $subtotal = $cart['subtotal'];
 							   <p>Check-in: <b><?php echo e($checkin->format("jS F, Y")); ?></b></p>
 							   <p>Duration: <b><?php echo e($duration." ".$dtt); ?></b></p>
 							   <p>Guests: <b><?php echo e($c['guests']); ?></b> | Kids: <b><?php echo e($c['kids']); ?></b></p>
+							   <input type="hidden" id="<?php echo e($axf); ?>-vsb" value="h">
+							   <div class="row uc" id="<?php echo e($axf); ?>-row">
+							  
+							     <div class="col-md-4">
+								   <div class="form-group">
+								     <label>Guests<i class="req">*</i></label>
+									 <input type="number" class="form-control" placeholder="0" id="uc-<?php echo e($axf); ?>-guests">
+								   </div>
+								 </div>
+								 <div class="col-md-4">
+								   <div class="form-group">
+								     <label>Kids<i class="req">*</i></label>
+									 <input type="number" class="form-control" placeholder="0" id="uc-<?php echo e($axf); ?>-kids">
+								   </div>
+								 </div>
+								 <div class="col-md-4">
+								   <a class="btn btn-success btn-sm" href="javascript:void(0)" onclick="uc({axf: '<?php echo e($axf); ?>'}); return false;">Submit</a>
+								 </div>
+							   </div>
+							   <span><a class="btn btn-info btn-sm" href="javascript:void(0)" onclick="tuc({axf: '<?php echo e($axf); ?>'}); return false;" id="<?php echo e($axf); ?>-update">Update</a></span>
+							   <span><a class="btn btn-danger btn-sm" href="javascript:void(0)" onclick="rc({axf: '<?php echo e($axf); ?>'}); return false;">Remove</a></span>
 							   <p></p>
 							 <?php
 													 }

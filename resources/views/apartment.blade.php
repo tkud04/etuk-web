@@ -33,7 +33,22 @@ $imgs = $cmedia['images'];
 $video = $cmedia['video'];
 
 $as = $apartment['avb'];
-$asText = $as == "available" ? "Available for booking" : "Apartment is currently occupied";
+$asText = "";
+
+switch($as)
+{
+	case "available":
+	  $asText = "Available for booking";
+	break;
+	
+	case "occupied":
+	  $asText = "Currently occupied";
+	break;
+	
+	case "booked":
+	  $asText = "Booked till [booking date]";
+	break;
+}
 
 ?>
 
