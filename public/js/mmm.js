@@ -864,13 +864,28 @@ $(document).ready(function() {
 	$('#apartment-book-now-btn').click(e => {
 		e.preventDefault();
 		
-		/**let msg = $('#apartment-add-review-msg').val();
-
-        let validation = sec < 1 || svc < 1 || loc < 1 || cln < 1 || cmf < 1 || msg == "";
-		**/
-		let validation = false;
+		let as = $('#apt-as').val(), c1 = $('#apartment-checkin').val(), c2 = $('#apartment-checkout').val(),
+   		    g = $('#guestNo').val(), k = $('#kidsNo').val(), validation = (c1 == "" || c2 == "" || parseInt(g) < 1);
 		
-        if(validation){
+		
+        if(as == "occupied" || as == "booked"){
+			let asText = "";
+			
+			switch(as){
+				case "occupied":
+				  asText = "This apartment is currently occupied";
+				break;
+				
+				case "booked":
+				  asText = "This apartment has been booked till [booking date]";
+				break;
+			}
+			Swal.fire({
+			 icon: 'error',
+             title: asText
+           });
+		}
+		else if(validation){
 			Swal.fire({
 			 icon: 'error',
              title: "Please fill all required fields."

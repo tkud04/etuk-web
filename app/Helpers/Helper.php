@@ -2713,7 +2713,7 @@ function createSocial($data)
 		   
 		   function checkout($u,$data,$type="paystack")
 		   {
-			  //dd($data);
+			 # dd($data);
 			   $ret = [];
 			   
 			   switch($type)
@@ -2776,7 +2776,7 @@ function createSocial($data)
 		   function payWithPayStack($user, $payStackResponse)
            { 
               $md = $payStackResponse['metadata'];
-			  #dd($md);
+			  #dd($payStackResponse);
               $amount = $payStackResponse['amount'] / 100;
               $psref = $payStackResponse['reference'];
               $ref = $md['ref'];
@@ -2796,6 +2796,8 @@ function createSocial($data)
               
               //create order
               $this->addOrder($user,$dt);
+			  
+ 
 			  
 			  //add to saved payments
 			  if($sps == "yes")
@@ -2838,7 +2840,7 @@ function createSocial($data)
 			 
                #create order details
                foreach($cartt as $c)
-               {
+               {			  
 				   $temp = []; 
                	     $temp['apartment_id'] = $c['apartment_id']; 
                         $temp['checkin'] = $c['checkin'];
@@ -2848,6 +2850,9 @@ function createSocial($data)
                        $temp['order_id'] = $order->id;
 				    $oi = $this->createOrderItems($temp);
 					
+					//update apartment avb
+			        $apt = Apartments::where('apartment_id',$c['apartment_id'])->first();
+					if($apt != null) $apt->update(['avb' => "occupied"]);
 					//create host transaction
                     $host = $c['apartment']['host']; 
                     $this->createTransaction([

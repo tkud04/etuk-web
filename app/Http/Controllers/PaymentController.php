@@ -284,7 +284,7 @@ class PaymentController extends Controller {
 		
 		$paymentDetails = Paystack::getPaymentData();
 
-        dd($paymentDetails);     
+        #dd($paymentDetails);     
 		if(Auth::check())
 		{
 			$user = Auth::user();
@@ -323,7 +323,7 @@ class PaymentController extends Controller {
 		  //guest checkout
 		  $md = $paymentData['metadata'];
 		
-		  dd($md);       
+		  #dd($md);       
 		  $successLocation = "";
           $failureLocation = "";
         

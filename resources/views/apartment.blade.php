@@ -104,6 +104,7 @@ let sec = 0, svc = 0, loc = 0, cln = 0, cmf = 0;
 															<i class="icofont-home"></i>
 														</div>
 														<div class="info">
+															<input type="hidden" id="apt-as" value="{{$as}}"/>
 															<h4 class="name">{{ucwords($as)}}</h4>
 															<p class="value">{{$asText}}</p>
 														</div>
