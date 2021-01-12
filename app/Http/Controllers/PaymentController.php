@@ -281,6 +281,10 @@ class PaymentController extends Controller {
 		$user = null;
 		$messages = [];
 		#dd($request);
+		
+		$paymentDetails = Paystack::getPaymentData();
+
+        dd($paymentDetails);     
 		if(Auth::check())
 		{
 			$user = Auth::user();
@@ -291,9 +295,7 @@ class PaymentController extends Controller {
 			return redirect()->intended('/');
 		}
 		
-        $paymentDetails = Paystack::getPaymentData();
-
-        dd($paymentDetails);       
+          
         
         $paymentData = $paymentDetails['data'];
         
