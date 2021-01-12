@@ -42,6 +42,7 @@ $(document).ready(() => {
 
                             	<input type="hidden" id="card-action" value="<?php echo e($pay); ?>">
                             	<input type="hidden" id="checkout-ref" value="<?php echo e($ref); ?>">
+                            	<input type="hidden" id="checkout-cc" value="<?php echo e(count($cartt)); ?>">
 <!-- ============================ Checkout Start ================================== -->
 			<section>
 				<div class="container">

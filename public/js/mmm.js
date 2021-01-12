@@ -917,9 +917,15 @@ $(document).ready(function() {
 		
 		console.log("pay btn");
 		
-		let pt = $('#checkout-payment-type').val(), ref = $('#checkout-ref').val();
+		let pt = $('#checkout-payment-type').val(), ref = $('#checkout-ref').val(), cc = $('#checkout-cc').val();
 		
-		if(pt == "none"){
+		if(cc == "" || cc == "0"){
+			Swal.fire({
+			 icon: 'error',
+             title: "Your cart is empty."
+           });
+		}
+		else if(pt == "none"){
 			Swal.fire({
 			 icon: 'error',
              title: "Select a payment type."
@@ -928,6 +934,35 @@ $(document).ready(function() {
 		else{
 			 payCard({ref: ref,pt: pt});
 		}
+	});
+	
+	$('#checkout-book-btn').click(e => {
+		e.preventDefault();
+		console.log("book btn");
+		
+		let cc = $('#checkout-cc').val();
+		
+		if(cc == "" || cc == "0"){
+			Swal.fire({
+			 icon: 'error',
+             title: "Your cart is empty."
+           });
+		}
+		else{
+			/**
+			 $('#message-reply-btn').hide();
+		    $('#message-reply-loading').fadeIn();
+
+		   let fd =  new FormData();
+		   fd.append("_token",$('#tk-message').val());
+           fd.append("apartment_id",aapt);
+		   fd.append("gsb",hhxf);
+		   fd.append("gxf",ggxf);
+		   fd.append("msg",msg);
+			sendMessage(fd,"message-reply");
+	     **/
+		}
+		
 	});
 
 
@@ -968,34 +1003,7 @@ $(document).ready(function() {
 		
 	});
 	
-	$('#checkout-book-btn').click(e => {
-		e.preventDefault();
-		console.log("book btn");
-		/**
-		let msg = $('#message-reply-msg').val();
-		
-		if(msg == ""){
-			Swal.fire({
-			 icon: 'error',
-             title: "Your reply cannot be empty."
-           });
-		}
-		else{
-			 $('#message-reply-btn').hide();
-		    $('#message-reply-loading').fadeIn();
-
-		   let fd =  new FormData();
-		   fd.append("_token",$('#tk-message').val());
-           fd.append("apartment_id",aapt);
-		   fd.append("gsb",hhxf);
-		   fd.append("gxf",ggxf);
-		   fd.append("msg",msg);
-			sendMessage(fd,"message-reply");
 	
-		}
-		
-	**/
-	});
 	
 	
 	//CONTACT US

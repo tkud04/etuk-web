@@ -42,6 +42,7 @@ $(document).ready(() => {
 
                             	<input type="hidden" id="card-action" value="{{$pay}}">
                             	<input type="hidden" id="checkout-ref" value="{{$ref}}">
+                            	<input type="hidden" id="checkout-cc" value="{{count($cartt)}}">
 <!-- ============================ Checkout Start ================================== -->
 			<section>
 				<div class="container">
