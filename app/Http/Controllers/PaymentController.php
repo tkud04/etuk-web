@@ -293,7 +293,7 @@ class PaymentController extends Controller {
 		
         $paymentDetails = Paystack::getPaymentData();
 
-        #dd($paymentDetails);       
+        dd($paymentDetails);       
         
         $paymentData = $paymentDetails['data'];
         
