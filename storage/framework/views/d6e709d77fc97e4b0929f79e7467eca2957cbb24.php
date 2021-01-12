@@ -290,7 +290,7 @@ if(count($apf) < 1) $apf = $def;
 										    foreach($services as $s)
 											{
 												$cc = "";
-												foreach($facilities as $ff)
+												foreach($apf['facilities'] as $ff)
 												{
 													if($ff['facility'] == $s['tag']) $cc = " checked"; 
 												}
