@@ -3068,6 +3068,53 @@ class MainController extends Controller {
     }
 	
 	
+	/**
+	 * Retrieve Bank settlement codes from PayStack.
+	 *
+	 * @return Response
+	 */
+	public function getBankSettlementCodes(Request $request)
+    {
+		$user = null;
+		if(Auth::check())
+		{
+			$user = Auth::user();
+		}
+
+		$req = $request->all();
+        #dd($req);
+		$rett = ['status' => "error",'message' => "nothing happened"];
+		$ret = "";
+	    
+		$validator = Validator::make($req,[
+		                    'ss' => 'required'                
+		]);
+		
+		if($validator->fails())
+         {
+             $rett['message'] = "validation";
+			 $ret = json_encode($rett);
+         }
+		 else
+		 {					
+					
+		  $rr = [
+                 
+		      ],
+                 'headers' => [
+	            'Authorization' => "Bearer ".env("PAYSTACK_SECRET_KEY")
+	          ],
+                 'url' => "https://api.paystack.co/bank?country=nigeria",
+                 'method' => "get"
+                ];
+			  
+	           $ret = $this->helpers->bomb($rr);
+		 }
+		 
+		 return $ret;
+    }
+	
+	
 
 	/**
 	 * Show the application welcome screen to the user.
