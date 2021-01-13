@@ -3099,11 +3099,12 @@ class MainController extends Controller {
 		 {					
 					
 		  $rr = [
+			     'data' => [
                  
-		      ],
+		         ],
                  'headers' => [
-	            'Authorization' => "Bearer ".env("PAYSTACK_SECRET_KEY")
-	          ],
+	              'Authorization' => "Bearer ".env("PAYSTACK_SECRET_KEY")
+	             ],
                  'url' => "https://api.paystack.co/bank?country=nigeria",
                  'method' => "get"
                 ];
