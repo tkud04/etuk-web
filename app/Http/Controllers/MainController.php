@@ -2451,14 +2451,17 @@ class MainController extends Controller {
 						
 			            $a = $this->helpers->createApartment($req);
 						
+						if($bank_id != null)
+			            {
 						//create subaccount on paystack
 				        $data = [
 							 'apartment' => $a,
 				             'bank_details' => $this->helpers->getBankDetail($req['bank_id']),
-				             'user' => $this->helpers->getUser($user->id)
+							 'description' => "PayStack subaccount for ".$user->fname." ".$user->lname,
+							 'percentage_charge' => "20"
 					    ];
                          $sa = $this->helpers->createSubAccount($data);
-			             
+					   }
 						 $ret = ['status' => "ok"];
 					}
 					
@@ -2572,7 +2575,8 @@ class MainController extends Controller {
 		                    'lga' => 'required',
 		                    'state' => 'required',
 		                    'facilities' => 'required',
-		                    'img_count' => 'required|numeric'
+		                    'img_count' => 'required|numeric',
+							'bank' => 'required|not_in:none'
 		]);
 		
 		if($validator->fails())
@@ -2604,9 +2608,32 @@ class MainController extends Controller {
 					
 					$req['user_id'] = $user->id;
 					$req['ird'] = $ird;
+				    
+				     $bank_id = $req['bank'];
+						
+						if($bank_id == "new" && isset($req['bname']) && isset($req['acname']) && isset($req['acnum']))
+						{
+							$b = $this->helpers->createBankDetails($req);
+							$bank_id = $b->id;
+						}
+						$req['bank_id'] = $bank_id;
 				 
-			$this->helpers->updateApartment($req);
-			$ret = ['status' => "ok"];
+			$a = $this->helpers->updateApartment($req);
+			
+			if($bank_id != null)
+			{
+				//create subaccount on paystack
+				        $data = [
+							 'apartment' => $a,
+				             'bank_details' => $this->helpers->getBankDetail($req['bank_id']),
+							 'description' => "PayStack subaccount for ".$user->fname." ".$user->lname,
+							 'percentage_charge' => "20"
+					    ];
+                         $sa = $this->helpers->createSubAccount($data);
+			             
+						 $ret = ['status' => "ok"];
+			}
+			
 		 }
 		 
 		 return json_encode($ret);

@@ -2410,6 +2410,8 @@ function isDuplicateUser($data)
 
 function updateApartment($data)
            {
+			   $ret = null;
+			   
 			   $apartment_id = $data['apartment_id'];
            	$apartment = Apartments::where('apartment_id',$apartment_id)->first();
 			
@@ -2423,7 +2425,7 @@ function updateApartment($data)
                   'avb' => $data['avb'],                                                       
                   'url' => $data['url'],   
 			  ]);			  
-			}
+			
                               
                 $this->updateApartmentData($data);
                 $this->updateApartmentAddress($data);
@@ -2453,7 +2455,10 @@ function updateApartment($data)
                          ]);
                     }
 				}
-                
+				$ret = $apartment;
+              }
+              
+              return $ret;			  
            }
 		   
           function updateApartmentAddress($data)
@@ -5926,8 +5931,6 @@ function createSocial($data)
 				   
 				   $a = $data['apartment'];
 				   $b = $data['bank_details'];
-				   $u = $data['user'];
-				   //create paystack subaccount here
 				   
 				   //find the settlement code for the bank
 				   foreach($this->banks2 as $bk)
@@ -5943,8 +5946,8 @@ function createSocial($data)
 	 		             'business_name' => $a->name." (".$b['bname'].")",
 	 					'settlement_bank' => $b['ps_settlement_code'],
 	 					'account_number' => $b['acnum'],
-						'percentage_charge' => "85",
-						'description' => "PayStack subaccount for ".$u['fname']." ".$u['lname'],
+						'percentage_charge' => $data['percentage_charge'],
+						'description' => $data['description'],
 	 			      ],
 	                   'headers' => [
 	 		            'Authorization' => "Bearer ".env("PAYSTACK_SECRET_KEY")
