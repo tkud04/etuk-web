@@ -54,6 +54,7 @@ use App\UserPlans;
 use App\Activities;
 use App\Leads;
 use App\BankDetails;
+use App\SubAccounts;
 use App\Guests;
 use \Swift_Mailer;
 use \Swift_SmtpTransport;
@@ -5096,6 +5097,95 @@ function createSocial($data)
 	   			    }
            
 	              }
+				  
+		function createSubAccount($data)
+	        {
+	   			   #dd($data);
+				   
+				   //create paystack subaccount here
+				   
+	   			 $ret = null;
+			     $ret = SubAccounts::create(['bank_id' => $data['bank_id'], 
+	                                   'ps_id' => $data['ps_id'], 
+	                                   'status' => $data['status']                               
+	                                  ]);
+	   			 return $ret;
+	         }
+			 
+		  function getSubAccounts($bank_id)
+	      {
+	   	   $ret = [];
+	        $subAccounts = SubAccounts::where('bank_id',$bank->id)->get();
+	   	     if(!is_null($subAccounts))
+	   	     {
+			   $subAccounts = $subAccounts->sortByDesc('created_at');	
+	   		   foreach($subAccounts as $sa)
+	   		   {
+	   		     $temp = $this->getSubAccount($sa->id);
+	   		     array_push($ret,$temp);
+	   	       }
+			 }
+	   
+	   	   return $ret;
+	      }
+		  
+		  
+	 	 function getSubAccount($id)
+	            {
+	            	$ret = [];
+	                $b = SubAccounts::where('id',$id)->first();
+ 
+	               if($b != null)
+	                {
+                            $temp['id'] = $b->id; 
+							$temp['bank_id'] = $b->bank_id; 
+	                    	$temp['ps_id'] = $b->ps_id; 
+	                        $temp['status'] = $b->status; 
+							$temp['date'] = $b->created_at->format("jS F, Y h:i A"); 
+	                        $temp['updated'] = $b->updated_at->format("jS F, Y h:i A"); 
+							$ret = $temp; 
+	                }                          
+                                                      
+	                 return $ret;
+	            }
+				
+		 function removeSubAccount($xf)
+	              {
+	   			    #dd($data);
+	   			    $ret = "error";
+	   			     $b = SubAccounts::where('id',$xf)->first();
+			 
+			 
+	   			    if(!is_null($b))
+	   			    {
+	   				  $b->delete();
+	   			      $ret = "ok";
+	   			    }
+           
+	              }
+				  
+		  function createSplit($data)
+		  {
+			  $rr = [
+                  'data' => [
+		             'authorization' => trim($spdt->authorization_code),
+					'customer' => trim($spdt->auth_email),
+					'plan' => $p['ps_id'],
+			      ],
+                  'headers' => [
+		            'Authorization' => "Bearer ".env("PAYSTACK_SECRET_KEY")
+		          ],
+                  'url' => "https://api.paystack.co/subscription",
+                  'method' => "post",
+                  'type' => "multipart"
+                 ];
+				  
+		           $rett = $this->helpers->bomb($rr);
+                   $ret = json_decode($rett);
+				   
+				   
+				   #dd($ret);
+		  }
    
 }
 ?>
