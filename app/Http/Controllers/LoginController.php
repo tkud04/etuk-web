@@ -152,7 +152,7 @@ class LoginController extends Controller {
          
          else
          {
-			 $isNew = !$this->helpers->isDuplicateUser(['email' => $dt['email'], 'phone' => $dt['phone']]);
+			 $isNew = $this->helpers->isDuplicateUser(['email' => $dt['email'], 'phone' => $dt['phone']]);
 			 
             $dt['role'] = "user";    
             $dt['status'] = "enabled";           
@@ -166,15 +166,15 @@ class LoginController extends Controller {
             
             # dd($isNew);            
             
-			if($isNew)
+			if($isNew[1])
 			{
-				$user =  $this->helpers->createUser($dt);
-				Auth::login($user);
-				$ret = ['status' => "ok",'message' => "Signup successful"];			
+				$ret = ['status' => "error",'message' => "duplicate",'is_new' => $isNew];
 			}
 			else
 			{
-				$ret = ['status' => "error",'message' => "duplicate"];			
+                $user =  $this->helpers->createUser($dt);
+				Auth::login($user);
+				$ret = ['status' => "ok",'message' => "Signup successful"];						
 			}
             
             

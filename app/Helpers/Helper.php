@@ -1674,7 +1674,7 @@ function isDuplicateUser($data)
 		           ->orWhere('phone',$data['phone'])->get();
 
        if(count($dup) > 0) $ret = true;		
-		return $ret;
+		return [$dup,$ret];
 	}
 	
 	function isValidUser($data)

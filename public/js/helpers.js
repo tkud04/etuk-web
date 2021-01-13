@@ -125,9 +125,20 @@ const signup = dt => {
               window.location = "dashboard"; 			   
 		   }
 		   else if(res.status == "error"){
-		     alert("An unknown error has occured, please try again.");			
-			hideElem('#signup-loading');
-		     showElem('#signup-submit');					 
+			   let msg = ``;
+			   
+			   if(res.message == "duplicate"){
+				   msg = `The email or phone number has been used before.`;
+			   }
+			   else{
+				   msg = `An unknown error has occured, please try again.`;
+			   }
+			   
+			   $('#signup-error-msg').html(msg);
+ 		       showElem('#signup-error');
+			  
+			   hideElem('#signup-loading');
+		       showElem('#signup-submit');					 
 		   }
 		   		   
 		  

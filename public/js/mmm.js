@@ -4,7 +4,7 @@
 $(document).ready(function() {
     "use strict";
 	hideInputErrors(["signup","login","forgot-password","reset-password","oauth-sp"]);
-	hideElem(["#signup-loading","#signup-finish",
+	hideElem(["#signup-loading","#signup-finish","#signup-error",
 	          "#login-loading","#login-finish",
 			  "#fp-loading","#fp-finish",
 			  "#rp-loading","#rp-finish",
@@ -41,7 +41,8 @@ $(document).ready(function() {
 	$("#signup-submit").click(e => {
        e.preventDefault();
 	  
-       hideInputErrors("signup");	  
+       hideInputErrors("signup");	 
+       hideElem(["#signup-error"]);	   
       let mode = $('#s-mode').val(),fname = $('#s-fname').val(),lname = $('#s-lname').val(),em = $('#s-email').val(),
 	      phone = $('#s-phone').val(),p = $('#s-pass').val(),p2 = $('#s-pass2').val();
 		  
