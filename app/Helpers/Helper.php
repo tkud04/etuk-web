@@ -5968,7 +5968,8 @@ function createSocial($data)
 				           $s = SubAccounts::create(['bank_id' => $b['id'], 
 	                                   'business_name' => $dt->business_name,   
 	                                   'subaccount_code' => $dt->subaccount_code,   
-	                                   'status' => $data['status']                               
+	                                   'split_code' => "",   
+	                                   'status' => "enabled"                              
 	                                  ]);
 	   			      }
 					  return $s;
@@ -6003,6 +6004,7 @@ function createSocial($data)
 							$temp['bank_id'] = $b->bank_id; 
 	                    	$temp['business_name'] = $b->business_name; 
 	                    	$temp['subaccount_code'] = $b->subaccount_code; 
+	                    	$temp['split_code'] = $b->split_code; 
 	                        $temp['status'] = $b->status; 
 							$temp['date'] = $b->created_at->format("jS F, Y h:i A"); 
 	                        $temp['updated'] = $b->updated_at->format("jS F, Y h:i A"); 
@@ -6027,27 +6029,60 @@ function createSocial($data)
            
 	              }
 				  
-		  function createSplit($data)
+		  function createSplitGroup($sa_id)
 		  {
+			  /**
+						 curl https://api.paystack.co/split
+-H "Authorization: Bearer YOUR_SECRET_KEY"
+-H "Content-Type: application/json"
+-d '{ "name":"Percentage Split", 
+      "type":"percentage", 
+      "currency": "NGN",
+      "subaccounts":[{
+        "subaccount": "ACCT_z3x6z3nbo14xsil",
+        "share": 20
+    },
+    {
+        "subaccount": "ACCT_pwwualwty4nhq9d",
+        "share": 30
+    }], 
+      "bearer_type":"subaccount", 
+      "bearer_subaccount":"ACCT_hdl8abxl8drhrl3"
+    }'
+-X POST
+						 **/
+			  $sa = SubAccounts::where('id',$sa_id)->first();
+			  $b = $this->getBankDetail($sa->bank_id);
+			  $u = $this->getUser($b['user_id']);
+			  
 			  $rr = [
                   'data' => [
-		             'authorization' => trim($spdt->authorization_code),
-					'customer' => trim($spdt->auth_email),
-					'plan' => $p['ps_id'],
+		             'name' => "Split Group for ".$u['fname']." ".$u['lname'],
+					'type' => "percentage",
+					'currency' => "NGN",
+					'bearer_type' => "account",
+					'subaccounts' => [
+					  ['subaccount' => env('PAYSTACK_SUBACCOUNT_CODE'),'share' => "5"],
+					  ['subaccount' => $sa['subaccount_code'],'share' => "85"]
+					]
 			      ],
                   'headers' => [
 		            'Authorization' => "Bearer ".env("PAYSTACK_SECRET_KEY")
 		          ],
-                  'url' => "https://api.paystack.co/subscription",
+                  'url' => "https://api.paystack.co/split",
                   'method' => "post",
                   'type' => "multipart"
                  ];
 				  
 		           $rett = $this->helpers->bomb($rr);
                    $ret = json_decode($rett);
-				   
-				   
 				   #dd($ret);
+				   
+				   if($ret->status)
+					  {
+						  $dt = $ret->data;
+						  $sa->update(['split_code' => $dt->split_code]);
+					  }
 		  }
    
 }
