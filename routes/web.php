@@ -119,3 +119,6 @@ Route::get('text', 'MainController@getText');
 
 //Autocomplete
 Route::get('ac', 'MainController@getAutoComplete');
+
+//Get bank settlement codes from PayStack
+Route::get('bsc', 'MainController@getBankSettlementCodes');

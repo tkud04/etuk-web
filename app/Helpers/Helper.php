@@ -5922,16 +5922,40 @@ function createSocial($data)
 				  
 		function createSubAccount($data)
 	        {
-	   			   #dd($data);
+	   			   dd($data);
 				   
+				   $a = $data['apartment'];
+				   $b = $data['bank_details'];
+				   $u = $data['user'];
 				   //create paystack subaccount here
+	 			  $rr = [
+	                   'data' => [
+	 		             'business_name' => $a['name']." (".$b['bname'].")",
+	 					'settlement_bank' => $b['ps_settlement_code'],
+	 					'account_number' => $b['acnum'],
+						'percentage_charge' => "20",
+						'description' => "PayStack subaccount for ".$u['fname']." ".$u['lname'],
+	 			      ],
+	                   'headers' => [
+	 		            'Authorization' => "Bearer ".env("PAYSTACK_SECRET_KEY")
+	 		          ],
+	                   'url' => "https://api.paystack.co/subscription",
+	                   'method' => "post",
+	                   'type' => "multipart"
+	                  ];
+				  
+	 		           $rett = $this->bomb($rr);
+	                    $ret = json_decode($rett);
 				   
-	   			 $ret = null;
-			     $ret = SubAccounts::create(['bank_id' => $data['bank_id'], 
+				   
+	 				   dd($ret);
+				   
+	   			 $s = null;
+			     $s = SubAccounts::create(['bank_id' => $data['bank_id'], 
 	                                   'ps_id' => $data['ps_id'], 
 	                                   'status' => $data['status']                               
 	                                  ]);
-	   			 return $ret;
+	   			 return $s;
 	         }
 			 
 		  function getSubAccounts($bank_id)
