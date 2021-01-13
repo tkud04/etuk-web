@@ -3105,7 +3105,7 @@ class MainController extends Controller {
                  'headers' => [
 	              'Authorization' => "Bearer ".env("PAYSTACK_SECRET_KEY")
 	             ],
-                 'url' => "https://api.paystack.co/bank?country=nigeria",
+                 'url' => "https://api.paystack.co/bank?country=nigeria&perPage=".$req['ss'],
                  'method' => "get"
                 ];
 			  
