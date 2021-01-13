@@ -1872,7 +1872,7 @@ function isDuplicateUser($data)
                          ]);
                     }
 				}
-                
+				
                 return $ret;
            }
 		   
@@ -5922,15 +5922,25 @@ function createSocial($data)
 				  
 		function createSubAccount($data)
 	        {
-	   			   dd($data);
+	   			  # dd($data);
 				   
 				   $a = $data['apartment'];
 				   $b = $data['bank_details'];
 				   $u = $data['user'];
 				   //create paystack subaccount here
+				   
+				   //find the settlement code for the bank
+				   foreach($this->banks2 as $bk)
+				   {
+					   if($bk['slug'] == $b['bname'])
+					   {
+						   $b['ps_settlement_code'] = $bk['code'];
+						   break;
+					   }
+				   }
 	 			  $rr = [
 	                   'data' => [
-	 		             'business_name' => $a['name']." (".$b['bname'].")",
+	 		             'business_name' => $a->name." (".$b['bname'].")",
 	 					'settlement_bank' => $b['ps_settlement_code'],
 	 					'account_number' => $b['acnum'],
 						'percentage_charge' => "20",
@@ -5939,7 +5949,7 @@ function createSocial($data)
 	                   'headers' => [
 	 		            'Authorization' => "Bearer ".env("PAYSTACK_SECRET_KEY")
 	 		          ],
-	                   'url' => "https://api.paystack.co/subscription",
+	                   'url' => "https://api.paystack.co/subaccount",
 	                   'method' => "post",
 	                   'type' => "multipart"
 	                  ];
@@ -5947,21 +5957,23 @@ function createSocial($data)
 	 		           $rett = $this->bomb($rr);
 	                    $ret = json_decode($rett);
 				   
-				   
-	 				   dd($ret);
-				   
-	   			 $s = null;
-			     $s = SubAccounts::create(['bank_id' => $data['bank_id'], 
-	                                   'ps_id' => $data['ps_id'], 
+	   			       $s = null;
+			       
+				      if($ret->status)
+					  {
+				           $s = SubAccounts::create(['bank_id' => $b['id'], 
+	                                   'business_name' => $ret->business_name,   
+	                                   'subaccount_code' => $ret->subaccount_code,   
 	                                   'status' => $data['status']                               
 	                                  ]);
-	   			 return $s;
+	   			      }
+					  return $s;
 	         }
 			 
 		  function getSubAccounts($bank_id)
 	      {
 	   	   $ret = [];
-	        $subAccounts = SubAccounts::where('bank_id',$bank->id)->get();
+	        $subAccounts = SubAccounts::where('bank_id',$bank_id)->get();
 	   	     if(!is_null($subAccounts))
 	   	     {
 			   $subAccounts = $subAccounts->sortByDesc('created_at');	
@@ -5985,7 +5997,8 @@ function createSocial($data)
 	                {
                             $temp['id'] = $b->id; 
 							$temp['bank_id'] = $b->bank_id; 
-	                    	$temp['ps_id'] = $b->ps_id; 
+	                    	$temp['business_name'] = $b->business_name; 
+	                    	$temp['subaccount_code'] = $b->subaccount_code; 
 	                        $temp['status'] = $b->status; 
 							$temp['date'] = $b->created_at->format("jS F, Y h:i A"); 
 	                        $temp['updated'] = $b->updated_at->format("jS F, Y h:i A"); 

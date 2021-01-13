@@ -185,7 +185,7 @@ $(document).ready(function() {
 	          hideElem(['#add-apartment-side-0']);
 			  showElem(['#add-apartment-side-1']);	
 		}
-		else if(ac == "lluf" && plan == "1"){
+		else if(ac == "lluf"){
 		  Swal.fire({
 				icon: 'error',
 				title: 'You have reached your limit for your current plan'
@@ -336,7 +336,7 @@ $(document).ready(function() {
         // console.log("video: ",aptVideo);
          //console.log("images: ",aptImages);
 	   
-	   let aptPlan = $('#add-apartment-plan').val(), side3_validation = (aptPlan == "none"); 
+	   let aptPlan = $('#add-apartment-plan').val(), ac = $('#ac').val(), side3_validation = (aptPlan == "none"); 
 	   let aptBank = $('#add-apartment-bank').val(), aptBname = $('#add-apartment-bname').val(), aptAcname = $('#add-apartment-acname').val(), aptAcnum = $('#add-apartment-acnum').val(),
 	   bankValidation = (aptBank == "none" || ( aptBank == "new" && (aptBname == "none" || aptAcname == "" || aptAcnum == "") ) );
 	   
@@ -435,12 +435,15 @@ $(document).ready(function() {
 		  
 		  $('#add-apartment-submit').hide();
 		  $('#add-apartment-loading').fadeIn();
+		  console.log("ac: ",ac);
 		  
 		  if(aptPlan == fpp){
 			addApartment(fd);  
 		  }
 		  else{
-			  console.log(aptPlan);
+			  if(ac == "sey"){
+				  addApartment(fd);  
+			  }
 		  }
 		  
 	   }

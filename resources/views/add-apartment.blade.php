@@ -40,7 +40,7 @@ foreach($plans as $p)
 @section('content')
 @include('banner-2',['title' => $title,'subtitle' => $subtitle])
 <script>
-let selectedSide = "1", facilities = [], aptImages = [], aptImgCount = 1, aptCover = "none", fpp = "{{$fp}}";
+let selectedSide = "1", facilities = [], aptImages = [], aptImgCount = 1, aptCover = "none", aptPlan = "", fpp = "{{$fp}}";
   
 let mc = {
       "type":"posting",

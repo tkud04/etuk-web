@@ -40,7 +40,7 @@ foreach($plans as $p)
 <?php $__env->startSection('content'); ?>
 <?php echo $__env->make('banner-2',['title' => $title,'subtitle' => $subtitle], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <script>
-let selectedSide = "1", facilities = [], aptImages = [], aptImgCount = 1, aptCover = "none", fpp = "<?php echo e($fp); ?>";
+let selectedSide = "1", facilities = [], aptImages = [], aptImgCount = 1, aptCover = "none", aptPlan = "", fpp = "<?php echo e($fp); ?>";
   
 let mc = {
       "type":"posting",

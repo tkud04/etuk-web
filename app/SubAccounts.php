@@ -13,6 +13,6 @@ class SubAccounts extends Model
      * @var array
      */
     protected $fillable = [
-        'id', 'bank_id', 'ps_id', 'status'
+        'id', 'bank_id', 'business_name', 'subaccount_code', 'status'
     ];
 }

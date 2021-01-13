@@ -2449,8 +2449,17 @@ class MainController extends Controller {
 						}
 						$req['bank_id'] = $bank_id;
 						
-			            $this->helpers->createApartment($req);
-			             $ret = ['status' => "ok"];
+			            $a = $this->helpers->createApartment($req);
+						
+						//create subaccount on paystack
+				        $data = [
+							 'apartment' => $a,
+				             'bank_details' => $this->helpers->getBankDetail($req['bank_id']),
+				             'user' => $this->helpers->getUser($user->id)
+					    ];
+                         $sa = $this->helpers->createSubAccount($data);
+			             
+						 $ret = ['status' => "ok"];
 					}
 					
 		 }
