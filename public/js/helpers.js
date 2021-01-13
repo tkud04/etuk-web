@@ -322,7 +322,7 @@ const toggleFacility = dt => {
 	  i = $(`i#apt-service-icon-${dt}`);
 	  ft = f.attr('data-check');
 	  ret = {id: dt, selected: false};
-	  ih = "Check", rc = 'btn-warning', ac = 'btn-primary', iac = "ti-control-stop", idc = "ti-check-box",  dc = "unchecked";
+	  let ih = "Check", rc = 'btn-warning', ac = 'btn-primary', iac = "ti-control-stop", idc = "ti-check-box",  dc = "unchecked";
 	  
 	  if(f){
 		  if(ft == "unchecked"){

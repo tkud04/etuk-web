@@ -621,10 +621,10 @@ let addApartmentDescriptionEditor = new Simditor({
 												<select class="form-control" id="add-apartment-bname">
 												  <option value="none">Select bank</option>
 												  <?php
-												   foreach($banks as $k => $v)
+												   foreach($banks as $b)
 												   {
 												  ?>
-												    <option value="<?php echo e($k); ?>"><?php echo e($v); ?></option>
+												    <option value="<?php echo e($b['slug']); ?>"><?php echo e($b['name']); ?></option>
 												  <?php
 												   }
 												  ?>

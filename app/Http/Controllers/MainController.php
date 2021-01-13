@@ -2323,7 +2323,7 @@ class MainController extends Controller {
 		$secure = (isset($req['ss']) && $req['ss'] == "1") ? false : true;
 		$sps = $this->helpers->getSavedPayments($user);
 		$subs = $this->helpers->getUserPlans($user,['active' => true]);
-		$banks = $this->helpers->banks;
+		$banks = $this->helpers->banks2;
 		$bankAccounts = $this->helpers->getBankDetails($user);
 		$stats = $this->helpers->getUserPlanStats([
             'user' => $this->helpers->getUser($user->id),		
@@ -2503,7 +2503,7 @@ class MainController extends Controller {
 		
 		    $apartment = $this->helpers->getApartment($req['xf'],['imgId' => true]);
 			$plans = $this->helpers->getPlans();
-			$banks = $this->helpers->banks;
+			$banks = $this->helpers->banks2;
 		    $bankAccounts = $this->helpers->getBankDetails($user);
 			#dd($apartment);
 		    shuffle($ads);
