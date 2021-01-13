@@ -5943,7 +5943,7 @@ function createSocial($data)
 	 		             'business_name' => $a->name." (".$b['bname'].")",
 	 					'settlement_bank' => $b['ps_settlement_code'],
 	 					'account_number' => $b['acnum'],
-						'percentage_charge' => "20",
+						'percentage_charge' => "85",
 						'description' => "PayStack subaccount for ".$u['fname']." ".$u['lname'],
 	 			      ],
 	                   'headers' => [
@@ -5961,9 +5961,10 @@ function createSocial($data)
 			       
 				      if($ret->status)
 					  {
+						  $dt = $ret->data;
 				           $s = SubAccounts::create(['bank_id' => $b['id'], 
-	                                   'business_name' => $ret->business_name,   
-	                                   'subaccount_code' => $ret->subaccount_code,   
+	                                   'business_name' => $dt->business_name,   
+	                                   'subaccount_code' => $dt->subaccount_code,   
 	                                   'status' => $data['status']                               
 	                                  ]);
 	   			      }
