@@ -6088,6 +6088,44 @@ function createSocial($data)
 					  
 					 return $ret;
 		  }
+		  
+		  
+		  function getSplitObect($u)
+		  {
+			  $cart = $this->getCart($u,"",['subaccounts' => true]);
+			  
+			  					 $subtotal = $cart['subtotal'];
+
+             //media fee (5%)
+			 $share1 = 0; $share2 = 0;
+			 
+			 $split = [
+			   'type' => "flat",
+			   'currency' => "NGN",
+			   'bearer_type' => "account",
+			   'subaccounts' => []
+			 ];
+			  #dd($cart);
+			 foreach($cart['data'] as $c)
+			 {
+				 $a = $c['apartment'];
+				 $adt = $a['data'];
+				 $amt = $adt['amount'];
+				 
+				 $share1 += (0.05 * $amt);
+				 $share2 = 0.8 * $amt; 
+				 
+				 $b = $a['bank'];
+				 $sa = $this->getSubAccount($b['id']);
+				# dd($sa);
+				 array_push($split['subaccounts'],['subaccount' => $sa['subaccount_code'],'share' => (float)$share2]);
+			 }
+			 
+			 array_push($split['subaccounts'],['subaccount' => env('PAYSTACK_SUBACCOUNT_CODE'),'share' => (float)$share1]);
+			 #dd($split);
+			 
+			 return $split;
+		  }
    
 }
 ?>

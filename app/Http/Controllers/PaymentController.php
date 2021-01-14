@@ -188,13 +188,15 @@ class PaymentController extends Controller {
 				 if(count($sp) > 0)
 				 {
 					 $spdt = $sp['data'];
-					 
+					 $spl = $req['split'];
+					 $spl = str_replace('/','',$spl);
+					 #dd($spl);
 					 $rr = [
                   'data' => json_encode([
 				    'authorization_code' => trim($spdt->authorization_code),
 					'email' => trim($spdt->auth_email),
 					'amount' => $req['amount'],
-					'split' => $split
+					'split' => $this->helpers->getSplitObect($user)
 				  ]),
                   'headers' => [
 		           'Authorization' => "Bearer ".env("PAYSTACK_SECRET_KEY")
@@ -205,12 +207,12 @@ class PaymentController extends Controller {
                  ];
       
                   $dt = [];
-		           #dd($rr);
+		         #  dd($rr);
 			       $rett = $this->helpers->bomb($rr);
                    $ret = json_decode($rett);
 				   
 				   
-				   #dd($ret);
+				   dd($ret);
 
                     
                     if($ret->status == 'success')
@@ -285,7 +287,7 @@ class PaymentController extends Controller {
 		
 		$paymentDetails = Paystack::getPaymentData();
 
-        dd($paymentDetails);     
+        #dd($paymentDetails);     
 		if(Auth::check())
 		{
 			$user = Auth::user();
