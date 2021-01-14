@@ -165,19 +165,36 @@ class PaymentController extends Controller {
 			      }
 			      else
 			      {
-			        //$paystack = new Paystack();
-			        #dd($request);
-			        $request->reference = Paystack::genTranxRef();
-                    $request->key = config('paystack.secretKey');
-                   #dd($request);
-			        try{
-				      return Paystack::getAuthorizationUrl()->redirectNow(); 
-			        }
-			        catch(Exception $e)
-			        {
-				      $request->session()->flash("pay-card-status-error","ok");
-			          return redirect()->intended("checkout");
-			        } 
+			        #dd($spl);
+					 $rr = [
+                  'data' => json_encode([
+				    'email' => $req['email'],
+					'amount' => $req['amount'],
+					'split' => $this->helpers->getSplitObect($user)
+				  ]),
+                  'headers' => [
+		           'Authorization' => "Bearer ".env("PAYSTACK_SECRET_KEY")
+		           ],
+                  'url' => "https://api.paystack.co/transaction/initialize",
+                  'type' => "raw",
+                  'method' => "post",
+                 ];
+      
+                  $dt = [];
+		          #dd($rr);
+			       $rett = $this->helpers->bomb($rr);
+                   $ret = json_decode($rett);
+				   
+				   
+				   #dd($ret);
+
+                    
+                    if($ret->status)
+                     {
+						 $dt = $ret->data;
+						 return redirect()->away($dt->authorization_url);
+					 }
+
 			      } 
 			 }
 			 else
@@ -287,7 +304,7 @@ class PaymentController extends Controller {
 		
 		$paymentDetails = Paystack::getPaymentData();
 
-        #dd($paymentDetails);     
+        dd($paymentDetails);     
 		if(Auth::check())
 		{
 			$user = Auth::user();

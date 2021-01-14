@@ -6090,15 +6090,21 @@ function createSocial($data)
 		  }
 		  
 		  
-		  function getSplitObect($u)
+		  function getSplitObect($u,$optionalParams=[])
 		  {
 			  $cart = $this->getCart($u,"",['subaccounts' => true]);
 			  
 			  					 $subtotal = $cart['subtotal'];
 
+
+
              //media fee (5%)
 			 $share1 = 0; $share2 = 0;
 			 
+			 
+			//{"type":"flat","currency":"NGN","bearer_type":"account","subaccounts":[{"subaccount":"ACCT_aaj7m8hm1aih10h","share":5600},{"subaccount":"ACCT_yp39qx3rzgg2yh1","share":350}]}
+           $spl = '{"type":"flat","currency":"NGN","bearer_type":"account","subaccounts":[';
+		    
 			 $split = [
 			   'type' => "flat",
 			   'currency' => "NGN",
@@ -6118,13 +6124,17 @@ function createSocial($data)
 				 $b = $a['bank'];
 				 $sa = $this->getSubAccount($b['id']);
 				# dd($sa);
-				 array_push($split['subaccounts'],['subaccount' => $sa['subaccount_code'],'share' => (float)$share2]);
+				 array_push($split['subaccounts'],['subaccount' => $sa['subaccount_code'],'share' => (int)($share2 * 100)]);
+			 $spl .= '{"subaccount": "'.$sa['subaccount_code'].'","share" : '.(int)($share2 * 100).'},';
 			 }
 			 
-			 array_push($split['subaccounts'],['subaccount' => env('PAYSTACK_SUBACCOUNT_CODE'),'share' => (float)$share1]);
-			 #dd($split);
+			 array_push($split['subaccounts'],['subaccount' => env('PAYSTACK_SUBACCOUNT_CODE'),'share' => (int)($share1 * 100)]);
+		  $spl .= '{"subaccount":"'.env('PAYSTACK_SUBACCOUNT_CODE').'","share":'.(int)($share1 * 100).'}]}';
 			 
-			 return $split;
+			 #dd([$spl,json_encode($split)]);
+			 #dd($split);
+			 $ret = (isset($optionalParams['text']) && $optionalParams['text']) ? $spl : $split;
+			 return $ret;
 		  }
    
 }

@@ -2001,39 +2001,10 @@ class MainController extends Controller {
 		$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
 		$cart = $this->helpers->getCart($user,$gid,['subaccounts' => true]);
 		
-					 $subtotal = $cart['subtotal'];
-
-             //media fee (5%)
-			 $share1 = 0; $share2 = 0;
-			 
-			 $split = [
-			   'type' => "flat",
-			   'currency' => "NGN",
-			   'bearer_type' => "account",
-			   'subaccounts' => []
-			 ];
-			  #dd($cart);
-			 foreach($cart['data'] as $c)
-			 {
-				 $a = $c['apartment'];
-				 $adt = $a['data'];
-				 $amt = $adt['amount'];
-				 
-				 $share1 += (0.05 * $amt);
-				 $share2 = 0.8 * $amt; 
-				 
-				 $b = $a['bank'];
-				 $sa = $this->helpers->getSubAccount($b['id']);
-				# dd($sa);
-				 array_push($split['subaccounts'],['subaccount' => $sa['subaccount_code'],'share' => $share2]);
-			 }
-			 
-			 array_push($split['subaccounts'],['subaccount' => env('PAYSTACK_SUBACCOUNT_CODE'),'share' => $share1]);
-			 #dd($split);
-			 $spl = json_encode($split);
+	    $spl = $this->helpers->getSplitObect($user,['text' => true]);
 		
 		$c = $this->helpers->getCategories();
-		//dd($bs);
+		#dd($spl);
 		$signals = $this->helpers->signals;
 		$banner = $this->helpers->getBanner();
 		
