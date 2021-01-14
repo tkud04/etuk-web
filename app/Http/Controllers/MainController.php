@@ -1999,7 +1999,7 @@ class MainController extends Controller {
 		}
 		$req = $request->all();
 		$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
-		$cart = $this->helpers->getCart($user,$gid);
+		$cart = $this->helpers->getCart($user,$gid,['subaccounts' => true]);
 		$c = $this->helpers->getCategories();
 		//dd($bs);
 		$signals = $this->helpers->signals;
@@ -2463,7 +2463,7 @@ class MainController extends Controller {
                          $sa = $this->helpers->createSubAccount($data);
 						 
 						 //create split group on paystack
-						 $sg = $this->helpers->createSplitGroup($sa->id);
+						 //$sg = $this->helpers->createSplitGroup($sa->id);
 						 
 					   }
 						 $ret = ['status' => "ok"];

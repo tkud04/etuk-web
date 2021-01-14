@@ -3366,7 +3366,7 @@ function createSocial($data)
              return $ret;
            }
 		   
-		    function getCart($user,$r="")
+		    function getCart($user,$r="",$optionalParams=[])
            {
            	$ret = ['data' => [],'subtotal' => 0];
 			$uu = ""; $rett = [];		
@@ -5996,7 +5996,8 @@ function createSocial($data)
 	 	 function getSubAccount($id)
 	            {
 	            	$ret = [];
-	                $b = SubAccounts::where('id',$id)->first();
+	                $b = SubAccounts::where('id',$id)
+					                ->orWhere('bank_id',$id)->first();
  
 	               if($b != null)
 	                {

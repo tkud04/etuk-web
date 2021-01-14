@@ -154,7 +154,28 @@ class PaymentController extends Controller {
          }
          
          else
-         {
+         {			 
+			 $cart = $this->helpers->getCart($user,"",['subaccounts' => true]);
+
+			 $split = [
+			   'type' => "percentage",
+			   'currency' => "NGN",
+			   'bearer_type' => "account",
+			   'subaccounts' => [
+			      ['subaccount' => env('PAYSTACK_SUBACCOUNT_CODE'),'share' => 5],
+			   ]
+			 ];
+			 
+			 foreach($cart['data'] as $c)
+			 {
+				 $a = $c['apartment'];
+				 $b = $a['bank'];
+				 $sa = $this->helpers->getSubAccount($b['id']);
+				# dd($sa);
+				 array_push($split['subaccounts'],['subaccount' => $sa['subaccount_code'],'share' => 80]);
+			 }
+			 
+			 #dd($split);
 			 
 			 if($metadata->pt == "card")
 			 {
@@ -170,6 +191,7 @@ class PaymentController extends Controller {
 			        #dd($request);
 			        $request->reference = Paystack::genTranxRef();
                     $request->key = config('paystack.secretKey');
+                    $request->split = $split;
 			 
 			        try{
 				      return Paystack::getAuthorizationUrl()->redirectNow(); 
@@ -194,7 +216,8 @@ class PaymentController extends Controller {
                   'data' => [
 				    'authorization_code' => trim($spdt->authorization_code),
 					'email' => trim($spdt->auth_email),
-					'amount' => $req['amount']
+					'amount' => $req['amount'],
+					'split' => $split
 				  ],
                   'headers' => [
 		           'Authorization' => "Bearer ".env("PAYSTACK_SECRET_KEY")
@@ -284,7 +307,7 @@ class PaymentController extends Controller {
 		
 		$paymentDetails = Paystack::getPaymentData();
 
-        #dd($paymentDetails);     
+        dd($paymentDetails);     
 		if(Auth::check())
 		{
 			$user = Auth::user();
