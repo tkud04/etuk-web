@@ -34,9 +34,11 @@ $subtotal = $cart['subtotal'];
 								       "email":"<?php echo e($user->email); ?>",
 									   "notes":""
 									  };
-                        
+            let spl = '<?php echo $spl; ?>';
+            
 $(document).ready(() => {
 	$('.uc').hide();
+	$('#spl').val(spl);
 });						
            </script>
 
@@ -134,6 +136,7 @@ $(document).ready(() => {
                             	<input type="hidden" name="email" value="<?php echo e($user->email); ?>"> 
                             	<input type="hidden" name="quantity" value="1"> 
                             	<input type="hidden" name="amount" value="<?php echo e($subtotal * 100); ?>"> 
+                            	<input type="hidden" name="split" id="spl" value=""> 
                             	<input type="hidden" name="metadata" id="nd" value="" > 
                             
                                 <input type="hidden" id="meta-comment" value="">  

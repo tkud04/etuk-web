@@ -155,28 +155,6 @@ class PaymentController extends Controller {
          
          else
          {			 
-			 $cart = $this->helpers->getCart($user,"",['subaccounts' => true]);
-
-			 $split = [
-			   'type' => "percentage",
-			   'currency' => "NGN",
-			   'bearer_type' => "account",
-			   'subaccounts' => [
-			      ['subaccount' => env('PAYSTACK_SUBACCOUNT_CODE'),'share' => 5],
-			   ]
-			 ];
-			 
-			 foreach($cart['data'] as $c)
-			 {
-				 $a = $c['apartment'];
-				 $b = $a['bank'];
-				 $sa = $this->helpers->getSubAccount($b['id']);
-				# dd($sa);
-				 array_push($split['subaccounts'],['subaccount' => $sa['subaccount_code'],'share' => 80]);
-			 }
-			 
-			 #dd($split);
-			 
 			 if($metadata->pt == "card")
 			 {
 				 if($req['amount'] < 1)
@@ -191,8 +169,7 @@ class PaymentController extends Controller {
 			        #dd($request);
 			        $request->reference = Paystack::genTranxRef();
                     $request->key = config('paystack.secretKey');
-                    $request->split = $split;
-			 
+                   #dd($request);
 			        try{
 				      return Paystack::getAuthorizationUrl()->redirectNow(); 
 			        }
@@ -213,17 +190,18 @@ class PaymentController extends Controller {
 					 $spdt = $sp['data'];
 					 
 					 $rr = [
-                  'data' => [
+                  'data' => json_encode([
 				    'authorization_code' => trim($spdt->authorization_code),
 					'email' => trim($spdt->auth_email),
 					'amount' => $req['amount'],
 					'split' => $split
-				  ],
+				  ]),
                   'headers' => [
 		           'Authorization' => "Bearer ".env("PAYSTACK_SECRET_KEY")
 		           ],
                   'url' => "https://api.paystack.co/transaction/charge_authorization",
-                  'method' => "post"
+                  'type' => "raw",
+                  'method' => "post",
                  ];
       
                   $dt = [];

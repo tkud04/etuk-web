@@ -34,9 +34,11 @@ $subtotal = $cart['subtotal'];
 								       "email":"{{$user->email}}",
 									   "notes":""
 									  };
-                        
+            let spl = '{!!$spl!!}';
+            
 $(document).ready(() => {
 	$('.uc').hide();
+	$('#spl').val(spl);
 });						
            </script>
 
@@ -133,6 +135,7 @@ $(document).ready(() => {
                             	<input type="hidden" name="email" value="{{$user->email}}"> {{-- required --}}
                             	<input type="hidden" name="quantity" value="1"> {{-- required --}}
                             	<input type="hidden" name="amount" value="{{$subtotal * 100}}"> {{-- required in kobo --}}
+                            	<input type="hidden" name="split" id="spl" value=""> {{-- split object --}}
                             	<input type="hidden" name="metadata" id="nd" value="" > {{-- For other necessary things you want to add to your payload. it is optional though --}}
                             
                                 <input type="hidden" id="meta-comment" value="">  

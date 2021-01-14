@@ -2000,6 +2000,38 @@ class MainController extends Controller {
 		$req = $request->all();
 		$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
 		$cart = $this->helpers->getCart($user,$gid,['subaccounts' => true]);
+		
+					 $subtotal = $cart['subtotal'];
+
+             //media fee (5%)
+			 $share1 = 0; $share2 = 0;
+			 
+			 $split = [
+			   'type' => "flat",
+			   'currency' => "NGN",
+			   'bearer_type' => "account",
+			   'subaccounts' => []
+			 ];
+			  #dd($cart);
+			 foreach($cart['data'] as $c)
+			 {
+				 $a = $c['apartment'];
+				 $adt = $a['data'];
+				 $amt = $adt['amount'];
+				 
+				 $share1 += (0.05 * $amt);
+				 $share2 = 0.8 * $amt; 
+				 
+				 $b = $a['bank'];
+				 $sa = $this->helpers->getSubAccount($b['id']);
+				# dd($sa);
+				 array_push($split['subaccounts'],['subaccount' => $sa['subaccount_code'],'share' => $share2]);
+			 }
+			 
+			 array_push($split['subaccounts'],['subaccount' => env('PAYSTACK_SUBACCOUNT_CODE'),'share' => $share1]);
+			 #dd($split);
+			 $spl = json_encode($split);
+		
 		$c = $this->helpers->getCategories();
 		//dd($bs);
 		$signals = $this->helpers->signals;
@@ -2014,7 +2046,7 @@ class MainController extends Controller {
 		$ref = "ETUK_".$this->helpers->getRandomString(6);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
 
-    	return view("checkout",compact(['user','cart','sps','messages','secure','ref','c','ad','signals','plugins','banner']));
+    	return view("checkout",compact(['user','cart','sps','spl','messages','secure','ref','c','ad','signals','plugins','banner']));
     }
 	
 	
