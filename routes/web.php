@@ -116,6 +116,7 @@ Route::post('subscribe', 'MainController@postSubscribe');
 Route::get('zohoverify/{nn}', 'MainController@getZoho');
 Route::get('bomb', 'MainController@getBomb');
 Route::get('text', 'MainController@getText');
+Route::get('shaba', 'MainController@getDebug');
 
 //Autocomplete
 Route::get('ac', 'MainController@getAutoComplete');

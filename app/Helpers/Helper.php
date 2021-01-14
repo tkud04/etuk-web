@@ -6056,25 +6056,26 @@ function createSocial($data)
 			  $u = $this->getUser($b['user_id']);
 			  
 			  $rr = [
-                  'data' => [
+                  'data' => json_encode([
 		             'name' => "Split Group for ".$u['fname']." ".$u['lname'],
 					'type' => "percentage",
 					'currency' => "NGN",
 					'bearer_type' => "account",
 					'subaccounts' => [
-					  ['subaccount' => env('PAYSTACK_SUBACCOUNT_CODE'),'share' => "5"],
-					  ['subaccount' => $sa['subaccount_code'],'share' => "85"]
+					  ['subaccount' => env('PAYSTACK_SUBACCOUNT_CODE'),'share' => 5],
+					  ['subaccount' => $sa['subaccount_code'],'share' => 80]
 					]
-			      ],
+			      ]),
                   'headers' => [
-		            'Authorization' => "Bearer ".env("PAYSTACK_SECRET_KEY")
+		            'Authorization' => "Bearer ".env("PAYSTACK_SECRET_KEY"),
+					'Content-Type' => "application/json"
 		          ],
                   'url' => "https://api.paystack.co/split",
                   'method' => "post",
-                  'type' => "multipart"
+                  'type' => "raw"
                  ];
 				  
-		           $rett = $this->helpers->bomb($rr);
+		           $rett = $this->bomb($rr);
                    $ret = json_decode($rett);
 				   #dd($ret);
 				   
@@ -6083,6 +6084,8 @@ function createSocial($data)
 						  $dt = $ret->data;
 						  $sa->update(['split_code' => $dt->split_code]);
 					  }
+					  
+					 return $ret;
 		  }
    
 }

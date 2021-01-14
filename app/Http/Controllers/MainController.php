@@ -3158,6 +3158,18 @@ class MainController extends Controller {
 	
 
 	/**
+	 * Debugging route
+	 *
+	 * @return Response
+	 */
+	public function getDebug()
+    {
+        //create split group on paystack
+      // $ret = $this->helpers->createSplitGroup("1");
+		dd($ret);
+    }
+	
+	/**
 	 * Show the application welcome screen to the user.
 	 *
 	 * @return Response
