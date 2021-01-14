@@ -3613,6 +3613,9 @@ function createSocial($data)
               $dt = [];
               
               if($type == "checkout"){
+				  
+				  //separate between booking and paind orders here
+				  
                	$dt['amount'] = $amount;
 				$dt['ref'] = $ref;
 				$dt['notes'] = isset($md['notes']) ? $md['notes'] : "";
@@ -3681,6 +3684,7 @@ function createSocial($data)
 					//update apartment avb
 			        $apt = Apartments::where('apartment_id',$c['apartment_id'])->first();
 					if($apt != null) $apt->update(['avb' => "occupied"]);
+					
 					//create host transaction
                     $host = $c['apartment']['host']; 
                     $this->createTransaction([
