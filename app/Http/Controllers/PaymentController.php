@@ -229,7 +229,7 @@ class PaymentController extends Controller {
                    $ret = json_decode($rett);
 				   
 				   
-				   dd($ret);
+				   #dd($ret);
 
                     
                     if($ret->status == 'success')
@@ -304,7 +304,7 @@ class PaymentController extends Controller {
 		
 		$paymentDetails = Paystack::getPaymentData();
 
-        dd($paymentDetails);     
+        #dd($paymentDetails);     
 		if(Auth::check())
 		{
 			$user = Auth::user();
