@@ -54,7 +54,7 @@ class MainController extends Controller {
 		$banner = $this->helpers->getBanner("landing");
 		$plugins = $this->helpers->getPlugins();
 		#$this->helpers->populateTips();
-		
+
 		#dd($messages);
 		
 		$popularApartments = $this->helpers->getPopularApartments();

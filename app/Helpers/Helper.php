@@ -6125,11 +6125,14 @@ function createSocial($data)
 				 $share1 += (0.05 * $amt);
 				 $share2 = 0.8 * $amt; 
 				 
-				 $b = $a['bank'];
-				 $sa = $this->getSubAccount($b['id']);
-				# dd($sa);
-				 array_push($split['subaccounts'],['subaccount' => $sa['subaccount_code'],'share' => (int)($share2 * 100)]);
-			 $spl .= '{"subaccount": "'.$sa['subaccount_code'].'","share" : '.(int)($share2 * 100).'},';
+				 if($a['bank_id'] != "admin")
+				 {
+				    $b = $a['bank'];
+				    $sa = $this->getSubAccount($b['id']);
+				    # dd($sa);
+				    array_push($split['subaccounts'],['subaccount' => $sa['subaccount_code'],'share' => (int)($share2 * 100)]);
+			        $spl .= '{"subaccount": "'.$sa['subaccount_code'].'","share" : '.(int)($share2 * 100).'},';	 
+				 }
 			 }
 			 
 			 array_push($split['subaccounts'],['subaccount' => env('PAYSTACK_SUBACCOUNT_CODE'),'share' => (int)($share1 * 100)]);
