@@ -2140,6 +2140,7 @@ function isDuplicateUser($data)
 				  if($host) $temp['host'] = $this->getUser($apartment->user_id);
 				  $temp['name'] = $apartment->name;
 				  $temp['avb'] = $apartment->avb;
+				  $temp['bank_id'] = $apartment->bank_id;
 				  $temp['bank'] = $this->getBankDetail($apartment->bank_id);
 				  $temp['url'] = $apartment->url;
 				  $temp['in_catalog'] = $apartment->in_catalog;
