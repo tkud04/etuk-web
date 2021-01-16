@@ -1134,6 +1134,7 @@ const payCard = dt =>{
 	  mc['notes'] = $('#notes').val();
 	  mc['sps'] = $('#checkout-sps').val();
 	  mc['pt'] = dt.pt;
+	  mc['type'] = "checkout";
 	 
 	 $('#nd').val(JSON.stringify(mc)); 
 	console.log(mc);
@@ -1607,7 +1608,7 @@ const tuc = dt => {
 }
 
 const uc = dt => {
-	let axf = dt.axf, guests = $(`#uc-${axf}-guests`).val(), kids = $(`#uc-${axf}-kids`).val(), validation = (axf == "" || parseInt(guests) < 1 || parseInt(kids) < 1);
+	let axf = dt.axf, guests = $(`#uc-${axf}-guests`).val(), c1 = $(`#uc-${axf}-checkin`).val(), c2 = $(`#uc-${axf}-checkout`).val(), validation = (axf == "" || parseInt(guests) < 1 || c1 == "" || c2 == "");
 	
 	if(validation){
 		Swal.fire({
@@ -1616,7 +1617,7 @@ const uc = dt => {
            });
 	}
 	else{
-		window.location = `update-cart?axf=${axf}&guests=${guests}&kids=${kids}`;
+		window.location = `update-cart?axf=${axf}&guests=${guests}&checkin=${c1}&checkout=${c2}`;
 	}
 }
 

@@ -154,6 +154,11 @@ $(document).ready(() => {
 							  </div><br>
 							  <div class="col-lg-12 col-md-12">
 							  <?php
+							  $dci = date("Y-m-d");
+									$cd = new DateTime($dci);
+                                    $cd->add(new DateInterval('P1D'));
+                                    $dco = $cd->format("Y-m-d");
+							  
 							    foreach($cartt as $c)
 													 {
 														 $xf = $user->id;
@@ -168,10 +173,7 @@ $(document).ready(() => {
 														 $location = $address['city'].", ".$address['state'];
 														 $checkin = new DateTime($c['checkin']);
 														 $checkout = new DateTime($c['checkout']);
-														 $c1 = new DateTime($checkin->format("jS F, Y"));
-														 $c2 = new DateTime($checkout->format("jS F, Y"));
-														 $cdiff = $c1->diff($c2);
-														 $duration = $cdiff->format("%r%a");
+														 $duration = $c['duration'];
 														 $dtt = $duration == 1 ? "night" : "nights";
 							 if($c != $cartt[0])
 							 {
@@ -183,23 +185,27 @@ $(document).ready(() => {
 							   <h3><span class="label label-primary"><?php echo e($apartment['name']); ?></span> <b>&#8358;<?php echo e(number_format($amount,2)); ?></b> <small>per night</small></h3>
 							   <p>Check-in: <b><?php echo e($checkin->format("jS F, Y")); ?></b></p>
 							   <p>Duration: <b><?php echo e($duration." ".$dtt); ?></b></p>
-							   <p>Guests: <b><?php echo e($c['guests']); ?></b> | Kids: <b><?php echo e($c['kids']); ?></b></p>
+							   <p>Guests: <b><?php echo e($c['guests']); ?></b></p>
 							   <input type="hidden" id="<?php echo e($axf); ?>-vsb" value="h">
 							   <div class="row uc" id="<?php echo e($axf); ?>-row">
 							  
 							     <div class="col-md-4">
 								   <div class="form-group">
 								     <label>Guests<i class="req">*</i></label>
-									 <input type="number" class="form-control" placeholder="0" id="uc-<?php echo e($axf); ?>-guests">
+									 <input type="number" class="form-control" placeholder="0" id="uc-<?php echo e($axf); ?>-guests" value="<?php echo e($c['guests']); ?>">
 								   </div>
 								 </div>
-								 <div class="col-md-4">
+								 <div class="col-md-5">
 								   <div class="form-group">
-								     <label>Kids<i class="req">*</i></label>
-									 <input type="number" class="form-control" placeholder="0" id="uc-<?php echo e($axf); ?>-kids">
-								   </div>
+													<label>Check In<i class="req">*</i></label>
+														<input type="date" id="uc-<?php echo e($axf); ?>-checkin" class="form-control" value="<?php echo e($checkin->format('Y-m-d')); ?>" />
+									</div>
+									<div class="form-group">
+													<label>Check Out<i class="req">*</i></label>
+														<input type="date" id="uc-<?php echo e($axf); ?>-checkout" class="form-control" value="<?php echo e($checkout->format('Y-m-d')); ?>" />
+									</div>
 								 </div>
-								 <div class="col-md-4">
+								 <div class="col-md-3">
 								   <a class="btn btn-success btn-sm" href="javascript:void(0)" onclick="uc({axf: '<?php echo e($axf); ?>'}); return false;">Submit</a>
 								 </div>
 							   </div>

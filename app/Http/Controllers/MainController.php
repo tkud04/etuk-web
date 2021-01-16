@@ -1843,11 +1843,10 @@ class MainController extends Controller {
 			$user = Auth::user();
 			
 			$req = $request->all();
-        
+            #dd($req);
 		    $validator = Validator::make($req,[
 		                    'axf' => 'required|numeric',
 		                    'guests' => 'required|numeric',
-		                    'kids' => 'required|numeric',
 		                    'checkin' => 'required',
 		                    'checkout' => 'required'
 		    ]);
@@ -1897,11 +1896,12 @@ class MainController extends Controller {
 			$user = Auth::user();
 			
 			$req = $request->all();
-        
+             #dd($req);
 		    $validator = Validator::make($req,[
 		                    'axf' => 'required',
 		                    'guests' => 'required|numeric',
-		                    'kids' => 'required|numeric',
+		                    'checkin' => 'required',
+		                    'checkout' => 'required'
 		    ]);
 		
 		if($validator->fails())
@@ -1912,7 +1912,7 @@ class MainController extends Controller {
 		 else
 		 {  
 	        $req['user_id'] = $user->id;	 
-			$r = $this->helpers->UpdateCart($req);
+			$r = $this->helpers->updateCart($req);
 			
 			if($r == "host")
 			{

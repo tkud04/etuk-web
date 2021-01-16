@@ -53,7 +53,8 @@ class PaymentController extends Controller {
 		
 		$req = $request->all();
 		#dd($req);
-		$metadata = json_decode($req['metadata']);
+		$md = $req['metadata'];
+		$metadata = json_decode($md);
 		
 		if(isset($metadata->pid))
 		{
@@ -157,9 +158,6 @@ class PaymentController extends Controller {
          {			 
 			 if($metadata->pt == "card")
 			 {
-			    $md = $req['md'];
-			       $md['type'] = "checkout";
-			
 				 if($req['amount'] < 1)
 			      {
 				    $err = "error";

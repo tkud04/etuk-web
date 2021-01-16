@@ -566,41 +566,21 @@ let sec = 0, svc = 0, loc = 0, cln = 0, cmf = 0;
 												<div class="col-lg-12 col-md-12 col-sm-12 small-spilx">
 													<h4 class="booking-title">How many are you?</h4>
 												</div>
-												<div class="col-lg-6 col-md-6 col-sm-6 col-6 small-spilx">
+												<div class="col-lg-12 col-md-12 col-sm-12 col-12 small-spilx">
 													<div class="form-group">
 														<div class="guests">
 															<div class="advance-bboking">
 															
 																<div class="guest-type">
-																	<h5>Adults</h5>
+																	<h5>Guests</h5>
 																	<span><?php echo e($terms['max_adults']); ?> max.</span>
 																</div>
 																
 																<div class="guests-box">
 																	  <button class="counter-btn" type="button" id="cnt-down"><i class="ti-minus"></i></button>
-																	  <input type="text" id="guestNo" name="guests" value="2" max="<?php echo e($terms['max_children']); ?>"/>
+																	  <input type="text" id="guestNo" name="guests" value="2" max="<?php echo e($terms['max_adults']); ?>"/>
+																	  <input type="hidden" id="mg" value="<?php echo e($terms['max_adults']); ?>"/>
 																	  <button class="counter-btn" type="button" id="cnt-up"><i class="ti-plus"></i></button>
-																</div>
-																
-															</div>
-														</div>
-													</div>
-												</div>
-
-												<div class="col-lg-6 col-md-6 col-sm-6 col-6 small-spilx brl">
-													<div class="form-group">
-														<div class="guests">
-															<div class="advance-bboking">
-															
-																<div class="guest-type">
-																	<h5>Child</h5>
-																	<span><?php echo e($terms['max_children']); ?> max.</span>
-																</div>
-																
-																<div class="guests-box">
-																	<button class="counter-btn" type="button" id="kcnt-down"><i class="ti-minus"></i></button>
-																	<input type="text" id="kidsNo" name="kids" value="0" max="<?php echo e($terms['max_children']); ?>"/>
-																	<button class="counter-btn" type="button" id="kcnt-up"><i class="ti-plus"></i></button>
 																</div>
 																
 															</div>

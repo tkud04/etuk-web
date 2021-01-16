@@ -3290,7 +3290,7 @@ function createSocial($data)
 			 $ret = "error";
 			 
 			 $a = Apartments::where(['user_id' => $xf,'id' => $axf])->first();
-			 #dd($a);
+			 #dd($data);
 			 if($a == null)
 			 {
 				 $aa = Apartments::where(['id' => $axf])->first();
@@ -3303,7 +3303,7 @@ function createSocial($data)
                                                       'checkin' => $data['checkin'],
                                                       'checkout' => $data['checkout'],
                                                       'guests' => $data['guests'],
-                                                      'kids' => $data['kids']
+                                                      'kids' => ""
                                                       ]); 
 				
 				     $ret = "ok";
@@ -3333,7 +3333,8 @@ function createSocial($data)
 			    if(!is_null($c))
 			    {
 				    $c->update(['guests' => $dt['guests'],
-                                                      'kids' => $dt['kids']
+                                                      'checkin' => $dt['checkin'],
+                                                      'checkout' => $dt['checkout'],
                                                       ]); 
 				
 				     $ret = "ok";
@@ -3414,12 +3415,12 @@ function createSocial($data)
 						
 						$checkin = Carbon::parse($c->checkin);
 						$checkout = Carbon::parse($c->checkout);
-                        $temp['checkin'] = $checkin->format("jS F, Y");
-                        $temp['checkout'] = $checkout->format("jS F, Y");
-                        $c1 = new \DateTime($temp['checkin']);
-						$c2 = new \DateTime($temp['checkout']);
-						$cdiff = $c1->diff($c2);
-						$duration = $cdiff->format("%r%a");		
+                        
+                         $duration = $checkin->diffInDays($checkout);
+						$temp['checkin'] = $checkin;
+						$temp['checkout'] = $checkout;
+						$temp['duration'] = $duration;
+						#dd($duration);
                         $ret['subtotal'] += ($adata['amount'] * $duration);						
                         $temp['guests'] = $c->guests; 
                         $temp['kids'] = $c->kids; 
@@ -3428,6 +3429,7 @@ function createSocial($data)
                }                                 
               			  
                 $ret['data'] = $rett;
+				#dd($ret);
 				return $ret;
            }
            function clearCart($user)
