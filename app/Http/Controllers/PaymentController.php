@@ -157,6 +157,9 @@ class PaymentController extends Controller {
          {			 
 			 if($metadata->pt == "card")
 			 {
+			    $md = $req['md'];
+			       $md['type'] = "checkout";
+			
 				 if($req['amount'] < 1)
 			      {
 				    $err = "error";
@@ -166,10 +169,12 @@ class PaymentController extends Controller {
 			      else
 			      {
 			        #dd($spl);
+			       
 					 $rr = [
                   'data' => json_encode([
 				    'email' => $req['email'],
 					'amount' => $req['amount'],
+					'metadata' => $md,
 					'split' => $this->helpers->getSplitObect($user)
 				  ]),
                   'headers' => [
@@ -213,6 +218,7 @@ class PaymentController extends Controller {
 				    'authorization_code' => trim($spdt->authorization_code),
 					'email' => trim($spdt->auth_email),
 					'amount' => $req['amount'],
+					'metadata' => $md,
 					'split' => $this->helpers->getSplitObect($user)
 				  ]),
                   'headers' => [
