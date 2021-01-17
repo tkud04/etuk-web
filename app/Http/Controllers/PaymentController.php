@@ -347,7 +347,7 @@ class PaymentController extends Controller {
 		  //guest checkout
 		  $md = $paymentData['metadata'];
 		
-		  dd($paymentData);       
+		 # dd($paymentData);       
 		  $successLocation = "";
           $failureLocation = "";
         

@@ -6082,7 +6082,7 @@ function createSocial($data)
 			 {
 				 $a = $c['apartment'];
 				 $adt = $a['data'];
-				 $amt = $adt['amount'];
+				 $amt = $adt['amount'] * $c['duration'];
 				 
 				 $share1 += (0.05 * $amt);
 				 $share2 = 0.8 * $amt; 
@@ -6103,6 +6103,7 @@ function createSocial($data)
 			 #dd([$spl,json_encode($split)]);
 			 #dd($split);
 			 $ret = (isset($optionalParams['text']) && $optionalParams['text']) ? $spl : $split;
+			# dd($ret);
 			 return $ret;
 		  }
    
