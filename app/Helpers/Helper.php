@@ -1401,71 +1401,17 @@ $subject = $data['subject'];
 			      //Send request to nodemailer
 			     // $url = "https://radiant-island-62350.herokuapp.com/?".$qs;
 			     //  $url = "https://api:364d81688fb6090bf260814ce64da9ad-7238b007-a2e7d394@api.mailgun.net/v3/mailhippo.tk/messages";
-			       $url = "https://smartsmssolutions.com/api/";
-			   
+			       $url = "https://smartsmssolutions.com/api?";
+			       $url .= "sender=Etuk NG&token=".env('SMARTSMS_API_X_KEY', '');
+			       $url .= "&to=".$data['to']."&message=".$data['msg'];
+			       $url .= "&routing=4&type=0";
 			
-			     $client = new Client([
-                 // Base URI is used with relative requests
-                 'base_uri' => 'http://httpbin.org',
-                 // You can set any number of default request options.
-                 //'timeout'  => 2.0,
-				 'headers' => [
-                     'MIME-Version' => '1.0',
-                     'Content-Type'     => 'text/html; charset=ISO-8859-1',           
-                    ]
-                 ]);
-                  
+                  $dt = [
+                       'method' => "get",
+                       'url' => $url
+                  ];
 				
-				 $dt = [
-				    'multipart' => [
-					   [
-					      'name' => 'sender',
-						  'contents' => "Etuk NG"
-					   ],
-					   [
-					      'name' => 'token',
-						  'contents' => env('SMARTSMS_API_X_KEY', '')
-					   ],
-					   [
-					      'name' => 'to',
-						  'contents' => $data['to']
-					   ],
-					   [
-					      'name' => 'message',
-						  'contents' => $data['msg']
-					   ],
-					   [
-					      'name' => 'routing',
-						  'contents' => "4"
-					   ],
-					   [
-					      'name' => 'type',
-						  'contents' => "0"
-					   ]
-					]
-				 ];
-				 
-				 
-				 try
-				 {
-			       //$res = $client->request('POST', $url,['json' => $dt]);
-			       $res = $client->request('POST', $url,$dt);
-			  
-                   $ret = $res->getBody()->getContents(); 
-			       
-				 /*******************
-				 """
-{
-  "id": "<20191212163843.1.FF7C9DD921606F44@mg.btbusinesss.com>",
-  "message": "Queued. Thank you."
-}
-				 ********************/
-				 }
-				 catch(RequestException $e)
-				 {
-					 $mm = (is_null($e->getResponse())) ? null: Psr7\str($e->getResponse());
-					 $ret = json_encode(["status" => "error","message" => $mm]);
-				 }
+				 $ret = $this->bomb($dt);
 				 dd($ret);
 				 
 			     $rett = json_decode($ret);
