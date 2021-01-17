@@ -1393,41 +1393,54 @@ $subject = $data['subject'];
 			   
 			   if($lead == null || $lead == "")
 			   {
-				    $ret = json_encode(["status" => "ok","message" => "Invalid number"]);
+				    $ret = json_encode(["status" => "error","message" => "Invalid number"]);
 			   }
 			   else
 			    { 
                   
-			      //Send request to nodemailer
-			     // $url = "https://radiant-island-62350.herokuapp.com/?".$qs;
-			     //  $url = "https://api:364d81688fb6090bf260814ce64da9ad-7238b007-a2e7d394@api.mailgun.net/v3/mailhippo.tk/messages";
-			       $url = "https://smartsmssolutions.com/api?";
-			       $url .= "sender=Etuk NG&token=".env('SMARTSMS_API_X_KEY', '');
-			       $url .= "&to=".$data['to']."&message=".$data['msg'];
-			       $url .= "&routing=4&type=0";
-			
+			       $url = "https://smartsmssolutions.com/api/?";
+			       $url .= "message=".urlencode($data['msg'])."&to=".$data['to'];
+			       $url .= "&sender=Etuk+NG&type=0&routing=4&token=".env('SMARTSMS_API_X_KEY', '');
+			      #dd($url);
+				  
                   $dt = [
+				       'headers' => [
+					     'Content-Type' => "text/html"
+					   ],
                        'method' => "get",
                        'url' => $url
                   ];
 				
 				 $ret = $this->bomb($dt);
-				 dd($ret);
-				 
-			     $rett = json_decode($ret);
-			     if($rett->status == "queued" || $rett->status == "ok")
-			     {
-					 $nb = $user->balance - 1;
-					 $user->update(['balance' => $nb]);
-					//  $this->setNextLead();
-			    	//$lead->update(["status" =>"sent"]);					
-			     }
-			     /**
-				 
+				 #dd($ret);
+				 $smsData = explode("||",$ret);
+				 if(count($smsData) == 2)
+				 {
+					 $status = $smsData[0];
+					 $dt = $smsData[1];
+					 
+					 if($status == "1000")
+					 {
+						$rett = json_decode($dt);
+			            if($rett->code == "1000")
+			            {
+					      $ret = json_encode(["status" => "ok","message" => "Message sent!"]); 			
+			             }
+				         else
+			             {
+			         	   $ret = json_encode(["status" => "error","message" => "Error sending message."]); 
+			             } 
+					 }
+					 else
+					 {
+						 $ret = json_encode(["status" => "error","message" => "Error sending message."]); 
+					 }
+				 }
 				 else
-			     {
-			    	// $lead->update(["status" =>"pending"]);
-			     }**/
+				 {
+					$ret = json_encode(["status" => "error","message" => "Malformed response from SMS API"]); 
+				 }
+			     
 			    }
 				
               return $ret; 
