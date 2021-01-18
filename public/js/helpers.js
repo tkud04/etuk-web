@@ -1610,10 +1610,17 @@ const tuc = dt => {
 const uc = dt => {
 	let axf = dt.axf, guests = $(`#uc-${axf}-guests`).val(), c1 = $(`#uc-${axf}-checkin`).val(), c2 = $(`#uc-${axf}-checkout`).val(), validation = (axf == "" || parseInt(guests) < 1 || c1 == "" || c2 == "");
 	
+	let gn = $(`#gn-${axf}`).val();
 	if(validation){
 		Swal.fire({
 			 icon: 'error',
              title: "Please fill all required fields."
+           });
+	}
+	else if(parseInt(guests) > parseInt(gn)){
+		Swal.fire({
+			 icon: 'error',
+             title: `Maximum of ${gn} guests allowed`
            });
 	}
 	else{

@@ -167,6 +167,7 @@ $(document).ready(() => {
 														 $cmedia = $apartment['cmedia'];
 														 $imgs = $cmedia['images'];
 														 $adata = $apartment['data'];
+														 $terms = $apartment['terms'];
 														 $amount = $adata['amount'];
 														 $address = $apartment['address'];
 														 $location = $address['city'].", ".$address['state'];
@@ -181,6 +182,7 @@ $(document).ready(() => {
 							 <?php
 							 }
 							 ?>
+							    <input type="hidden" id="gn-{{$axf}}"  value="{{$terms['max_adults']}}"/>																	 
 							   <h3><span class="label label-primary">{{$apartment['name']}}</span> <b>&#8358;{{number_format($amount,2)}}</b> <small>per night</small></h3>
 							   <p>Check-in: <b>{{$checkin->format("jS F, Y")}}</b></p>
 							   <p>Duration: <b>{{$duration." ".$dtt}}</b></p>
