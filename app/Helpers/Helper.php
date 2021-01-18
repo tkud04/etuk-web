@@ -3879,11 +3879,18 @@ function createSocial($data)
                 return $ret;
 		   }
 		   
-		   function getTransaction($id)
+		   function getTransaction($id,$optionalParams=[])
 		   {
 			   $ret = [];
-			   $t = Transactions::where('id',$id)
-			                    ->orWhere('user_id',$id)->first();
+			   if(isset($optionalParams['user_id']))
+			   {
+				   $t = Transactions::where('user_id',$id)->first();
+			   }
+			   else
+			   {
+				   $t = Transactions::where('id',$id)->first();
+			   }
+			   
 			   
 			   if($t != null)
                {
