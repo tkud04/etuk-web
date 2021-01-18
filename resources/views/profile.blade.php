@@ -41,7 +41,7 @@ $subtitle = "Edit your account information";
 											
 											<div class="form-group col-md-6">
 												<label>Email</label>
-												<input type="email" name="email" class="form-control" value="{{$u['email']}}">
+												<input type="email" name="email" class="form-control" value="{{$u['email']}}" readonly>
 											</div>
 											
 											

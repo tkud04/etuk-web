@@ -820,13 +820,7 @@ class MainController extends Controller {
 		$user = null;
 		if(Auth::check())
 		{
-			$user = Auth::user();
-			
-			if($user->mode != "host")
-			{
-				session()->flash("valid-mode-status-error","ok");
-			    return redirect()->intended('/');
-			}
+			$user = Auth::user();		
 		}
 		else
 		{
@@ -834,7 +828,7 @@ class MainController extends Controller {
 		}
 		
 		
-		    $user->update(['avatar' => "", 'avatat_type' => ""]);
+		    $user->update(['avatar' => "", 'avatar_type' => ""]);
 			session()->flash("delete-avatar-status","ok");
 		
 		return redirect()->intended('profile');
