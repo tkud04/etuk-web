@@ -1842,37 +1842,45 @@ class MainController extends Controller {
 		{
 			$user = Auth::user();
 			
-			$req = $request->all();
-            #dd($req);
-		    $validator = Validator::make($req,[
+			if($user->mode == "guest")
+			{
+			  $req = $request->all();
+              #dd($req);
+		      $validator = Validator::make($req,[
 		                    'axf' => 'required|numeric',
 		                    'guests' => 'required|numeric',
 		                    'checkin' => 'required',
 		                    'checkout' => 'required'
-		    ]);
+		       ]);
 		
-		if($validator->fails())
-         {
-			 session()->flash("validation-status-error","ok");
-			 return redirect()->back()->withInput();
-         }
-		 else
-		 {  
-	        $req['user_id'] = $user->id;	 
-			$r = $this->helpers->addToCart($req);
+		      if($validator->fails())
+              {
+			    session()->flash("validation-status-error","ok");
+			    return redirect()->back()->withInput();
+              }
+		      else
+		      {  
+	             $req['user_id'] = $user->id;	 
+			     $r = $this->helpers->addToCart($req);
 			
-			if($r == "host")
-			{
-				session()->flash("add-to-cart-host-status-error","ok");
-				return redirect()->back()->withInput();
+			     if($r == "host")
+			     {
+				   session()->flash("add-to-cart-host-status-error","ok");
+				   return redirect()->back()->withInput();
+			     }
+		   	     else
+			     {
+				   session()->flash("add-to-cart-status","ok");
+			       return redirect()->intended('/');
+			     }
+			
+		       }
 			}
 			else
 			{
-				session()->flash("add-to-cart-status","ok");
-			    return redirect()->intended('/');
-			}
-			
-		 }
+				session()->flash("cart-user-mode-status-error","ok");
+			    return redirect()->back();
+			}	
 		}
 		else
 		{

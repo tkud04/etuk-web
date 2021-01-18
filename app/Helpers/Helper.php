@@ -108,6 +108,7 @@ class Helper implements HelperContract
 					 "oauth-status-error" => "Social login failed, please try again.",
 					 "checkout-auth-status-error" => "Please sign in to book an apartment.",
 					 "cart-auth-status-error" => "Please sign in to view your cart.",
+					 "cart-user-mode-status-error" => "Only guests can book apartments.",
 					 "save-apartment-auth-status-error" => "Please sign in to save an apartment.",
 					 "save-payment-auth-status-error" => "Please sign in to save payment details.",
 					 "validation-status-error" => "Please fill all required fields.",
