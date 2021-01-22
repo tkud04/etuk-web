@@ -1210,5 +1210,24 @@ $(document).ready(function() {
 			 $('#newsletter-form').submit();
 		}
 	});
+	
+ //SUBSCRIPTIONS
+	$('#cancel-btn').click(e => {
+		Swal.fire({
+    title: `Cancel Subscription?`,
+  imageUrl: "img/randoms/ask.jpg",
+  imageWidth: 400,
+  imageHeight: 200,
+  imageAlt: `Are you sure?`,
+  showCloseButton: true,
+  html:
+     "<h4 class='text-danger'><b>NOTE: You cannot downgrade back to the Free plan, and all your postings will be disabled</b>.</h4><p class='text-primary'>Click OK if you are sure.</p>"
+}).then((result) => {
+  if (result.value) {
+	  let h = $('#cancel-btn').attr('data-href');
+	  window.location = h;
+  }
+});
+	});
 
 });

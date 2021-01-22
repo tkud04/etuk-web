@@ -95,6 +95,7 @@ Route::post('my-apartment', 'MainController@postMyApartment');
 Route::get('delete-apartment', 'MainController@getDeleteApartment');
 
 Route::get('my-subscriptions', 'MainController@getMySubscriptions');
+Route::get('cancel-subscription', 'MainController@getCancelSubscription');
 
 Route::get('analytics', 'MainController@getAnalytics');
 Route::get('host-analytics', 'MainController@getHostAnalytics');

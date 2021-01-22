@@ -73,7 +73,7 @@ $subtitle = "List of all your subscriptions here";
 												</div>
 											</div>
 											<div class="buttons-to-right">
-												<a href="javascript:void(0) "data-href="{{$cu}}" id="cancel-btn" class="button gray"><i class="ti-trash"></i> Cancel</a>
+												<a href="javascript:void(0) " data-href="{{$cu}}" id="cancel-btn" class="button gray"><i class="ti-trash"></i> Cancel</a>
 											</div>
 										</li>
 										<?php

@@ -99,6 +99,7 @@ class Helper implements HelperContract
 					 "respond-to-reservation-status" => "Response sent.",
 					 "contact-status" => "Message sent! Our officials will get back to you shortly.",
 					 "subscribe-status" => "You are now subscribed!",
+					 "cancel-subscription-status" => "Your subscription has been cancelled.",
 						
 					 //ERROR NOTIFICATIONS
 					 "invalid-apartment-id-status-error" => "Apartment not found.",
@@ -6115,6 +6116,58 @@ function createSocial($data)
 			# dd($ret);
 			 return $ret;
 		  }
+		  
+		  
+		  function cancelSubscription($xf)
+	        {
+	
+				   $up = $this->getUserPlan($xf);
+				   dd($up);
+				   $a = $data['apartment'];
+				   $b = $data['bank_details'];
+				   
+				   //find the settlement code for the bank
+				   foreach($this->banks2 as $bk)
+				   {
+					   if($bk['slug'] == $b['bname'])
+					   {
+						   $b['ps_settlement_code'] = $bk['code'];
+						   break;
+					   }
+				   }
+	 			  $rr = [
+	                   'data' => [
+	 		             'business_name' => $a->name." (".$b['bname'].")",
+	 					'settlement_bank' => $b['ps_settlement_code'],
+	 					'account_number' => $b['acnum'],
+						'percentage_charge' => $data['percentage_charge'],
+						'description' => $data['description'],
+	 			      ],
+	                   'headers' => [
+	 		            'Authorization' => "Bearer ".env("PAYSTACK_SECRET_KEY")
+	 		          ],
+	                   'url' => "https://api.paystack.co/subaccount",
+	                   'method' => "post",
+	                   'type' => "multipart"
+	                  ];
+				  
+	 		           $rett = $this->bomb($rr);
+	                    $ret = json_decode($rett);
+				   
+	   			       $s = null;
+			       
+				      if($ret->status)
+					  {
+						  $dt = $ret->data;
+				           $s = SubAccounts::create(['bank_id' => $b['id'], 
+	                                   'business_name' => $dt->business_name,   
+	                                   'subaccount_code' => $dt->subaccount_code,   
+	                                   'split_code' => "",   
+	                                   'status' => "enabled"                              
+	                                  ]);
+	   			      }
+					  return $s;
+	         }
    
 }
 ?>

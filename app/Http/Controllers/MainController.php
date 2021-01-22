@@ -2728,6 +2728,42 @@ class MainController extends Controller {
 		
     }
 	
+	
+	 /**
+	 * Handle cancel subscription.
+	 *
+	 * @return Response
+	 */
+	public function getCancelSubscription(Request $request)
+    {
+		$user = null;
+		$messages = [];
+		if(Auth::check())
+		{
+			$user = Auth::user();
+			
+			if($user->mode != "host")
+			{
+				session()->flash("valid-mode-status-error","ok");
+			    return redirect()->intended('/');
+			}
+		}
+		
+		$req = $request->all();
+		
+		if(isset($req['xf']))
+		{
+			$this->helpers->cancelSubscription($req['xf']);
+			session()->flash("cancel-subscription-status","ok");
+		}
+		else
+		{
+			return redirect()->intended('my-subscriptions');
+		}
+		
+    }
+	
+	
 	/**
 	 * Set apartment's current image.
 	 *
