@@ -3542,7 +3542,8 @@ function createSocial($data)
 					  'ps_ref' => $ref."|".$email_token,
 					  'status' => "enabled"
 					]);
-				   
+				    //upgade user
+					$user->update(['host_upgraded' => "yes"]);
                     //add to saved payments
 			        if($sps == "yes")
 			        {
