@@ -3527,8 +3527,9 @@ function createSocial($data)
 			   $md = $payStackData['metadata'];
 			   $sps = $md['sps'];
 			   $ref = $payStackData['reference'];
+			   $email_token = $payStackData['email_token'];
 			   $plan = $this->getPlan($payStackData['plan']);
-			   dd($payStackData);
+			   #dd($payStackData);
 			   $ret = "error";
 			   
 			   if(count($plan) > 1)
@@ -3538,7 +3539,7 @@ function createSocial($data)
 				   $this->createUserPlan([
 					  'user_id' => $user->id,
 					  'plan_id' => $plan['id'],
-					  'ps_ref' => $ref,
+					  'ps_ref' => $ref."|".$email_token,
 					  'status' => "enabled"
 					]);
 				   
