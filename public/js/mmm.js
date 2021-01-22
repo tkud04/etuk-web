@@ -186,7 +186,7 @@ $(document).ready(function() {
 	          hideElem(['#add-apartment-side-0']);
 			  showElem(['#add-apartment-side-1']);	
 		}
-		else if(ac == "lluf"){
+		else if(ac == "lluf" && plan == "1"){
 		  Swal.fire({
 				icon: 'error',
 				title: 'You have reached your limit for your current plan'

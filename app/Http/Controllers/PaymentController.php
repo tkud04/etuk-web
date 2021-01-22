@@ -117,7 +117,7 @@ class PaymentController extends Controller {
 						 **/
 						 $pd = [
 						   'metadata' => ['sps' => "no"],
-						   'reference' => $psdata->subscription_code,
+						   'reference' => $psdata->subscription_code."|".$psdata->email_token,
 						   'plan' => $p['ps_id'],
 						   'npd' => $psdata->next_payment_date
 						 ];
