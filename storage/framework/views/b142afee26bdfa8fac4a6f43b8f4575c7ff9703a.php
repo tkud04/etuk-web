@@ -4,6 +4,8 @@ $subtitle = "Edit your account information";
  $img = $u['avatar'];
  if(is_array($img)) $img = $img[0];
  if($img == "") $img = asset("img/avatar.png");
+ 
+ $sb = $user->mode."-dashboard-sidebar";
 ?>
 
 
@@ -20,7 +22,9 @@ $subtitle = "Edit your account information";
 			<section class="gray">
 				<div class="container-fluid">
 					<div class="row">
-						<div class="col-lg-12 col-md-12 col-sm-12">
+					<?php echo $__env->make($sb,['user' => $user], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+					
+						<div class="col-lg-9 col-md-8 col-sm-12">
 							<div class="dashboard-wraper">
 							<form method="post" id="profile-form" action="<?php echo e(url('profile')); ?>" enctype="multipart/form-data">
 							    <?php echo csrf_field(); ?>
@@ -42,7 +46,7 @@ $subtitle = "Edit your account information";
 											
 											<div class="form-group col-md-6">
 												<label>Email</label>
-												<input type="email" name="email" class="form-control" value="<?php echo e($u['email']); ?>">
+												<input type="email" name="email" class="form-control" value="<?php echo e($u['email']); ?>" readonly>
 											</div>
 											
 											

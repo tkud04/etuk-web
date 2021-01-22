@@ -2242,6 +2242,51 @@ class MainController extends Controller {
     }
 	
 	/**
+	 * Show host subscriptions.
+	 *
+	 * @return Response
+	 */
+	public function getMySubscriptions(Request $request)
+    {
+		$user = null;
+		$messages = [];
+		if(Auth::check())
+		{
+			$user = Auth::user();
+			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
+			if($user->mode != "host")
+			{
+				session()->flash("valid-mode-status-error","ok");
+			    return redirect()->intended('/');
+			}
+		}
+		else
+		{
+			return redirect()->intended('/');
+		}
+		
+		$req = $request->all();
+		
+		$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
+		$cart = $this->helpers->getCart($user,$gid);
+		
+		$c = $this->helpers->getCategories();
+		//dd($bs);
+		$signals = $this->helpers->signals;
+		$banner = $this->helpers->getBanner();
+		
+		$ads = $this->helpers->getAds("wide-ad");
+		$plugins = $this->helpers->getPlugins();
+		
+		$subscriptions = $this->helpers->getUserPlans($user,['all' => true]);
+		#dd($subscriptions);
+		shuffle($ads);
+		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
+        
+    	return view("my-subscriptions",compact(['user','cart','messages','c','ad','subscriptions','signals','plugins','banner']));
+    }
+	
+	/**
 	 * Show host apartments.
 	 *
 	 * @return Response

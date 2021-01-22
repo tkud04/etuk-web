@@ -4,6 +4,8 @@ $subtitle = "Edit your account information";
  $img = $u['avatar'];
  if(is_array($img)) $img = $img[0];
  if($img == "") $img = asset("img/avatar.png");
+ 
+ $sb = $user->mode."-dashboard-sidebar";
 ?>
 @extends('layout')
 
@@ -20,7 +22,9 @@ $subtitle = "Edit your account information";
 			<section class="gray">
 				<div class="container-fluid">
 					<div class="row">
-						<div class="col-lg-12 col-md-12 col-sm-12">
+					@include($sb,['user' => $user])
+					
+						<div class="col-lg-9 col-md-8 col-sm-12">
 							<div class="dashboard-wraper">
 							<form method="post" id="profile-form" action="{{url('profile')}}" enctype="multipart/form-data">
 							    {!! csrf_field() !!}
