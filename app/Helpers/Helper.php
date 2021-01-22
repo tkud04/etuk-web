@@ -3932,6 +3932,44 @@ function createSocial($data)
                 return $ret;
            }
 		   
+		   function getDashboardStats($user,$dt=[])
+           {
+			   $r = [];
+			   $transactions = $this->getTransactions($user);
+			   
+			   if($user != null)
+			   {
+				   switch($user->mode)
+				   {
+					   case "guest":
+					   break;
+					   
+					   case "host":
+					     $r['apartments'] = Apartments::where('user_id',$user->id)->count();
+					     $profit = 0;
+						 
+						 if(count($transactions) > 0)
+						 {
+							 foreach($transactions as $t)
+							 {
+								 $i = $t['item'];
+								 $apartment = $i['apartment'];
+								 $adata = $apartment['data'];
+								 $amount = $adata['amount'];
+								 $checkin = Carbon::parse($i['checkin']);
+						         $checkout = Carbon::parse($i['checkout']);
+                                 $duration = $checkin->diffInDays($checkout);
+								 $amt = $amount * $duration;
+								 $profit += $amt;
+							 }
+						 }
+						 $r['profit'] = $profit;
+					   break;
+				   }
+			   }
+			  return $r;
+           }
+		   
 		   function getTransactionData($user,$dt=[])
            {
 			 $month = isset($dt['month']) ? $dt['month'] : date("m");

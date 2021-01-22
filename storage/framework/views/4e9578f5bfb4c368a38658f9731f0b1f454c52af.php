@@ -72,22 +72,22 @@ let transactionsData1 = [
 								<div class="row">
 									<div class="col-lg-4 col-md-4 col-sm-12">
 										<div class="dashboard-stat widget-1">
-											<div class="dashboard-stat-content"><h4>6</h4> <span>Total Booking</span></div>
-											<div class="dashboard-stat-icon"><i class="ti-location-pin"></i></div>
+											<div class="dashboard-stat-content"><h4><?php echo e($stats['apartments']); ?></h4> <span>Total Apartments</span></div>
+											<div class="dashboard-stat-icon"><i class="ti-home"></i></div>
 										</div>	
 									</div>
 									
 									<div class="col-lg-4 col-md-4 col-sm-12">
 										<div class="dashboard-stat widget-2">
-											<div class="dashboard-stat-content"><h4>7201</h4> <span>Upcoming Booking</span></div>
-											<div class="dashboard-stat-icon"><i class="ti-pie-chart"></i></div>
+											<div class="dashboard-stat-content"><h4>7201</h4> <span>Active Bookings</span></div>
+											<div class="dashboard-stat-icon"><i class="ti-location-pin"></i></div>
 										</div>	
 									</div>
 									
 									<div class="col-lg-4 col-md-4 col-sm-12">
 										<div class="dashboard-stat widget-4">
-											<div class="dashboard-stat-content"><h4>514</h4> <span>Main Balance</span></div>
-											<div class="dashboard-stat-icon"><i class="ti-bookmark"></i></div>
+											<div class="dashboard-stat-content"><h4>&#8358;<?php echo e(number_format($stats['profit'])); ?></h4> <span>Total Profit</span></div>
+											<div class="dashboard-stat-icon"><i class="ti-stats-up"></i></div>
 										</div>	
 									</div>
 								</div>

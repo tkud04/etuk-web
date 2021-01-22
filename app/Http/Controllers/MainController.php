@@ -407,14 +407,15 @@ class MainController extends Controller {
 		$cpt = []; $v = "errors.404";
 		
 		$activities = $this->helpers->getActivities($user);
-		
+		$stats = $this->helpers->getDashboardStats($user);
+		#dd($stats);
+			
 		if($user->mode == "host")
 		{
 			$transactions = $this->helpers->getTransactions($user);
 			$revenueData = $this->helpers->getTransactionData($user);
 			$bsa = $this->helpers->getBestSellingApartments($user);
-			#dd($transactions);
-			$cpt = ['user','cart','messages','activities','transactions','revenueData','bsa','c','ad','signals','plugins','banner'];
+			$cpt = ['user','cart','messages','activities','transactions','revenueData','stats','bsa','c','ad','signals','plugins','banner'];
 			$v = "host-dashboard";
 		}
 		else if($user->mode == "guest")
@@ -423,7 +424,7 @@ class MainController extends Controller {
 			$sapts = $this->helpers->getSavedApartments($user);
 			$orders = $this->helpers->getOrders($user);
 			#dd($sps);
-			$cpt = ['user','cart','messages','activities','sps','sapts','orders','c','ad','signals','plugins','banner'];
+			$cpt = ['user','cart','messages','activities','sps','sapts','stats','orders','c','ad','signals','plugins','banner'];
 			$v = "guest-dashboard";
 		}
 		
@@ -2287,6 +2288,89 @@ class MainController extends Controller {
     }
 	
 	/**
+	 * Show host subscriptions.
+	 *
+	 * @return Response
+	 */
+	public function getTransactions(Request $request)
+    {
+		$user = null;
+		$messages = [];
+		if(Auth::check())
+		{
+			$user = Auth::user();
+			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
+			if($user->mode != "host")
+			{
+				session()->flash("valid-mode-status-error","ok");
+			    return redirect()->intended('/');
+			}
+		}
+		else
+		{
+			return redirect()->intended('/');
+		}
+		
+		$req = $request->all();
+		
+		$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
+		$cart = $this->helpers->getCart($user,$gid);
+		
+		$c = $this->helpers->getCategories();
+		//dd($bs);
+		$signals = $this->helpers->signals;
+		$banner = $this->helpers->getBanner();
+		
+		$ads = $this->helpers->getAds("wide-ad");
+		$plugins = $this->helpers->getPlugins();
+		
+		$transactions = $this->helpers->getTransactions($user);
+		#dd($transactions);
+		shuffle($ads);
+		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
+        
+    	return view("transactions",compact(['user','cart','messages','c','ad','transactions','signals','plugins','banner']));
+    }
+	
+    /**
+	 * Handle cancel subscription.
+	 *
+	 * @return Response
+	 */
+	public function getCancelSubscription(Request $request)
+    {
+		$user = null;
+		$messages = [];
+		if(Auth::check())
+		{
+			$user = Auth::user();
+			
+			if($user->mode != "host")
+			{
+				session()->flash("valid-mode-status-error","ok");
+			    return redirect()->intended('/');
+			}
+		}
+		
+		$req = $request->all();
+		$ss = "cancel-subscription-status";
+		
+		if(isset($req['xf']))
+		{
+			$s = $this->helpers->cancelSubscription($req['xf']);
+			if($s == "error") $ss .= "-error";	
+		}
+		else
+		{
+			$ss .= "-error";
+		}
+		
+		session()->flash($ss,"ok");
+		return redirect()->intended('my-subscriptions');
+    }
+	
+	
+	/**
 	 * Show host apartments.
 	 *
 	 * @return Response
@@ -2728,43 +2812,6 @@ class MainController extends Controller {
 		
     }
 	
-	
-	 /**
-	 * Handle cancel subscription.
-	 *
-	 * @return Response
-	 */
-	public function getCancelSubscription(Request $request)
-    {
-		$user = null;
-		$messages = [];
-		if(Auth::check())
-		{
-			$user = Auth::user();
-			
-			if($user->mode != "host")
-			{
-				session()->flash("valid-mode-status-error","ok");
-			    return redirect()->intended('/');
-			}
-		}
-		
-		$req = $request->all();
-		$ss = "cancel-subscription-status";
-		
-		if(isset($req['xf']))
-		{
-			$s = $this->helpers->cancelSubscription($req['xf']);
-			if($s == "error") $ss .= "-error";	
-		}
-		else
-		{
-			$ss .= "-error";
-		}
-		
-		session()->flash($ss,"ok");
-		return redirect()->intended('my-subscriptions');
-    }
 	
 	
 	/**
