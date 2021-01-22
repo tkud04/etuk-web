@@ -13,154 +13,71 @@ $subtitle = "Our subscription plans";
 @section('content')
 @include('banner-2',['title' => $title,'subtitle' => $subtitle,'banner' => $banner])
 
-<section class="min">
+<section class="gray">
 				<div class="container">
-				
+					
 					<div class="row">
 						<div class="col-lg-12 col-md-12">
 							<div class="sec-heading center">
-								<p>Host Subscription plans</p>
-								<h2>View our packages</h2>
+								<p>Need more postings?</p>
+								<h2>Choose a Plan</h2>
 							</div>
 						</div>
 					</div>
 					
 					<div class="row">
-						
-						<!-- Single Tour Package -->
-						<div class="col-lg-6 col-md-12 col-sm-12">
-							<div class="tour-verticle">
+						<div class="col-lg-12 col-md-12">
+							<div class="owl-carousel owl-theme owl-loaded owl-drag" id="lists-slide">								
 							
-								<div class="tour-verticle-thumb">
-									<span class="theme-bg tv-cate"><i class="ti-car"></i></span>
-									<img src="assets/img/destination/pac-3.jpg" class="img-responsive" alt="">
-								</div>
-								
-								<div class="tour-verticle-caption">
-									<div class="tv-date"><i class="ti-calendar"></i>27 Fab</div>
-									<h4 class="tv-title"><a href="tour-detail.html">Machu Picchu, Peru</a></h4>
-									<p>It's the 7 person trip in the green city in South Africa</p>
-									<div class="tv-price-box">
-										<a href="tour-detail.html" class="tv-btn btn-theme">Get Details</a>
-										<h3 class="tv-price-title">$572</h3>
+							<div class="owl-stage-outer">
+							<div class="owl-stage" style="transition: all 0.25s ease 0s; width: 4364px; transform: translate3d(-2380px, 0px, 0px);">
+							<?php
+							 if(count($plans) > 0)
+							 {
+							  for($i = 0; $i < count($plans); $i++)
+							  {
+                                $p = $plans[$i];								  
+								$img = asset("img/randoms/sub-".$i.".jpg");
+							?>
+							<div class="owl-item cloned" style="width: 376.667px; margin-right: 20px;">
+							   <div class="single-item">
+									<div class="destination-discount">
+										<div class="destination-discount-thumb">
+											<a href="javascript:void(0)"><img src="{{$img}}" class="img-responsive" alt=""></a>
+										</div>
+										<div class="destination-discount-caption">
+											<div class="discount-box">
+												<h4 class="discount-title">{{ucwords($p['name'])}}</h4>
+											</div>
+											<h4 class="destination-title">
+											  	{!! $p['description'] !!}
+											</h4>
+											
+											<h5 class="destination-price theme-cl"><span>From</span>&#8358;{{number_format($p['amount'],2)}}</h5>
+											<a href="{{url('add-apartment')}}" class="check-btn">Subscribe<i class="ti-arrow-right"></i></a>
+										</div>
 									</div>
 								</div>
+						     </div>
+							 <?php
+							 }
+							 }
+							 ?>
 								
-							</div>
+								</div>
+								</div>
+								<div class="owl-nav disabled">
+								  <button type="button" role="presentation" class="owl-prev"><span aria-label="Previous">‹</span></button>
+								  <button type="button" role="presentation" class="owl-next"><span aria-label="Next">›</span></button>
+								</div>
+								<div class="owl-dots">
+								
+								</div>
+								
+								</div>
 						</div>
-						
-						<!-- Single Tour Package -->
-						<div class="col-lg-6 col-md-12 col-sm-12">
-							<div class="tour-verticle">
-							
-								<div class="tour-verticle-thumb">
-									<span class="theme-bg tv-cate"><i class="ti-car"></i></span>
-									<img src="assets/img/destination/pac-4.jpg" class="img-responsive" alt="">
-								</div>
-								
-								<div class="tour-verticle-caption">
-									<div class="tv-date"><i class="ti-calendar"></i>10 Fab</div>
-									<h4 class="tv-title"><a href="tour-detail.html">The Great Barrier Reef</a></h4>
-									<p>It's the 7 person trip in the green city in South Africa</p>
-									<div class="tv-price-box">
-										<a href="tour-detail.html" class="tv-btn btn-theme">Get Details</a>
-										<h3 class="tv-price-title">$950</h3>
-									</div>
-								</div>
-								
-							</div>
-						</div>
-						
-						<!-- Single Tour Package -->
-						<div class="col-lg-6 col-md-12 col-sm-12">
-							<div class="tour-verticle">
-							
-								<div class="tour-verticle-thumb">
-									<span class="theme-bg tv-cate"><i class="ti-car"></i></span>
-									<img src="assets/img/destination/pac-5.jpg" class="img-responsive" alt="">
-								</div>
-								
-								<div class="tour-verticle-caption">
-									<div class="tv-date"><i class="ti-calendar"></i>17 Fab</div>
-									<h4 class="tv-title"><a href="tour-detail.html">British Virgin Islands</a></h4>
-									<p>It's the 7 person trip in the green city in South Africa</p>
-									<div class="tv-price-box">
-										<a href="tour-detail.html" class="tv-btn btn-theme">Get Details</a>
-										<h3 class="tv-price-title">$1200</h3>
-									</div>
-								</div>
-								
-							</div>
-						</div>
-						
-						<!-- Single Tour Package -->
-						<div class="col-lg-6 col-md-12 col-sm-12">
-							<div class="tour-verticle">
-							
-								<div class="tour-verticle-thumb">
-									<span class="theme-bg tv-cate"><i class="ti-car"></i></span>
-									<img src="assets/img/destination/pac-6.jpg" class="img-responsive" alt="">
-								</div>
-								
-								<div class="tour-verticle-caption">
-									<div class="tv-date"><i class="ti-calendar"></i>27 Fab</div>
-									<h4 class="tv-title"><a href="tour-detail.html">Pyramids of Giza, Egypt</a></h4>
-									<p>It's the 7 person trip in the green city in South Africa</p>
-									<div class="tv-price-box">
-										<a href="tour-detail.html" class="tv-btn btn-theme">Get Details</a>
-										<h3 class="tv-price-title">$1050</h3>
-									</div>
-								</div>
-								
-							</div>
-						</div>
-						
-						<!-- Single Tour Package -->
-						<div class="col-lg-6 col-md-12 col-sm-12">
-							<div class="tour-verticle">
-							
-								<div class="tour-verticle-thumb">
-									<span class="theme-bg tv-cate"><i class="ti-car"></i></span>
-									<img src="assets/img/destination/pac-7.jpg" class="img-responsive" alt="">
-								</div>
-								
-								<div class="tour-verticle-caption">
-									<div class="tv-date"><i class="ti-calendar"></i>27 Fab</div>
-									<h4 class="tv-title"><a href="tour-detail.html">The heritage of England</a></h4>
-									<p>It's the 7 person trip in the green city in South Africa</p>
-									<div class="tv-price-box">
-										<a href="tour-detail.html" class="tv-btn btn-theme">Get Details</a>
-										<h3 class="tv-price-title">$872</h3>
-									</div>
-								</div>
-								
-							</div>
-						</div>
-						
-						<!-- Single Tour Package -->
-						<div class="col-lg-6 col-md-12 col-sm-12">
-							<div class="tour-verticle">
-							
-								<div class="tour-verticle-thumb">
-									<span class="theme-bg tv-cate"><i class="ti-car"></i></span>
-									<img src="assets/img/destination/pac-8.jpg" class="img-responsive" alt="">
-								</div>
-								
-								<div class="tour-verticle-caption">
-									<div class="tv-date"><i class="ti-calendar"></i>27 Fab</div>
-									<h4 class="tv-title"><a href="tour-detail.html">The City of Lights </a></h4>
-									<p>It's the 7 person trip in the green city in South Africa</p>
-									<div class="tv-price-box">
-										<a href="tour-detail.html" class="tv-btn btn-theme">Get Details</a>
-										<h3 class="tv-price-title">$1050</h3>
-									</div>
-								</div>
-								
-							</div>
-						</div>
-						
 					</div>
-				
+					
 				</div>
 			</section>
 @stop

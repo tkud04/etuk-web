@@ -168,7 +168,7 @@ class MainController extends Controller {
 		$plugins = $this->helpers->getPlugins();
 		$plans = $this->helpers->getPlans();
 		
-		dd($plans);
+		#dd($plans);
 		
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
