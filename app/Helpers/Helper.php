@@ -6139,16 +6139,13 @@ function createSocial($data)
 				       //cancel subscription on Paystack
 	 			       $rr = [
 	                   'data' => [
-	 		             'business_name' => $a->name." (".$b['bname'].")",
-	 					'settlement_bank' => $b['ps_settlement_code'],
-	 					'account_number' => $b['acnum'],
-						'percentage_charge' => $data['percentage_charge'],
-						'description' => $data['description'],
+	 		             'code' => $ps_ref[0],
+	 		             'token' => $ps_ref[1]
 	 			      ],
 	                   'headers' => [
 	 		            'Authorization' => "Bearer ".env("PAYSTACK_SECRET_KEY")
 	 		          ],
-	                   'url' => "https://api.paystack.co/subaccount",
+	                   'url' => "https://api.paystack.co/subscription/disable",
 	                   'method' => "post",
 	                   'type' => "multipart"
 	                  ];
@@ -6160,16 +6157,9 @@ function createSocial($data)
 			       
 				      if($ret->status)
 					  {
-						  $dt = $ret->data;
-				           $s = SubAccounts::create(['bank_id' => $b['id'], 
-	                                   'business_name' => $dt->business_name,   
-	                                   'subaccount_code' => $dt->subaccount_code,   
-	                                   'split_code' => "",   
-	                                   'status' => "enabled"                              
-	                                  ]);
+						 $upp->delete();
+						 $s = "ok";
 	   			      }
-					  
-					  $s = "ok";
 				   }
 				   
 					  return $s;

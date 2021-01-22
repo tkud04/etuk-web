@@ -127,10 +127,19 @@ let addApartmentDescriptionEditor = new Simditor({
 												  <?php
 												  foreach($plans as $p)
 												  {
+													  $v = $p['ps_id'] == "free" && $user->host_upgraded == "yes";
+													  
+													  if($v)
+													  {
+														  
+													  }
+													  else
+													  {
 													  $ss = $p['ps_id'] == "free" ? " selected='selected'" : "";
 												  ?>
 												  <option value="{{$p['id']}}"{{$ss}}>{{$p['name']}} - &#8358;{{number_format($p['amount'],2)}}/{{$p['frequency']}}</option>
 												  <?php
+												      }
 												  }
 												  ?>
 												</select>
