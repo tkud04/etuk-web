@@ -2750,17 +2750,20 @@ class MainController extends Controller {
 		}
 		
 		$req = $request->all();
+		$ss = "cancel-subscription-status";
 		
 		if(isset($req['xf']))
 		{
-			$this->helpers->cancelSubscription($req['xf']);
-			session()->flash("cancel-subscription-status","ok");
+			$s = $this->helpers->cancelSubscription($req['xf']);
+			if($s == "error") $ss .= "-error";	
 		}
 		else
 		{
-			return redirect()->intended('my-subscriptions');
+			$ss .= "-error";
 		}
 		
+		session()->flash($ss,"ok");
+		return redirect()->intended('my-subscriptions');
     }
 	
 	

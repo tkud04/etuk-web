@@ -129,6 +129,7 @@ class Helper implements HelperContract
 					 "contact-status-error" => "Message could not be updated, please try again.",
 					 "subscribe-status-error" => "Subscription could not be activated, please try again.",
 					 "duplicate-subscribe-status-error" => "You are already subscribed.",
+					 "cancel-subscription-status-error" => "An unknown error occured.",
                      ],
                      'errors'=> ["login-status-error" => "Wrong username or password, please try again.",
 					 "signup-status-error" => "There was a problem creating your account, please try again.",
@@ -1465,6 +1466,7 @@ $subject = $data['subject'];
                                                       'avatar' => $avatar, 
                                                       'avatar_type' => $avatarType, 
                                                       'currency' => $data['currency'], 
+                                                      'host_upgraded' => "no", 
                                                       'status' => $data['status'], 
                                                       'verified' => $data['verified'], 
                                                       'password' => $pass, 
@@ -1527,6 +1529,8 @@ $subject = $data['subject'];
                        $temp['mode_type'] = $u->mode_type; 
 					   $temp['avatar'] = $this->getCloudinaryMedia([[ 'url' => $u->avatar,'src_type' => $u->avatar_type ]]);
                        $temp['verified'] = $u->verified; 
+                       $temp['currency'] = $u->currency; 
+                       $temp['host_upgraded'] = $u->host_upgraded; 
                        $temp['id'] = $u->id; 
                        $temp['date'] = $u->created_at->format("jS F, Y"); 
                        $temp['updated'] = $u->updated_at->format("jS F, Y h:i A"); 
@@ -3524,7 +3528,7 @@ function createSocial($data)
 			   $sps = $md['sps'];
 			   $ref = $payStackData['reference'];
 			   $plan = $this->getPlan($payStackData['plan']);
-			   #dd($payStackData);
+			   dd($payStackData);
 			   $ret = "error";
 			   
 			   if(count($plan) > 1)
@@ -6120,22 +6124,18 @@ function createSocial($data)
 		  
 		  function cancelSubscription($xf)
 	        {
-	
+	               $s = "error";
 				   $up = $this->getUserPlan($xf);
-				   dd($up);
-				   $a = $data['apartment'];
-				   $b = $data['bank_details'];
+				   #dd($up);
 				   
-				   //find the settlement code for the bank
-				   foreach($this->banks2 as $bk)
+				   if(count($up) > 0)
 				   {
-					   if($bk['slug'] == $b['bname'])
-					   {
-						   $b['ps_settlement_code'] = $bk['code'];
-						   break;
-					   }
-				   }
-	 			  $rr = [
+					   $upp = UserPlans::where('id',$up['id'])->first();
+				       $ps_ref = explode("|",$up['ps_ref']);
+				       #dd($ps_ref);
+				  
+				       //cancel subscription on Paystack
+	 			       $rr = [
 	                   'data' => [
 	 		             'business_name' => $a->name." (".$b['bname'].")",
 	 					'settlement_bank' => $b['ps_settlement_code'],
@@ -6166,6 +6166,10 @@ function createSocial($data)
 	                                   'status' => "enabled"                              
 	                                  ]);
 	   			      }
+					  
+					  $s = "ok";
+				   }
+				   
 					  return $s;
 	         }
    
