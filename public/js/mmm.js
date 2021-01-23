@@ -14,7 +14,7 @@ $(document).ready(function() {
 	hideElem(["#apartment-preference-side-2"]);
 	hideElem(["#my-apartment-side-2","#my-apartment-side-3"]);
 	hideElem([".review-loading","#host-total-revenue-loading","#host-best-selling-apartments-loading"]);
-	
+	hideElem('#booking-pay-now-payment-type-error');
 	
 	//Init wysiwyg editors
 	Simditor.locale = 'en-US';
@@ -977,6 +977,22 @@ $(document).ready(function() {
 			bookApartment({ref: ref});
 		}
 		
+	});
+	
+	//MY BOOKINGS
+	$('#booking-pay-now-submit').click(e => {
+		e.preventDefault();
+		hideElem('#booking-pay-now-payment-type-error');
+		console.log("booking pay now btn");
+		
+		let pt = $('#booking-pay-now-payment-type').val();
+		
+		if(pt == "none"){
+			showElem('#booking-pay-now-payment-type-error');
+		}
+		else{
+			 $('#booking-pay-now-form').submit();
+		}
 	});
 
 

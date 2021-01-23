@@ -2097,12 +2097,13 @@ class MainController extends Controller {
 		$plugins = $this->helpers->getPlugins();
 		
 		$orders = $this->helpers->getOrders($user);
+		$sps = $this->helpers->getSavedPayments($user);
 		
 		#dd($orders);
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
 
-    	return view("orders",compact(['user','cart','messages','orders','c','ad','signals','plugins','banner']));
+    	return view("orders",compact(['user','cart','messages','orders','sps','c','ad','signals','plugins','banner']));
     }
 	
 	/**

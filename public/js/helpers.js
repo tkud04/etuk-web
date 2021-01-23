@@ -1679,3 +1679,7 @@ const rc = dt => {
 		window.location = `remove-from-cart?axf=${axf}`;
 	}
 }
+
+const addXF = dt => {
+	$('#booking-pay-now-xf').val(dt);
+}

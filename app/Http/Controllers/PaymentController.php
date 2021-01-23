@@ -295,6 +295,178 @@ class PaymentController extends Controller {
         
         
     }
+	
+	/**
+	 * Show the application welcome screen to the user.
+	 *
+	 * @return Response
+	 */
+    public function postPayForBooking(Request $request)
+    {
+		$user = null;
+		$messages = [];
+		
+    	if(Auth::check())
+		{
+			$user = Auth::user();
+			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
+		}
+		
+		
+		$req = $request->all();
+		dd($req);
+		$md = $req['metadata'];
+		$metadata = json_decode($md);
+
+		 /**********/
+        $validator = Validator::make($req, [
+							 'amount' => 'required',
+                             'email' => 'required|email|filled'
+         ]);
+         
+         if($validator->fails())
+         {
+             $messages = $validator->messages();
+             return redirect()->back()->withInput()->with('errors',$messages);
+             //dd($messages);
+         }
+         
+         else
+         {			 
+			 if($metadata->pt == "card")
+			 {
+				 if($req['amount'] < 1)
+			      {
+				    $err = "error";
+				    session()->flash("no-cart-status-error","ok");
+				    return redirect()->back();
+			      }
+			      else
+			      {
+			        #dd($spl);
+			       
+					 $rr = [
+                  'data' => json_encode([
+				    'email' => $req['email'],
+					'amount' => $req['amount'],
+					'metadata' => $md,
+					'split' => $this->helpers->getSplitObect($user)
+				  ]),
+                  'headers' => [
+		           'Authorization' => "Bearer ".env("PAYSTACK_SECRET_KEY")
+		           ],
+                  'url' => "https://api.paystack.co/transaction/initialize",
+                  'type' => "raw",
+                  'method' => "post",
+                 ];
+      
+                  $dt = [];
+		          #dd($rr);
+			       $rett = $this->helpers->bomb($rr);
+                   $ret = json_decode($rett);
+				   
+				   
+				   #dd($ret);
+
+                    
+                    if($ret->status)
+                     {
+						 $dt = $ret->data;
+						 return redirect()->away($dt->authorization_url);
+					 }
+
+			      } 
+			 }
+			 else
+			 {
+				 #dd($metadata);
+				 $sp = $this->helpers->getSavedPayment($metadata->pt);
+				 
+				 if(count($sp) > 0)
+				 {
+					 $spdt = $sp['data'];
+					 $spl = $req['split'];
+					 $spl = str_replace('/','',$spl);
+					 #dd($spl);
+					 $rr = [
+                  'data' => json_encode([
+				    'authorization_code' => trim($spdt->authorization_code),
+					'email' => trim($spdt->auth_email),
+					'amount' => $req['amount'],
+					'metadata' => $md,
+					'split' => $this->helpers->getSplitObect($user)
+				  ]),
+                  'headers' => [
+		           'Authorization' => "Bearer ".env("PAYSTACK_SECRET_KEY")
+		           ],
+                  'url' => "https://api.paystack.co/transaction/charge_authorization",
+                  'type' => "raw",
+                  'method' => "post",
+                 ];
+      
+                  $dt = [];
+		         #  dd($rr);
+			       $rett = $this->helpers->bomb($rr);
+                   $ret = json_decode($rett);
+				   
+				   
+				   #dd($ret);
+
+                    
+                    if($ret->status == 'success')
+                     {
+						 $paymentData = $ret->data;	
+			           $id = $metadata->ref;
+			 
+			           #dd($paymentData);
+					   $au = [];
+					   
+					   $rep = [
+					     'metadata' => [
+						   'type' => "checkout",
+						   'ref' => $metadata->ref,
+						   'sps' => "no",
+						   'notes' => $metadata->notes,
+						 ],
+					     'amount' => $paymentData->amount,
+					     'reference' => $paymentData->reference,
+						 'authorization' => $au
+					   ];
+        	           $this->helpers->checkout($user,$rep);
+			
+			   
+                    $request->session()->flash("pay-card-status","ok");
+			
+			         $gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
+		            $cart = $this->helpers->getCart($user,$gid);
+		            $c = $this->helpers->getCategories();
+	             	$ads = $this->helpers->getAds();
+		            $plugins = $this->helpers->getPlugins();
+		            shuffle($ads);
+		            $ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
+	        	    $signals = $this->helpers->signals;
+					$banner = $this->helpers->getBanner();
+			
+			        return view("cps",compact(['user','cart','c','messages','ad','signals','plugins','banner']));
+               }
+               else
+               {
+        	      //Payment failed, redirect to orders
+                  $request->session()->flash("pay-card-status-error","ok");
+			      return redirect()->back();
+                }					
+				 }
+				 else
+				 {
+					 session()->flash("pay-card-status-error","ok");
+					 return redirect()->back();
+				 }
+				  
+			 }
+			        
+         }		 
+		 /**********/	
+    }
     
     /**
 	 * Show the application welcome screen to the user.

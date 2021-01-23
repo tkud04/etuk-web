@@ -536,6 +536,88 @@
 			</div>
 			<!-- End Modal -->
 			
+			<!-- Booking Pay Now Modal -->
+			<div class="modal fade" id="booking-pay-now" tabindex="-1" role="dialog" aria-labelledby="label-booking-pay-now">
+				<div class="modal-dialog modal-dialog-centered login-pop-form" role="document">
+					<div class="modal-content" id="label-booking-pay-now">
+						<span class="mod-close" data-dismiss="modal"><i class="ti-close"></i></span>
+						<div class="modal-body">
+							<h4 class="modal-header-title">Pay <span class="theme-cl">Now</span></h4>
+							<div class="login-form">
+								<form id="booking-pay-now-form" action="{{url('pay-for-booking')}}" method="post">
+								{!! csrf_field() !!}
+								<input type="hidden" name="xf" id="booking-pay-now-xf" value="">
+									<div class="row">
+										
+										<div class="col-lg-6 col-md-6">
+										<?php
+										 if(isset($sps) && count($sps) > 0)
+										 {
+										?>
+											<div class="form-group">
+												<div class="input-with-icon">
+													<select class="form-control" id="booking-pay-now-payment-type">
+												  <option value="none">Select a card to pay with</option>
+												  <?php
+												   foreach($sps as $s)
+												   {
+													   $dt = $s['data'];
+													   $n = $dt->bank." | **** ".$dt->last4." | Expires: ".$dt->exp_month."/".$dt->exp_year;
+												  ?>
+												    <option value="{{$s['id']}}">{{$n}}</option>
+												  <?php
+												   }
+												  ?>
+												  <option value="card">Use a different card</option>
+												  </select>											
+												</div>
+											  </div>
+												<?php
+										 }
+										 else
+										 {
+										?>
+										<div class="form-group">
+												<div class="input-with-icon">
+													<label>Payment type</label>
+												<select class="form-control" name="pt" id="booking-pay-now-payment-type">
+												  <option value="none">Select payment type</option>
+												  <option value="card" selected="selected">Card</option>
+												</select>									
+												</div>
+											  </div>
+										<?php
+										 }
+										?>
+												<span class="text-danger text-bold input-error" id="booking-pay-now-payment-type-error">This field is required</span>
+											
+										</div>
+										<div class="col-lg-6 col-md-6">
+										  <div class="form-group">
+												<div class="input-with-icon">
+													<label>Save payment info?</label>
+												<select class="form-control" name="sps" id="booking-pay-now-sps">
+												  <option value="yes" selected="selected">Yes</option>
+												  <option value="no">No</option>
+												</select>											
+												</div>
+											  </div>
+																					  
+										</div>
+									</div>
+									
+									<div class="form-group">
+										<button  id="booking-pay-now-submit" class="btn btn-md full-width pop-login">Submit</button>
+									</div>
+								
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End Modal -->
+			
 			<a id="back2Top" class="top-scroll" title="Back to top" href="javascript:void(0)"><i class="ti-arrow-up"></i></a>
 			
 			

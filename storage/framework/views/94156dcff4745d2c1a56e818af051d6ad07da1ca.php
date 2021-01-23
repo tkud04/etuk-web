@@ -129,7 +129,7 @@ $subtitle = "List of bookings made by you";
 												<?php if($o['status'] == "paid"): ?>
 												<a href="<?php echo e($cu); ?>" class="button gray reject"><i class="ti-trash"></i> Cancel</a>
 												<?php elseif($o['status'] == "unpaid"): ?>
-												<a href="<?php echo e($cu); ?>" class="button gray reject"><i class="ti-card"></i> Pay now</a>
+												<a data-toggle="modal" data-target="#booking-pay-now" onclick="addXF('<?php echo e($o['id']); ?>')" class="button gray reject"><i class="ti-card"></i> Pay now</a>
 											    <?php endif; ?>
 											</div>
 										</li>
