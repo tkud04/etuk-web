@@ -1170,6 +1170,23 @@ const bookApartment = dt =>{
 
 }
 
+const ccu = dt =>{
+	
+	Swal.fire({
+    title: `Are you sure?`,
+  showCloseButton: true,
+  html:
+     "<h4 class='text-danger'><b>NOTE: </b>You can checkout for your guests once they've vacated your apartment, but not before.</h4><p class='text-primary'>Click OK below to complete checkout.</p>"
+}).then((result) => {
+  if (result.value) {
+	  let a = false;
+	 window.location = `checkout-guest?xf=${dt.dh}`;
+
+  }
+});
+
+}
+
 const getAnalytics = dt => {
 //create request
    let url = `analytics?type=${dt.type}&month=${dt.month}&year=${dt.year}`;

@@ -2411,6 +2411,43 @@ class MainController extends Controller {
 		session()->flash($ss,"ok");
 		return redirect()->intended('my-subscriptions');
     }
+
+	/**
+	 * Handle checkout guest.
+	 *
+	 * @return Response
+	 */
+	public function getCheckoutGuest(Request $request)
+    {
+		$user = null;
+		$messages = [];
+		if(Auth::check())
+		{
+			$user = Auth::user();
+			
+			if($user->mode != "host")
+			{
+				session()->flash("valid-mode-status-error","ok");
+			    return redirect()->intended('/');
+			}
+		}
+		
+		$req = $request->all();
+		$ss = "checkout-guest-status";
+		
+		if(isset($req['xf']))
+		{
+			$s = $this->helpers->checkoutGuest($req['xf']);
+			if($s == "error") $ss .= "-error";	
+		}
+		else
+		{
+			$ss .= "-error";
+		}
+		
+		session()->flash($ss,"ok");
+		return redirect()->intended('my-bookings');
+    }
 	
 	/**
 	 * Show host active bookings.

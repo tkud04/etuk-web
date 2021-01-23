@@ -72,6 +72,7 @@ $subtitle = "List of bookings made by you";
 														 $location = $address['city'].", ".$address['state'];
 														 $checkin = $i['checkin'];
 														 $checkout = $i['checkout'];
+														 $bmax = $i['booking-end'];  
 														 
 											  
 									   ?>
@@ -83,10 +84,17 @@ $subtitle = "List of bookings made by you";
 														<h3>{{$apartment['name']}} <span class="booking-status{{$ps}}">{{$s}}</span></h3>
 
 														<div class="inner-booking-list">
+														 @if($o['status'] == "paid")
 															<h5>Booking Date:</h5>
 															<ul class="booking-list">
 																<li class="highlighted">{{$checkin}} - {{$checkout}}</li>
 															</ul>
+														  @elseif($o['status'] == "unpaid")
+														    <h5>Booked till:</h5>
+															<ul class="booking-list">
+																<li class="highlighted">{{$bmax->format("jS F, Y")}}</li>
+															</ul>
+														  @endif
 														</div>
 																	
 														<div class="inner-booking-list">
@@ -116,9 +124,12 @@ $subtitle = "List of bookings made by you";
 												</div>
 											</div>
 											<div class="buttons-to-right">
+											
 												<a href="{{$ru}}" class="button gray approve"><i class="ti-printer"></i> Receipt</a>
 												@if($o['status'] == "paid")
 												<a href="{{$cu}}" class="button gray reject"><i class="ti-trash"></i> Cancel</a>
+												@elseif($o['status'] == "unpaid")
+												<a href="{{$cu}}" class="button gray reject"><i class="ti-card"></i> Pay now</a>
 											    @endif
 											</div>
 										</li>

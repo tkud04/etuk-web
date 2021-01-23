@@ -100,6 +100,7 @@ Route::get('my-subscriptions', 'MainController@getMySubscriptions');
 Route::get('cancel-subscription', 'MainController@getCancelSubscription');
 
 Route::get('my-bookings', 'MainController@getMyBookings');
+Route::get('checkout-guest', 'MainController@getCheckoutGuest');
 
 Route::get('analytics', 'MainController@getAnalytics');
 Route::get('host-analytics', 'MainController@getHostAnalytics');

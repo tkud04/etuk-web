@@ -130,7 +130,7 @@ let transactionsData1 = [
 											</ul>
 										</div>
 										<div class="dashboard-gravity-list with-icons">
-											<h4>Bookings</h4>
+											<h4>Active Bookings</h4>
 											<ul>
 											<?php
 											 if(count($transactions) > 0)

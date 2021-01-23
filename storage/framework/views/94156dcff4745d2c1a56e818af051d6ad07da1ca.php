@@ -72,6 +72,7 @@ $subtitle = "List of bookings made by you";
 														 $location = $address['city'].", ".$address['state'];
 														 $checkin = $i['checkin'];
 														 $checkout = $i['checkout'];
+														 $bmax = $i['booking-end'];  
 														 
 											  
 									   ?>
@@ -83,10 +84,17 @@ $subtitle = "List of bookings made by you";
 														<h3><?php echo e($apartment['name']); ?> <span class="booking-status<?php echo e($ps); ?>"><?php echo e($s); ?></span></h3>
 
 														<div class="inner-booking-list">
+														 <?php if($o['status'] == "paid"): ?>
 															<h5>Booking Date:</h5>
 															<ul class="booking-list">
 																<li class="highlighted"><?php echo e($checkin); ?> - <?php echo e($checkout); ?></li>
 															</ul>
+														  <?php elseif($o['status'] == "unpaid"): ?>
+														    <h5>Booked till:</h5>
+															<ul class="booking-list">
+																<li class="highlighted"><?php echo e($bmax->format("jS F, Y")); ?></li>
+															</ul>
+														  <?php endif; ?>
 														</div>
 																	
 														<div class="inner-booking-list">
@@ -116,9 +124,12 @@ $subtitle = "List of bookings made by you";
 												</div>
 											</div>
 											<div class="buttons-to-right">
+											
 												<a href="<?php echo e($ru); ?>" class="button gray approve"><i class="ti-printer"></i> Receipt</a>
 												<?php if($o['status'] == "paid"): ?>
 												<a href="<?php echo e($cu); ?>" class="button gray reject"><i class="ti-trash"></i> Cancel</a>
+												<?php elseif($o['status'] == "unpaid"): ?>
+												<a href="<?php echo e($cu); ?>" class="button gray reject"><i class="ti-card"></i> Pay now</a>
 											    <?php endif; ?>
 											</div>
 										</li>

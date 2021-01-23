@@ -69,15 +69,15 @@ $subtitle = "List of all your subscriptions here";
 													</ul>
 												   </div>
 												   <div class="col-md-5" style="border-left: 1px solid #ddd;">
-												   <p class="badge badge-primary mb-3" style="font-size: 1.2em;">Actions</p>
+												   <p class="badge badge-primary mt-3" style="font-size: 1.2em;">Actions</p>
 												   <div>
 												     <p>Receipt: <a href="{{$iu}}" target="_blank" class="button gray">View Receipt</a></p>
 												     <p>
-													   Contact guest: 
+													   Message guest: 
 													   <a href="javascript:void(0)" class="button gray"><i class="ti-mobile"></i></a>
 													   <a href="javascript:void(0)" class="button gray"><i class="ti-email"></i></a>
 													 </p>
-												     
+												     <p>Checkout guest: <a href="javascript:void(0)" onclick="ccu({dh:'{{$item['id']}}'})" class="button gray">Checkout</a></p>
 												   </div>
 												   </div>
 												 </div>

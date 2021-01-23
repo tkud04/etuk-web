@@ -101,6 +101,7 @@ class Helper implements HelperContract
 					 "contact-status" => "Message sent! Our officials will get back to you shortly.",
 					 "subscribe-status" => "You are now subscribed!",
 					 "cancel-subscription-status" => "Your subscription has been cancelled.",
+					 "checkout-guest-status" => "You checked out your guest. Apartment is now available for rent!",
 						
 					 //ERROR NOTIFICATIONS
 					 "invalid-apartment-id-status-error" => "Apartment not found.",
@@ -132,6 +133,7 @@ class Helper implements HelperContract
 					 "subscribe-status-error" => "Subscription could not be activated, please try again.",
 					 "duplicate-subscribe-status-error" => "You are already subscribed.",
 					 "cancel-subscription-status-error" => "An unknown error occured.",
+					 "check-guest-status-error" => "An error occured while checking out.",
                      ],
                      'errors'=> ["login-status-error" => "Wrong username or password, please try again.",
 					 "signup-status-error" => "There was a problem creating your account, please try again.",
@@ -3820,10 +3822,8 @@ function createSocial($data)
 						$checkout = Carbon::parse($i->checkout);
                         $temp['checkin'] = $checkin->format("jS F, Y");
                         $temp['checkout'] = $checkout->format("jS F, Y");
-                        $c1 = new \DateTime($temp['checkin']);
-						$c2 = new \DateTime($temp['checkout']);
-						$cdiff = $c1->diff($c2);
-						$duration = $cdiff->format("%r%a");						
+                        $duration = $checkin->diffInDays($checkout);						
+                        $temp['booking-end'] = $checkin->addWeeks(2);						
                         $temp['amount'] = $adata['amount'] * $duration;
 						$temp['guests'] = $i->guests; 
                         $temp['kids'] = $i->kids;
@@ -6264,6 +6264,24 @@ function createSocial($data)
 				   }
 				   
 					  return $s;
+	         }
+			 
+			function checkoutGuest($xf)
+	        {
+	               $s = "error";
+				   $i = OrderItems::where('id',$xf)->first();
+				   #dd($up);
+				   
+				   if($i != null)
+				   {
+					   $a = Apartments::where('apartment_id',$i->apartment_id)->first();
+				       
+					   //make apartment available
+					   $a->update(['avb' => "available"]);
+	 			       
+						 $s = "ok";
+				   }
+				   return $s;
 	         }
    
 }
