@@ -43,7 +43,7 @@ $(document).ready(() => {
            </script>
 
                             	<input type="hidden" id="card-action" value="<?php echo e($pay); ?>">
-                            	<input type="hidden" id="checkout-ref" value="<?php echo e($ref); ?>">
+                            	<input type="hidden" id="booking-action" value="<?php echo e(url('book')); ?>">
                             	<input type="hidden" id="checkout-cc" value="<?php echo e(count($cartt)); ?>">
 <!-- ============================ Checkout Start ================================== -->
 			<section>
@@ -57,6 +57,8 @@ $(document).ready(() => {
 								<form id="checkout-form" method="post">
 								<?php echo csrf_field(); ?>
 
+								<input type="hidden" id="checkout-ref" name="ref" value="<?php echo e($ref); ?>">
+                            	
 									<div class="row">
 										<div class="col-lg-6 col-md-6">
 											<div class="form-group">
@@ -127,7 +129,7 @@ $(document).ready(() => {
 										<div class="col-lg-12 col-md-12">
 											<div class="form-group">
 												<label>Notes (optional)</label>
-												<textarea class="form-control" id="notes" placeholder="Type Here..."></textarea>
+												<textarea class="form-control" id="notes" name="notes" placeholder="Type Here..."></textarea>
 											</div>
 										</div>
 									</div>
@@ -140,6 +142,7 @@ $(document).ready(() => {
                             	<input type="hidden" name="metadata" id="nd" value="" > 
                             
                                 <input type="hidden" id="meta-comment" value="">  
+                                <input type="hidden" id="type" name="type" value="">  
                             <!-- End payment form -->
 									
 								</form>
@@ -168,6 +171,7 @@ $(document).ready(() => {
 														 $cmedia = $apartment['cmedia'];
 														 $imgs = $cmedia['images'];
 														 $adata = $apartment['data'];
+														 $terms = $apartment['terms'];
 														 $amount = $adata['amount'];
 														 $address = $apartment['address'];
 														 $location = $address['city'].", ".$address['state'];
@@ -182,6 +186,7 @@ $(document).ready(() => {
 							 <?php
 							 }
 							 ?>
+							    <input type="hidden" id="gn-<?php echo e($axf); ?>"  value="<?php echo e($terms['max_adults']); ?>"/>																	 
 							   <h3><span class="label label-primary"><?php echo e($apartment['name']); ?></span> <b>&#8358;<?php echo e(number_format($amount,2)); ?></b> <small>per night</small></h3>
 							   <p>Check-in: <b><?php echo e($checkin->format("jS F, Y")); ?></b></p>
 							   <p>Duration: <b><?php echo e($duration." ".$dtt); ?></b></p>

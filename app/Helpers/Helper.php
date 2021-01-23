@@ -87,6 +87,7 @@ class Helper implements HelperContract
 					 "update-cart-status" => "Cart updated",
 					 "remove-from-cart-status" => "Removed from your cart.",
 					 "pay-card-status" => "Payment successful. Have a lovely stay!",
+					 "book-status" => "Booking successful. Let us know when you are ready!",
 					 "save-apartment-status" => "Apartment saved.",
 					 "save-duplicate-apartment-status" => "You have saved this apartment already.",
 					 "remove-saved-apartment-status" => "Apartment removed from your list.",
@@ -117,6 +118,7 @@ class Helper implements HelperContract
 					 "update-cart-host-status-error" => "You cannot book your own apartment.",
 					 "no-cart-status-error" => "Your cart is empty.",
 					 "pay-card-status-error" => "Your payment could not be processed, please try again.",
+					 "book-status-error" => "Your booking could not be processed, please try again.",
 					 "save-apartment-status-error" => "Apartment could not be saved, please try again.",
 					 "remove-saved-apartment-status-error" => "Apartment could not be removed, please try again.",
 					 "remove-saved-payment-status-error" => "Payment details could not be removed, please try again.",
@@ -3517,6 +3519,10 @@ function createSocial($data)
 				  case "paystack":
                  	$ret = $this->payWithPayStack($u, $data);
                   break;
+				  
+				  case "booking":
+                 	$ret = $this->bookApartment($u, $data);
+                  break;
 			   }
 			   
 			   return $ret;
@@ -3584,9 +3590,10 @@ function createSocial($data)
               
               if($type == "checkout"){
 				  
-				  //separate between booking and paind orders here
+				  //separate between booking and paid orders here
 				  
                	$dt['amount'] = $amount;
+				$dt['avb_status'] = "occupied";
 				$dt['ref'] = $ref;
 				$dt['notes'] = isset($md['notes']) ? $md['notes'] : "";
 				$dt['ps_ref'] = $psref;
@@ -3627,6 +3634,27 @@ function createSocial($data)
                 return ['status' => "ok",'dt' => $dt];
            }
 		   
+		   function bookApartment($user, $dt)
+           { 
+              #dd($dt);
+              $type = $dt['type'];
+			  
+			  $v = ($type == "booking") && (isset($dt['amount']) && isset($dt['ref']));
+              if($v){ 
+               	$dt['ps_ref'] = "";
+               	$dt['amount'] = $dt['amount'] / 100;
+				$dt['avb_status'] = "booked";
+				$dt['type'] = "card";
+				$dt['status'] = "unpaid";
+				if(!isset($dt['notes'])) $dt['notes'] = "";
+              }
+              
+              //create order
+              $this->addOrder($user,$dt);
+			  
+                return "ok";
+           }
+		   
 		   
 		   function addOrder($user,$data,$gid=null)
            {
@@ -3653,7 +3681,7 @@ function createSocial($data)
 					
 					//update apartment avb
 			        $apt = Apartments::where('apartment_id',$c['apartment_id'])->first();
-					if($apt != null) $apt->update(['avb' => "occupied"]);
+					if($apt != null) $apt->update(['avb' => $data['avb_status']]);
 					
 					//create host transaction
                     $host = $c['apartment']['host']; 
@@ -3702,7 +3730,7 @@ function createSocial($data)
 			                          'checkin' => $dt['checkin'],
 			                          'checkout' => $dt['checkout'],
 			                          'guests' => $dt['guests'],
-			                          'kids' => $dt['kids'],
+			                          'kids' => $dt['kids']
 			                 ]);
 			  return $ret;
 		   }
@@ -3729,7 +3757,7 @@ function createSocial($data)
 		   
 		   
 		   
-		   function getOrder($ref)
+		   function getOrder($ref,$optionalParams=[])
            {
            	$ret = [];
 
@@ -3741,6 +3769,7 @@ function createSocial($data)
 				  $temp = [];
                   $temp['id'] = $o->id;
                   $temp['user_id'] = $o->user_id;
+				  if(isset($optionalParams['guest']) && $optionalParams['guest']) $temp['user'] = $this->getUser($o->user_id);
                   $temp['reference'] = $o->reference;
                   $temp['amount'] = $o->amount;
                   $temp['type'] = $o->type;
@@ -3893,6 +3922,17 @@ function createSocial($data)
 			   {
 				   $t = Transactions::where('user_id',$id)->first();
 			   }
+			   if(isset($optionalParams['apartment_id']))
+			   {
+				   $tt = Transactions::where('apartment_id',$id)->get();
+				   $t = null;
+				   #dd($tt);
+				   if($tt != null)
+				   {
+					   $tt = $tt->sortByDesc('created_at');	
+					   $t = $tt[0];
+				   }
+			   }
 			   else
 			   {
 				   $t = Transactions::where('id',$id)->first();
@@ -3913,11 +3953,11 @@ function createSocial($data)
                return $ret;			   
 		   }
 		   
-		   function getTransactions($user)
+		   function getTransactions($user,$optionalParams=[])
            {
            	$ret = [];
-			$transactions = Transactions::where('user_id',$user->id)->get();
-			  
+
+				$transactions = Transactions::where('user_id',$user->id)->get();
               if($transactions != null)
                {
 				   $transactions = $transactions->sortByDesc('created_at');	
@@ -3929,6 +3969,26 @@ function createSocial($data)
 				  }
                }                         
                                   
+                return $ret;
+           }
+		   
+		   function getActiveBookings($user)
+           {
+           	$ret = [];
+			$apartments = Apartments::where('user_id',$user->id)
+			                          ->whereIn('avb',['booked','occupied'])->get();
+			  
+              if($apartments != null)
+               {
+				  foreach($apartments as $a)
+				  {
+					  $temp = $this->getTransaction($a->apartment_id,['apartment_id' => true]);
+					  $o = $this->getOrder($temp['item']['order_id'],['guest' => true]);
+					   $temp['guest'] = $o['user'];
+					  array_push($ret,$temp);
+				  }
+               }                         
+                   #dd($ret);               
                 return $ret;
            }
 		   
@@ -3964,6 +4024,9 @@ function createSocial($data)
 							 }
 						 }
 						 $r['profit'] = $profit;
+						 
+						 $r['active-bookings'] = Apartments::where('user_id',$user->id)
+						                                   ->whereIn('avb',['booked','occupied'])->count();
 					   break;
 				   }
 			   }

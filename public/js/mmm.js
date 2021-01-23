@@ -965,7 +965,7 @@ $(document).ready(function() {
 		e.preventDefault();
 		console.log("book btn");
 		
-		let cc = $('#checkout-cc').val();
+		let cc = $('#checkout-cc').val(), ref = $('#checkout-ref').val();
 		
 		if(cc == "" || cc == "0"){
 			Swal.fire({
@@ -973,19 +973,8 @@ $(document).ready(function() {
              title: "Your cart is empty."
            });
 		}
-		else{
-			/**
-			 $('#message-reply-btn').hide();
-		    $('#message-reply-loading').fadeIn();
-
-		   let fd =  new FormData();
-		   fd.append("_token",$('#tk-message').val());
-           fd.append("apartment_id",aapt);
-		   fd.append("gsb",hhxf);
-		   fd.append("gxf",ggxf);
-		   fd.append("msg",msg);
-			sendMessage(fd,"message-reply");
-	     **/
+		else{ 
+			bookApartment({ref: ref});
 		}
 		
 	});

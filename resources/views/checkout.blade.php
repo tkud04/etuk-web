@@ -43,7 +43,7 @@ $(document).ready(() => {
            </script>
 
                             	<input type="hidden" id="card-action" value="{{$pay}}">
-                            	<input type="hidden" id="checkout-ref" value="{{$ref}}">
+                            	<input type="hidden" id="booking-action" value="{{url('book')}}">
                             	<input type="hidden" id="checkout-cc" value="{{count($cartt)}}">
 <!-- ============================ Checkout Start ================================== -->
 			<section>
@@ -56,6 +56,8 @@ $(document).ready(() => {
 							<div class="contact-form">
 								<form id="checkout-form" method="post">
 								{!! csrf_field() !!}
+								<input type="hidden" id="checkout-ref" name="ref" value="{{$ref}}">
+                            	
 									<div class="row">
 										<div class="col-lg-6 col-md-6">
 											<div class="form-group">
@@ -126,7 +128,7 @@ $(document).ready(() => {
 										<div class="col-lg-12 col-md-12">
 											<div class="form-group">
 												<label>Notes (optional)</label>
-												<textarea class="form-control" id="notes" placeholder="Type Here..."></textarea>
+												<textarea class="form-control" id="notes" name="notes" placeholder="Type Here..."></textarea>
 											</div>
 										</div>
 									</div>
@@ -139,6 +141,7 @@ $(document).ready(() => {
                             	<input type="hidden" name="metadata" id="nd" value="" > {{-- For other necessary things you want to add to your payload. it is optional though --}}
                             
                                 <input type="hidden" id="meta-comment" value="">  
+                                <input type="hidden" id="type" name="type" value="">  
                             <!-- End payment form -->
 									
 								</form>

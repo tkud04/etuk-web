@@ -413,9 +413,10 @@ class MainController extends Controller {
 		if($user->mode == "host")
 		{
 			$transactions = $this->helpers->getTransactions($user);
+			$bookings = $this->helpers->getActiveBookings($user);
 			$revenueData = $this->helpers->getTransactionData($user);
 			$bsa = $this->helpers->getBestSellingApartments($user);
-			$cpt = ['user','cart','messages','activities','transactions','revenueData','stats','bsa','c','ad','signals','plugins','banner'];
+			$cpt = ['user','cart','messages','activities','transactions','bookings','revenueData','stats','bsa','c','ad','signals','plugins','banner'];
 			$v = "host-dashboard";
 		}
 		else if($user->mode == "guest")
@@ -2023,6 +2024,48 @@ class MainController extends Controller {
     	return view("checkout",compact(['user','cart','sps','spl','messages','secure','ref','c','ad','signals','plugins','banner']));
     }
 	
+	/**
+	 * Handle remove from cart.
+	 *
+	 * @return Response
+	 */
+	public function postBookApartment(Request $request)
+    {
+		$user = null;
+		 
+		if(Auth::check())
+		{
+			$user = Auth::user();
+			
+			$req = $request->all();
+            #dd($req);
+		    $validator = Validator::make($req,[
+		                    'ref' => 'required',
+		                    'amount' => 'required|numeric',
+		    ]);
+		
+		if($validator->fails())
+         {
+			 session()->flash("validation-status-error","ok");
+			 return redirect()->back()->withInput();
+         }
+		 else
+		 {  
+	        $r = $this->helpers->bookApartment($user,$req);
+			$ret = "book-status";
+			if($r == "error") $ret .= "-error";
+			session()->flash($ret,"ok");
+			return redirect()->intended('bookings');
+		 }
+		}
+		else
+		{
+			session()->flash("cart-auth-status-error","ok");
+			return redirect()->back();
+		}
+		 
+    }
+	
 	
 	/**
 	 * Show the orders page.
@@ -2367,6 +2410,51 @@ class MainController extends Controller {
 		
 		session()->flash($ss,"ok");
 		return redirect()->intended('my-subscriptions');
+    }
+	
+	/**
+	 * Show host active bookings.
+	 *
+	 * @return Response
+	 */
+	public function getMyBookings(Request $request)
+    {
+		$user = null;
+		$messages = [];
+		if(Auth::check())
+		{
+			$user = Auth::user();
+			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
+			if($user->mode != "host")
+			{
+				session()->flash("valid-mode-status-error","ok");
+			    return redirect()->intended('/');
+			}
+		}
+		else
+		{
+			return redirect()->intended('/');
+		}
+		
+		$req = $request->all();
+		
+		$gid = isset($_COOKIE['gid']) ? $_COOKIE['gid'] : "";
+		$cart = $this->helpers->getCart($user,$gid);
+		
+		$c = $this->helpers->getCategories();
+		//dd($bs);
+		$signals = $this->helpers->signals;
+		$banner = $this->helpers->getBanner();
+		
+		$ads = $this->helpers->getAds("wide-ad");
+		$plugins = $this->helpers->getPlugins();
+		
+		$bookings = $this->helpers->getActiveBookings($user);
+		#dd($bookings);
+		shuffle($ads);
+		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
+        
+    	return view("my-bookings",compact(['user','cart','messages','c','ad','bookings','signals','plugins','banner']));
     }
 	
 	

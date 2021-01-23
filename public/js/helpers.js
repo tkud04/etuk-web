@@ -1149,6 +1149,27 @@ const payCard = dt =>{
 
 }
 
+const bookApartment = dt =>{
+	
+	Swal.fire({
+    title: `Order reference: ${dt.ref}`,
+  showCloseButton: true,
+  html:
+     "<h4 class='text-danger'><b>NOTE: </b>You can book an apartment for a maximum of 14 days, after which failure to make payment will result in forfeting your booking.</h4><p class='text-primary'>Click OK below to complete your booking.</p>"
+}).then((result) => {
+  if (result.value) {
+	  let a = false;
+	 $('#type').val("booking");
+	
+	let bookingURL = $("#booking-action").val(); 
+	$('#checkout-form').attr('action',bookingURL);
+   $('#checkout-form').submit();
+
+  }
+});
+
+}
+
 const getAnalytics = dt => {
 //create request
    let url = `analytics?type=${dt.type}&month=${dt.month}&year=${dt.year}`;

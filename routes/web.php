@@ -75,7 +75,7 @@ Route::get('update-cart', 'MainController@getUpdateCart');
 Route::get('add-to-cart', 'MainController@getAddToCart');
 Route::get('remove-from-cart', 'MainController@getRemoveFromCart');
 Route::get('checkout', 'MainController@getCheckout');
-Route::post('checkout', 'MainController@postCheckout');
+Route::post('book', 'MainController@postBookApartment');
 Route::get('bookings', 'MainController@getOrders');
 Route::get('receipt', 'MainController@getReceipt');
 
@@ -98,6 +98,8 @@ Route::get('transactions', 'MainController@getTransactions');
 
 Route::get('my-subscriptions', 'MainController@getMySubscriptions');
 Route::get('cancel-subscription', 'MainController@getCancelSubscription');
+
+Route::get('my-bookings', 'MainController@getMyBookings');
 
 Route::get('analytics', 'MainController@getAnalytics');
 Route::get('host-analytics', 'MainController@getHostAnalytics');

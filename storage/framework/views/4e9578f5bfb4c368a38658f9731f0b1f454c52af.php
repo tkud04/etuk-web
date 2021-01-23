@@ -79,7 +79,7 @@ let transactionsData1 = [
 									
 									<div class="col-lg-4 col-md-4 col-sm-12">
 										<div class="dashboard-stat widget-2">
-											<div class="dashboard-stat-content"><h4>7201</h4> <span>Active Bookings</span></div>
+											<div class="dashboard-stat-content"><h4><?php echo e($stats['active-bookings']); ?></h4> <span>Active Bookings</span></div>
 											<div class="dashboard-stat-icon"><i class="ti-location-pin"></i></div>
 										</div>	
 									</div>
@@ -102,7 +102,7 @@ let transactionsData1 = [
 											<?php
 											 if(count($activities) > 0)
 											 {
-												 $activitiesLength = count($activities) > 9 ? 9 : count($activities);
+												 $activitiesLength = count($activities) > 5 ? 5 : count($activities);
 												 
 											   for($i = 0; $i < $activitiesLength; $i++)
 											   {
@@ -129,6 +129,72 @@ let transactionsData1 = [
 											?>
 											</ul>
 										</div>
+										<div class="dashboard-gravity-list with-icons">
+											<h4>Bookings</h4>
+											<ul>
+											<?php
+											 if(count($transactions) > 0)
+											 {
+											?>
+											 <ul>
+											<?php
+											   $bookingsLength = count($bookings) > 4 ? 4 : count($bookings);
+												 
+											   for($i = 0; $i < $bookingsLength; $i++)
+											   {
+												   $t = $bookings[$i];
+											      $item = $t['item'];
+												  $iu = url('receipt')."?xf=".$item['order_id'];
+												  $a = $item['apartment'];
+												  $avbh = "";
+												  
+												  if($a['avb'] == "booked" || $a['avb'] == "occupied" )
+												  {
+												    if($a['avb'] == "booked" )
+												    {
+													  $avbhClass = "info";
+												    }
+												    else if($a['avb'] == "occupied" )
+												    {
+													  $avbhClass = "success";
+												    }
+													
+													$avbh = "<span class='badge badge-".$avbhClass."'>".strtoupper($a['avb'])."</span>";
+												 
+												  $cmedia = $a['cmedia'];
+												  $imgs = $cmedia['images'];
+											?>
+												<li><img src="<?php echo e($imgs[0]); ?>" style="width: 80px; height: 80px;">
+													<strong><?php echo e(ucwords($a['name'])); ?></strong>
+														<?php echo $avbh; ?>
+
+													<ul>
+														<li>Order: #<?php echo e($item['order_id']); ?></li>
+														<li>Date: <?php echo e($t['date']); ?></li>
+													</ul>
+													<div class="buttons-to-right">
+														<a href="<?php echo e($iu); ?>" target="_blank" class="button gray">View Receipt</a>
+													</div>
+												</li>
+
+											<?php
+											      }
+											 }
+                                            ?>											 
+											</ul>
+											<h4><center><a href="<?php echo e(url('my-bookings')); ?>" class="btn btn-theme">View more</a></center></h4>
+											<?php
+											 }
+											 else
+											 {
+											?>
+											<ul>
+											<li>No bookings yet.</li>
+											</ul>
+											<?php
+											 }
+											?>
+										</div>
 									</div>
 									<div class="col-lg-6 col-md-12">
 										<div class="dashboard-gravity-list with-icons">
@@ -139,10 +205,14 @@ let transactionsData1 = [
 											?>
 											 <ul>
 											<?php
-											   foreach($transactions as $t)
-											   { 
+											   $transactionsLength = count($transactions) > 4 ? 4 : count($transactions);
+												 
+											   for($i = 0; $i < $transactionsLength; $i++)
+											   {
+												   $t = $transactions[$i];
 											      $item = $t['item'];
 												  $a = $item['apartment'];
+
 												  $cmedia = $a['cmedia'];
 												  $imgs = $cmedia['images'];
 											?>
@@ -153,7 +223,7 @@ let transactionsData1 = [
 														<li>Date: <?php echo e($t['date']); ?></li>
 													</ul>
 													<div class="buttons-to-right">
-														<a href="dashboard-invoice.html" class="button gray">View Invoice</a>
+														<a href="<?php echo e($iu); ?>" class="button gray">View Receipt</a>
 													</div>
 												</li>
 
