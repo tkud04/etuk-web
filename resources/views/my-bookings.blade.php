@@ -1,6 +1,6 @@
 <?php
 $title = "Active Bookings";
-$subtitle = "List of all your subscriptions here";
+$subtitle = "List of all apartments that are currently occupied or booked for later";
 ?>
 @extends('layout')
 
