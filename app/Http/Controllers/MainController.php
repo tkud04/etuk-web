@@ -2025,7 +2025,7 @@ class MainController extends Controller {
     }
 	
 	/**
-	 * Handle remove from cart.
+	 * Handle book apartment.
 	 *
 	 * @return Response
 	 */
@@ -2061,6 +2061,59 @@ class MainController extends Controller {
 		else
 		{
 			session()->flash("cart-auth-status-error","ok");
+			return redirect()->back();
+		}
+		 
+    }
+	
+	/**
+	 * Handle redirect.
+	 *
+	 * @return Response
+	 */
+	public function getMessageHost(Request $request)
+    {
+	    return redirect()->intended('bookings');
+    }
+	
+	/**
+	 * Handle message host.
+	 *
+	 * @return Response
+	 */
+	public function postMessageHost(Request $request)
+    {
+		$user = null;
+		 
+		if(Auth::check())
+		{
+			$user = Auth::user();
+			
+			$req = $request->all();
+            #dd($req);
+		    $validator = Validator::make($req,[
+		                    'xf' => 'required|numeric',
+		                    'type' => 'required',
+		                    'message' => 'required',
+		    ]);
+		
+		if($validator->fails())
+         {
+			 session()->flash("validation-status-error","ok");
+			 return redirect()->back()->withInput();
+         }
+		 else
+		 {  
+	        $r = $this->helpers->sendMessage($user,$req);
+			$ret = "send-message-status";
+			if($r == "error") $ret .= "-error";
+			session()->flash($ret,"ok");
+			return redirect()->intended('bookings');
+		 }
+		}
+		else
+		{
+			session()->flash("auth-status-error","ok");
 			return redirect()->back();
 		}
 		 

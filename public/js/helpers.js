@@ -1681,5 +1681,9 @@ const rc = dt => {
 }
 
 const addXF = dt => {
-	$('#booking-pay-now-xf').val(dt);
+	$(`#${dt.type}-xf`).val(dt.xf);
+	
+	if(dt.a){
+		$(`#${dt.type}-a`).html(`${dt.a}`);
+	}
 }

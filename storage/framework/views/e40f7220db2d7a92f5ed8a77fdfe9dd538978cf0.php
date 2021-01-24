@@ -620,6 +620,71 @@
 			</div>
 			<!-- End Modal -->
 			
+			<!-- Booking Send Message Modal -->
+			<div class="modal fade" id="booking-send-message" tabindex="-1" role="dialog" aria-labelledby="label-booking-pay-now">
+				<div class="modal-dialog modal-dialog-centered login-pop-form" role="document">
+					<div class="modal-content" id="label-booking-pay-now">
+						<span class="mod-close" data-dismiss="modal"><i class="ti-close"></i></span>
+						<div class="modal-body">
+							<h4 class="modal-header-title">Send <span class="theme-cl">Message</span></h4>
+							<div class="login-form">
+								<form id="booking-send-message-form" action="<?php echo e(url('message-host')); ?>" method="post">
+								<?php echo csrf_field(); ?>
+
+								<input type="hidden" name="xf" id="booking-send-message-xf" value="">
+								<input type="hidden" name="gh" value="g">
+									<div class="row">
+										
+										<div class="col-lg-12 col-md-12">
+										  <h4>Need something? Send a message to <span class="theme-cl" id="booking-send-message-a"></span></h4>
+										</div>
+										<div class="col-lg-12 col-md-12">
+											<div class="form-group">
+												<div class="input-with-icon">
+													<select class="form-control" name="type" id="booking-send-message-type">
+												      <option value="none">Select message type</option>
+												    <option value="sms">Text message</option>
+												    <option value="email">Email</option>
+												  </select>											
+												</div>
+											  </div>
+											
+												<span class="text-danger text-bold input-error" id="booking-send-message-type-error">This field is required</span>
+											
+										</div>
+										<div class="col-lg-12 col-md-12" id="booking-send-message-email-div">
+										  <div class="form-group">
+												<div class="input-with-icon">
+													<label>Subject</label>
+												<input type="text" class="form-control" name="subject" id="booking-send-message-subject" placeholder="Subject">											
+												</div>
+											  </div>
+											  <span class="text-danger text-bold input-error" id="booking-send-message-subject-error">This field is required</span>						  
+										</div>
+										<div class="col-lg-12 col-md-12">
+										  <div class="form-group">
+												<div class="input-with-icon">
+													<label>Message</label>
+												<textarea rows="10" class="form-control" name="message" id="booking-send-message-msg" placeholder="Your message"></textarea>											
+												</div>
+											  </div>
+											  <span class="text-danger text-bold input-error" id="booking-send-message-msg-error">This field is required</span>						  
+										</div>
+										
+									</div>
+									
+									<div class="form-group">
+										<button  id="booking-send-message-submit" class="btn btn-md full-width pop-login">Submit</button>
+									</div>
+								
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End Modal -->
+			
 			<a id="back2Top" class="top-scroll" title="Back to top" href="javascript:void(0)"><i class="ti-arrow-up"></i></a>
 			
 			

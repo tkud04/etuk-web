@@ -100,7 +100,7 @@ $subtitle = "List of bookings made by you";
 														<div class="inner-booking-list">
 															<h5>Booking Details:</h5>
 															<ul class="booking-list">
-																<li class="highlighted"><?php echo e($i['guests']); ?> Adults | <?php echo e($i['kids']); ?> Kids</li>
+																<li class="highlighted"><?php echo e($i['guests']); ?> Guests</li>
 															</ul>
 														</div>		
 																	
@@ -118,7 +118,7 @@ $subtitle = "List of bookings made by you";
 															</ul>
 														</div>
 
-														<a href="#small-dialog" class="rate-review"><i class="ti-email"></i> Send Message</a>
+														<a data-toggle="modal" data-target="#booking-send-message" onclick="addXF({xf: '<?php echo e($o['id']); ?>',a: '<?php echo e($apartment['name']); ?>',type:'booking-send-message'})" class="rate-review"><i class="ti-email"></i> Send Message</a>
 
 													</div>
 												</div>
@@ -129,7 +129,7 @@ $subtitle = "List of bookings made by you";
 												<?php if($o['status'] == "paid"): ?>
 												<a href="<?php echo e($cu); ?>" class="button gray reject"><i class="ti-trash"></i> Cancel</a>
 												<?php elseif($o['status'] == "unpaid"): ?>
-												<a data-toggle="modal" data-target="#booking-pay-now" onclick="addXF('<?php echo e($o['id']); ?>')" class="button gray reject"><i class="ti-card"></i> Pay now</a>
+												<a data-toggle="modal" data-target="#booking-pay-now" onclick="addXF({xf: '<?php echo e($o['id']); ?>',type:'booking-pay-now'})" class="button gray reject"><i class="ti-card"></i> Pay now</a>
 											    <?php endif; ?>
 											</div>
 										</li>

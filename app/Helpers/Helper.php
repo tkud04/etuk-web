@@ -102,6 +102,7 @@ class Helper implements HelperContract
 					 "subscribe-status" => "You are now subscribed!",
 					 "cancel-subscription-status" => "Your subscription has been cancelled.",
 					 "checkout-guest-status" => "You checked out your guest. Apartment is now available for rent!",
+					 "send-message-status" => "Message sent!",
 						
 					 //ERROR NOTIFICATIONS
 					 "invalid-apartment-id-status-error" => "Apartment not found.",
@@ -111,6 +112,7 @@ class Helper implements HelperContract
 					 "oauth-status-error" => "Social login failed, please try again.",
 					 "checkout-auth-status-error" => "Please sign in to book an apartment.",
 					 "cart-auth-status-error" => "Please sign in to view your cart.",
+					 "auth-status-error" => "Please sign in to continue.",
 					 "cart-user-mode-status-error" => "Only guests can book apartments.",
 					 "save-apartment-auth-status-error" => "Please sign in to save an apartment.",
 					 "save-payment-auth-status-error" => "Please sign in to save payment details.",
@@ -134,6 +136,7 @@ class Helper implements HelperContract
 					 "duplicate-subscribe-status-error" => "You are already subscribed.",
 					 "cancel-subscription-status-error" => "An unknown error occured.",
 					 "check-guest-status-error" => "An error occured while checking out.",
+					 "send-message-status-error" => "An error occured while sending your message.",
                      ],
                      'errors'=> ["login-status-error" => "Wrong username or password, please try again.",
 					 "signup-status-error" => "There was a problem creating your account, please try again.",
@@ -3655,6 +3658,59 @@ function createSocial($data)
               $this->addOrder($user,$dt);
 			  
                 return "ok";
+           }
+		   
+		   function sendMessage($user, $dt)
+           { 
+              #dd($dt);
+              $r = "error";
+			  
+			  if(isset($dt['xf']) && isset($dt['gh']))
+			  {
+				 $sender = $dt['gh'];
+			     
+                 if($sender == "g")
+				 {
+					 //guest
+					 $o = $this->getOrderItem($dt['xf']);
+					 dd($o);
+					 $a = $o['apartment'];
+					 $h = $a['host'];
+				 }
+                 else if($sender == "h")
+				 {
+					 //host
+				 }
+				 
+				 if($dt['type'] == "email")
+				 {
+					  $ret = $this->getCurrentSender();
+		       $ret['data'] = $sd;
+    		   $ret['subject'] = $data['name'].": ".$data['subject'];	
+		       
+			   try
+		       {
+			    $ret['em'] = $this->adminEmail;
+		         $this->sendEmailSMTP($ret,"emails.contact");
+		         $ret['em'] = $this->suEmail;
+		         $this->sendEmailSMTP($ret,"emails.contact");
+			     $s = "ok";
+		       }
+		
+		       catch(Throwable $e)
+		       {
+			     #dd($e);
+			     $s = "error";
+		       }
+				 }
+				 else if($dt['type'] == "sms")
+				 {
+					 
+				 }
+				 
+                 $r = "ok";				 
+			  }
+                return $r;
            }
 		   
 		   

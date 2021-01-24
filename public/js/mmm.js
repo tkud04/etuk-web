@@ -14,7 +14,9 @@ $(document).ready(function() {
 	hideElem(["#apartment-preference-side-2"]);
 	hideElem(["#my-apartment-side-2","#my-apartment-side-3"]);
 	hideElem([".review-loading","#host-total-revenue-loading","#host-best-selling-apartments-loading"]);
-	hideElem('#booking-pay-now-payment-type-error');
+	hideElem(['#booking-pay-now-payment-type-error','#booking-send-message-type-error',
+	          '#booking-send-message-subject-error','#booking-send-message-msg-error',
+			  '#booking-send-message-email-div']);
 	
 	//Init wysiwyg editors
 	Simditor.locale = 'en-US';
@@ -992,6 +994,35 @@ $(document).ready(function() {
 		}
 		else{
 			 $('#booking-pay-now-form').submit();
+		}
+	});
+	
+	$('#booking-send-message-type').change(e => {
+		e.preventDefault();
+		let mt = $('#booking-send-message-type').val();
+		
+		if(mt == "email"){
+			showElem('#booking-send-message-email-div');
+		}
+		else{
+			hideElem('#booking-send-message-email-div');
+		}
+	});
+	
+	$('#booking-send-message-submit').click(e => {
+		e.preventDefault();
+		hideElem(['#booking-send-message-type-error','#booking-send-message-subject-error','#booking-send-message-msg-error']);
+		
+		let mt = $('#booking-send-message-type').val(), ms = $('#booking-send-message-subject').val(), mm = $('#booking-send-message-msg').val();
+		let v = (mt == "none" || (ms == "" && mt == "email") || mm == "");
+		
+		if(v){
+			if(mt == "none") showElem('#booking-send-message-type-error');
+			if(ms == "" && mt == "email") showElem('#booking-send-message-subject-error');
+			if(mm == "") showElem('#booking-send-message-msg-error');
+		}
+		else{
+			 $('#booking-send-message-form').submit();
 		}
 	});
 
