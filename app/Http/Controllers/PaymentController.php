@@ -314,28 +314,29 @@ class PaymentController extends Controller {
 		
 		
 		$req = $request->all();
-		dd($req);
-		$md = $req['metadata'];
-		$metadata = json_decode($md);
+		#dd($req);
 
 		 /**********/
         $validator = Validator::make($req, [
-							 'amount' => 'required',
-                             'email' => 'required|email|filled'
+							 'xf' => 'required',
+                             'pt' => 'required'
          ]);
          
          if($validator->fails())
          {
-             $messages = $validator->messages();
-             return redirect()->back()->withInput()->with('errors',$messages);
-             //dd($messages);
+             session()->flash("validation-status-error","ok");
+			 return redirect()->back()->withInput();
          }
          
          else
-         {			 
-			 if($metadata->pt == "card")
+         {		
+            $o = $this->helpers->getOrder($req['xf']);
+            dd($o);			
+			 if($count($o) > 1 && $o['status'] == "unpaid")
 			 {
-				 if($req['amount'] < 1)
+			 if($req['pt'] == "card")
+			 {
+				 if($o['amount'] < 1)
 			      {
 				    $err = "error";
 				    session()->flash("no-cart-status-error","ok");
@@ -347,8 +348,8 @@ class PaymentController extends Controller {
 			       
 					 $rr = [
                   'data' => json_encode([
-				    'email' => $req['email'],
-					'amount' => $req['amount'],
+				    'email' => $user->email,
+					'amount' => $o['amount'] * 100,
 					'metadata' => $md,
 					'split' => $this->helpers->getSplitObect($user)
 				  ]),
@@ -463,7 +464,12 @@ class PaymentController extends Controller {
 				 }
 				  
 			 }
-			        
+		   } 
+          else
+           {
+             session()->flash("validation-status-error","ok");
+			 return redirect()->back()->withInput();
+           }		   
          }		 
 		 /**********/	
     }

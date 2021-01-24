@@ -1,6 +1,6 @@
 <?php
 $title = "Active Bookings";
-$subtitle = "List of all your subscriptions here";
+$subtitle = "List of all apartments that are currently occupied or booked for later";
 ?>
 
 
@@ -112,4 +112,5 @@ $subtitle = "List of all your subscriptions here";
 			<!-- ============================ Active Bookings End ================================== -->
 
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\bkupp\lokl\repo\etuk-web\resources\views/my-bookings.blade.php ENDPATH**/ ?>
