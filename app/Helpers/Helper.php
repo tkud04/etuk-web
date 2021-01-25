@@ -3739,6 +3739,7 @@ function createSocial($data)
                         $temp['guests'] = $c['guests']; 
                         $temp['kids'] = $c['kids']; 
                        $temp['order_id'] = $order->id;
+                       $temp['status'] = $data['status'] == "paid" ? "" : "booked";
 				    $oi = $this->createOrderItems($temp);
 					
 					//update apartment avb
@@ -3792,7 +3793,8 @@ function createSocial($data)
 			                          'checkin' => $dt['checkin'],
 			                          'checkout' => $dt['checkout'],
 			                          'guests' => $dt['guests'],
-			                          'kids' => $dt['kids']
+			                          'kids' => $dt['kids'],
+			                          'status' => $dt['status'],
 			                 ]);
 			  return $ret;
 		   }
@@ -3887,6 +3889,7 @@ function createSocial($data)
                         $temp['amount'] = $adata['amount'] * $duration;
 						$temp['guests'] = $i->guests; 
                         $temp['kids'] = $i->kids;
+                        $temp['status'] = $i->status;
 				}
 			    
 				return $temp;
@@ -6330,7 +6333,7 @@ function createSocial($data)
 	        {
 	               $s = "error";
 				   $i = OrderItems::where('id',$xf)->first();
-				   dd($i);
+				   #dd($i);
 				   
 				   if($i != null)
 				   {

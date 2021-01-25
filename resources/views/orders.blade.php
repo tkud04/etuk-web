@@ -35,29 +35,31 @@ $subtitle = "List of bookings made by you";
 										  $ru = url('receipt')."?xf=".$ref;
 										  
 										  $s = ""; $liClass = ""; $ps = "";
-										  
-										  if($o['status'] == "paid")
-										  {
-											  $liClass = "approved-booking";
-											  $s = "Active";									
-										  }
-										  else if($o['status'] == "expired")
-										  {
-											  $liClass = "pending-booking";
-											  $s = "Expired";
-											  $ps = " pending";
-										  }
-										  else if($o['status'] == "cancelled")
-										  {
-											  $liClass = "canceled-booking";
-											  $s = "Cancelled";
-										  }
+								
 										  
 										  $items = $o['items'];
 										  $ii = $items['data'];
 										  
 										  foreach($ii as $i)
 										  {
+											  $is = $i['status'];
+											  
+										  if($is == "")
+										  {
+											  $liClass = "approved-booking";
+											  $s = "Active";									
+										  }
+										  else if($is == "booked")
+										  {
+											  $liClass = "pending-booking";
+											  $s = "Booked";
+											  $ps = " pending";
+										  }
+										  else if($is == "cancelled")
+										  {
+											  $liClass = "canceled-booking";
+											  $s = "Cancelled";
+										  }
 											 
 														 $apartment = $i['apartment'];
 														 $au = $apartment['url'];
@@ -130,12 +132,14 @@ $subtitle = "List of bookings made by you";
 											   <center><p class="badge badge-primary mt-3" style="font-size: 1.2em;">Actions</p></center>
 											   <div>
 												<a href="{{$ru}}" target="_blank" class="button gray approve"><i class="ti-printer"></i> Receipt</a>
+												@if($is != "cancelled")
 												@if($o['status'] == "paid")
 												<a href="javascript:void(0)" onclick="checkoutApartment({xf: '{{$i['id']}}'})" class="button gray reject"><i class="ti-trash"></i> Checkout</a>
 												<a data-toggle="modal" data-target="#booking-send-message" onclick="addXF({xf: '{{$o['id']}}',a: '{{$apartment['name']}}',type:'booking-send-message'})" class="rate-review"><i class="ti-email"></i> Send Message</a>
 												@elseif($o['status'] == "unpaid")
 												<a data-toggle="modal" data-target="#booking-pay-now" onclick="addXF({xf: '{{$o['id']}}',type:'booking-pay-now'})" class="button gray reject"><i class="ti-card"></i> Pay now</a>
 											   <a href="javascript:void(0)" onclick="cancelBooking({xf: '{{$i['id']}}'})" class="button gray reject"><i class="ti-trash"></i> Cancel</a>
+												@endif
 												@endif
 												</div>
 											</div>
