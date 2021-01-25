@@ -336,6 +336,12 @@ class PaymentController extends Controller {
          else
          {		
             $o = $this->helpers->getOrder($req['xf']);
+			
+			$md = [
+			        'type' => "pay-for-booking",
+			        'xf' => $o['id'],
+			        'sps' => isset($req['sps']) ? $req['sps'] : "yes"
+			      ];
             #dd($o);			
 			 if(count($o) > 1 && $o['status'] == "unpaid")
 			 {
@@ -357,7 +363,7 @@ class PaymentController extends Controller {
                   'data' => json_encode([
 				    'email' => $user->email,
 					'amount' => $o['amount'] * 100,
-					'metadata' => $req,
+					'metadata' => $md,
 					'split' => $split
 				  ]),
                   'headers' => [
@@ -430,12 +436,7 @@ class PaymentController extends Controller {
 					   $au = [];
 					   
 					   $rep = [
-					     'metadata' => [
-						   'type' => "checkout",
-						   'ref' => $metadata->ref,
-						   'sps' => "no",
-						   'notes' => $metadata->notes,
-						 ],
+					     'metadata' => $md,
 					     'amount' => $paymentData->amount,
 					     'reference' => $paymentData->reference,
 						 'authorization' => $au
@@ -540,6 +541,7 @@ class PaymentController extends Controller {
           switch($md['type'])
           {
         	case 'checkout':
+        	case 'pay-for-booking':
               $successLocation = "orders";
              $failureLocation = "checkout";           
             break; 
@@ -549,7 +551,7 @@ class PaymentController extends Controller {
           if($paymentData['status'] == 'success')
           {
 			#dd($md);
-			$id = $md['ref'];
+			#$id = $md['ref'];
 			 
 			#dd($paymentData);
         	$this->helpers->checkout($user,$paymentData);

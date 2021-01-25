@@ -3589,31 +3589,40 @@ function createSocial($data)
 		   function payWithPayStack($user, $payStackResponse)
            { 
               $md = $payStackResponse['metadata'];
-			  #dd($payStackResponse);
+			  dd($payStackResponse);
               $amount = $payStackResponse['amount'] / 100;
               $psref = $payStackResponse['reference'];
-              $ref = $md['ref'];
               $type = $md['type'];
               $sps = $md['sps'];
               $dt = [];
               
               if($type == "checkout"){
 				  
-				  //separate between booking and paid orders here
-				  
                	$dt['amount'] = $amount;
 				$dt['avb_status'] = "occupied";
-				$dt['ref'] = $ref;
+				$dt['ref'] = $md['ref'];
 				$dt['notes'] = isset($md['notes']) ? $md['notes'] : "";
 				$dt['ps_ref'] = $psref;
 				$dt['type'] = "card";
 				$dt['status'] = "paid";
 				
-              }
-              
-              //create order
+				//create order
               $this->addOrder($user,$dt);
 			  
+              }
+			  else if($type == "pay-for-booking")
+			  {
+				$o = $this->getOrder($md['xf']);
+				$dt['amount'] = $amount;
+				$dt['avb_status'] = "occupied";
+				$dt['ref'] = $md['ref'];
+				$dt['notes'] = isset($md['notes']) ? $md['notes'] : "";
+				$dt['ps_ref'] = $psref;
+				$dt['type'] = "card";
+				$dt['status'] = "paid";
+			  }
+              
+              
  
 			  
 			  //add to saved payments
