@@ -439,8 +439,6 @@ class PaymentController extends Controller {
                     if($ret->status == 'success')
                      {
 						 $paymentData = $ret->data;	
-			           $id = $metadata->ref;
-			 
 			           #dd($paymentData);
 					   
         	           $this->helpers->checkout($user,$paymentData);
