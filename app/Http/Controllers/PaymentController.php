@@ -319,7 +319,7 @@ class PaymentController extends Controller {
 		
 		
 		$req = $request->all();
-		#dd($req);
+		dd($req);
 
 		 /**********/
         $validator = Validator::make($req, [
