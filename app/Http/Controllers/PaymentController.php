@@ -291,10 +291,19 @@ class PaymentController extends Controller {
          }		 
 		 /**********/	
 		}
-               
-        
-        
     }
+	
+		
+	/**
+	 * Handle redirect.
+	 *
+	 * @return Response
+	 */
+	public function getPayForBooking(Request $request)
+    {
+	    return redirect()->intended('bookings');
+    }
+	
 	
 	/**
 	 * Show the application welcome screen to the user.

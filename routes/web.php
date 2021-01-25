@@ -124,6 +124,7 @@ Route::get('payment/callback', 'PaymentController@getPaymentCallback');
 Route::get('payment/rc', 'PaymentController@getPayWithSavedPayment');
 Route::get('pay', 'PaymentController@getPay');
 Route::post('pay', 'PaymentController@postRedirectToGateway');
+Route::get('pay-for-booking', 'PaymentController@getPayForBooking');
 Route::post('pay-for-booking', 'PaymentController@postPayForBooking');
 
 Route::post('subscribe', 'MainController@postSubscribe');
