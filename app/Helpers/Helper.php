@@ -3613,7 +3613,7 @@ function createSocial($data)
 			  else if($type == "pay-for-booking")
 			  {
 				$o = $this->getOrder($md['xf']);
-				$dt['amount'] = $amount;
+				$dt['amount'] = $o['amount'];
 				$dt['avb_status'] = "occupied";
 				$dt['ref'] = $md['ref'];
 				$dt['notes'] = isset($md['notes']) ? $md['notes'] : "";

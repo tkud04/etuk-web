@@ -406,7 +406,7 @@ class PaymentController extends Controller {
                   'data' => json_encode([
 				    'authorization_code' => trim($spdt->authorization_code),
 					'email' => trim($spdt->auth_email),
-					'amount' => $req['amount'],
+					'amount' => $o['amount'] * 100,
 					'metadata' => $md,
 					'split' => $split
 				  ]),

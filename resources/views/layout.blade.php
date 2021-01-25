@@ -556,7 +556,7 @@
 										?>
 											<div class="form-group">
 												<div class="input-with-icon">
-													<select class="form-control" id="booking-pay-now-payment-type">
+													<select class="form-control" name="pt" id="booking-pay-now-payment-type">
 												  <option value="none">Select a card to pay with</option>
 												  <?php
 												   foreach($sps as $s)
