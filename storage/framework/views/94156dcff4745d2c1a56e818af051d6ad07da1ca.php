@@ -55,6 +55,11 @@ $subtitle = "List of bookings made by you";
 											  $s = "Booked";
 											  $ps = " pending";
 										  }
+										  else if($is == "completed")
+										  {
+											  $liClass = "approved-booking";
+											  $s = "Completed";
+										  }
 										  else if($is == "cancelled")
 										  {
 											  $liClass = "canceled-booking";
