@@ -3589,7 +3589,7 @@ function createSocial($data)
 		   function payWithPayStack($user, $payStackResponse)
            { 
               $md = $payStackResponse['metadata'];
-			  dd($payStackResponse);
+			  #dd($payStackResponse);
               $amount = $payStackResponse['amount'] / 100;
               $psref = $payStackResponse['reference'];
               $type = $md['type'];
@@ -3612,14 +3612,13 @@ function createSocial($data)
               }
 			  else if($type == "pay-for-booking")
 			  {
-				$o = $this->getOrder($md['xf']);
-				$dt['amount'] = $o['amount'];
-				$dt['avb_status'] = "occupied";
-				$dt['ref'] = $md['ref'];
-				$dt['notes'] = isset($md['notes']) ? $md['notes'] : "";
-				$dt['ps_ref'] = $psref;
-				$dt['type'] = "card";
-				$dt['status'] = "paid";
+				$o = Orders::where('id',$md['xf'])->first();
+				
+				if($o != null)
+				{					
+					//update order
+                    $this->payForBooking($o->reference);
+				}
 			  }
               
               
@@ -3775,6 +3774,37 @@ function createSocial($data)
 			   //if new user, clear discount
 			   //$this->clearNewUserDiscount($user);
 			   return $order;
+           }
+
+		   function payForBooking($xf)
+           {  
+           	   $o = $this->getOrder($xf);
+			   
+			   if(count($o) > 1)
+			   {
+				   #dd($o);
+				   $items = $o['items'];
+				   foreach($items['data'] as $i)
+                   {
+                     $a = $i['apartment'];					   
+					//update apartment avb
+			        $apt = Apartments::where('apartment_id',$i['apartment_id'])->first();
+					if($apt != null) $apt->update(['avb' => "occupied"]);
+					
+					
+					
+					//create host transaction
+                    $host = $a['host']; 
+                    $this->createTransaction([
+					  'user_id' => $host['id'],
+					  'item_id' => $i['id'],
+					  'apartment_id' => $i['apartment_id']
+					]);
+                   }
+				   
+				   $oo = Orders::where('reference',$xf)->first();
+					if($oo != null) $oo->update(['status' => "paid"]);
+			   }
            }
 
            function createOrder($user, $dt)
