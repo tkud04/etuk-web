@@ -311,6 +311,11 @@ class PaymentController extends Controller {
 			$user = Auth::user();
 			$messages = $this->helpers->getMessages(['user_id' => $user->id]);
 		}
+		else
+         {
+             session()->flash("auth-status-error","ok");
+			 return redirect()->back()->withInput();
+         }
 		
 		
 		$req = $request->all();
@@ -331,9 +336,11 @@ class PaymentController extends Controller {
          else
          {		
             $o = $this->helpers->getOrder($req['xf']);
-            dd($o);			
-			 if($count($o) > 1 && $o['status'] == "unpaid")
+            #dd($o);			
+			 if(count($o) > 1 && $o['status'] == "unpaid")
 			 {
+				$split = $this->helpers->getSplitObect($user,['order' => true,'o' => $o]);
+				
 			 if($req['pt'] == "card")
 			 {
 				 if($o['amount'] < 1)
@@ -350,8 +357,8 @@ class PaymentController extends Controller {
                   'data' => json_encode([
 				    'email' => $user->email,
 					'amount' => $o['amount'] * 100,
-					'metadata' => $md,
-					'split' => $this->helpers->getSplitObect($user)
+					'metadata' => $req,
+					'split' => $split
 				  ]),
                   'headers' => [
 		           'Authorization' => "Bearer ".env("PAYSTACK_SECRET_KEY")
@@ -381,13 +388,13 @@ class PaymentController extends Controller {
 			 else
 			 {
 				 #dd($metadata);
-				 $sp = $this->helpers->getSavedPayment($metadata->pt);
+				 $sp = $this->helpers->getSavedPayment($req['pt']);
 				 
 				 if(count($sp) > 0)
 				 {
 					 $spdt = $sp['data'];
-					 $spl = $req['split'];
-					 $spl = str_replace('/','',$spl);
+					 #$spl = $req['split'];
+					 #$spl = str_replace('/','',$spl);
 					 #dd($spl);
 					 $rr = [
                   'data' => json_encode([
@@ -395,7 +402,7 @@ class PaymentController extends Controller {
 					'email' => trim($spdt->auth_email),
 					'amount' => $req['amount'],
 					'metadata' => $md,
-					'split' => $this->helpers->getSplitObect($user)
+					'split' => $split
 				  ]),
                   'headers' => [
 		           'Authorization' => "Bearer ".env("PAYSTACK_SECRET_KEY")

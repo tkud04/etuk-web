@@ -3886,6 +3886,7 @@ function createSocial($data)
                         $temp['checkout'] = $checkout->format("jS F, Y");
                         $duration = $checkin->diffInDays($checkout);						
                         $temp['booking-end'] = $checkin->addWeeks(2);						
+                        $temp['duration'] = $duration;						
                         $temp['amount'] = $adata['amount'] * $duration;
 						$temp['guests'] = $i->guests; 
                         $temp['kids'] = $i->kids;
@@ -6258,24 +6259,53 @@ function createSocial($data)
 			   'subaccounts' => []
 			 ];
 			  #dd($cart);
-			 foreach($cart['data'] as $c)
+			  
+			 if(isset($optionalParams['order']) && $optionalParams['order'])
 			 {
-				 $a = $c['apartment'];
-				 $adt = $a['data'];
-				 $amt = $adt['amount'] * $c['duration'];
+				 $o = $optionalParams['o'];
+				 $items = $o['items'];
 				 
-				 $share1 += (0.05 * $amt);
-				 $share2 = 0.8 * $amt; 
+				 foreach($items['data'] as $i)
+			     {
+				    $a = $i['apartment'];
+				    $adt = $a['data'];
+				    $amt = $adt['amount'] * $i['duration'];
 				 
-				 if($a['bank_id'] != "admin")
-				 {
-				    $b = $a['bank'];
-				    $sa = $this->getSubAccount($b['id']);
-				    # dd($sa);
-				    array_push($split['subaccounts'],['subaccount' => $sa['subaccount_code'],'share' => (int)($share2 * 100)]);
-			        $spl .= '{"subaccount": "'.$sa['subaccount_code'].'","share" : '.(int)($share2 * 100).'},';	 
-				 }
+				    $share1 += (0.05 * $amt);
+				    $share2 = 0.8 * $amt; 
+				 
+				    if($a['bank_id'] != "admin")
+				    {
+				       $b = $a['bank'];
+				       $sa = $this->getSubAccount($b['id']);
+				       # dd($sa);
+				       array_push($split['subaccounts'],['subaccount' => $sa['subaccount_code'],'share' => (int)($share2 * 100)]);
+			           $spl .= '{"subaccount": "'.$sa['subaccount_code'].'","share" : '.(int)($share2 * 100).'},';	 
+				    }
+			     }
 			 }
+			 else
+			 {
+				 foreach($cart['data'] as $c)
+			     {
+				    $a = $c['apartment'];
+				    $adt = $a['data'];
+				    $amt = $adt['amount'] * $c['duration'];
+				 
+				    $share1 += (0.05 * $amt);
+				    $share2 = 0.8 * $amt; 
+				 
+				    if($a['bank_id'] != "admin")
+				    {
+				       $b = $a['bank'];
+				       $sa = $this->getSubAccount($b['id']);
+				       # dd($sa);
+				       array_push($split['subaccounts'],['subaccount' => $sa['subaccount_code'],'share' => (int)($share2 * 100)]);
+			           $spl .= '{"subaccount": "'.$sa['subaccount_code'].'","share" : '.(int)($share2 * 100).'},';	 
+				    }
+			     }
+			 }
+			 
 			 
 			 array_push($split['subaccounts'],['subaccount' => env('PAYSTACK_SUBACCOUNT_CODE'),'share' => (int)($share1 * 100)]);
 		  $spl .= '{"subaccount":"'.env('PAYSTACK_SUBACCOUNT_CODE').'","share":'.(int)($share1 * 100).'}]}';
