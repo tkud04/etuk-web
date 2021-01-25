@@ -442,15 +442,8 @@ class PaymentController extends Controller {
 			           $id = $metadata->ref;
 			 
 			           #dd($paymentData);
-					   $au = [];
 					   
-					   $rep = [
-					     'metadata' => $md,
-					     'amount' => $paymentData->amount,
-					     'reference' => $paymentData->reference,
-						 'authorization' => $au
-					   ];
-        	           $this->helpers->checkout($user,$rep);
+        	           $this->helpers->checkout($user,$paymentData);
 			
 			   
                     $request->session()->flash("pay-card-status","ok");
