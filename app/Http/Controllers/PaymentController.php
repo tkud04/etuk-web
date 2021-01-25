@@ -440,8 +440,14 @@ class PaymentController extends Controller {
                      {
 						 $paymentData = $ret->data;	
 			           #dd($paymentData);
+					   $md = $paymentData->metadata;
+					   $mdd = [
+					      'xf' => $md->xf,
+					      'type' => $md->type,
+					      'sps' => $md->sps,
+					   ];
 					   $tpd = [
-					      'metadata' => $paymentData->metadata,
+					      'metadata' => $mdd,
 					      'amount' => $paymentData->amount,
 					      'reference' => $paymentData->reference,
 					   ];
