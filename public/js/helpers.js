@@ -1687,3 +1687,37 @@ const addXF = dt => {
 		$(`#${dt.type}-a`).html(`${dt.a}`);
 	}
 }
+
+const checkoutApartment = dt =>{
+	
+	Swal.fire({
+    title: `Are you sure?`,
+  showCloseButton: true,
+  html:
+     "<h4 class='text-danger'><b>NOTE: </b>If there was an issue with your apartment or host please <a href='contact'>let us know</a>. We take your comfort and satisfaction very seriously and will respond immediately.</h4><p class='text-primary'>Click OK below to complete checkout.</p>"
+}).then((result) => {
+  if (result.value) {
+	  let a = false;
+	 window.location = `checkout-apartment?xf=${dt.xf}`;
+
+  }
+});
+
+}
+
+const cancelBooking = dt =>{
+	
+	Swal.fire({
+    title: `Are you sure?`,
+  showCloseButton: true,
+  html:
+     "<h4 class='text-danger'><b>NOTE: </b>if you cancel your booking this apartment will be put up for rent.</h4><p class='text-primary'>Click OK below to cancel booking.</p>"
+}).then((result) => {
+  if (result.value) {
+	  let a = false;
+	 window.location = `cancel-booking?xf=${dt.xf}`;
+
+  }
+});
+
+}

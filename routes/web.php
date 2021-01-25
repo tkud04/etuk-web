@@ -82,6 +82,9 @@ Route::get('receipt', 'MainController@getReceipt');
 Route::get('message-host', 'MainController@getMessageHost');
 Route::post('message-host', 'MainController@postMessageHost');
 
+Route::get('checkout-apartment', 'MainController@getCheckoutApartment');
+Route::get('cancel-booking', 'MainController@getCancelBooking');
+
 Route::post('ssf', 'MainController@postSSF');
 Route::post('search', 'MainController@postSearch');
 Route::get('search', 'MainController@getSearch');

@@ -33,7 +33,7 @@ $subtitle = "List of bookings made by you";
 										{
 										  $ref = $o['reference'];
 										  $ru = url('receipt')."?xf=".$ref;
-										  $cu = "javascript:void(0)";
+										  
 										  $s = ""; $liClass = ""; $ps = "";
 										  
 										  if($o['status'] == "paid")
@@ -73,6 +73,9 @@ $subtitle = "List of bookings made by you";
 														 $checkin = $i['checkin'];
 														 $checkout = $i['checkout'];
 														 $bmax = $i['booking-end'];  
+														 
+														 $ccu = url('checkout-apartment')."?xf=".$i['id'];
+														 $cu = url('cancel-booking')."?xf=".$i['id'];
 														 
 											  
 									   ?>
@@ -118,19 +121,23 @@ $subtitle = "List of bookings made by you";
 															</ul>
 														</div>
 
-														<a data-toggle="modal" data-target="#booking-send-message" onclick="addXF({xf: '<?php echo e($o['id']); ?>',a: '<?php echo e($apartment['name']); ?>',type:'booking-send-message'})" class="rate-review"><i class="ti-email"></i> Send Message</a>
+														
 
 													</div>
 												</div>
 											</div>
 											<div class="buttons-to-right">
-											
-												<a href="<?php echo e($ru); ?>" class="button gray approve"><i class="ti-printer"></i> Receipt</a>
+											   <center><p class="badge badge-primary mt-3" style="font-size: 1.2em;">Actions</p></center>
+											   <div>
+												<a href="<?php echo e($ru); ?>" target="_blank" class="button gray approve"><i class="ti-printer"></i> Receipt</a>
 												<?php if($o['status'] == "paid"): ?>
-												<a href="<?php echo e($cu); ?>" class="button gray reject"><i class="ti-trash"></i> Cancel</a>
+												<a href="javascript:void(0)" onclick="checkoutApartment({xf: '<?php echo e($i['id']); ?>'})" class="button gray reject"><i class="ti-trash"></i> Checkout</a>
+												<a data-toggle="modal" data-target="#booking-send-message" onclick="addXF({xf: '<?php echo e($o['id']); ?>',a: '<?php echo e($apartment['name']); ?>',type:'booking-send-message'})" class="rate-review"><i class="ti-email"></i> Send Message</a>
 												<?php elseif($o['status'] == "unpaid"): ?>
 												<a data-toggle="modal" data-target="#booking-pay-now" onclick="addXF({xf: '<?php echo e($o['id']); ?>',type:'booking-pay-now'})" class="button gray reject"><i class="ti-card"></i> Pay now</a>
-											    <?php endif; ?>
+											   <a href="javascript:void(0)" onclick="cancelBooking({xf: '<?php echo e($i['id']); ?>'})" class="button gray reject"><i class="ti-trash"></i> Cancel</a>
+												<?php endif; ?>
+												</div>
 											</div>
 										</li>
                                         <?php

@@ -103,6 +103,8 @@ class Helper implements HelperContract
 					 "cancel-subscription-status" => "Your subscription has been cancelled.",
 					 "checkout-guest-status" => "You checked out your guest. Apartment is now available for rent!",
 					 "send-message-status" => "Message sent!",
+					 "checkout-apartment-status" => "Thank you for choosing Etuk NG. We hope you enjoyed your stay!",
+					 "cancel-booking-status" => "Booking cancelled.",
 						
 					 //ERROR NOTIFICATIONS
 					 "invalid-apartment-id-status-error" => "Apartment not found.",
@@ -137,6 +139,8 @@ class Helper implements HelperContract
 					 "cancel-subscription-status-error" => "An unknown error occured.",
 					 "check-guest-status-error" => "An error occured while checking out.",
 					 "send-message-status-error" => "An error occured while sending your message.",
+					 "checkout-apartment-status-error" => "An error occured while checking you out, please try again.",
+					 "cancel-booking-status-error" => "An error occured while cancelling your booking, please try again.",
                      ],
                      'errors'=> ["login-status-error" => "Wrong username or password, please try again.",
 					 "signup-status-error" => "There was a problem creating your account, please try again.",
@@ -6322,7 +6326,23 @@ function createSocial($data)
 					  return $s;
 	         }
 			 
-			function checkoutGuest($xf)
+			function cancelBooking($xf)
+	        {
+	               $s = "error";
+				   $i = OrderItems::where('id',$xf)->first();
+				   dd($i);
+				   
+				   if($i != null)
+				   {
+					   //set order item status 
+					   $i->update(['status' => "cancelled"]);
+	 			       
+						 $s = "ok";
+				   }
+				   return $s;
+	         }
+			 
+			function checkoutGuest($xf,$optionalParams=[])
 	        {
 	               $s = "error";
 				   $i = OrderItems::where('id',$xf)->first();
@@ -6334,6 +6354,9 @@ function createSocial($data)
 				       
 					   //make apartment available
 					   $a->update(['avb' => "available"]);
+					   
+					   //set order item status 
+					   $i->update(['status' => "completed"]);
 	 			       
 						 $s = "ok";
 				   }

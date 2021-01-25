@@ -2119,6 +2119,88 @@ class MainController extends Controller {
 		 
     }
 	
+	/**
+	 * Handle checkout apartment.
+	 *
+	 * @return Response
+	 */
+	public function getCheckoutApartment(Request $request)
+    {
+		$user = null;
+		 
+		if(Auth::check())
+		{
+			$user = Auth::user();
+			
+			$req = $request->all();
+            #dd($req);
+		    $validator = Validator::make($req,[
+		                    'xf' => 'required|numeric'
+		    ]);
+		
+		if($validator->fails())
+         {
+			 session()->flash("validation-status-error","ok");
+			 return redirect()->back()->withInput();
+         }
+		 else
+		 {  
+	        $r = $this->helpers->checkoutGuest($req['xf']);
+			$ret = "checkout-apartment-status";
+			if($r == "error") $ret .= "-error";
+			session()->flash($ret,"ok");
+			return redirect()->intended('bookings');
+		 }
+		}
+		else
+		{
+			session()->flash("auth-status-error","ok");
+			return redirect()->back();
+		}
+		 
+    }
+	
+	/**
+	 * Handle cancel booking.
+	 *
+	 * @return Response
+	 */
+	public function getCancelBooking(Request $request)
+    {
+		$user = null;
+		 
+		if(Auth::check())
+		{
+			$user = Auth::user();
+			
+			$req = $request->all();
+            #dd($req);
+		    $validator = Validator::make($req,[
+		                    'xf' => 'required|numeric'
+		    ]);
+		
+		if($validator->fails())
+         {
+			 session()->flash("validation-status-error","ok");
+			 return redirect()->back()->withInput();
+         }
+		 else
+		 {  
+	        $r = $this->helpers->cancelBooking($req['xf']);
+			$ret = "cancel-booking-status";
+			if($r == "error") $ret .= "-error";
+			session()->flash($ret,"ok");
+			return redirect()->intended('bookings');
+		 }
+		}
+		else
+		{
+			session()->flash("auth-status-error","ok");
+			return redirect()->back();
+		}
+		 
+    }
+	
 	
 	/**
 	 * Show the orders page.

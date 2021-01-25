@@ -144,7 +144,7 @@ let transactionsData1 = [
 											   {
 												   $t = $bookings[$i];
 											      $item = $t['item'];
-												  $iu = url('receipt')."?xf=".$item['order_id'];
+												  $iuu = url('receipt')."?xf=".$item['order_id'];
 												  $a = $item['apartment'];
 												  $avbh = "";
 												  
@@ -173,7 +173,7 @@ let transactionsData1 = [
 														<li>Date: <?php echo e($t['date']); ?></li>
 													</ul>
 													<div class="buttons-to-right">
-														<a href="<?php echo e($iu); ?>" target="_blank" class="button gray">View Receipt</a>
+														<a href="<?php echo e($iuu); ?>" target="_blank" class="button gray">View Receipt</a>
 													</div>
 												</li>
 
@@ -211,6 +211,7 @@ let transactionsData1 = [
 											   {
 												   $t = $transactions[$i];
 											      $item = $t['item'];
+												  $tiu = url('receipt')."?xf=".$item['order_id'];
 												  $a = $item['apartment'];
 
 												  $cmedia = $a['cmedia'];
@@ -223,7 +224,7 @@ let transactionsData1 = [
 														<li>Date: <?php echo e($t['date']); ?></li>
 													</ul>
 													<div class="buttons-to-right">
-														<a href="<?php echo e($iu); ?>" class="button gray">View Receipt</a>
+														<a href="<?php echo e($tiu); ?>" target="_blank" class="button gray">View Receipt</a>
 													</div>
 												</li>
 
