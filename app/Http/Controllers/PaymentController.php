@@ -440,8 +440,12 @@ class PaymentController extends Controller {
                      {
 						 $paymentData = $ret->data;	
 			           #dd($paymentData);
-					   
-        	           $this->helpers->checkout($user,$paymentData);
+					   $tpd = [
+					      'metadata' => $paymentData->metadata,
+					      'amount' => $paymentData->amount,
+					      'reference' => $paymentData->reference,
+					   ];
+        	           $this->helpers->checkout($user,$tpd);
 			
 			   
                     $request->session()->flash("pay-card-status","ok");
