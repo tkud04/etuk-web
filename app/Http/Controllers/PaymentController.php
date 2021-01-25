@@ -444,7 +444,7 @@ class PaymentController extends Controller {
 					   $mdd = [
 					      'xf' => $md->xf,
 					      'type' => $md->type,
-					      'sps' => $md->sps,
+					      'sps' => "no",
 					   ];
 					   $tpd = [
 					      'metadata' => $mdd,
