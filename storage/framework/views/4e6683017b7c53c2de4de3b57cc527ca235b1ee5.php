@@ -88,6 +88,7 @@ $noFooter = true;
 														<table class="table table-striped table-bordered">
 															<thead>
 																<tr>
+																	<th>Status</th>
 																	<th>Apartment</th>
 																	<th>Duration</th>
 																	<th>Price per day</th>
@@ -122,8 +123,26 @@ $noFooter = true;
 														 $cdiff = $c1->diff($c2);
 														 $duration = $cdiff->format("%r%a");
 														 $dtt = $duration == 1 ? "night" : "nights";
+														 
+														 $is = $i['status']; $s = "";
+											  
+										  if($is == "")
+										  {
+											  $s = "Paid";									
+										  }
+										  else if($is == "booked")
+										  {
+											  $s = "Booked";
+										  }
+										  else if($is == "cancelled")
+										  {
+											  $s = "Cancelled";
+										  }
+														 
+														 
 															?>
 																<tr>
+																  <td><b><?php echo e(strtoupper($s)); ?></b></td>
 																	<td>
 																	  <div class="row">
 																	    <div class="col-md-5">

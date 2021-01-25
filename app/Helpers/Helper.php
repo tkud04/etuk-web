@@ -6337,6 +6337,11 @@ function createSocial($data)
 				   
 				   if($i != null)
 				   {
+					   $a = Apartments::where('apartment_id',$i->apartment_id)->first();
+					   
+					    //make apartment available
+					   $a->update(['avb' => "available"]);
+					   
 					   //set order item status 
 					   $i->update(['status' => "cancelled"]);
 	 			       
