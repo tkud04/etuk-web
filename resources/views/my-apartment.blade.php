@@ -526,7 +526,7 @@ let myApartmentDescriptionEditor = new Simditor({
 										<div class="col-md-12 col-lg-12">
 										  <div class="form-group">
 												<label>Select Bank Account<i class="req">*</i></label>
-												<select class="form-control" id="add-apartment-bank">
+												<select class="form-control" id="my-apartment-bank">
 												  <option value="none">Select bank account</option>
 												  <?php
 												   foreach($bankAccounts as $b)
@@ -541,16 +541,16 @@ let myApartmentDescriptionEditor = new Simditor({
 												</select>
 											</div>
 										</div>
-										<div class="col-md-12 col-lg-12" id="add-apartment-bank-new">
+										<div class="col-md-12 col-lg-12" id="my-apartment-bank-new">
 										  <div class="form-group">
 												<label>Select Bank<i class="req">*</i></label>
 												<select class="form-control" id="my-apartment-bname">
 												  <option value="none">Select bank</option>
 												  <?php
-												   foreach($banks as $k => $v)
+												   foreach($banks as $b)
 												   {
 												  ?>
-												    <option value="{{$k}}">{{$v}}</option>
+												    <option value="{{$b['slug']}}">{{$b['name']}}</option>
 												  <?php
 												   }
 												  ?>

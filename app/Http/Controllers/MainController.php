@@ -2916,7 +2916,7 @@ class MainController extends Controller {
 			$plans = $this->helpers->getPlans();
 			$banks = $this->helpers->banks2;
 		    $bankAccounts = $this->helpers->getBankDetails($user);
-			#dd($apartment);
+			#dd($banks);
 		    shuffle($ads);
 		    $ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
         
@@ -2981,6 +2981,7 @@ class MainController extends Controller {
 		if($validator->fails())
          {
              $ret['message'] = "validation";
+             $ret['dt'] = $req;
          }
 		 else
 		 {
@@ -3021,7 +3022,11 @@ class MainController extends Controller {
 			
 			if($bank_id != null)
 			{
-				//create subaccount on paystack
+				$sa = $this->helpers->getSubAccount($bank_id);
+				
+				if(count($sa) < 1)
+				{
+					//create subaccount on paystack
 				        $data = [
 							 'apartment' => $a,
 				             'bank_details' => $this->helpers->getBankDetail($req['bank_id']),
@@ -3029,8 +3034,8 @@ class MainController extends Controller {
 							 'percentage_charge' => "20"
 					    ];
                          $sa = $this->helpers->createSubAccount($data);
-			             
-						 $ret = ['status' => "ok"];
+				}       
+				$ret = ['status' => "ok"];
 			}
 			
 		 }

@@ -2489,10 +2489,7 @@ function updateApartment($data)
 			   {
            	       $at->update([
                                                       'max_adults' => $data['max_adults'],                                                       
-                                                      'max_children' => $data['max_children'],  
-                                                      'children' => $data['children'],                                                      
                                                       'pets' => $data['pets'],                                                      
-                                                      'payment_type' => $data['payment_type']                                                      
                                                       ]);
                 }
            }

@@ -1,5 +1,5 @@
 <?php
-$title = "My Apartments";
+$title = "My Listings";
 $subtitle = "Manage everything about your apartments here";
 ?>
 
@@ -24,7 +24,7 @@ $subtitle = "Manage everything about your apartments here";
 							<div class="dashboard-wrapers">
 							
 								<div class="dashboard-gravity-list mt-0">
-									<h4>My Apartments <a href="<?php echo e(url('add-apartment')); ?>" class="btn btn-success btn-sm">Post New Apartment</a></h4>
+									<h4>My Listings <a href="<?php echo e(url('add-apartment')); ?>" class="btn btn-success btn-sm">Post New Listing</a></h4>
 									<ul>
                                        <?php
 									    if(count($apartments) > 0)
