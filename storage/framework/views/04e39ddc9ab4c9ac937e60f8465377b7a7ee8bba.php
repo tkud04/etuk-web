@@ -75,8 +75,7 @@ $subtitle = "List of all apartments that are currently occupied or booked for la
 												     <p>Receipt: <a href="<?php echo e($iu); ?>" target="_blank" class="button gray">View Receipt</a></p>
 												     <p>
 													   Message guest: 
-													   <a href="javascript:void(0)" class="button gray"><i class="ti-mobile"></i></a>
-													   <a href="javascript:void(0)" class="button gray"><i class="ti-email"></i></a>
+													   <a data-toggle="modal" data-target="#booking-send-message" onclick="addXF({xf: '<?php echo e($item['id']); ?>',a: '<?php echo e($a['name']); ?>',type:'booking-send-message',gh:'h'})" class="button gray"><i class="ti-email"></i></a>
 													 </p>
 												     <p>Checkout guest: <a href="javascript:void(0)" onclick="ccu({dh:'<?php echo e($item['id']); ?>'})" class="button gray">Checkout</a></p>
 												   </div>

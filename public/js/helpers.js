@@ -1683,8 +1683,10 @@ const rc = dt => {
 const addXF = dt => {
 	$(`#${dt.type}-xf`).val(dt.xf);
 	
-	if(dt.a){
-		$(`#${dt.type}-a`).html(`${dt.a}`);
+	if(dt.a && dt.gh){
+		$(`#${dt.type}-gh`).val(`${dt.gh}`);
+		let aa = `${dt.gh == "g" ? "to " : "from "} ${dt.a}`;
+		$(`#${dt.type}-a`).html(`${aa}`);
 	}
 }
 

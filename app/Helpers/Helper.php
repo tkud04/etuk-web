@@ -3680,40 +3680,64 @@ function createSocial($data)
 			  if(isset($dt['xf']) && isset($dt['gh']))
 			  {
 				 $sender = $dt['gh'];
-			     
+			     $dtt = [];
+				 
                  if($sender == "g")
 				 {
 					 //guest
-					 $o = $this->getOrderItem($dt['xf']);
-					 dd($o);
-					 $a = $o['apartment'];
+					 $i = $this->getOrderItem($dt['xf']);
+					 #dd($dt);
+					 $a = $i['apartment'];
 					 $h = $a['host'];
+					 $dtt = [
+					   'mode' => "guest",
+					   'debug' => true,
+					   'a' => $a,
+					   'email' => $h['email'],
+					   'subject' => "New message from your guest at ".$a['name']." (ref: ".rand(9,999).")",
+					   'subject_2' => $dt['subject'],
+					   'name' => $user->fname." ".strtoupper(substr($user->lname,0,1)),
+					   'message' => $dt['message']
+					 ];
 				 }
                  else if($sender == "h")
 				 {
-					 //host
+					 $i = $this->getOrderItem($dt['xf']);
+					 $o = $this->getOrder($i['order_id'],['guest' => true]);
+					# dd($o);
+					 $a = $i['apartment'];
+					 $u = $o['user'];
+					 $g = $u['fname']." ".strtoupper(substr($u['lname'],0,1));
+					 $dtt = [
+					   'mode' => "host",
+					   'debug' => true,
+					   'a' => $a,
+					   'email' => $u['email'],
+					   'subject' => "New message from your host at ".$a['name']." (ref: ".rand(9,999).")",
+					   'subject_2' => $dt['subject'],
+					   'name' => $g,
+					   'message' => $dt['message']
+					 ];
 				 }
 				 
 				 if($dt['type'] == "email")
 				 {
-					  $ret = $this->getCurrentSender();
-		       $ret['data'] = $sd;
-    		   $ret['subject'] = $data['name'].": ".$data['subject'];	
+					$ret = $this->getCurrentSender();
+		            $ret['data'] = $dtt;
+    		        $ret['subject'] = $dtt['name'].": ".$dtt['subject'];	
 		       
-			   try
-		       {
-			    $ret['em'] = $this->adminEmail;
-		         $this->sendEmailSMTP($ret,"emails.contact");
-		         $ret['em'] = $this->suEmail;
-		         $this->sendEmailSMTP($ret,"emails.contact");
-			     $s = "ok";
-		       }
+			        try
+		            {
+			          $ret['em'] = $dtt['email'];
+		              $this->sendEmailSMTP($ret,"emails.message");
+			          $s = "ok";
+		            }
 		
-		       catch(Throwable $e)
-		       {
-			     #dd($e);
-			     $s = "error";
-		       }
+		            catch(Throwable $e)
+		            {
+			          #dd($e);
+			          $s = "error";
+		            }
 				 }
 				 else if($dt['type'] == "sms")
 				 {

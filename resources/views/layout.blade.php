@@ -629,11 +629,11 @@
 								<form id="booking-send-message-form" action="{{url('message-host')}}" method="post">
 								{!! csrf_field() !!}
 								<input type="hidden" name="xf" id="booking-send-message-xf" value="">
-								<input type="hidden" name="gh" value="g">
+								<input type="hidden" name="gh" id="booking-send-message-gh" value="">
 									<div class="row">
 										
 										<div class="col-lg-12 col-md-12">
-										  <h4>Need something? Send a message to <span class="theme-cl" id="booking-send-message-a"></span></h4>
+										  <h4>Need something? Send a message <span class="theme-cl" id="booking-send-message-a"></span></h4>
 										</div>
 										<div class="col-lg-12 col-md-12">
 											<div class="form-group">
