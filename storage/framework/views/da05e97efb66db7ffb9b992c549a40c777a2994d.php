@@ -212,7 +212,7 @@ let sec = 0, svc = 0, loc = 0, cln = 0, cmf = 0;
 							<div class="block-wrap">
 								
 								<div class="block-header">
-									<h4 class="block-title">Facilities</h4>
+									<h4 class="block-title">Amenities</h4>
 								</div>
 								
 								<div class="block-body">
@@ -605,7 +605,7 @@ let sec = 0, svc = 0, loc = 0, cln = 0, cmf = 0;
 										</div>
 										<div class="stbooking-footer-bottom">
 											<a href="javascript:void(0)" id="apartment-reservation-btn" class="books-btn btn-theme">Confirm Reservation</a>
-											<a href="javascript:void(0)" id="apartment-book-now-btn" class="books-btn black">Add to cart</a>
+											<a href="javascript:void(0)" id="apartment-book-now-btn" class="books-btn black">Book now</a>
 										</div>
 									</div>
 								  </form>
@@ -715,7 +715,7 @@ let sec = 0, svc = 0, loc = 0, cln = 0, cmf = 0;
 									<div class="tr-single-body">
 										<ul class="extra-service">
 										   <?php
-										    for($i = 0; $i < 5; $i++)
+										    for($i = 0; $i < 3; $i++)
 											{
 										   ?>
 											<li>
@@ -740,7 +740,7 @@ let sec = 0, svc = 0, loc = 0, cln = 0, cmf = 0;
 									
 								</div>
 						
-								<!-- Tags -->
+								<!-- Tags --
 								<div class="tr-single-box">
 									<div class="tr-single-header">
 										<h4><i class="lni-tag"></i> Tags</h4>
@@ -829,7 +829,8 @@ let sec = 0, svc = 0, loc = 0, cln = 0, cmf = 0;
 										</ul>
 									</div>
 									
-								</div>								
+								</div>	
+                                 -->								
 							
 							</div>
 						</div>

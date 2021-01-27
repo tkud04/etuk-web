@@ -43,6 +43,7 @@ $description = $adata['description'];
 		  temp = {
 			   apartment_id: "{{$a['apartment_id']}}",
 			   name: "{{$a['name']}}",
+			   avb: "{{ucwords($a['avb'])}}",
 			   uu: "{{$uu}}",
 			   lu: "{{$lu}}",
 			   bu: "{{$bu}}",

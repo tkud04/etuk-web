@@ -766,6 +766,8 @@ const showPage = (p,changeViewType=false) => {
 		for(let y = 0; y < 5 - a.stars; y++){
 			starsText += "<i class='fa fa-star'></i>";
 		}
+		
+		let rr = parseInt(a.review) == 1 ? "Review" : "Reviews";
  	
 	    if(viewType == "grid"){
 			hh = `
@@ -778,11 +780,11 @@ const showPage = (p,changeViewType=false) => {
 											</a>
 										</figure>
 										<div class="placeDetail">
-											<span class="onsale-section"><span class="onsale">45% Off</span></span>
+											<span class="onsale-section"><span class="onsale">${a.avb}</span></span>
 											<div class="placeDetail-left">
 												<div class="item-rating">
 													${starsText}
-													<span>${a.reviews} Reviews</span>
+													<span>${a.reviews} ${rr}</span>
 												</div>
 												<h4 class="title"><a href="${a.uu}">${nnn}</a></h4>
 												<span class="placeDetail-detail"><i class="ti-location-pin"></i>${a.location}</span>
@@ -797,6 +799,11 @@ const showPage = (p,changeViewType=false) => {
 		   `;
 		}
 		else if(viewType == "list"){
+			let qq = ``;
+			for(let q = 0; q < facilities.length; q++){
+				let f = facilities[q];
+				qq += `<li><i class="ti-receipt"></i>${f.facility}</li>`;
+			}
 			hh = `
 			    <!-- Single List -->
 								<div class="book_list_box popular_item">
@@ -820,20 +827,18 @@ const showPage = (p,changeViewType=false) => {
 												<p>${a.description}</p>
 											</div>
 											<div class="book_list_rate">
-												<h5 class="over_all_rate high"><span class="rating_status">${a.stars}</span>Very Good<small>(${a.reviews} Reviews)</small></h5>
+												<h5 class="over_all_rate high"><span class="rating_status">${a.stars}</span><small>(${a.reviews} ${rr})</small></h5>
 											</div>
 											<div class="book_list_offers">
 												<ul>
-													<li><i class="ti-location-pin"></i>Free WiFi</li>
-													<li><i class="ti-car"></i>Parking</li>
-													<li><i class="ti-cup"></i>Breakfast</li>
+													${qq}
 												</ul>
 											</div>
 										</div>
 										
 										<div class="col-lg-2 col-md-2 padd-l-0">
 											<div class="book_list_foot">
-												<span class="off-status theme-cl">${a.status}</span>
+												<span class="off-status theme-cl">${a.avb}</span>
 												<h4 class="book_list_price">&#8358;${a.amount}</h4>
 												<span class="booking-time">per night</span>
 												<a href="${a.uu}" class="book_list_btn btn-theme">View</a>

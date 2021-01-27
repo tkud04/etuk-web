@@ -43,6 +43,7 @@ $description = $adata['description'];
 		  temp = {
 			   apartment_id: "<?php echo e($a['apartment_id']); ?>",
 			   name: "<?php echo e($a['name']); ?>",
+			   avb: "<?php echo e(ucwords($a['avb'])); ?>",
 			   uu: "<?php echo e($uu); ?>",
 			   lu: "<?php echo e($lu); ?>",
 			   bu: "<?php echo e($bu); ?>",
