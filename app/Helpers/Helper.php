@@ -1414,7 +1414,7 @@ $subject = $data['subject'];
                   
 			       $url = "https://smartsmssolutions.com/api/?";
 			       $url .= "message=".urlencode($data['msg'])."&to=".$data['to'];
-			       $url .= "&sender=Etuk+NG&type=0&routing=4&token=".env('SMARTSMS_API_X_KEY', '');
+			       $url .= "&sender=Etuk+NG&type=0&routing=3&token=".env('SMARTSMS_API_X_KEY', '');
 			      #dd($url);
 				  
                   $dt = [

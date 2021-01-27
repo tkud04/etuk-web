@@ -300,7 +300,7 @@ let myApartmentDescriptionEditor = new Simditor({
 										
 										
                                         <div class="col-lg-12 col-md-12 col-sm-12" style="margin-top: 20px;">
-											<h4 class="mb-3">Facilities & Services</h4>
+											<h4 class="mb-3">Amenities & Services</h4>
 										</div>										
 										
 										<div class="col-lg-12 col-md-12 col-sm-12" style="margin-bottom: 20px;">

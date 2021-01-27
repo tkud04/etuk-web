@@ -448,7 +448,7 @@ const aptFinalPreview = (id) => {
 												<li>No. of bedrooms<span>${aptBedrooms}</span></li>
 												<li>No. of bathrooms<span>${aptBathrooms}</span></li>
 												<li>Pets<span>${aptPets}</span></li>
-												<li>Facilities & services<span>${ff}</span></li>
+												<li>Amenities & services<span>${ff}</span></li>
 	`;
 	
 	$(`#${id}-final-preview`).html(i);
@@ -492,7 +492,7 @@ const aptPreferencePreview = (id) => {
 												<li>No. of bedrooms<span>${aptBedrooms}</span></li>
 												<li>No. of bathrooms<span>${aptBathrooms}</span></li>
 												<li>Pets<span>${aptPets}</span></li>
-												<li>Facilities & services<span>${ff}</span></li>
+												<li>Amenities & services<span>${ff}</span></li>
 	`;
 	
 	$(`#${id}-final-preview`).html(i);
