@@ -40,10 +40,12 @@ $subtitle = "List of your bookmarked apartments";
 											   
 											   if(count($a) > 0){
 											      $name = $a['name'];
-											      $address = $a['address'];
+											      $aa = $a['address'];
+											      $address = $aa['address'].", ".$aa['city'].", ".$aa['state'];
 											      $reviews = $a['reviews'];
 											      $uu = url('apartment')."?xf=".$a['url'];
 											      $du = url('remove-saved-apartment')."?xf=".$a['id'];
+											      $rating = 8;
 											      $imgs = $a['cmedia']['images'];
 											   }
 											   else{
@@ -52,6 +54,7 @@ $subtitle = "List of your bookmarked apartments";
 											      $name = $deletedApt['name'];
 											      $reviews = [];
 											      $address = "";
+											      $rating = 0;
 											      $imgs = [asset('img/no-image.png')];
 											   }
 											   
@@ -62,11 +65,11 @@ $subtitle = "List of your bookmarked apartments";
 												<div class="list-box-listing-content">
 													<div class="inner">
 														<h3><a href="{{$uu}}">{{$name}}</a></h3>
-														<span>{{$address['address'].", ".$address['city'].", ".$address['state']}}</span>
+														<span>{{$address}}</span>
 														<div class="star-rating">
 															<div class="rating-counter">({{count($reviews)}} reviews)</div>
 															<?php
-															$rating = 8; $stars = $rating / 2;
+															 $stars = $rating / 2;
 															
 															 for($u = 0; $u < $stars; $u++)
 															 {
