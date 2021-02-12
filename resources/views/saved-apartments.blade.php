@@ -48,7 +48,7 @@ $subtitle = "List of your bookmarked apartments";
 											   }
 											   else{
 											      $uu = $deletedApt['url'];
-											      $du = url('remove-saved-apartment')."?xf=".$a['id'];
+											      $du = url('remove-saved-apartment')."?xf=".$sapt['apartment_id'];
 											      $name = $deletedApt['name'];
 											      $reviews = [];
 											      $address = "";
