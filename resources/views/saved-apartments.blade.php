@@ -27,18 +27,33 @@ $subtitle = "List of your bookmarked apartments";
 									<h4>Saved Apartments</h4>
 									<ul>
                                        <?php
+				                                        $deletedApt = [
+                                                                                          'name' => "Apartment removed",
+                                                                                          'url' => "javascript:void(0)"
+                                                                                          ];
+											  
 									    if(count($sapts) > 0)
 										{
 										  foreach($sapts as $sapt)
 										   {
 											   $a = $sapt['apartment'];
-											   $name = $a['name'];
-											   $address = $a['address'];
-											   $reviews = $a['reviews'];
-											   $uu = url('apartment')."?xf=".$a['url'];
-											   $du = url('remove-saved-apartment')."?xf=".$a['id'];
 											   
-											   $imgs = $a['cmedia']['images'];
+											   if(count($a) > 0){
+											      $name = $a['name'];
+											      $address = $a['address'];
+											      $reviews = $a['reviews'];
+											      $uu = url('apartment')."?xf=".$a['url'];
+											      $du = url('remove-saved-apartment')."?xf=".$a['id'];
+											      $imgs = $a['cmedia']['images'];
+											   }
+											   else{
+											      $uu = $deletedApt['url'];
+											      $du = url('remove-saved-apartment')."?xf=".$a['id'];
+											      $name = $deletedApt['name'];
+											      $reviews = [];
+											      $address = "";
+											      $imgs = [asset('img/no-image.png')];
+											   }
 											   
 									   ?>
 										<li>
