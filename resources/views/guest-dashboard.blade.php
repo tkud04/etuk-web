@@ -75,14 +75,11 @@ $subtitle = "Manage your guest account here";
 									<div class="col-lg-6 col-md-12">
 										<div class="dashboard-gravity-list with-icons">
 											<h4>Saved Apartments</h4>
-											<?php
-
-                                                                                        
-$deletedApt = [
-'name' => "Apartment removed",
-'url' => "JavaScript:void(0),
-
-];
+											<?php                                                                                       
+                                                                                          $deletedApt = [
+                                                                                          'name' => "Apartment removed",
+                                                                                          'url' => "javascript:void(0)"
+                                                                                          ];
 											 if(count($sapts) > 0)
 											 {
 												 $saptsLength = count($sapts) > 5 ? 5 : count($sapts);
@@ -113,8 +110,8 @@ $deletedApt = [
 											   $location = "";
 											   $stars = 0;
 											   $ratingClass = "low";
-}
-?>
+											   }
+                                                                                          ?>
 												<li>
 											        <i class="dash-icon-box ti-home"></i>  
 													<div class="row">
@@ -137,8 +134,8 @@ $deletedApt = [
 													  {
 													 ?>
 													 <i class="ti-star"></i>
-                                                     <?php
-											          }
+                                                                                                         <?php
+											                  }
 													 ?>
 													 </div>
 													 </h3>
@@ -149,7 +146,7 @@ $deletedApt = [
 
 											<?php
 											 }
-                                            ?>											 
+                                                                                        ?>											 
 											</ul>
 											<h4><center><a href="{{url('saved-apartments')}}" class="btn btn-theme">View more</a></center></h4>
 											<?php
