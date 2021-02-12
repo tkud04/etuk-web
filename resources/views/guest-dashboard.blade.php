@@ -76,6 +76,13 @@ $subtitle = "Manage your guest account here";
 										<div class="dashboard-gravity-list with-icons">
 											<h4>Saved Apartments</h4>
 											<?php
+
+                                                                                        
+$deletedApt = [
+'name' => "Apartment removed",
+'url' => "JavaScript:void(0),
+
+];
 											 if(count($sapts) > 0)
 											 {
 												 $saptsLength = count($sapts) > 5 ? 5 : count($sapts);
@@ -86,16 +93,28 @@ $subtitle = "Manage your guest account here";
 											   { 
 											   $sa = $sapts[$i];
 											   $a = $sa['apartment'];
+                                              	   	   	   	   	   	   if(count($a) > 0){
 											   $au = url('apartment')."?xf=".$a['url'];
 											   $title = $a['name'];
 											   $cmedia = $a['cmedia'];
 											   $imgs = $cmedia['images'];
-											   $adata = $a['data'];
-											   $address = $a['address'];
+			                					           $adata = $a['data'];
+						                          		   $address = $a['address'];
 											   $location = $address['city'].", ".$address['state'];
 											   $stars = $a['rating'];
 											   $ratingClass = $stars > 3.5 ? "high" : "low";
-											?>
+											   }
+											   else{
+											   $au = $deletedApt['url'];
+											   $title = $deletedApt['name'];
+											   
+											   $imgs = [asset('img/no-image.png')];
+			                					           
+											   $location = "";
+											   $stars = 0;
+											   $ratingClass = "low";
+}
+?>
 												<li>
 											        <i class="dash-icon-box ti-home"></i>  
 													<div class="row">
