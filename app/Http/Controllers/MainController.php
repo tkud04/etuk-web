@@ -466,7 +466,7 @@ class MainController extends Controller {
 		$plugins = $this->helpers->getPlugins();
 		
 		$sapts = $this->helpers->getSavedApartments($user);
-		#dd($sapts);
+		dd($sapts);
 		shuffle($ads);
 		$ad = count($ads) < 1 ? "images/inner-ad-2.png" : $ads[0]['img'];
         
