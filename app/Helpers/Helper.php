@@ -4328,34 +4328,34 @@ function createSocial($data)
            	  
 			  $ret = [];
               $p = Preferences::where('user_id',$user->id)->first();
-              #dd($p);
+             # dd($p);
               if($p != null)
                {
 				  $data = $this->getPreferenceData($p->id);
 				  $address = $this->getPreferenceAddress($p->id);
 				  $terms = $this->getPreferenceTerms($p->id);
-				  dd($address);
+				  #dd($address);
 				  
 				  $temp = [];
 				  $temp['id'] = $p->id;
 				  $temp['user_id'] = $p->user_id;
 				  $temp['avb'] = $p->avb;
 				  $temp['rating'] = $p->rating;
-				  $temp['city'] = $address['city'];
-				  $temp['lga'] = $address['lga'];
-				  $temp['state'] = $address['state'];
-				  $temp['amount'] = $data['amount'];
-				  $temp['property_type'] = $data['property_type'];
-				  $temp['rooms'] = $data['rooms'];
-				  $temp['units'] = $data['units'];
-				  $temp['bedrooms'] = $data['bedrooms'];
-				  $temp['bathrooms'] = $data['bathrooms'];
-				  $temp['category'] = $data['category'];
-				  $temp['children'] = $terms['children'];
-				  $temp['max_adults'] = $terms['max_adults'];
-				  $temp['max_children'] = $terms['max_children'];
-				  $temp['pets'] = $terms['pets'];
-				  $temp['payment_type'] = $terms['payment_type'];
+				  $temp['city'] = isset($address['city']) ? $address['city'] : $this->def['city'];
+				  $temp['lga'] = isset($address['lga']) ? $address['lga'] : $this->def['lga'];
+				  $temp['state'] = isset($address['state']) ? $address['state'] : $this->def['state'];
+				  $temp['amount'] = isset($data['amount']) ? $data['amount'] : $this->def['amount'];
+				  $temp['property_type'] = isset($data['property_type']) ? $data['property_type'] : $this->def['property_type'];
+				  $temp['rooms'] = isset($data['rooms']) ? $data['rooms'] : $this->def['rooms'];
+				  $temp['units'] = isset($data['units']) ? $data['units'] : $this->def['units'];
+				  $temp['bedrooms'] = isset($data['bedrooms']) ? $data['bedrooms'] : $this->def['bedrooms'];
+				  $temp['bathrooms'] = isset($data['bathrooms']) ? $data['bathrooms'] : $this->def['bathrooms'];
+				  $temp['category'] = isset($data['category']) ? $data['category'] : $this->def['category'];
+				  $temp['children'] = isset($terms['children']) ? $terms['children'] : $this->def['children'];
+				  $temp['max_adults'] = isset($terms['max_adults']) ? $terms['max_adults'] : $this->def['max_adults'];
+				  $temp['max_children'] = isset($terms['max_children']) ? $terms['max_children'] : $this->def['max_children'];
+				  $temp['pets'] = isset($terms['pets']) ? $terms['pets'] : $this->def['pets'];
+				  $temp['payment_type'] = isset($terms['payment_type']) ? $terms['payment_type'] : $this->def['payment_type'];
 				  $temp['facilities'] = $this->getPreferenceFacilities($p->id);	  
 				  
 				   $temp['date'] = $p->created_at->format("jS F, Y h:i A");
