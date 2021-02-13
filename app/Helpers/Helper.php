@@ -4362,7 +4362,7 @@ function createSocial($data)
 				   $temp['date'] = $p->created_at->format("jS F, Y h:i A");
 				  $ret = $temp;
                }                         
-                 dd($ret);                                     
+                # dd($ret);                                     
                 return $ret;
            }
 		   
