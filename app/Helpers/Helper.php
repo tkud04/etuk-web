@@ -1257,6 +1257,7 @@ class Helper implements HelperContract
   'pets' => "no",
   'max_adults' => "4",
   'max_children' => "0",
+   'payment_type' => "card",
   'facilities' => []
 ];
 
